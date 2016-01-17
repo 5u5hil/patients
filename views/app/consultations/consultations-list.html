@@ -1,0 +1,123 @@
+<ion-view class="records-view">
+    <ion-nav-title>
+        <span>Consultations</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-person">
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="ctab">
+            <ion-tabs class="tabs-positive tabs-icon-top">
+                <ion-tab title="Book" >
+                    <!-- Tab 1 content -->
+                    <div class="tabcon2">	
+                        <div class="searchbox">
+                            <div class="item item-input-inset" style="border-bottom:0;">
+                                <label class="item-input-wrapper">
+                                    <input type="text" placeholder="Search..." ng-model="searchKeyword">
+                                </label>
+                                <!---<button class="button button-small">Submit</button>--->
+                            </div>	
+                        </div>
+                        <div class="list miscellaneous-functionalities">
+                            <a class="item  item-icon-right" ui-sref="app.consultation-cards({'id':spec.id, 'res' : 'json'})"  ng-repeat="spec in specializations| filter : searchKeyword">
+                                <div>
+                                    <span class="stitle">{{spec.specialization}}</span>
+                                    <p class=""><label ng-repeat="focus in spec.focuses">{{focus.focus}}, </label>{{spec.description}}</p>
+                                </div>
+                                <i class="icon ion-arrow-right-c"></i>
+                            </a>
+                        </div>
+                    </div>
+                </ion-tab>
+                <!-- =========== Upcoming ===========-->
+                <ion-tab  title="Current" ng-if="userLogged = 1">
+                    {{video_app}}
+                    <div class="tabcon2"> 
+                        <div class="searchbox">
+                            <div class="item item-input-inset" style="border-bottom:0;">
+                                <label class="item-input-wrapper">
+                                    <input type="text" placeholder="Search...">
+                                </label>
+                                <button class="button button-small">
+                                    <i class="ion-android-search"></i>
+                                </button>
+                            </div>	
+                        </div>
+                        <div class="ctab commontab">
+                            <ion-tabs class="tabs-positive tabs-icon-top">
+                                    <ion-tab title="Video<br>{{video_app.length}} <br/>"  >
+                                        <div class="tabcontainer p0" ng-repeat="vApp in video_app track by $index">
+                                            <div class="posts-list" ng-repeat="prod in products[$index]">
+                                                <div  class="list card post-item">
+                                                    <div class="post-content item item-text-wrap p0">
+                                                        <a ui-sref="app.current-tab({'id': vApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in doctorsData[$index]">
+                                                            <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                                                <span ng-repeat="spec in doc.specializations">
+                                                                    {{spec.specialization}} , 
+                                                                </span>
+                                                            </p>
+                                                            <p><strong>Appointment Time</strong><br/> 
+                                                                <span>{{vApp.appointments.scheduled_start_time|time}} To {{vApp.appointments.scheduled_end_time|time}}
+                                                                </span>
+                                                            </p>
+                                                            <p>2 Records Shared by you <br/>
+                                                                3 Records Shared by Dr.ABC</p>
+                                                            <div class="clr"></div>
+                                                        </a>
+                                                        <div class="post-actions  post-footer p0">
+                                                            <div class="row cardbtn-small p0">
+                                                                <div class="col"><a ui-sref="#" id="{{vApp.appointment_id}}" class="cbtn">Cancel</a></div>
+                                                                <div class="col"><a ui-sref="#"  class="cbtn">Reschedule</a></div>
+                                                                <div class="col"><a ui-sref="#" class="cbtn">Join</a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ion-tab>
+
+                                <ion-tab title="Chat" >
+                                    <div class="tabcontainer">
+                                        Under Construction
+                                    </div>
+                                </ion-tab>
+
+                                <ion-tab title="Clinic<br>5" >
+                                    <div class="tabcontainer">
+                                        Under Construction
+                                    </div>
+                                </ion-tab>
+
+                                <ion-tab title="Home<br>5" >
+                                    <div class="tabcontainer">
+                                        Under Construction
+                                    </div>
+                                </ion-tab>
+
+                            </ion-tabs>
+                        </div>
+
+
+
+
+
+
+
+
+
+                    </div>
+                </ion-tab>
+
+                <ion-tab title="Past" ng-if="userLogged = 1">
+                    <div class="tabcontainer">
+                        Under Construction	
+                    </div>
+                </ion-tab>
+            </ion-tabs>
+        </div>
+    </ion-content>
+</ion-view>
+

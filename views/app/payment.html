@@ -1,0 +1,78 @@
+<ion-view class="payment-view">
+    <ion-nav-title>
+        <span>Payment</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="content-section">
+            <div class="list card">
+                <div class="item item-body allp" ng-repeat="doc in doctor">
+                    <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                        <span ng-repeat="spec in doc.specializations">
+                            {{spec.specialization}},   
+                        </span>
+                    </p>
+                    <!--<p><strong>Qualification</strong><br/>MBBS,MD</p>-->
+                    <ul class="clist">
+                        <li ng-repeat="pro in product">{{pro.desc}},{{pro.mode}} </li>
+                        <li ng-repeat="pInc in  prod_inclusion track by $index">{{pInc.mode}}, {{pInc.desc}},
+                            <span ng-if="pInc.discount < 100">Discount : {{pInc.discount}} %</span>, {{pInc.validity_in_days}} Days</li>
+                    </ul>
+                    <p><strong>Appointment Details</strong> <br/> 
+                        <strong>Date: </strong> {{slot | dateFormat}} <br/>
+                        <strong>Time: </strong> {{slot | time}} <br/>
+                        <!---<strong>Mode: </strong> Video<br/>
+                        <strong>Address: </strong> 10AM to 11AM <br/>-->
+                    </p>
+                </div>
+            </div>
+            <div class="ctab commontab">
+                <ion-tabs class="tabs-positive tabs-icon-top">
+                    <ion-tab title="Pay Now" >
+                        <div class="tabcontainer">
+                            <div class="pprice">Price: INR {{product[0].price}}</div>
+                            <div class="row">
+                                <div class="col col-75">
+                                    <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly disabled/>
+                                    <!-- <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly/> -->
+                                </div>
+                                <div class="col">
+                                    <button class="button button-small button-assertive csbtn" disabled="">Undo</button>
+                                    <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
+                                </div>
+                            </div>
+                            <p class="fg txt-centre">Applied Discount:20%</p>
+                            <h4 class="txt-centre">Final Price: INR {{product[0].price}}</h4>
+                            <br/>
+                            <div class="section-footer"> <!---ui-sref="app.success"-->
+                                <a ng-click="payNow()" class="button button-full button-positive">Proceed</a>
+                            </div>	
+                        </div>
+                    </ion-tab>
+                    <ion-tab title="I have Package" >
+                        <div class="tabcontainer">
+                            Under Construction
+                        </div>
+                    </ion-tab>
+
+
+
+                </ion-tabs>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </ion-content>
+</ion-view>

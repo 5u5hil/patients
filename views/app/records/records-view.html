@@ -1,0 +1,61 @@
+<ion-view class="records-view">
+    <ion-nav-title>
+        <span>Records</span>
+    </ion-nav-title>
+
+    <div class="item item-divider mtop44" style="font-size: 18px; min-height: 45px; text-align:center;">
+        Medication
+    </div>
+    <div class="bar bar-subheader cbar divider-2" style="margin-top:45px;">
+        <div class="row">
+            <div class="col-50"><a  ui-sref="app.filter"><h4 class="subhead"><i class="icon ion-funnel"></i> Filter</h4></a></div>
+            <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
+        </div>
+    </div>
+
+    <ion-content>
+
+        <div class="list recordview" >
+            <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index">
+                <div  class="list card post-item">
+                    <div class="post-content item item-text-wrap">
+                        <div class="row pr-b10">
+                            <div class="col" ng-repeat="detail in rec.record_metadata | limitTo:limit">
+                                <p><strong>{{detail.field_id | capitalize}}</strong><br/>
+                                    {{detail.value}}</p>
+                            </div>	
+                        </div>
+                        <div class="post-actions row post-footer">
+                            <span>Created {{rec.created_at | date:'medium' }} by You</span>
+                        </div>
+
+                    </div>
+                </div>
+            </a>
+
+
+           
+
+
+
+        </div>
+
+    </ion-content>
+    <div class="footerbar">
+        <a class="button"><i class="icon ion-trash-b"></i> Delete</a>
+        <a class="button"><i class="icon ion-android-share-alt"></i> Share</a>
+        <a class="button" ui-sref="#" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a>
+    </div>
+    <!-- 
+    <div class="cslideup">
+            <div class="slidebox">
+                    <ul>
+                    <li>fasdj fksjdaf</li>	
+                    <li>fasdj fksjdaf</li>	
+                    <li>fasdj fksjdaf</li>	
+                    <li>fasdj fksjdaf</li>	
+                    </ul>
+            </div>
+    </div> -->
+</ion-view>
+
