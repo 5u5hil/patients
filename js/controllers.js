@@ -208,21 +208,24 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.manageiAd = function () {
+                $http({
+                    method: 'GET',
+                    url: domain + 'records/get-record-categories'
+                }).then(function successCallback(response) {
+                    $scope.cats = [];
+                    //console.log(response);
+                    //$scope.categories = response.data; 
+                    angular.forEach(response.data, function (value, key) {
+                        //console.log(value.category);
+                        $scope.cats.push({text: value.category, id: value.id});
+                    });
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
                 // Show the action sheet
                 var hideSheet = $ionicActionSheet.show({
                     //Here you can add some more buttons
-                    buttons: [
-                        {text: 'Allergies'},
-                        {text: 'Bills'},
-                        {text: 'Test Results'},
-                        {text: 'Medication'},
-                        {text: 'Packaging'},
-                        {text: 'Test Results'},
-                        {text: 'Bills'},
-                        {text: 'Medication'},
-                        {text: 'Test Results'},
-                        {text: 'Packaging'}
-                    ],
+                    buttons:  $scope.cats,
                     destructiveText: 'Remove Ads',
                     titleText: 'Choose the ad to show - Interstitial only works in iPad',
                     cancelText: 'Cancel',

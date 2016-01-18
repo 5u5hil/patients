@@ -128,7 +128,7 @@ angular.module('your_app_name.factories', [])
   }
   else
   {
-    console.log("No AdMob?");
+    //console.log("No AdMob?");
   }
 
   return {
@@ -177,7 +177,7 @@ angular.module('your_app_name.factories', [])
   }
   else
   {
-    console.log("No iAd?");
+    //console.log("No iAd?");
   }
 
   return {
