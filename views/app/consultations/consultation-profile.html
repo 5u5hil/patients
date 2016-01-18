@@ -6,10 +6,10 @@
         <button class="button button-icon button-clear ion-person">
         </button>
     </ion-nav-buttons>
-    <ion-content>
-        <div ng-repeat="doc in doctor">
-            <div class="profile-head">
-                <div class="card-content">
+	
+		<div ng-repeat="doc in doctor">
+	    <div class="profile-head">
+		<div class="card-content">
                     <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div>
                     <div class="card-left">	<img class="user-image-circle" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"></div>
                     <div class="card-detail txt-left">
@@ -21,6 +21,12 @@
                     <div class="clr"></div>
                 </div>
             </div>
+	</div>
+	
+	
+    <ion-content>
+        <div ng-repeat="doc in doctor">
+           
             <ion-slide-box show-pager="true">
                 <ion-slide>
                     <div class="list card profile-card">
