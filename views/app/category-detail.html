@@ -15,7 +15,7 @@
     <ion-content>
         <div class="fltr-mesg"> &nbsp;</div>
         <div class="list cdetail-list">
-            <a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords track by $index">
+            <a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
                 <span class="title">{{cat.category}}</span>	
                 <span class="count">{{cat.count}}</span>	
             </a>
