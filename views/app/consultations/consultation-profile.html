@@ -96,7 +96,7 @@
                                 <ion-tabs class="tabs-positive tabs-icon-top">
                                     <div ng-repeat="serv in services">
                                         <ion-tab  title="{{videoProd.mode}} <br>INR {{videoProd.price}}" ng-if="serv == 1" >
-                                            <div class="tabcontainer"> 
+                                            <div class="tabcontainer minh350"> 
                                                 <ul class="clist">
                                                     <li>{{videoProd.desc}}</li>
                                                     <li ng-repeat="vInc in videoInc track by $index">{{vInc.mode}}, {{vInc.desc}},
@@ -137,7 +137,7 @@
                                         </ion-tab>
                                         <!-- clinic -->
                                         <ion-tab  title="{{clinicProd.mode}} <br>INR {{clinicProd.price}}" ng-if="serv == 3">
-                                            <div class="tabcontainer"> 
+                                            <div class="tabcontainer minh350"> 
                                                 <ul class="clist">
                                                     <li>{{clinicProd.desc}}</li>
                                                     <li ng-repeat="cInc in clinicInc track by $index">{{cInc.mode}}, {{cInc.desc}},
@@ -182,7 +182,7 @@
                                         <!-- End clinic -->
                                         <!-- Home -->
                                         <ion-tab  title="{{homeProd.mode}} <br>INR {{homeProd.price}}" ng-if="serv == 4">
-                                            <div class="tabcontainer">  
+                                            <div class="tabcontainer minh350">  
                                                 <ul class="clist">
                                                     <li>{{homeProd.desc}}</li>
                                                     <li ng-repeat="hInc in homeInc track by $index">{{hInc.mode}}, {{hInc.desc}},
