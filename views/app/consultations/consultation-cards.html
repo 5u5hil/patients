@@ -14,6 +14,7 @@
     </div>
     <ion-content>
         <div class="list consultview">
+            <h4>{{doctors.length==0?'No Doctors': ''}}</h4>
             <div class="posts-list" ng-repeat="doc in doctors track by $index">
                 <div  class="list card post-item">
                     <div class="post-content item item-text-wrap p0">

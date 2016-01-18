@@ -253,10 +253,10 @@ angular.module('your_app_name.controllers', [])
 
 //bring specific category providers
         .controller('CategoryListCtrl', function ($scope, $http, $stateParams, $rootScope) {
-            if (get('id') != null)
-                ;
+            if (get('id') != null){                
             $rootScope.userLogged = 1;
-            console.log($rootScope.userLogged);
+            }
+            //console.log($rootScope.userLogged);
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
         })
@@ -271,7 +271,7 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/view-patient-record-category',
                 params: {userId: $scope.userid}
             }).then(function successCallback(response) {
-                console.log(response.data);
+                //console.log(response.data);
                 $scope.categories = response.data.categories;
                 $scope.userRecords = response.data.recordCount;
             }, function errorCallback(response) {
@@ -439,25 +439,20 @@ angular.module('your_app_name.controllers', [])
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
                 //$ionicLoading.hide();
-                //console.log(response);
                 $scope.doctors = response.data.user;
                 angular.forEach($scope.doctors, function (value, key) {
-                    //console.log(value.id);
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctor-services',
                         params: {id: value.id}
                     }).then(function successCallback(responseData) {
-                        console.log(responseData);
                         //$ionicLoading.hide();
                         $scope.docServices[key] = responseData.data;
                     }, function errorCallback(response) {
                         console.log(response);
                     });
                     $scope.spec = response.data.spec;
-                    //console.log($scope.services);
                 });
-                //$state.go('app.category-detail');
             }, function errorCallback(e) {
                 console.log(e);
             });
