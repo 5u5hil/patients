@@ -67,17 +67,22 @@ angular.module('your_app_name.controllers', [])
         })
         .controller('SignupCtrl', function ($scope, $state, $http, $rootScope) {
             $scope.user = {};
+            $scope.user.name = '';
+            $scope.user.email = '';
+            $scope.user.phone = '';
+            $scope.user.password = '';
             $scope.doSignUp = function () {
-                var data = new FormData(jQuery("#signup")[0]);
+                var data = "name="+$scope.user.name+"&email="+$scope.user.email+"&phone="+$scope.user.phone+"&password="+$scope.user.password;
+                //var data = new FormData(jQuery("#signup")[0]);
                 $.ajax({
-                    type: 'POST',
-                    url: domain + "/register",
+                    type: 'GET',
+                    url: domain + "register",
                     data: data,
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        //console.log(response);
+                        console.log(response);
                         if (angular.isObject(response)) {
                             store(response);
                             $rootScope.userLogged = 1;
