@@ -8566,7 +8566,8 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 .profile {    position: relative;
               float: left;
               width: 100%; margin-top:0;}
-.profile .tabcontainer{ position:relative;}
+.profile .tabcontainer,.profile .tabcontainer.pane{ position:relative !important;}
+
 .profile .tabs{height:90px; position:relative;}
 .profile  .tab-item{padding-top:5px;}
 .profile .tab-title{    font-size: 14px;
@@ -8608,8 +8609,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
     display: inline-block;
     background: #eee;
     margin: 4px 2px;
-    
-    width: 14%;
+    width: 15%;
     box-sizing: border-box;
     border: 1px #ccc solid; font-size:12px; cursor:pointer;
 }
