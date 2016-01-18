@@ -8609,11 +8609,12 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
     background: #eee;
     margin: 4px 2px;
     padding: 9px;
-    width: 22%;
+    width: 14%;
     box-sizing: border-box;
-    border: 1px #ccc solid; font-size:12px;
+    border: 1px #ccc solid; font-size:12px; cursor:pointer;
 }
 .timesheet li.active{background:#f00; color:#fff;}
+.timesheet li span{width:100%;}
 .timesheet li.disabled{opacity:0.3;}
 .sche-date input{margin:0 auto; height:30px; padding:3px;}
 .leftarrow,.rightarrow{position:absolute; top:10px; font-size:18px; cursor: pointer;}

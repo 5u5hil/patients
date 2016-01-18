@@ -119,7 +119,7 @@
                                                         <div class="rightarrow" ng-click="getNextSlots(schDate, vs.supersaas_id)"><i class="ion-android-arrow-forward"></i></div>
                                                     </div>
                                                     <ul class="timesheet" ng-if="schV[$index] == vs.supersaas_id" ng-repeat="(key, slot) in vSch">
-                                                        <li ng-repeat="(k, slt) in slot track by $index" > 
+                                                        <li onclick="toggleclass(this);" ng-repeat="(k, slt) in slot track by $index" > 
                                                             <!--button class="button button-small" ng-model="timeslot" ng-click="bookTimeSlot(timeslot)" value=""> </button>--->
                                                             <span ng-repeat="(tk, tv) in slt" ng-model="timeslot" ng-click="bookSlot(tv[0], vs.supersaas_id)" ng-if="tk == 'start'">
                                                                {{tv[0]| time}}

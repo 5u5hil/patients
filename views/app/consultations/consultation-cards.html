@@ -1,6 +1,6 @@
 <ion-view class="records-view">
     <ion-nav-title>
-        <span>Dermatology</span>
+        <span>{{spec[0].specialization}}</span>
     </ion-nav-title>
     <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-person">
@@ -46,22 +46,22 @@
                         </a>
                         <div class="post-actions row post-footer">
                             <div class="row cardbtn">
-                                <div class="col" ng-repeat="serv in doc.services">
-                                    <div class="cbtn" ng-if="serv.service=='Video'">
+                                <div class="col" ng-repeat="serv in docServices[$index]">
+                                    <div class="cbtn" ng-if="serv.service_id==1">
                                         <i class="ion-videocamera f33" ></i>   <br/>                                      
-                                        {{serv.service}}
+                                        Video
                                     </div>
-                                    <div class="cbtn" ng-if="serv.service=='Chat' ">
+                                    <div class="cbtn" ng-if="serv.service_id==2 ">
                                         <i class="ion-chatbubble f33" ></i>  <br/>                                      
-                                        {{serv.service}}
+                                        Chat
                                     </div>
-                                    <div class="cbtn" ng-if="serv.service=='Home'">
+                                    <div class="cbtn" ng-if="serv.service_id==3">
                                         <i class="ion-home f33" ></i>      <br/>                                   
-                                        {{serv.service}}
+                                        Clinic
                                     </div>
-                                    <div class="cbtn" ng-if="serv.service=='Clinic'">
+                                    <div class="cbtn" ng-if="serv.service_id==4">
                                         <i class="ion-person f33" ></i>  <br/>                                       
-                                        {{serv.service}}
+                                        Home
                                     </div>
                                 </div>
                                 <!---<div class="col"><a href="#" class="cbtn"><i class="ion-checkmark f33"></i> <br/>Schedule<br/> INR 400</a></div>

@@ -419,7 +419,7 @@ angular.module('your_app_name.controllers', [])
                 params: {userId: $scope.userId}
             }).then(function successCallback(response) {
                 //$ionicLoading.hide();
-                console.log(response.data);
+                //console.log(response.data);
                 $scope.specializations = response.data.spec;
                 $scope.video_app = response.data.video_app;
                 $scope.doctorsData = response.data.doctorsData;
@@ -431,16 +431,16 @@ angular.module('your_app_name.controllers', [])
         })
         .controller('ConsultationCardsCtrl', function ($scope, $http, $stateParams) {
             $scope.specId = $stateParams.id;
-            $scope.services = $stateParams.id;
             $scope.userId = get('id');
+            $scope.docServices = [];
             $http({
                 method: 'GET',
                 url: domain + 'doctors/list',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
                 //$ionicLoading.hide();
-                console.log(response);
-                $scope.doctors = response.data;
+                //console.log(response);
+                $scope.doctors = response.data.user;
                 angular.forEach($scope.doctors, function (value, key) {
                     //console.log(value.id);
                     $http({
@@ -448,13 +448,14 @@ angular.module('your_app_name.controllers', [])
                         url: domain + 'doctors/get-doctor-services',
                         params: {id: value.id}
                     }).then(function successCallback(responseData) {
-                        console.log(responseData.data);
+                        console.log(responseData);
                         //$ionicLoading.hide();
-                        $scope.services[key] = responseData.data;
+                        $scope.docServices[key] = responseData.data;
                     }, function errorCallback(response) {
                         console.log(response);
                     });
-                    console.log($scope.services);
+                    $scope.spec = response.data.spec;
+                    //console.log($scope.services);
                 });
                 //$state.go('app.category-detail');
             }, function errorCallback(e) {
@@ -560,7 +561,7 @@ angular.module('your_app_name.controllers', [])
                  });*/
             };
             $scope.bookSlot = function (timeslot, supid) {
-                //console.log(timeslot + '===' + supid);
+                console.log(timeslot + '===' + supid);
                 $scope.bookingSlot = timeslot;
                 $scope.supId = supid;
             };
