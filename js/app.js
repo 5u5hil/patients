@@ -117,36 +117,6 @@ angular.module('your_app_name', [
                         controller: 'AppCtrl'
                     })
 
-                    .state('app.image-picker', {
-                        url: "/miscellaneous/image-picker",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/miscellaneous/image-picker.html",
-                                controller: 'ImagePickerCtrl'
-                            }
-                        }
-                    })
-
-                    .state('app.slider', {
-                        url: "/layouts/slider",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/layouts/slider.html"
-                            }
-                        }
-                    })
-
-                    .state('app.category-feeds', {
-                        url: "/category-feeds/:categoryId",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/feeds/category-feeds.html",
-                                controller: 'CategoryFeedsCtrl'
-                            }
-                        }
-                    })
-
-
                     .state('app.category-list', {
                         url: "/category-listing",
                         views: {
