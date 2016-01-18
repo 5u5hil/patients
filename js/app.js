@@ -117,36 +117,6 @@ angular.module('your_app_name', [
                         controller: 'AppCtrl'
                     })
 
-                    //MISCELLANEOUS
-                    .state('app.miscellaneous', {
-                        url: "/miscellaneous",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/miscellaneous/miscellaneous.html"
-                            }
-                        }
-                    })
-
-                    .state('app.home', {
-                        url: "/home",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/home.html"
-                            }
-                        }
-                    })
-
-
-                    .state('app.maps', {
-                        url: "/miscellaneous/maps",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/miscellaneous/maps.html",
-                                controller: 'MapsCtrl'
-                            }
-                        }
-                    })
-
                     .state('app.image-picker', {
                         url: "/miscellaneous/image-picker",
                         views: {
@@ -157,42 +127,11 @@ angular.module('your_app_name', [
                         }
                     })
 
-                    //LAYOUTS
-                    .state('app.layouts', {
-                        url: "/layouts",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/layouts/layouts.html"
-                            }
-                        }
-                    })
-
-                    .state('app.tinder-cards', {
-                        url: "/layouts/tinder-cards",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/layouts/tinder-cards.html",
-                                controller: 'TinderCardsCtrl'
-                            }
-                        }
-                    })
-
                     .state('app.slider', {
                         url: "/layouts/slider",
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/layouts/slider.html"
-                            }
-                        }
-                    })
-
-                    //FEEDS
-                    .state('app.feeds-categories', {
-                        url: "/feeds-categories",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/feeds/feeds-categories.html",
-                                controller: 'FeedsCategoriesCtrl'
                             }
                         }
                     })
@@ -218,7 +157,6 @@ angular.module('your_app_name', [
                         }
                     })
 
-
                     .state('app.category-detail', {
                         url: "/category-detail",
                         views: {
@@ -228,6 +166,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+
                     .state('app.add-category', {
                         url: "/add-category/{id:int}",
                         views: {
@@ -267,7 +206,6 @@ angular.module('your_app_name', [
                         }
                     })
 
-
                     //Consultations
 
                     .state('app.consultations-list', {
@@ -289,6 +227,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+
                     .state('app.consultation-profile', {
                         url: "/consultation-profile/{id:int}",
                         views: {
@@ -298,6 +237,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+
                     .state('app.current-tab', {
                         url: "/current-tab/{id:int}",
                         views: {
@@ -307,7 +247,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-                    
+
                     .state('app.patient-join', {
                         url: "/patient-join/{id:int}",
                         views: {
@@ -339,7 +279,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-                    
+
                     .state('app.failure', {
                         url: "/failure/{id:int}/{serviceId:int}",
                         views: {
@@ -350,85 +290,6 @@ angular.module('your_app_name', [
                         }
                     })
 
-                    .state('app.feed-entries', {
-                        url: "/feed-entries/:categoryId/:sourceId",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/feeds/feed-entries.html",
-                                controller: 'FeedEntriesCtrl'
-                            }
-                        }
-                    })
-
-                    //WORDPRESS
-                    .state('app.wordpress', {
-                        url: "/wordpress",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/wordpress/wordpress.html",
-                                controller: 'WordpressCtrl'
-                            }
-                        }
-                    })
-
-                    .state('app.post', {
-                        url: "/wordpress/:postId",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/wordpress/wordpress_post.html",
-                                controller: 'WordpressPostCtrl'
-                            }
-                        },
-                        resolve: {
-                            post_data: function (PostService, $ionicLoading, $stateParams) {
-                                $ionicLoading.show({
-                                    template: 'Loading post ...'
-                                });
-
-                                var postId = $stateParams.postId;
-                                return PostService.getPost(postId);
-                            }
-                        }
-                    })
-
-                    //OTHERS
-                    .state('app.settings', {
-                        url: "/settings",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/settings.html",
-                                controller: 'SettingsCtrl'
-                            }
-                        }
-                    })
-
-                    .state('app.forms', {
-                        url: "/forms",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/forms.html"
-                            }
-                        }
-                    })
-
-                    .state('app.profile', {
-                        url: "/profile",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/profile.html"
-                            }
-                        }
-                    })
-
-                    .state('app.bookmarks', {
-                        url: "/bookmarks",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/bookmarks.html",
-                                controller: 'BookMarksCtrl'
-                            }
-                        }
-                    })
                     .state('app.logout', {
                         url: "/logout",
                         views: {
