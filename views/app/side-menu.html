@@ -24,7 +24,7 @@
                     <h2 class="greeting">Hi Brynn</h2>
                     <p class="message">Welcome back</p>
                 </ion-item>
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
+                <!---<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
                     <i class="icon ion-bookmark"></i>
                     <h2 class="menu-text">Saved for later</h2>
                 </ion-item>
@@ -52,16 +52,17 @@
                     <i class="icon ion-gear-a"></i>
                     <h2 class="menu-text">Settings</h2>
                 </ion-item>
+                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.home">
+                    <i class="icon ion-gear-a"></i>
+                    <h2 class="menu-text">Home</h2>
+                </ion-item>--->
 
                 <ion-item class="item-icon-left" nav-clear menu-close ui-sref="{{ userLogged == 1 ? 'app.logout' : 'auth.login'}}">
                     <i class="icon ion-gear-a"></i>
                     <h2 class="menu-text">{{ userLogged == 1 ? 'Logout' : 'Login / Register'}}</h2>
                 </ion-item>
 
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.home">
-                    <i class="icon ion-gear-a"></i>
-                    <h2 class="menu-text">Home</h2>
-                </ion-item>
+                
 
                 <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.category-list">
                     <i class="icon ion-gear-a"></i>
