@@ -14,8 +14,9 @@
     <ion-content>
         <div class="fltr-mesg"> &nbsp;</div>
         <div class="mediascreen" >
-            <iframe class="videochat" ng-src="{{trustSrc(oToken)}}" >
-            </iframe>
+            <iframe class="videochat" ng-src="{{trustSrc(oToken)}}" ></iframe>
+            <div id='myPublisherDiv' style="position:absolute;right: 10px;bottom:10px"></div> 
+           <div id='subscribersDiv' style="position:absolute;top: 0;z-index:-11"></div> 
         </div>
 
         <div class="ctab commontab mt0">
