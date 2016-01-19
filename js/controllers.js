@@ -309,7 +309,7 @@ angular.module('your_app_name.controllers', [])
                 callAjax("POST", domain + "records/save", data, function (response) {
                     console.log(response);
                     if (angular.isObject(response)) {
-                        $state.go('app.viewRecords', {'id': $scope.categoryId});
+                        $state.go('app.records-view', {'id': $scope.categoryId});
                         //window.location.href = "http://192.168.2.169:8100/#/app/records-view/" + $scope.categoryId;
                     }
                 });
