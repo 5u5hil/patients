@@ -8535,6 +8535,9 @@ a.posts-list{text-decoration:none;}
 .clistdata li{ display:block; padding:10px; border-bottom:1px #eee solid;}
 .clistdata li span{font-weight:bold; display:block; padding-right:5px;}
 .tabcontainer,.tabcon2{ float:left; width:100%; padding:0 10px; box-sizing:border-box; position:relative; margin-top:20px;}
+
+.tabcontainer{position:static;}
+
 .tabcon2{padding:0 0px; }
 .searchbox{margin-bottom:15px;}
 .stitle{    font-weight: bold;
@@ -8650,7 +8653,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 .txt-centre{text-align:center;}
 
 .commontab{margin-top:15px;}
-.commontab .tabs{position:relative;}
+.commontab .tabs{position:relative; top:0 !important;}
 input.custominput{width: 100%;
                   border: 1px #ddd solid; padding:5px;}
 .csbtn{    width: 100%;
