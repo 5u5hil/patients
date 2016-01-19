@@ -291,7 +291,6 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/add',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
-                console.log(response);
                 $scope.fields = response.data;
                 //angular.forEach(response.data, function (value, key) {
                 //    $scope.fields.push($sce.trustAsHtml(createElement(value)));
@@ -301,7 +300,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.addNewElement = function (ele) {
-                console.log('text' + ele);
+                //console.log('text' + ele);
                 addNew(ele);
             };
             $scope.submit = function () {
@@ -324,7 +323,6 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/add',
                 params: {id: $stateParams.cat}
             }).then(function successCallback(response) {
-                console.log(response.data);
                 $scope.fields.push($sce.trustAsHtml("<input type='hidden' ng-model='record.recordId' value='" + $stateParams.id + "' name='recordId' /><input type='hidden' ng-model='record.recordCat' value='" + $stateParams.cat + "' name='recordCat' />"));
                 angular.forEach(response.data, function (value, key) {
                     $scope.fields.push($sce.trustAsHtml(createElement(value)));
@@ -337,7 +335,7 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     angular.forEach(response.data, function (value, key) {
-                        console.log(value.field_id + ' : ' + value.value + '-------' + key);
+                        //console.log(value.field_id + ' : ' + value.value + '-------' + key);
                         modelname = value.field_id;
                         if (!$scope.$$phase) {
                             $timeout(function () {
@@ -369,7 +367,7 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/get-records-details',
                 params: {id: $stateParams.id, userId: $scope.userId}
             }).then(function successCallback(response) {
-                console.log(response.data);
+                //console.log(response.data);
                 $scope.records = response.data;
                 //$ionicLoading.hide();
             }, function errorCallback(response) {
@@ -384,7 +382,7 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/get-record-details',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
-                console.log(response);
+                //console.log(response);
                 $scope.recordDetails = response.data.recordsDetails;
                 $scope.category = response.data.record;
                 //$ionicLoading.hide();
@@ -393,7 +391,7 @@ angular.module('your_app_name.controllers', [])
             });
             //DELETE Modal
             $scope.delete = function (id) {
-                console.log(id);
+                //console.log(id);
                 //$ionicLoading.show({ template: 'Loading...' });
                 $http({
                     method: 'POST',
@@ -401,7 +399,7 @@ angular.module('your_app_name.controllers', [])
                     params: {id: id}
                 }).then(function successCallback(response) {
                     //$ionicLoading.hide();
-                    console.log(response);
+                    //console.log(response);
                     $state.go('app.category-detail');
                 }, function errorCallback(e) {
                     console.log(e);
