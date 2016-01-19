@@ -13,10 +13,9 @@
     </div>
     <ion-content>
         <div class="fltr-mesg"> &nbsp;</div>
-        <div class="mediascreen" id="subscribersDiv">
-            <img ng-src="img/profile.jpg"/>
-            <div class="media-sview" id="myPublisherDiv"></div>
-
+        <div class="mediascreen" >
+            <iframe ng-src="{{trustSrc(oToken)}}" >
+            </iframe>
         </div>
 
         <div class="ctab commontab mt0">

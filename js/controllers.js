@@ -714,7 +714,7 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams) {
+        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce) {
             $scope.appId = $stateParams.id;
             $scope.userId = get('id');
             $http({
@@ -725,26 +725,14 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
-                $scope.oToken = response.data.oToken;
-                var apiKey = '45463682';
-                var sessionId = $scope.app[0].appointments.opentok_session_id;
-                var token = $scope.oToken;
-                var session = OT.initSession(apiKey, sessionId);
-                session.on({
-                    streamCreated: function (event) {
-                        session.subscribe(event.stream, 'subscribersDiv', {insertMode: 'append'});
-                    }
-                });
-                session.connect(token, function (error) {
-                    if (error) {
-                        console.log(error.message);
-                    } else {
-                        session.publish('myPublisherDiv', {width: 130, height: 110});
-                    }
-                });
+                $scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
+
+
             }, function errorCallback(e) {
                 console.log(e);
             });
-
+            $scope.trustSrc = function (src) {
+                return $sce.trustAsResourceUrl(src);
+            }
         })
        ;
