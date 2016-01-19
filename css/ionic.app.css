@@ -2899,7 +2899,8 @@ a.subdued:last-child {
     -webkit-transition: all cubic-bezier(.36, .66, .04, 1) 500ms;
     transition: all cubic-bezier(.36, .66, .04, 1) 500ms;
     position: absolute;
-    bottom: 0;
+    top: 0;
+	bottom:0; overflow:auto;
     left: 0;
     right: 0;
     width: 100%;
