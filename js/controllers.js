@@ -72,7 +72,7 @@ angular.module('your_app_name.controllers', [])
             $scope.user.phone = '';
             $scope.user.password = '';
             $scope.doSignUp = function () {
-                var data = "name="+$scope.user.name+"&email="+$scope.user.email+"&phone="+$scope.user.phone+"&password="+$scope.user.password;
+                var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
                 //var data = new FormData(jQuery("#signup")[0]);
                 $.ajax({
                     type: 'GET',
@@ -225,7 +225,7 @@ angular.module('your_app_name.controllers', [])
                 // Show the action sheet
                 var hideSheet = $ionicActionSheet.show({
                     //Here you can add some more buttons
-                    buttons:  $scope.cats,
+                    buttons: $scope.cats,
                     destructiveText: 'Remove Ads',
                     titleText: 'Choose the ad to show - Interstitial only works in iPad',
                     cancelText: 'Cancel',
@@ -256,8 +256,8 @@ angular.module('your_app_name.controllers', [])
 
 //bring specific category providers
         .controller('CategoryListCtrl', function ($scope, $http, $stateParams, $rootScope) {
-            if (get('id') != null){                
-            $rootScope.userLogged = 1;
+            if (get('id') != null) {
+                $rootScope.userLogged = 1;
             }
             //console.log($rootScope.userLogged);
             $scope.category_sources = [];
@@ -459,7 +459,7 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
             $scope.vSch = [];
             $scope.schV = [];
             $scope.cSch = [];
@@ -497,7 +497,7 @@ angular.module('your_app_name.controllers', [])
                         url: domain + 'doctors/get-doctors-availability',
                         params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        console.log(responseData.data.slots);
+                        //console.log(responseData.data.slots);
                         //$ionicLoading.hide();
                         $scope.vSch[key] = responseData.data.slots;
                         $scope.schV[key] = supsassId;
@@ -562,7 +562,7 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                 });
             };
-            $scope.getFirstSlots = function(supsassId, key){
+            $scope.getFirstSlots = function (supsassId, key) {
                 $http({
                     method: 'GET',
                     url: domain + 'doctors/get-doctors-availability',
@@ -723,8 +723,23 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
-                $scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
-
+                //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
+                var apiKey = '45463682';
+                var sessionId = response.data.app[0].appointments.opentok_session_id;
+                var token = response.data.oToken;
+                var session = OT.initSession(apiKey, sessionId);
+                session.on({
+                    streamCreated: function (event) {
+                        session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+                    }
+                });
+                session.connect(token, function (error) {
+                    if (error) {
+                        console.log(error.message);
+                    } else {
+                        session.publish('myPublisherDiv', {width: "30%", height: "30%"});
+                    }
+                });
 
             }, function errorCallback(e) {
                 console.log(e);
@@ -733,4 +748,4 @@ angular.module('your_app_name.controllers', [])
                 return $sce.trustAsResourceUrl(src);
             }
         })
-       ;
+        ;

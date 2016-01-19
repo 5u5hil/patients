@@ -96,7 +96,7 @@
                                 <ion-tabs class="tabs-positive tabs-icon-top">
                                     <div ng-repeat="serv in services">
                                         <ion-tab  title="{{videoProd.mode}} <br>INR {{videoProd.price}}" ng-if="serv == 1" >
-                                            <div class="tabcontainer"> 
+                                            <div class="tabcontainer minh350"> 
                                                 <ul class="clist">
                                                     <li>{{videoProd.desc}}</li>
                                                     <li ng-repeat="vInc in videoInc track by $index">{{vInc.mode}}, {{vInc.desc}},
@@ -114,12 +114,11 @@
                                                         </li>
                                                     </ul>	
                                                     <div class="sche-date">
-                                                        <div class="leftarrow" ng-click="getFirstSlots(vs.supersaas_id, $index)"><i class="ion-android-arrow-back"></i></div> 
+                                                        <div class="leftarrow" ng-click="getFirstSlots(vs.supersaas_id, key)"><i class="icon ion-arrow-left-c"></i></div> 
                                                         <input type="date" ng-model="schdate" />
-                                                        <input type="text" ng-model="nextdate" value="{{nextdate|datetime1}}"/>
-                                                        <div class="rightarrow" ng-click="getNextSlots(schdate, vs.supersaas_id, $index)"><i class="ion-android-arrow-forward"></i></div>
+                                                        <div class="rightarrow" ng-click="getNextSlots(schdate, vs.supersaas_id, key)"><i class="icon ion-arrow-right-c"></i>></div>
                                                     </div>
-                                                    <ul class="timesheet" ng-if="schV[$index] == vs.supersaas_id" ng-repeat="(key, slot) in vSch" ng-model="vSch">
+                                                    <ul class="timesheet" ng-if="schV[$index] == vs.supersaas_id" ng-repeat="(key, slot) in vSch">
                                                         <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" > 
                                                             <span ng-repeat="(tk, tv) in slt" ng-model="timeslot" ng-click="bookSlot(tv[0], vs.supersaas_id)" ng-if="tk == 'start'">
                                                                {{tv[0]| time}}
@@ -136,7 +135,7 @@
                                         </ion-tab>
                                         <!-- clinic -->
                                         <ion-tab  title="{{clinicProd.mode}} <br>INR {{clinicProd.price}}" ng-if="serv == 3">
-                                            <div class="tabcontainer"> 
+                                            <div class="tabcontainer minh350"> 
                                                 <ul class="clist">
                                                     <li>{{clinicProd.desc}}</li>
                                                     <li ng-repeat="cInc in clinicInc track by $index">{{cInc.mode}}, {{cInc.desc}},
@@ -181,7 +180,7 @@
                                         <!-- End clinic -->
                                         <!-- Home -->
                                         <ion-tab  title="{{homeProd.mode}} <br>INR {{homeProd.price}}" ng-if="serv == 4">
-                                            <div class="tabcontainer">  
+                                            <div class="tabcontainer minh350">  
                                                 <ul class="clist">
                                                     <li>{{homeProd.desc}}</li>
                                                     <li ng-repeat="hInc in homeInc track by $index">{{hInc.mode}}, {{hInc.desc}},
