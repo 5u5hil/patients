@@ -8588,7 +8588,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
               z-index: 9;
               margin-top: 45px; box-shadow:0 0 3px rgba(0,0,0,0.5);
 }
-.profile-card{margin-top: 150px;}
+.profile-card{margin-top: 100px;}
 .profile-card .item-body p{margin-top:5px;}
 .profile-card .item-body{padding:5px;}
 
