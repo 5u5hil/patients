@@ -2915,7 +2915,7 @@ a.subdued:last-child {
     z-index: 11;
     overflow: hidden; }
 .action-sheet .button {
-    display: block;
+    display: block; text-align:center !important;
     padding: 1px;
     width: 100%;
     border-radius: 0;
