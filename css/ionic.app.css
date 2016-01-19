@@ -2900,7 +2900,9 @@ a.subdued:last-child {
     transition: all cubic-bezier(.36, .66, .04, 1) 500ms;
     position: absolute;
     top: 0;
-	bottom:0; overflow:auto;
+	bottom:0; 
+	overflow-x:hidden;
+	overflow-y:auto;
     left: 0;
     right: 0;
     width: 100%;
@@ -4650,7 +4652,7 @@ ion-tabs.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs.tabs-color-a
     position: relative;
     z-index: 2;
     display: block;
-    margin: -1px;
+    /* margin: -1px; */
     padding: 14px;
     border-width: 1px;
     border-style: solid;
