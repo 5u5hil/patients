@@ -8571,7 +8571,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 .profile .tabcontainer,.profile .tabcontainer.pane{ position:relative !important;}
 
 .profile .tabs{height:90px; position:relative;}
-.profile .tabs:first-child{position:absolute;}
+.profile .tabs:first-child{position:static;}
 
 .profile  .tab-item{padding-top:5px;}
 .profile .tab-title{    font-size: 14px;
@@ -8589,7 +8589,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 
 /* === schedule == */
 .schedule{float:left; width:100%;}
-.profile  .schedule .tabs{height:50px;}
+.profile  .schedule .tabs{height:50px !important;}
 .clist{    list-style: square;
            margin: 0 0 20px 20px;}
 .profile  .schedule  .tabcontainer{overflow:auto; padding-bottom:10px;}
@@ -8712,6 +8712,7 @@ input.custominput{width: 100%;
              margin-top: 4px;}
 .scroll-content{overflow:auto !important;}
 .minh350{height:350px !important;}
+.top50{top:50px !important;}
 
 
 
