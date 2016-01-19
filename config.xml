@@ -3,7 +3,7 @@
  
     <name>Doctrs</name>
     <preference name="orientation" value="portrait" />
-    <preference name="fullscreen" value="true" />
+    <preference name="fullscreen" value="false" />
     
     <gap:platform name="ios" />
     <gap:platform name="android" />
