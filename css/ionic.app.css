@@ -2921,7 +2921,7 @@ a.subdued:last-child {
     padding: 1px;
     width: 100%;
     border-radius: 0;
-    border-color: #d1d3d6;
+    border-color: #d1d3d6 !important;
     background-color: transparent;
     color: #007aff;
     font-size: 21px; }
