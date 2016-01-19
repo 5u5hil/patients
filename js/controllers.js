@@ -723,8 +723,8 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
-                //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
-                var apiKey = '45463682';
+                $scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
+                /*var apiKey = '45463682';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 var session = OT.initSession(apiKey, sessionId);
@@ -739,7 +739,7 @@ angular.module('your_app_name.controllers', [])
                     } else {
                         session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
-                });
+                });*/
 
             }, function errorCallback(e) {
                 console.log(e);
