@@ -46,7 +46,7 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="UIWebViewBounce" value="false" />
     
-    <gap:plugin name="com.tokbox.cordova.opentok" spec="1.0.3" source="pgb" />
+    <plugin name="com.tokbox.cordova.opentok" spec="1.0.3" source="pgb" />
     <gap:plugin name="org.apache.cordova.splashscreen" source="npm" />
     <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />
     <gap:plugin name="org.apache.cordova.file" source="npm" />
