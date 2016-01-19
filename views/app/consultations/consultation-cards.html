@@ -26,21 +26,21 @@
                             <div class="card-detail txt-left">
                                 <p><strong>Mr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                     <span ng-repeat="spec in doc.specializations">
-                                            {{spec.specialization}} , 
+                                            {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                         </span></p>
                             </div>
                             <div class="row txt-left">
                                 <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}} Years of Experience</p></div>	
                                 <div class="col"><p><strong>Qualification</strong><br/>
-                                        <span ng-repeat="qual in doc.qualifications">{{qual.qualification}} ,</span></p></div>	
+                                        <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span></p></div>	
                             </div>
                             <div class="row txt-left">
                                 <div class="col"><p><strong>Languages</strong><br/><span ng-repeat="lang in doc.languages">
-                                            {{lang.language}} ,
+                                            {{lang.language}}{{$last==true? '': ',&nbsp;'}}
                                         </span></p></div>	
                                 <div class="col"><p><strong>Focus Area</strong><br/>
                                         <span ng-repeat="focus in doc.focuses">
-                                            {{focus.focus}} ,
+                                            {{focus.focus}}{{$last==true? '': ',&nbsp;'}}
                                         </span></p></div>	
                             </div>
                             <div class="clr"></div>

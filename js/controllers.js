@@ -461,7 +461,7 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
+         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
             $scope.vSch = [];
             $scope.schV = [];
             $scope.cSch = [];
@@ -470,7 +470,6 @@ angular.module('your_app_name.controllers', [])
             $scope.schH = [];
             $scope.bookingSlot = '';
             $scope.supId = '';
-            $scope.schdate = new Date('YYYY-MM-DD');
             $http({
                 method: 'GET',
                 url: domain + 'doctors/get-details',
@@ -494,30 +493,33 @@ angular.module('your_app_name.controllers', [])
                 //$ionicLoading.hide();
                 angular.forEach($scope.videoSch, function (value, key) {
                     var supsassId = value.supersaas_id
-                    console.log(supsassId);
+                    //console.log(supsassId);
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId}
+                        params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        console.log(responseData.data);
+                        console.log(responseData.data.slots);
                         //$ionicLoading.hide();
                         $scope.vSch[key] = responseData.data.slots;
                         $scope.schV[key] = supsassId;
+                        $scope.schdate = new Date(responseData.data.lastdate);
+                        $scope.nextdate = new Date(responseData.data.lastdate);
                     }, function errorCallback(response) {
                         console.log(response);
                     });
+
+                    //console.log($scope.vSch);
                 });
                 //console.log($scope.videoSch);
                 angular.forEach($scope.clinicSch, function (value, key) {
                     var supsassId = value.supersaas_id
-                    console.log(supsassId);
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId}
+                        params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        console.log(responseData.data);
+                        //console.log(responseData.data);
                         //$ionicLoading.hide();
                         $scope.cSch[key] = responseData.data.slots;
                         $scope.schC[key] = supsassId;
@@ -527,13 +529,12 @@ angular.module('your_app_name.controllers', [])
                 });
                 angular.forEach($scope.homeSch, function (value, key) {
                     var supsassId = value.supersaas_id
-                    console.log(supsassId);
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId}
+                        params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        console.log(responseData.data);
+                        //console.log(responseData.data);
                         //$ionicLoading.hide();
                         $scope.hSch[key] = responseData.data.slots;
                         $scope.schH[key] = supsassId;
@@ -541,22 +542,42 @@ angular.module('your_app_name.controllers', [])
                         console.log(response);
                     });
                 });
+                //$scope.$digest();
                 //console.log(response);
             });
-            $scope.getNextSlots = function (nextDate, supsassId) {
-                //console.log(nextDate + '=======' + supsassId);
+            $scope.getNextSlots = function (nextDate, supsassId, key) {
+                console.log(nextDate + '=======' + supsassId + '=====' + key);
                 //$ionicLoading.show({template: 'Loading...'});
-                /*$http({
-                 method: 'GET',
-                 url: domain + 'doctors/get-doctors-availability',
-                 params: {id: supsassId}
-                 }).then(function successCallback(response) {
-                 console.log(response);
-                 //$ionicLoading.hide();
-                 
-                 }, function errorCallback(response) {
-                 console.log(response);
-                 });*/
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctors/get-doctors-availability',
+                    //cache: false,
+                    params: {id: supsassId, from: nextDate}
+                }).then(function successCallback(responseData) {
+                    console.log(responseData);
+                    //$ionicLoading.hide();
+                    $scope.vSch[key] = responseData.data.slots;
+                    $scope.schdate = new Date(responseData.data.lastdate);
+                    $scope.nextdate = new Date(responseData.data.lastdate);
+                    //$scope.$digest();
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            };
+            $scope.getFirstSlots = function(supsassId, key){
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctors/get-doctors-availability',
+                    params: {id: supsassId, from: new Date()}
+                }).then(function successCallback(responseData) {
+                    console.log(responseData);
+                    //$ionicLoading.hide();
+                    $scope.vSch[key] = responseData.data.slots;
+                    $scope.schdate = new Date(responseData.data.lastdate);
+                    $scope.nextdate = new Date(responseData.data.lastdate);
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
             };
             $scope.bookSlot = function (timeslot, supid) {
                 console.log(timeslot + '===' + supid);
@@ -564,7 +585,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId) {
-                console.log($scope.bookingSlot);
+                //console.log($scope.bookingSlot);
                 if ($scope.bookingSlot) {
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('slot', $scope.bookingSlot);
