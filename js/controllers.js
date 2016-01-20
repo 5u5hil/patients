@@ -615,7 +615,7 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.bookSlot = function (starttime,endtime, supid) {
-                console.log(timeslot + '===' + supid);
+                console.log(starttime + '===' + supid);
                 $scope.bookingStart = starttime;
                 $scope.bookingEnd = endtime;
                 $scope.supId = supid;
@@ -664,8 +664,8 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.payNow = function () {
-                alert($location.absUrl() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
-                /*$scope.appUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
+                console.log($location.url() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
+                $scope.appUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
                 $scope.userId = get('id');
                 console.log($scope.prodid + '--' + $scope.userId);
                 $http({
@@ -691,7 +691,7 @@ angular.module('your_app_name.controllers', [])
                             });
                 }, function errorCallback(response) {
                     console.log(response);
-                });*/
+                });
             };
         })
 
