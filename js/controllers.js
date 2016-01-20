@@ -459,7 +459,7 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter) {
             $scope.vSch = [];
             $scope.schV = [];
             $scope.cSch = [];
@@ -490,21 +490,32 @@ angular.module('your_app_name.controllers', [])
                 $scope.services = response.data.services;
                 //$ionicLoading.hide();
                 angular.forEach($scope.videoSch, function (value, key) {
-                    var supsassId = value.supersaas_id
+                    var supsassId = value.supersaas_id;
+                    var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                     //console.log(supsassId);
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId, from: new Date()}
+                        params: {id: supsassId, from: from}
                     }).then(function successCallback(responseData) {
-                        //console.log(responseData.data.slots);
                         //$ionicLoading.hide();
                         $scope.vSch[key] = responseData.data.slots;
                         $scope.schV[key] = supsassId;
-                        $scope.schdate = new Date(responseData.data.lastdate);
-                        $scope.nextdate = new Date(responseData.data.lastdate);
+                        if (responseData.data.lastdate == '')
+                        {
+                            $scope.schdate = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate = tomorrow;
+
+                        } else {
+                            $scope.schdate = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
                     }, function errorCallback(response) {
-                        console.log(response);
+                        console.log(response.responseText);
                     });
 
                     //console.log($scope.vSch);
@@ -521,6 +532,19 @@ angular.module('your_app_name.controllers', [])
                         //$ionicLoading.hide();
                         $scope.cSch[key] = responseData.data.slots;
                         $scope.schC[key] = supsassId;
+                        if (responseData.data.lastdate == '')
+                        {
+                            $scope.schCdate = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextCdate = tomorrow;
+
+                        } else {
+                            $scope.schCdate = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextCdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -545,34 +569,47 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.getNextSlots = function (nextDate, supsassId, key) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
+                var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
                 //$ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
                     url: domain + 'doctors/get-doctors-availability',
                     //cache: false,
-                    params: {id: supsassId, from: nextDate}
+                    params: {id: supsassId, from: from}
                 }).then(function successCallback(responseData) {
-                    console.log(responseData);
+                    console.log(responseData.data.slots);
                     //$ionicLoading.hide();
                     $scope.vSch[key] = responseData.data.slots;
-                    $scope.schdate = new Date(responseData.data.lastdate);
-                    $scope.nextdate = new Date(responseData.data.lastdate);
+                    if (responseData.data.lastdate == '')
+                    {
+                        $scope.schdate = new Date();
+                        $scope.nextdate = new Date();
+
+                    } else {
+                        $scope.schdate = new Date(responseData.data.lastdate);
+                        var tomorrow = new Date(responseData.data.lastdate);
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        $scope.nextdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                    }
                     //$scope.$digest();
                 }, function errorCallback(response) {
                     console.log(response);
                 });
             };
             $scope.getFirstSlots = function (supsassId, key) {
+                var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 $http({
                     method: 'GET',
                     url: domain + 'doctors/get-doctors-availability',
-                    params: {id: supsassId, from: new Date()}
+                    params: {id: supsassId, from: from}
                 }).then(function successCallback(responseData) {
                     console.log(responseData);
                     //$ionicLoading.hide();
                     $scope.vSch[key] = responseData.data.slots;
                     $scope.schdate = new Date(responseData.data.lastdate);
-                    $scope.nextdate = new Date(responseData.data.lastdate);
+                    var tomorrow = new Date(responseData.data.lastdate);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    $scope.nextdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                 }, function errorCallback(response) {
                     console.log(response);
                 });

@@ -114,15 +114,15 @@
                                                         </li>
                                                     </ul>	
                                                     <div class="sche-date">
-                                                        <div class="leftarrow" ng-click="getFirstSlots(vs.supersaas_id, key)"><i class="icon ion-arrow-left-c"></i></div> 
-                                                        <input type="date" ng-model="schdate" />
-                                                        <div class="rightarrow" ng-click="getNextSlots(schdate, vs.supersaas_id, key)"><i class="icon ion-arrow-right-c"></i>></div>
+                                                        <div class="leftarrow" ng-click="getFirstSlots(vs.supersaas_id, $index)"><i class="icon ion-arrow-left-c"></i></div> 
+                                                        <input type="date" ng-model="schdate" value="schdate|dateFormat1"/>
+                                                        <input type="hidden" ng-model="nextdate" value="nextdate|datetime"/>
+                                                        <div class="rightarrow" ng-click="getNextSlots(nextdate, vs.supersaas_id, $index)"><i class="icon ion-arrow-right-c"></i></div>
                                                     </div>
-                                                    <ul class="timesheet" ng-if="schV[$index] == vs.supersaas_id" ng-repeat="(key, slot) in vSch">
-                                                        <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" > 
-                                                            <span ng-repeat="(tk, tv) in slt" ng-model="timeslot" ng-click="bookSlot(tv[0], vs.supersaas_id)" ng-if="tk == 'start'">
-                                                               {{tv[0]| time}}
-                                                            </span>                                                            
+                                                    {{vSch[$index]==''? 'No slots available':''}}
+                                                    <ul class="timesheet" ng-if="schV[$index] == vs.supersaas_id" ng-repeat="slot in vSch">
+                                                        <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate']<nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], vs.supersaas_id)"s> 
+                                                            {{slt['start'][0]|time}}                                                           
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -157,18 +157,17 @@
                                                     </ul>	
                                                     <div class="sche-date">
                                                         <div class="leftarrow"><i class="ion-android-arrow-back"></i></div> 
-                                                        <input type="date" class="" value="25/1/2016" />
+                                                        <input type="date" ng-model="schCdate" value="schCdate|dateFormat1"/>
+                                                        <input type="hidden" ng-model="nextCdate" value="nextCdate|datetime"/>
                                                         <div class="rightarrow"><i class="ion-android-arrow-forward"></i></div> 
                                                     </div>
-                                                    <ul class="timesheet" ng-if="schH[$index] == cs.supersaas_id" ng-repeat="(key, slot) in cSch">
-                                                        <li ng-repeat="(k, slt) in slot track by $index" > 
-                                                            <!--button class="button button-small" ng-model="timeslot" ng-click="bookTimeSlot(timeslot)" value=""> </button>--->
-                                                            <span ng-repeat="(tk, tv) in slt" ng-model="timeslot" ng-click="bookSlot(tv[0], vs.supersaas_id)" ng-if="tk == 'start'">
-                                                               {{tv[0]| time}}
-                                                                <input type="hidden" ng-model="schDate" ng-value="tv[0]" />
-                                                            </span>                                                              
+                                                    {{schH[$index]==''? 'No slots available':''}}
+                                                    <ul class="timesheet" ng-if="schH[$index] == cs.supersaas_id[$index]" ng-repeat="slot in cSch track by $index">
+                                                        <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate']<nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], cs.supersaas_id)"s> 
+                                                            {{slt['start'][0]|time}}                                                           
                                                         </li>
                                                     </ul>
+
                                                 </div>
                                                 <div class="section-footer">
                                                     <a class="button button-full button-positive" ng-click="bookAppointment(clinicProd.id)">Proceed

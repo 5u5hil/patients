@@ -8623,6 +8623,8 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
     margin: 4px 2px;
     width: 15%;
     box-sizing: border-box;
+    padding: 5px 3px;
+    text-align:center;
     border: 1px #ccc solid; font-size:12px; cursor:pointer;
 }
 .timesheet li.active{background:#f00; color:#fff;}
