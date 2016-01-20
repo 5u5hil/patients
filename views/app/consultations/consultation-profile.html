@@ -121,8 +121,8 @@
                                                     </div>
                                                     {{vSch[$index]==''? 'No slots available':''}}
                                                     <ul class="timesheet" ng-if="schV[$index] == vs.supersaas_id" ng-repeat="slot in vSch">
-                                                        <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate']<nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], vs.supersaas_id)"s> 
-                                                            {{slt['start'][0]|time}}                                                           
+                                                        <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate']<nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0],slt['finish'][0], vs.supersaas_id)"s> 
+                                                            {{slt['start'][0]|time}} - {{slt['finish'][0]|time}}                                                          
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -164,7 +164,7 @@
                                                     {{schH[$index]==''? 'No slots available':''}}
                                                     <ul class="timesheet" ng-if="schH[$index] == cs.supersaas_id[$index]" ng-repeat="slot in cSch track by $index">
                                                         <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate']<nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], cs.supersaas_id)"s> 
-                                                            {{slt['start'][0]|time}}                                                           
+                                                            {{slt['start'][0]|time}}                                                     
                                                         </li>
                                                     </ul>
 

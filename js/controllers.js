@@ -614,20 +614,23 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                 });
             };
-            $scope.bookSlot = function (timeslot, supid) {
+            $scope.bookSlot = function (starttime,endtime, supid) {
                 console.log(timeslot + '===' + supid);
-                $scope.bookingSlot = timeslot;
+                $scope.bookingStart = starttime;
+                $scope.bookingEnd = endtime;
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId) {
                 //console.log($scope.bookingSlot);
-                if ($scope.bookingSlot) {
+                if ($scope.bookingStart) {
                     window.localStorage.setItem('supid', $scope.supId);
-                    window.localStorage.setItem('slot', $scope.bookingSlot);
+                    window.localStorage.setItem('startSlot', $scope.bookingStart);
+                    window.localStorage.setItem('endSlot', $scope.bookingEnd);
                     window.localStorage.setItem('prodid', prodId);
                     window.localStorage.setItem('url', 'app.payment');
                     $rootScope.supid = $scope.supId;
-                    $rootScope.slot = $scope.bookingSlot;
+                    $rootScope.startSlot = $scope.bookingStart;
+                    $rootScope.endSlot = $scope.bookingEnd;
                     $rootScope.prodid = prodId;
                     $rootScope.url = 'app.payment';
                     $rootScope.$digest;
@@ -643,7 +646,8 @@ angular.module('your_app_name.controllers', [])
 
         .controller('PaymentCtrl', function ($scope, $http, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $cordovaInAppBrowser) {
             $scope.supid = window.localStorage.getItem('supid');
-            $scope.slot = window.localStorage.getItem('slot');
+            $scope.startSlot = window.localStorage.getItem('startSlot');
+            $scope.endSlot = window.localStorage.getItem('endSlot');
             $scope.prodid = window.localStorage.getItem('prodid');
             //console.log(supid + '--' + slot + '---' + prodid);
             $http({
@@ -660,7 +664,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.payNow = function () {
-                //console.log($location.absUrl() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
+                console.log($location.absUrl() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
                 $scope.appUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
                 $scope.userId = get('id');
                 console.log($scope.prodid + '--' + $scope.userId);
@@ -692,11 +696,12 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('SuccessCtrl', function ($scope, $http, $stateParams) {
-            $scope.slot = window.localStorage.getItem('slot');
+            $scope.startSlot = window.localStorage.getItem('startSlot');
+            $scope.endSlot = window.localStorage.getItem('endSlot');
             $http({
                 method: 'GET',
                 url: domain + 'orders/get-order-details',
-                params: {id: $stateParams.id, serviceId: $stateParams.serviceId, slot: $scope.slot}
+                params: {id: $stateParams.id, serviceId: $stateParams.serviceId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
             }).then(function successCallback(responseData) {
                 console.log(responseData.data);
                 //$ionicLoading.hide();
