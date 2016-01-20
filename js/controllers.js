@@ -614,7 +614,7 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                 });
             };
-            $scope.bookSlot = function (starttime,endtime, supid) {
+            $scope.bookSlot = function (starttime, endtime, supid) {
                 console.log(starttime + '===' + supid);
                 $scope.bookingStart = starttime;
                 $scope.bookingEnd = endtime;
@@ -689,6 +689,12 @@ angular.module('your_app_name.controllers', [])
                             .catch(function (e) {
                                 // error
                             });
+                    req.addEventListener('$cordovaInAppBrowser:loadstart', function () {
+                        alert(event.url);
+                    });
+                    req.addEventListener('$cordovaInAppBrowser:exit', function () {
+                        alert(event.url);
+                    });
                 }, function errorCallback(response) {
                     console.log(response);
                 });
