@@ -664,8 +664,8 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.payNow = function () {
-                console.log($location.absUrl() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
-                $scope.appUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
+                alert($location.absUrl() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
+                /*$scope.appUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
                 $scope.userId = get('id');
                 console.log($scope.prodid + '--' + $scope.userId);
                 $http({
@@ -691,7 +691,7 @@ angular.module('your_app_name.controllers', [])
                             });
                 }, function errorCallback(response) {
                     console.log(response);
-                });
+                });*/
             };
         })
 
