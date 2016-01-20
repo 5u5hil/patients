@@ -8532,6 +8532,9 @@ a.posts-list{text-decoration:none;}
 
 .footerbar a{width:33.33%; padding:0; border:none; display: block; float:left; text-align:center;}
 .footerbar a:first-child,.footerbar a:nth-child(2){border-right:1px #ccc solid;}
+
+
+
 .addform .item.item-checkbox{padding: 10px 10px 10px 60px;     font-size: 14px;}
 .ctab{ /* margin-top:50px;  */}
 .ctab .tabs{    border-top: 1px #ddd solid;   border-bottom: 1px #ddd solid;  background-color: #f5f5f5; background-image:none;}
