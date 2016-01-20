@@ -2993,7 +2993,7 @@ a.subdued:last-child {
     border-radius: 0;
     background-color: #fafafa; }
 .platform-android .action-sheet-cancel {
-    display: none; }
+   /*  display: none;  */ margin:1px 0 45px 0;}
 .platform-android .action-sheet-has-icons .button {
     padding-left: 56px; }
 
