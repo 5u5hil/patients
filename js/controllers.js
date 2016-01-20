@@ -664,10 +664,10 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.payNow = function () {
-                console.log($location.url() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
+                alert($location.url() + '--' + $location.protocol() + '---' + $location.host() + '---' + $location.port());
                 $scope.appUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port();
                 $scope.userId = get('id');
-                console.log($scope.prodid + '--' + $scope.userId);
+                //console.log($scope.prodid + '--' + $scope.userId);
                 $http({
                     method: 'GET',
                     url: domain + 'buy/buy-individual',
