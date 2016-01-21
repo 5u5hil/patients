@@ -664,26 +664,25 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.payNow = function () {
-                alert($location.absUrl());
-                var rurl = $location.absUrl().split('#');
-                alert(rurl);
+                $scope.startSlot = window.localStorage.getItem('startSlot');
+                $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 //console.log($scope.prodid + '--' + $scope.userId);
                 $http({
                     method: 'GET',
                     url: domain + 'buy/buy-individual',
-                    params: {prodId: $scope.prodid, userId: $scope.userId, appUrl: $scope.appUrl}
+                    params: {prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
-                    console.log(response.data);
+                    console.log(response);
                     //$ionicLoading.hide();
                     var href = response.data; //'http://infinisystem.com/';
                     var options = {
-                        location: 'no',
+                        location: 'yes',
                         clearcache: 'yes',
-                        toolbar: 'no'
+                        toolbar: 'yes'
                     };
-                    var req = $cordovaInAppBrowser.open(href, '_self', options)
+                    $cordovaInAppBrowser.open(href, '_self', options)
                             .then(function (e) {
                                 console.log('successfully load');
                                 // success
@@ -691,12 +690,6 @@ angular.module('your_app_name.controllers', [])
                             .catch(function (e) {
                                 // error
                             });
-                    req.addEventListener('$cordovaInAppBrowser:loadstart', function () {
-                        alert(event.url);
-                    });
-                    req.addEventListener('$cordovaInAppBrowser:exit', function () {
-                        alert(event.url);
-                    });
                 }, function errorCallback(response) {
                     console.log(response);
                 });
