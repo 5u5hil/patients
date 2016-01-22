@@ -268,6 +268,16 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+					  .state('app.thankyou', {
+						  url: "/thankyou",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/thankyou.html",
+                                controller: 'ThankyouCtrl'
+                            }
+                        }
+                    })
+					
 
                     .state('app.logout', {
                         url: "/logout",

@@ -359,6 +359,14 @@ angular.module('your_app_name.controllers', [])
             };
 
         })
+		
+		.controller('ThankyouCtrl', function($scope, $http, $stateParams) {
+	$scope.category_sources = [];
+	$scope.categoryId = $stateParams.categoryId;
+
+})
+		
+		
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
             $http({
