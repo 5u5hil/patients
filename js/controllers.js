@@ -1,4 +1,3 @@
-
 angular.module('your_app_name.controllers', [])
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
@@ -515,7 +514,39 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter,$ionicLoading,$timeout) {
+		  $scope.IsVisible = false;
+		
+		  
+		   
+		  
+		//$ionicLoading.show({ template: 'Loading...' });
+		$scope.counter = 100;
+			var stopped;
+		$scope.countdown = function() {
+		$scope.IsVisible = true;
+			stopped = $timeout(function() {
+			   console.log($scope.counter);
+			 $scope.counter--;   
+			 $scope.countdown();   
+			}, 1000);
+			if($scope.counter==0){
+			$scope.IsVisible = false;
+			$timeout.cancel(stopped);
+				}
+			};
+			
+		$scope.hidediv=function(){
+			$scope.IsVisible = false;
+			$timeout.cancel(stopped);
+			$scope.counter = 100;
+			}
+		
+			
+					
+		
+		
+		
             $scope.vSch = [];
             $scope.schV = [];
             $scope.schdate = [];
