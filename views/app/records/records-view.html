@@ -4,10 +4,7 @@
     </ion-nav-title>
 
     <div class="item item-divider mtop44" style="font-size: 18px; min-height: 45px; text-align:center;">
-    <select class="selectheader">
-		<option selected>Medication</option>
-      <option >Allergies</option>
-      <option>Immunization</option>
+    <select class="selectheader" ng-model="cat" ng-options="c as cat.categories.category for cat in category" ng-change="getRecords(cat.categories.id)">
     </select>
     </div>
     <div class="bar bar-subheader cbar divider-2" style="margin-top:45px;">
@@ -18,19 +15,18 @@
     </div>
 
     <ion-content>
-
         <div class="list recordview" >
             <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index">
                 <div  class="list card post-item">
                     <div class="post-content item item-text-wrap">
                         <div class="row pr-b10">
                             <div class="col" ng-repeat="detail in rec.record_metadata | limitTo:limit">
-                                <p><strong>{{detail.field_id | capitalize}}</strong><br/>
+                                <p><strong>{{detail.fields.field | capitalize}}</strong><br/>
                                     {{detail.value}}</p>
                             </div>	
                         </div>
                         <div class="post-actions row post-footer">
-                            <span>Created {{rec.created_at | date:'medium' }} by You</span>
+                            <span>Created {{rec.created_at | datetime3 }} by You</span>
                         </div>
 
                     </div>

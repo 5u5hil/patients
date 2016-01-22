@@ -59,6 +59,7 @@ angular.module('your_app_name.filters', [])
 
             };
         })
+        
         .filter('dateFormat2', function ($filter)
         {
             return function (input)
@@ -127,6 +128,21 @@ angular.module('your_app_name.filters', [])
 
                 var _date = $filter('date')(new Date(input),
                         'MM dd yyyy - HH:mm:ss');
+
+                return _date.toUpperCase();
+
+            };
+        })
+        .filter('datetime3', function ($filter)
+        {
+            return function (input)
+            {
+                if (input == null) {
+                    return "";
+                }
+
+                var _date = $filter('date')(new Date(input),
+                        'd MMM, yyyy - HH:mm a');
 
                 return _date.toUpperCase();
 

@@ -360,20 +360,25 @@ angular.module('your_app_name.controllers', [])
         .controller('RecordsViewCtrl', function ($scope, $http, $stateParams) {
             $scope.record = {recordId: ''};
             $scope.record.ids = [];
+            $scope.catId = $stateParams.id;
             $scope.limit = 4;
             $scope.userId = get('id');
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: domain + 'records/get-records-details',
                 params: {id: $stateParams.id, userId: $scope.userId}
             }).then(function successCallback(response) {
-                //console.log(response.data);
-                $scope.records = response.data;
+                console.log(response.data);
+                $scope.records = response.data.records;
+                $scope.category = response.data.category;
+                $scope.category.category = $stateParams.id;
                 //$ionicLoading.hide();
             }, function errorCallback(response) {
                 console.log(response);
             });
-
+            $scope.getRecords = function (cat) {
+                console.log(cat);
+            };
         })
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams) {
             $scope.recordId = $stateParams.id;
@@ -462,10 +467,15 @@ angular.module('your_app_name.controllers', [])
         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter) {
             $scope.vSch = [];
             $scope.schV = [];
+            $scope.schdate = [];
+            $scope.nextdate = [];
             $scope.cSch = [];
             $scope.schC = [];
+            $scope.schCdate = [];
+            $scope.nextCdate = [];
             $scope.hSch = [];
             $scope.schH = [];
+
             $scope.bookingSlot = '';
             $scope.supId = '';
             $http({
@@ -503,21 +513,21 @@ angular.module('your_app_name.controllers', [])
                         $scope.schV[key] = supsassId;
                         if (responseData.data.lastdate == '')
                         {
-                            $scope.schdate = new Date();
+                            $scope.schdate[key] = new Date();
                             var tomorrow = new Date();
                             tomorrow.setDate(tomorrow.getDate() + 1);
-                            $scope.nextdate = tomorrow;
+                            $scope.nextdate[key] = tomorrow;
 
                         } else {
-                            $scope.schdate = new Date(responseData.data.lastdate);
+                            $scope.schdate[key] = new Date(responseData.data.lastdate);
                             var tomorrow = new Date(responseData.data.lastdate);
                             tomorrow.setDate(tomorrow.getDate() + 1);
-                            $scope.nextdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                            $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                         }
+                        $rootScope.$digest;
                     }, function errorCallback(response) {
                         console.log(response.responseText);
                     });
-
                     //console.log($scope.vSch);
                 });
                 //console.log($scope.videoSch);
@@ -534,17 +544,18 @@ angular.module('your_app_name.controllers', [])
                         $scope.schC[key] = supsassId;
                         if (responseData.data.lastdate == '')
                         {
-                            $scope.schCdate = new Date();
+                            $scope.schCdate[key] = new Date();
                             var tomorrow = new Date();
                             tomorrow.setDate(tomorrow.getDate() + 1);
-                            $scope.nextCdate = tomorrow;
+                            $scope.nextCdate[key] = tomorrow;
 
                         } else {
-                            $scope.schCdate = new Date(responseData.data.lastdate);
+                            $scope.schCdate[key] = new Date(responseData.data.lastdate);
                             var tomorrow = new Date(responseData.data.lastdate);
                             tomorrow.setDate(tomorrow.getDate() + 1);
-                            $scope.nextCdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                            $scope.nextCdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                         }
+                        $rootScope.$digest;
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -560,6 +571,7 @@ angular.module('your_app_name.controllers', [])
                         //$ionicLoading.hide();
                         $scope.hSch[key] = responseData.data.slots;
                         $scope.schH[key] = supsassId;
+                        $rootScope.$digest;
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -567,7 +579,7 @@ angular.module('your_app_name.controllers', [])
                 //$scope.$digest();
                 //console.log(response);
             });
-            $scope.getNextSlots = function (nextDate, supsassId, key) {
+            $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
                 var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
                 //$ionicLoading.show({template: 'Loading...'});
@@ -578,20 +590,38 @@ angular.module('your_app_name.controllers', [])
                     params: {id: supsassId, from: from}
                 }).then(function successCallback(responseData) {
                     console.log(responseData.data.slots);
-                    //$ionicLoading.hide();
-                    $scope.vSch[key] = responseData.data.slots;
+                    //$ionicLoading.hide();                    
                     if (responseData.data.lastdate == '')
                     {
-                        $scope.schdate = new Date();
-                        $scope.nextdate = new Date();
+                        if (serv == 1) {
+                            $scope.vSch[key] = responseData.data.slots;
+                            $scope.schdate[key] = new Date();
+                            $scope.nextdate[key] = new Date();
+                            $rootScope.$digest;
+                        } else if (serv == 3) {
+                            $scope.cSch[key] = responseData.data.slots;
+                            $scope.schCdate[key] = new Date();
+                            $scope.nextCdate[key] = new Date();
+                            $rootScope.$digest;
+                        }
 
                     } else {
-                        $scope.schdate = new Date(responseData.data.lastdate);
-                        var tomorrow = new Date(responseData.data.lastdate);
-                        tomorrow.setDate(tomorrow.getDate() + 1);
-                        $scope.nextdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        if (serv == 1) {
+                            $scope.vSch[key] = responseData.data.slots;
+                            $scope.schdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                            $rootScope.$digest;
+                        } else if (serv == 3) {
+                            $scope.cSch[key] = responseData.data.slots;
+                            $scope.schCdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextCdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                            $rootScope.$digest;
+                        }
                     }
-                    //$scope.$digest();
                 }, function errorCallback(response) {
                     console.log(response);
                 });
@@ -644,7 +674,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PaymentCtrl', function ($scope, $http, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $cordovaInAppBrowser) {
+        .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $cordovaInAppBrowser) {
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
@@ -676,24 +706,47 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(response) {
                     console.log(response);
                     //$ionicLoading.hide();
-                    var href = response.data; //'http://infinisystem.com/';
-                    var options = {
-                        location: 'yes',
-                        clearcache: 'yes',
-                        toolbar: 'yes'
-                    };
-                    $cordovaInAppBrowser.open(href, '_self', options)
-                            .then(function (e) {
-                                console.log('successfully load');
-                                // success
-                            })
-                            .catch(function (e) {
-                                // error
-                            });
+                    $state.go('app.Gopay', {'link': response.data});
+                    /*var href = response.data; //'http://infinisystem.com/';
+                     var options = {
+                     location: 'yes',
+                     clearcache: 'yes',
+                     toolbar: 'yes'
+                     };
+                     $cordovaInAppBrowser.open(href, '_blank', options)
+                     .then(function (e) {
+                     $rootScope.$on('$cordovaInAppBrowser:loadstart', function (e, event) {
+                     console.log('start');
+                     });
+                     $rootScope.$on('$cordovaInAppBrowser:loadstop', function (e, event) {
+                     console.log('stopped');
+                     });
+                     // success
+                     })
+                     .catch(function (e) {
+                     // error
+                     });*/
                 }, function errorCallback(response) {
                     console.log(response);
                 });
             };
+        })
+
+        .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $cordovaInAppBrowser) {
+            console.log($stateParams.link);
+            $scope.link = $stateParams.link;
+            $scope.trustSrc = function (src) {
+                return $sce.trustAsResourceUrl(src);
+            };
+
+
+            $timeout(function () {
+                jQuery("iframe").css("height", jQuery(window).height());
+                console.log('huu' + jQuery(window).height());
+            }, 100);
+
+
+
         })
 
         .controller('SuccessCtrl', function ($scope, $http, $stateParams) {

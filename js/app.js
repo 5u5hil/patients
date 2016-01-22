@@ -238,7 +238,15 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-
+                    .state('app.Gopay', {
+                        url: "/gopay/{link:string}",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/go-payment.html",
+                                controller: 'GoPaymentCtrl'
+                            }
+                        }
+                    })
 
                     .state('app.success', {
                         url: "/success/{id:int}/{serviceId:int}",
