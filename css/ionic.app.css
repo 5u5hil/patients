@@ -5324,7 +5324,7 @@ a.item-content {
     margin: 20px 10px;
     border-radius: 2px;
     background-color: #fff; }
-
+.card.login-container{background-color:transparent !important;}
 .card {
     padding-top: 1px;
     padding-bottom: 1px;

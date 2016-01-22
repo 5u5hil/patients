@@ -24,6 +24,7 @@ angular.module('your_app_name', [
     'ngCordova',
     'slugifier',
     'ionic.contrib.ui.tinderCards',
+	'jett.ionic.filter.bar',
     'youtube-embed'
 ])
 
@@ -39,7 +40,7 @@ angular.module('your_app_name', [
                 if (window.StatusBar) {
                     StatusBar.styleDefault();
                 }
-
+				
                 PushNotificationsService.register();
             });
 

@@ -2,9 +2,9 @@
     <ion-nav-title>
         <span>Records</span>
     </ion-nav-title>
-    <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-android-search">
-        </button>
+   	 <ion-nav-buttons side="right">
+       <button class="button button-icon button-clear ion-android-search " ng-click="showFilterBar()">
+	   </button> 
     </ion-nav-buttons>
     <div class="bar bar-subheader cbar divider-2">
         <div class="row">
@@ -12,16 +12,34 @@
             <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
         </div>
     </div>
-    <ion-content>
-        <div class="fltr-mesg"> &nbsp;</div>
-        <div class="list cdetail-list">
-            <a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
-                <span class="title">{{cat.category}}</span>	
-                <span class="count">{{cat.count}}</span>	
-            </a>
-        </div>
+ <ion-content>
+	 <ion-content direction="y" scrollbar-y="false">
 
+    <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
+    </ion-refresher>
+
+	 <div ng-if="items !== undefined && !items.length" class="no-results">
+      <p>No Results</p>
+	  <div class="fltr-mesg"> &nbsp;</div>
+    </div>
+	
+	<ion-list>
+		<ion-item collection-repeat="item in items" >
+        <p>{{item.text}}</p>
+      </ion-item>
+	 </ion-list>
+
+  </ion-content>
+
+	<div class="list cdetail-list">
+		<a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
+			<span class="title">{{cat.category}}</span>	
+			<span class="count">{{cat.count}}</span>	
+		</a>
+		</div>
+  
     </ion-content>
+		
     <div class="footerbar">
         <a class="button" ui-sref="#"><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button" ui-sref="#"><i class="icon ion-android-share-alt" ></i> Share</a>
