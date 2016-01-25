@@ -104,12 +104,24 @@ angular.module('your_app_name', [
                         templateUrl: "views/auth/signup.html",
                         controller: 'SignupCtrl'
                     })
+                    .state('auth.check-otp', {
+                        url: '/check-otp',
+                        templateUrl: "views/auth/check-otp.html",
+                        controller: 'SignupCtrl'
+                    })
 
                     .state('auth.forgot-password', {
                         url: "/forgot-password",
                         templateUrl: "views/auth/forgot-password.html",
                         controller: 'ForgotPasswordCtrl'
                     })
+                    .state('auth.update-password', {
+                        url: "/update-password",
+                        templateUrl: "views/auth/update-password.html",
+                        controller: 'ForgotPasswordCtrl'
+                    })
+                    
+                    
 
                     .state('app', {
                         url: "/app",

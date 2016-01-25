@@ -77,37 +77,72 @@ angular.module('your_app_name.controllers', [])
             $scope.user.email = '';
             $scope.user.phone = '';
             $scope.user.password = '';
+
             $scope.doSignUp = function () {
                 var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
                 //var data = new FormData(jQuery("#signup")[0]);
                 $.ajax({
                     type: 'GET',
-                    url: domain + "register",
+                    url: domain + "check-otp",
                     data: data,
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        //console.log(response);
-                        if (angular.isObject(response)) {
-                            store(response);
-                            $rootScope.userLogged = 1;
-                            //if ($rootScope.url != '') {
-                            if (window.localStorage.getItem('url') != null) {
-                                $state.go(window.localStorage.getItem('url'));
-                            } else {
-                                $state.go('app.category-list');
-                            }
-                        } else {
-                            alert('Please fill all the details for signup');
-                        }
-                        $rootScope.$digest;
-                    },
-                    error: function (e) {
-                        console.log(e.responseText);
+
+                        window.localStorage.setItem('code', response.otpcode);
+                        store($scope.user);
+                        $state.go('auth.check-otp');
                     }
                 });
+
+
             };
+
+            //check OTP
+            $scope.checkOTP = function (otp) {
+                $scope.user = {};
+                $scope.user.name = window.localStorage.getItem('name');
+                $scope.user.email = window.localStorage.getItem('email');
+                $scope.user.phone = window.localStorage.getItem('phone');
+                $scope.user.password = window.localStorage.getItem('password');
+                var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
+                var code = window.localStorage.getItem('code');
+                console.log('data:---' + data);
+                // console.log(window.localStorage.getItem('code'));
+                if (parseInt(code) === parseInt(otp)) {
+
+                    //  alert('success');
+                    $.ajax({
+                        type: 'GET',
+                        url: domain + "register",
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            //console.log(response);
+                            if (angular.isObject(response)) {
+                                store(response);
+                                $rootScope.userLogged = 1;
+                                //if ($rootScope.url != '') {
+                                if (window.localStorage.getItem('url') != null) {
+                                    $state.go(window.localStorage.getItem('url'));
+                                } else {
+                                    $state.go('app.category-list');
+                                }
+                            } else {
+                                alert('Please fill all the details for signup');
+                            }
+                            $rootScope.$digest;
+                        },
+                        error: function (e) {
+                            console.log(e.responseText);
+                        }
+                    });
+                }
+
+            }
             //Check if email is already registered
             $scope.checkEmail = function (email) {
                 $http({
@@ -131,8 +166,43 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ForgotPasswordCtrl', function ($scope, $state) {
-            $scope.recoverPassword = function () {
-                $state.go('app.feeds-categories');
+          
+            $scope.recoverPassword = function (email,phone) {
+                window.localStorage.setItem('email',email);
+                console.log("email:  "+email);
+              
+                $.ajax({
+                    type: 'GET',
+                    url: domain + "recovery-password",
+                    data: {email:email,phone:phone},
+                    cache: false,
+                    success: function (response) {
+                        console.log(response);
+                        window.localStorage.setItem('passcode', response.passcode);
+                        
+                        $state.go('auth.update-password');
+                    }
+                });
+            };
+            $scope.updatePassword = function (passcode,password,cpassword) {
+                 var email = window.localStorage.getItem('email');
+               // console.log("email: "+email);
+                $.ajax({
+                    type: 'GET',
+                    url: domain + "update-password",
+                    data: {passcode:passcode,password:password,cpassword:cpassword,email:email},
+                    cache: false,
+                    success: function (response) {
+                        //console.log(response);
+                        if(response == 1){
+                             alert('please login with your new password.');
+                             $state.go('auth.login');
+                        }else{
+                            alert('oops something went wrong.');
+                        }
+                       
+                    }
+                });
             };
             $scope.user = {};
         })
