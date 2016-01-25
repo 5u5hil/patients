@@ -87,7 +87,7 @@
                                                     <a ui-sref="app.current-tab({'id': hApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in home_doctorsData[$index]">
                                                         <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
-                                                                {{spec.specialization}} , 
+                                                                {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
                                                             </span>
                                                         </p>
                                                         <p><strong>Appointment Time : {{hApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
