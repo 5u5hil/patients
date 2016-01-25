@@ -1,4 +1,3 @@
-
 angular.module('your_app_name.controllers', [])
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
@@ -10,7 +9,14 @@ angular.module('your_app_name.controllers', [])
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if ($rootScope.userLogged == 0)
                 $state.go('auth.login');
+        })  
+		
+.controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
+          
         })
+
+
+
 
 //LOGIN
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope) {
@@ -263,7 +269,43 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar) {
+		 var filterBarInstance;
+		 
+    // function getItems () {
+      // var items = [];
+      // for (var x = 1; x < 2000; x++) {
+        // items.push({text: 'This is item number ' + x + ' which is an ' + (x % 2 === 0 ? 'EVEN' : 'ODD') + ' number.'});
+      // }
+      // $scope.items = items;
+	  // }
+
+    // getItems();
+
+    $scope.showFilterBar = function () {
+      filterBarInstance = $ionicFilterBar.show({
+        items: $scope.items,
+        update: function (filteredItems, filterText) {
+          $scope.items = filteredItems;
+          if (filterText) {
+            console.log(filterText);
+          }
+        }
+      });
+    };
+
+    $scope.refreshItems = function () {
+      if (filterBarInstance) {
+        filterBarInstance();
+        filterBarInstance = null;
+      }
+
+      $timeout(function () {
+        getItems();
+        $scope.$broadcast('scroll.refreshComplete');
+      }, 1000);
+    };
+	
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
             //console.log(get('id'));
@@ -313,6 +355,14 @@ angular.module('your_app_name.controllers', [])
                 });
             };
         })
+		
+		.controller('ThankyouCtrl', function($scope, $http, $stateParams) {
+	$scope.category_sources = [];
+	$scope.categoryId = $stateParams.categoryId;
+
+})
+		
+		
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
             $http({
@@ -645,7 +695,43 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
+<<<<<<< HEAD
         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading) {
+=======
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter,$ionicLoading,$timeout) {
+		  $scope.IsVisible = false;
+		
+		  
+		   
+		  
+		//$ionicLoading.show({ template: 'Loading...' });
+		$scope.counter = 100;
+			var stopped;
+		$scope.countdown = function() {
+		$scope.IsVisible = true;
+			stopped = $timeout(function() {
+			   console.log($scope.counter);
+			 $scope.counter--;   
+			 $scope.countdown();   
+			}, 1000);
+			if($scope.counter==0){
+			$scope.IsVisible = false;
+			$timeout.cancel(stopped);
+				}
+			};
+			
+		$scope.hidediv=function(){
+			$scope.IsVisible = false;
+			$timeout.cancel(stopped);
+			$scope.counter = 100;
+			}
+		
+			
+					
+		
+		
+		
+>>>>>>> origin/master
             $scope.vSch = [];
             $scope.schV = [];
             $scope.schdate = [];

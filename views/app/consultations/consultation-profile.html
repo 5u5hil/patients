@@ -77,11 +77,16 @@
                                     <p>
                                         <br/>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                                     <br/>
+									
                                     <p>
-                                        <button class="button button-block button-positive">Check Availability</button>
+                                        <button class="button button-block button-positive" ng-click="countdown();">Check Availability</button>
                                     </p>
                                 </div>
                         </div>
+						
+							
+						
+						
                         </ion-tab>
                     </div>
                     <ion-tab icon="ion-checkmark" title="Schedule Now"  >
@@ -229,4 +234,20 @@
             </div>
         </div>
     </ion-content>
+
+	<div class="waitingdiv" ng-show="IsVisible" >
+	<div class="waitdiv">
+		<div class="countcounter" ng-bind="counter"></div>
+		<p class="text-center fwhite">Please Wait...</p>
+	</div>
+	
+	<div class="button button-assertive stickfoot" ng-click="hidediv()">Cancel</div>
+	</div>
+
+	
+	
 </ion-view>
+
+
+
+
