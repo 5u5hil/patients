@@ -18,8 +18,8 @@
                             <span ng-if="pInc.discount < 100">Discount : {{pInc.discount}} %</span>, {{pInc.validity_in_days}} Days</li>
                     </ul>
                     <p><strong>Appointment Details</strong> <br/> 
-                        <strong>Date: </strong> {{slot | dateFormat}} <br/>
-                        <strong>Time: </strong> {{slot | time}} <br/>
+                        <strong>Date: </strong> {{startSlot | dateFormat3}} <br/>
+                        <strong>Time: </strong> {{startSlot | time}} To {{endSlot | time}}<br/>
                         <!---<strong>Mode: </strong> Video<br/>
                         <strong>Address: </strong> 10AM to 11AM <br/>-->
                     </p>
@@ -27,7 +27,7 @@
             </div>
             <div class="ctab commontab">
                 <ion-tabs class="tabs-positive tabs-icon-top">
-                    <ion-tab title="Pay Now" >
+                    <ion-tab title="Pay Now" ng-if="serv==1" >
                         <div class="tabcontainer">
                             <div class="pprice">Price: INR {{product[0].price}}</div>
                             <div class="row">
@@ -44,7 +44,30 @@
                             <h4 class="txt-centre">Final Price: INR {{product[0].price}}</h4>
                             <br/>
                             <div class="section-footer"> <!---ui-sref="app.success"-->
-                                <a ng-click="payNow()" class="button button-full button-positive">Proceed</a>
+                                <a ng-if="mode==1" ng-click="payNow()" class="button button-full button-positive">Pay Now</a>
+                                
+                            </div>	
+                        </div>
+                    </ion-tab>
+                      <ion-tab title="Book Now" ng-if="mode==3 || mode==4" >
+                        <div class="tabcontainer">
+                            <div class="pprice">Price: INR {{product[0].price}}</div>
+                            <div class="row">
+                                <div class="col col-75">
+                                    <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly disabled/>
+                                    <!-- <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly/> -->
+                                </div>
+                                <div class="col">
+                                    <button class="button button-small button-assertive csbtn" disabled="">Undo</button>
+                                    <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
+                                </div>
+                            </div>
+                            <p class="fg txt-centre">Applied Discount:20%</p>
+                            <h4 class="txt-centre">Final Price: INR {{product[0].price}}</h4>
+                            <br/>
+                            <div class="section-footer"> <!---ui-sref="app.success"-->
+                                <a ng-if="mode==3 || mode==4" ng-click="bookNow()" class="button button-full button-positive">Book Now</a>
+                                
                             </div>	
                         </div>
                     </ion-tab>

@@ -6,7 +6,6 @@
         <button class="button button-icon button-clear ion-person">
         </button>
     </ion-nav-buttons>
-
     <div ng-repeat="doc in doctor">
         <div class="profile-head">
             <div class="card-content">
@@ -22,11 +21,8 @@
             </div>
         </div>
     </div>
-
-
     <ion-content>
         <div ng-repeat="doc in doctor">
-
             <ion-slide-box show-pager="true">
                 <ion-slide>
                     <div class="list card profile-card">
@@ -50,7 +46,6 @@
                         </div>
                     </div>
                 </ion-slide>
-
                 <ion-slide>
                     <div class="list card profile-card">
                         <div class="item item-body">
@@ -89,7 +84,7 @@
                         </div>
                         </ion-tab>
                     </div>
-                    <ion-tab icon="ion-checkmark" title="Schedule <br>INR 400"  >
+                    <ion-tab icon="ion-checkmark" title="Schedule Now"  >
                         <div class="tabcontainer">
                             <!-- Schedule-->
                             <div class="schedule">
@@ -115,25 +110,21 @@
                                                     </ul>	
                                                     <div class="sche-date">
                                                         <div class="leftarrow" ng-click="getFirstSlots(vs.supersaas_id, $index, serv)"><i class="icon ion-arrow-left-c"></i></div> 
-                                                        <input type="date" ng-model="schdate[$index]" value="schdate[$index]|dateFormat1"/>
+                                                        <input type="date" ng-model="schdate[$index]" value="schdate[$index]|dateFormat1" ng-change="getNextSlots(schdate[$index], vs.supersaas_id, $index, serv)"/>
                                                         <input type="hidden" ng-model="nextdate[$index]" value="nextdate[$index]|datetime"/>
                                                         <div class="rightarrow" ng-click="getNextSlots(nextdate, vs.supersaas_id, $index, serv)"><i class="icon ion-arrow-right-c"></i></div>
                                                     </div>
                                                     <div ng-if="schV[$index] == vs.supersaas_id">
-                                                        {{$index}}=====<br/>{{vSch[$index]}}
                                                         {{vSch[$index]==''? 'No slots available':''}}
-                                                        <ul class="timesheet"  ng-repeat="slot in vSch[$index] track by $index">
-                                                            <div ng-repeat="slt in slot track by $index" ng-if="slt[$index]< nextdate">{{$index}}</div>
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
+                                                        <ul class="timesheet"  ng-repeat="(key,slot) in vSch[$index] track by $index">
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
                                                                 {{slt['start'][0]|time}} - {{slt['finish'][0]|time}}                                                          
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="section-footer">
-                                                    <a class="button button-full button-positive" ng-click="bookAppointment(videoProd.id)">Proceed
-                                                        <!---<a ui-sref="app.payment" >Proceed</a>-->
-                                                    </a>
+                                                <div class="section-footer">                                                    
+                                                    <a class="button button-full button-positive" ng-click="bookAppointment(videoProd.id, serv)">Proceed</a>
                                                 </div>	
                                             </div>
                                         </ion-tab>
@@ -161,26 +152,22 @@
                                                     </ul>	
                                                     <div class="sche-date">
                                                         <div class="leftarrow" ng-click="getFirstSlots(cs.supersaas_id, $index, serv)"><i class="ion-android-arrow-back"></i></div> 
-                                                        <input type="date" ng-model="schCdate[$index]" value="schCdate[$index]|dateFormat1"/>
+                                                        <input type="date" ng-model="schCdate[$index]" value="schCdate[$index]|dateFormat1" ng-click="getNextSlots(schCdate[$index], cs.supersaas_id, $index, serv)"/>
                                                         <input type="hidden" ng-model="nextCdate[$index]" value="nextCdate[$index]|datetime"/>
                                                         <div class="rightarrow" ng-click="getNextSlots(nextCdate[$index], cs.supersaas_id, $index, serv)"><i class="ion-android-arrow-forward"></i></div> 
                                                     </div>
                                                     <div ng-if="schC[$index] == cs.supersaas_id">
-                                                        {{$index}}<br/>
-                                                        {{cSch[$index]}}
                                                         {{cSch[$index]==''? 'No slots available':''}}
-                                                        <ul class="timesheet" ng-model="cSch[$index]"  ng-repeat="(key, slot) in cSch[$index] track by $index">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextCdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], cs.supersaas_id)"s> 
-                                                                {{slt['start'][0]|time}}                                                     
+                                                        <ul class="timesheet" ng-model="cSch[$index]"  ng-repeat="(key, slot) in cSch[$index]">
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextCdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], cs.supersaas_id)"s> 
+                                                                {{slt['start'][0]|time}} - {{slt['finish'][0]|time}}                                                 
                                                             </li>
                                                         </ul>
                                                     </div>
 
                                                 </div>
                                                 <div class="section-footer">
-                                                    <a class="button button-full button-positive" ng-click="bookAppointment(clinicProd.id)">Proceed
-                                                        <!---<a ui-sref="app.payment" >Proceed</a>-->
-                                                    </a>
+                                                    <a class="button button-full button-positive" ng-click="bookAppointment(clinicProd.id, serv)">Proceed</a>
                                                 </div>	
                                             </div>
                                         </ion-tab>
@@ -196,31 +183,30 @@
                                                 </ul>
 
                                                 <div class="clr"></div>
-                                                <div class="item item-body" ng-repeat="vs in homeSch">
-                                                    <strong>Available on </strong>
+                                                <div class="item item-body" ng-repeat="hs in homeSch">
+                                                    <strong>Available on  </strong>
                                                     <ul class="wk">
-                                                        <li ng-repeat="day in vs.service_details| orderBy:'' | groupBy:['day_of_week']">
+                                                        <li ng-repeat="day in hs.service_details| orderBy:'' | groupBy:['day_of_week']">
                                                             <strong ng-show="day.group_by_CHANGED">{{ day.day_of_week|limitTo:1}} : </strong>
                                                             {{day.from|limitTo:2}} - {{day.to|limitTo:2}}
                                                         </li>
                                                     </ul>	
                                                     <div class="sche-date">
-                                                        <div class="leftarrow"><i class="ion-android-arrow-back"></i></div> 
-                                                        <input type="date" class="" value="25/1/2016" />
-                                                        <div class="rightarrow"><i class="ion-android-arrow-forward"></i></div> 
+                                                        <div class="leftarrow" ng-click="getFirstSlots(hs.supersaas_id, $index, serv)"><i class="ion-android-arrow-back"></i></div> 
+                                                        <input type="date" ng-model="schHdate[$index]" value="schHdate[$index]|datetime"  ng-click="getNextSlots(schHdate[$index], hs.supersaas_id, $index, serv)"/>
+                                                        <input type="hidden" ng-model="nextHdate[$index]" value="nextHdate[$index]|datetime"/>
+                                                        <div class="rightarrow" ng-click="getNextSlots(nextHdate[$index], hs.supersaas_id, $index, serv)"><i class="ion-android-arrow-forward"></i></div> 
                                                     </div>
-                                                    <ul class="timesheet" ng-if="schH[$index] == hs.supersaas_id" ng-repeat="(key, slot) in hSch">
-                                                        <li ng-repeat="(k, slt) in slot track by $index" > 
-                                                            <span ng-repeat="(tk, tv) in slt" ng-model="timeslot" ng-click="bookSlot(tv[0], vs.supersaas_id)" ng-if="tk == 'start'">
-                                                                {{tv[0]| time}}
-                                                                <input type="hidden" ng-model="schDate" ng-value="tv[0]" />
-                                                            </span>                                                           
-                                                        </li>
-                                                    </ul>
+                                                    <div ng-if="schH[$index] == hs.supersaas_id">
+                                                        {{hSch[$index]==''? 'No slots available':''}}
+                                                        <ul class="timesheet" ng-model="hSch[$index]"  ng-repeat="(key, slot) in hSch[$index]">
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextHdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], hs.supersaas_id)"s> 
+                                                                {{slt['start'][0]|time}} - {{slt['finish'][0]|time}}                                                 
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <a class="button button-full button-positive" ng-click="bookAppointment(homeProd.id)">Proceed
-                                                    <!---<a ui-sref="app.payment" >Proceed</a>-->
-                                                </a>
+                                                <a class="button button-full button-positive" ng-click="bookAppointment(homeProd.id, serv)">Proceed</a>
                                             </div>
                                         </ion-tab>
                                     </div>

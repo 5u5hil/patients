@@ -128,7 +128,6 @@ angular.module('your_app_name.controllers', [])
             $scope.recoverPassword = function () {
                 $state.go('app.feeds-categories');
             };
-
             $scope.user = {};
         })
 
@@ -312,9 +311,7 @@ angular.module('your_app_name.controllers', [])
                         //window.location.href = "http://192.168.2.169:8100/#/app/records-view/" + $scope.categoryId;
                     }
                 });
-
             };
-
         })
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
@@ -416,26 +413,210 @@ angular.module('your_app_name.controllers', [])
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
         })
-        .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams) {
+        .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter) {
             $scope.specializations = {};
             $scope.userId = get('id');
+            $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            $ionicLoading.show({template: 'Loading...'});
             $http({
                 method: 'GET',
                 url: domain + 'doctors/consultations',
                 params: {userId: $scope.userId}
             }).then(function successCallback(response) {
-                //$ionicLoading.hide();
-                //console.log(response.data);
+                $ionicLoading.hide();
+                console.log(response.data);
                 $scope.specializations = response.data.spec;
+                //Video
                 $scope.video_app = response.data.video_app;
-                $scope.doctorsData = response.data.doctorsData;
-                $scope.products = response.data.products;
+                $scope.video_doctorsData = response.data.video_doctorsData;
+                $scope.video_products = response.data.video_products;
+                //Clinic
+                $scope.clinic_app = response.data.clinic_app;
+                $scope.clinic_doctorsData = response.data.clinic_doctorsData;
+                $scope.clinic_products = response.data.clinic_products;
+                //Home
+                $scope.home_app = response.data.home_app;
+                $scope.home_doctorsData = response.data.home_doctorsData;
+                $scope.home_products = response.data.home_products;
                 //$state.go('app.category-detail');
             }, function errorCallback(e) {
                 console.log(e);
             });
+            $scope.cancelAppointment = function (appId, drId, mode) {
+                console.log(mode);
+                var from = new Date();
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                var diff = tomorrow-from;
+                console.log(tomorrow-from);
+                var mm = Math.floor(diff / 1000 / 60 / 60 );
+                console.log(mm);
+                /*$http({
+                 method: 'GET',
+                 //url: url,
+                 //params: {_method: 'DELETE', schedule_id: $scope.supId, password: 'RandomTest1*'},
+                 url: domain + 'appointment/cancel-app',
+                 params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.bookingStart, endSlot: $scope.bookingEnd}
+                 }).then(function successCallback(response) {
+                 console.log(response);
+                 alert('Your appointment is cancelled successfully.');
+                 $state.go('app.consultations-list');
+                 }, function errorCallback(response) {
+                 console.log(response);
+                 });*/
+            };
+            $scope.reschedule = function (appId, drId, mode) {
+                //var twentyMinutesLater = new Date(); //$filter('date')(new Date(endTime), 'yyyy-MM-dd HH:mm:ss');
+                //console.log(twentyMinutesLater);
+                //var canTime = twentyMinutesLater.setMinutes(twentyMinutesLater.getMinutes() + 20);
+                //console.log(endTime + '========' + twentyMinutesLater);
+                //console.log(appId, drId);
+                window.localStorage.setItem('appId', appId);
+                $state.go('app.reschedule-appointment', {'id': drId});
+            };
         })
-        .controller('ConsultationCardsCtrl', function ($scope, $http, $stateParams) {
+        .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $filter, $state) {
+            $scope.pSch = [];
+            $scope.schP = [];
+            $scope.schdate = [];
+            $scope.nextdate = [];
+            $scope.appId = window.localStorage.getItem('appId');
+            $http({
+                method: 'GET',
+                url: domain + 'doctors/get-service-details',
+                params: {id: $stateParams.id, appId: $scope.appId}
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                $scope.appointment = response.data.app;
+                $scope.doctor = response.data.user;
+                $scope.Prod = response.data.product;
+                $scope.Inc = response.data.inclusions;
+                $scope.prSch = response.data.pSch;
+                angular.forEach($scope.prSch, function (value, key) {
+                    var supsassId = value.supersaas_id;
+                    //var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                    //console.log(supsassId);
+                    $http({
+                        method: 'GET',
+                        url: domain + 'doctors/get-doctors-availability',
+                        params: {id: supsassId, from: new Date()}
+                    }).then(function successCallback(responseData) {
+                        $scope.pSch[key] = responseData.data.slots;
+                        $scope.schP[key] = supsassId;
+                        if (responseData.data.lastdate == '')
+                        {
+                            $scope.schdate[key] = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate[key] = tomorrow;
+                        } else {
+                            $scope.schdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
+                        $rootScope.$digest;
+                    }, function errorCallback(response) {
+                        console.log(response.responseText);
+                    });
+                });
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
+                console.log(nextDate + '=======' + supsassId + '=====' + key);
+                var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
+                $ionicLoading.show({template: 'Loading...'});
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctors/get-doctors-availability',
+                    cache: false,
+                    params: {id: supsassId, from: from}
+                }).then(function successCallback(responseData) {
+                    console.log(responseData.data);
+                    $ionicLoading.hide();
+                    if (responseData.data.lastdate == '')
+                    {
+                        $scope.pSch[key] = responseData.data.slots;
+                        $scope.schdate[key] = new Date();
+                        $scope.nextdate[key] = new Date();
+                        $rootScope.$digest;
+                    } else {
+                        $scope.pSch[key] = responseData.data.slots;
+                        $scope.schdate[key] = new Date(responseData.data.lastdate);
+                        var tomorrow = new Date(responseData.data.lastdate);
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        $rootScope.$digest;
+
+                    }
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            };
+            $scope.getFirstSlots = function (supsassId, key, serv) {
+                console.log(supsassId + ' - ' + key + ' - ' + serv);
+                //var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                $ionicLoading.show({template: 'Loading...'});
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctors/get-doctors-availability',
+                    params: {id: supsassId, from: new Date()}
+                }).then(function successCallback(responseData) {
+                    console.log(responseData);
+                    $ionicLoading.hide();
+                    if (responseData.data.slots == '') {
+                        $scope.pSch[key] = responseData.data.slots;
+                        $scope.schdate[key] = new Date();
+                        var tomorrow = new Date();
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                    } else {
+                        $scope.pSch[key] = responseData.data.slots;
+                        $scope.schdate[key] = new Date(responseData.data.lastdate);
+                        var tomorrow = new Date(responseData.data.lastdate);
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                    }
+
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            };
+            $scope.bookSlot = function (starttime, endtime, supid) {
+                console.log(starttime + '===' + endtime + '=========' + supid);
+                $scope.bookingStart = starttime;
+                $scope.bookingEnd = endtime;
+                $scope.supId = supid;
+            };
+            $scope.bookNewAppointment = function (prodId) {
+                console.log($scope.bookId);
+                $scope.prodid = prodId;
+                $scope.userId = get('id');
+                var url = $scope.bookId;
+                if ($scope.bookingStart) {
+                    $http({
+                        method: 'GET',
+                        //url: url,
+                        //params: {_method: 'DELETE', schedule_id: $scope.supId, password: 'RandomTest1*'},
+                        url: domain + 'appointment/delete-app',
+                        params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.bookingStart, endSlot: $scope.bookingEnd}
+                    }).then(function successCallback(response) {
+                        console.log(response);
+                    }, function errorCallback(response) {
+                        console.log(response);
+                    });
+                } else {
+                    alert('Please select slot');
+                }
+            };
+            $scope.cancelReschedule = function () {
+                window.localStorage.removeItem('appId');
+                $state.go('app.consultations-list');
+            };
+        })
+        .controller('ConsultationCardsCtrl', function ($scope, $http, $stateParams, $ionicLoading) {
+            $ionicLoading.show({template: 'Loading...'});
             $scope.specId = $stateParams.id;
             $scope.userId = get('id');
             $scope.docServices = [];
@@ -444,7 +625,7 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'doctors/list',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
-                //$ionicLoading.hide();
+                $ionicLoading.hide();
                 $scope.doctors = response.data.user;
                 angular.forEach($scope.doctors, function (value, key) {
                     $http({
@@ -464,7 +645,7 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading) {
             $scope.vSch = [];
             $scope.schV = [];
             $scope.schdate = [];
@@ -475,7 +656,8 @@ angular.module('your_app_name.controllers', [])
             $scope.nextCdate = [];
             $scope.hSch = [];
             $scope.schH = [];
-
+            $scope.schHdate = [];
+            $scope.nextHdate = [];
             $scope.bookingSlot = '';
             $scope.supId = '';
             $http({
@@ -501,14 +683,13 @@ angular.module('your_app_name.controllers', [])
                 //$ionicLoading.hide();
                 angular.forEach($scope.videoSch, function (value, key) {
                     var supsassId = value.supersaas_id;
-                    var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                    //var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                     //console.log(supsassId);
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId, from: from}
+                        params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        //$ionicLoading.hide();
                         $scope.vSch[key] = responseData.data.slots;
                         $scope.schV[key] = supsassId;
                         if (responseData.data.lastdate == '')
@@ -517,7 +698,6 @@ angular.module('your_app_name.controllers', [])
                             var tomorrow = new Date();
                             tomorrow.setDate(tomorrow.getDate() + 1);
                             $scope.nextdate[key] = tomorrow;
-
                         } else {
                             $scope.schdate[key] = new Date(responseData.data.lastdate);
                             var tomorrow = new Date(responseData.data.lastdate);
@@ -528,9 +708,7 @@ angular.module('your_app_name.controllers', [])
                     }, function errorCallback(response) {
                         console.log(response.responseText);
                     });
-                    //console.log($scope.vSch);
                 });
-                //console.log($scope.videoSch);
                 angular.forEach($scope.clinicSch, function (value, key) {
                     var supsassId = value.supersaas_id
                     $http({
@@ -538,8 +716,6 @@ angular.module('your_app_name.controllers', [])
                         url: domain + 'doctors/get-doctors-availability',
                         params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        //console.log(responseData.data);
-                        //$ionicLoading.hide();
                         $scope.cSch[key] = responseData.data.slots;
                         $scope.schC[key] = supsassId;
                         if (responseData.data.lastdate == '')
@@ -548,7 +724,6 @@ angular.module('your_app_name.controllers', [])
                             var tomorrow = new Date();
                             tomorrow.setDate(tomorrow.getDate() + 1);
                             $scope.nextCdate[key] = tomorrow;
-
                         } else {
                             $scope.schCdate[key] = new Date(responseData.data.lastdate);
                             var tomorrow = new Date(responseData.data.lastdate);
@@ -567,30 +742,38 @@ angular.module('your_app_name.controllers', [])
                         url: domain + 'doctors/get-doctors-availability',
                         params: {id: supsassId, from: new Date()}
                     }).then(function successCallback(responseData) {
-                        //console.log(responseData.data);
-                        //$ionicLoading.hide();
                         $scope.hSch[key] = responseData.data.slots;
                         $scope.schH[key] = supsassId;
+                        if (responseData.data.lastdate == '')
+                        {
+                            $scope.schHdate[key] = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextHdate[key] = tomorrow;
+                        } else {
+                            $scope.schHdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextHdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
                         $rootScope.$digest;
                     }, function errorCallback(response) {
                         console.log(response);
                     });
                 });
-                //$scope.$digest();
-                //console.log(response);
             });
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
                 var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
-                //$ionicLoading.show({template: 'Loading...'});
+                $ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
                     url: domain + 'doctors/get-doctors-availability',
-                    //cache: false,
+                    cache: false,
                     params: {id: supsassId, from: from}
                 }).then(function successCallback(responseData) {
                     console.log(responseData.data.slots);
-                    //$ionicLoading.hide();                    
+                    $ionicLoading.hide();
                     if (responseData.data.lastdate == '')
                     {
                         if (serv == 1) {
@@ -602,6 +785,11 @@ angular.module('your_app_name.controllers', [])
                             $scope.cSch[key] = responseData.data.slots;
                             $scope.schCdate[key] = new Date();
                             $scope.nextCdate[key] = new Date();
+                            $rootScope.$digest;
+                        } else if (serv == 4) {
+                            $scope.hSch[key] = responseData.data.slots;
+                            $scope.schHdate[key] = new Date();
+                            $scope.nextHdate[key] = new Date();
                             $rootScope.$digest;
                         }
 
@@ -620,54 +808,108 @@ angular.module('your_app_name.controllers', [])
                             tomorrow.setDate(tomorrow.getDate() + 1);
                             $scope.nextCdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                             $rootScope.$digest;
+                        } else if (serv == 4) {
+                            $scope.hSch[key] = responseData.data.slots;
+                            $scope.schHdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextHdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                            $rootScope.$digest;
                         }
                     }
                 }, function errorCallback(response) {
                     console.log(response);
                 });
             };
-            $scope.getFirstSlots = function (supsassId, key) {
-                var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            $scope.getFirstSlots = function (supsassId, key, serv) {
+                //var from = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                $ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
                     url: domain + 'doctors/get-doctors-availability',
-                    params: {id: supsassId, from: from}
+                    params: {id: supsassId, from: new Date()}
                 }).then(function successCallback(responseData) {
                     console.log(responseData);
-                    //$ionicLoading.hide();
-                    $scope.vSch[key] = responseData.data.slots;
-                    $scope.schdate = new Date(responseData.data.lastdate);
-                    var tomorrow = new Date(responseData.data.lastdate);
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    $scope.nextdate = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                    $ionicLoading.hide();
+                    if (serv == 1) {
+                        if (responseData.data.slots == '') {
+                            $scope.vSch[key] = responseData.data.slots;
+                            $scope.schdate[key] = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        } else {
+                            $scope.vSch[key] = responseData.data.slots;
+                            $scope.schdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
+                    } else if (serv == 3) {
+                        if (responseData.data.slots == '') {
+                            $scope.cSch[key] = responseData.data.slots;
+                            $scope.schCdate[key] = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextCdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        } else {
+                            $scope.cSch[key] = responseData.data.slots;
+                            $scope.schCdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextCdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
+                    } else if (serv == 4) {
+                        if (responseData.data.slots == '') {
+                            $scope.hSch[key] = responseData.data.slots;
+                            $scope.schHdate[key] = new Date();
+                            var tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextHdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        } else {
+                            $scope.hSch[key] = responseData.data.slots;
+                            $scope.schHdate[key] = new Date(responseData.data.lastdate);
+                            var tomorrow = new Date(responseData.data.lastdate);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            $scope.nextHdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
+                        }
+                    }
                 }, function errorCallback(response) {
                     console.log(response);
                 });
             };
             $scope.bookSlot = function (starttime, endtime, supid) {
-                console.log(starttime + '===' + supid);
+                console.log(starttime + '===' + endtime + '=========' + supid);
                 $scope.bookingStart = starttime;
                 $scope.bookingEnd = endtime;
                 $scope.supId = supid;
             };
-            $scope.bookAppointment = function (prodId) {
-                //console.log($scope.bookingSlot);
-                if ($scope.bookingStart) {
+            $scope.bookAppointment = function (prodId, serv) {
+                console.log($scope.bookingSlot);
+                if ($scope.bookingStart != '') {
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
                     window.localStorage.setItem('prodid', prodId);
                     window.localStorage.setItem('url', 'app.payment');
+                    window.localStorage.setItem('mode', serv);
                     $rootScope.supid = $scope.supId;
                     $rootScope.startSlot = $scope.bookingStart;
                     $rootScope.endSlot = $scope.bookingEnd;
                     $rootScope.prodid = prodId;
                     $rootScope.url = 'app.payment';
                     $rootScope.$digest;
-                    if (checkLogin())
-                        $state.go('app.payment');
-                    else
-                        $state.go('auth.login');
+                    if (serv == 1) {
+                        if (checkLogin())
+                            $state.go('app.payment');
+                        else
+                            $state.go('auth.login');
+                    } else if (serv == 3 || serv == 4) {
+                        if (checkLogin())
+                            $state.go('app.payment');
+                        else
+                            $state.go('auth.login');
+                    }
                 } else {
                     alert('Please select slot');
                 }
@@ -675,6 +917,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $cordovaInAppBrowser) {
+            $scope.mode = window.localStorage.getItem('mode');
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
@@ -693,6 +936,25 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
+            $scope.bookNow = function () {
+                $scope.startSlot = window.localStorage.getItem('startSlot');
+                $scope.endSlot = window.localStorage.getItem('endSlot');
+                $scope.appUrl = $location.absUrl();
+                $scope.userId = get('id');
+                $http({
+                    method: 'GET',
+                    url: domain + 'buy/book-appointment',
+                    params: {prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                }).then(function successCallback(response) {
+                    console.log(response);
+                    if (response.data.httpcode == 'success')
+                    {
+                        $state.go('app.success', {'id': response.data.orderId, 'serviceId': response.data.scheduleId});
+                    }
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            };
             $scope.payNow = function () {
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
@@ -729,8 +991,10 @@ angular.module('your_app_name.controllers', [])
                 }, function errorCallback(response) {
                     console.log(response);
                 });
-            };
-        })
+            }
+            ;
+        }
+        )
 
         .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $cordovaInAppBrowser) {
             console.log($stateParams.link);
@@ -738,18 +1002,13 @@ angular.module('your_app_name.controllers', [])
             $scope.trustSrc = function (src) {
                 return $sce.trustAsResourceUrl(src);
             };
-
-
             $timeout(function () {
                 jQuery("iframe").css("height", jQuery(window).height());
                 console.log('huu' + jQuery(window).height());
             }, 100);
-
-
-
         })
 
-        .controller('SuccessCtrl', function ($scope, $http, $stateParams) {
+        .controller('SuccessCtrl', function ($scope, $http, $stateParams, $state) {
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
             $http({
@@ -762,13 +1021,19 @@ angular.module('your_app_name.controllers', [])
                 $scope.product = responseData.data.prod;
                 $scope.prod_inclusion = responseData.data.prod_inclusion;
                 $scope.doctor = responseData.data.doctor;
-                $scope.appointment = responseData.data.appointment;
+                $scope.appointment = responseData.data.app;
             }, function errorCallback(response) {
                 console.log(response);
             });
             window.localStorage.removeItem('supid');
-            window.localStorage.removeItem('slot');
+            window.localStorage.removeItem('startslot');
+            window.localStorage.removeItem('endslot');
             window.localStorage.removeItem('prodid');
+
+            $scope.shareRecords = function (drId) {
+                window.localStorage.setItem('shareDrId', drId);
+                $state.go('app.category-detail');
+            };
         })
 
         .controller('FailureCtrl', function ($scope, $http, $stateParams) {
@@ -802,7 +1067,6 @@ angular.module('your_app_name.controllers', [])
                 $scope.app = response.data.app;
                 $scope.doctor = response.data.doctorsData;
                 $scope.products = response.data.products;
-
             }, function errorCallback(e) {
                 console.log(e);
             });
@@ -836,7 +1100,6 @@ angular.module('your_app_name.controllers', [])
                         session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
                 });
-
             }, function errorCallback(e) {
                 console.log(e);
             });

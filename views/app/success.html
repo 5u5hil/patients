@@ -20,8 +20,8 @@
                     </ul>
                     <p ><strong>Appointment Details</strong> 
                     <p >
-                        <strong>Date: </strong> {{appointment.scheduled_start_time|dateFormat}} <br/>
-                        <strong>Time: </strong> {{appointment.scheduled_start_time|time}} to {{appointment.scheduled_end_time|time}} <br/>
+                        <strong>Date: </strong> {{appointment[0].appointments.scheduled_start_time|dateFormat}} <br/>
+                        <strong>Time: </strong> {{appointment[0].appointments.scheduled_start_time|time}} to {{appointment[0].appointments.scheduled_end_time|time}} <br/>
                         <strong>Mode: </strong> {{product[0].mode}}<br/>
                     </p>
                     </p>
@@ -30,7 +30,7 @@
             <h4 class="txt-centre">Price: INR {{product[0].price}}</h4>
             <div class="ctab commontab">
                 <div class="success-btns">
-                    <a ui-sref="#" class="button  button-positive">Share Records</a>
+                    <a ng-click="shareRecords(product[0].user_id)" class="button  button-positive">Share Records</a>
                     <br/>
                     <br/>
                     <a ui-sref="#" class="button  button-positive">Join Now</a>

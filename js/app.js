@@ -208,6 +208,15 @@ angular.module('your_app_name', [
                         }
                     })
 
+                    .state('app.reschedule-appointment', {
+                        url: "/reschedule-appointment/{id:int}",
+                        views: {
+                            'menuContent':{
+                                templateUrl: "views/app/consultations/reschedule-appointment.html",
+                                controller: 'RescheduleAppointmentCtrl'
+                            }
+                        }
+                    })
                     .state('app.current-tab', {
                         url: "/current-tab/{id:int}",
                         views: {

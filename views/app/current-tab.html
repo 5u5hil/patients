@@ -17,7 +17,7 @@
                                     {{spec.specialization}} , 
                                 </span></p>
                             <p><strong>Appointment Time: </strong> {{app[0].appointments.scheduled_start_time|time}} to {{app[0].appointments.scheduled_end_time|time}} </p>
-                            <p><strong>Mode: </strong> Video</p>
+                            <p><strong>Mode: </strong> {{app[0].appointments.mode==1? 'Video':''}}{{app[0].appointments.mode==2? 'Chat':''}}{{app[0].appointments.mode==3? 'Clinic':''}}{{app[0].appointments.mode==4? 'Home':''}}</p>
                             <p><strong>Qualification:</strong> 
                                 <span ng-repeat="qual in doctor[0].qualifications">
                                     {{qual.qualification}} , 
