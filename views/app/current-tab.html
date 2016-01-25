@@ -64,8 +64,8 @@
     </ion-content>
 
     <div class="footerbar">
-        <a class="button" ui-sref="#" ><i class="ion-close"></i>  Cancel</a>
-        <a class="button" ui-sref="#" ><i class="ion-calendar"></i>  Reschedule</a>
+        <a class="button" confirmed-click="cancelAppointment(app[0].appointments.id,prod.user_id,app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" ><i class="ion-close"></i>  Cancel</a>
+        <a class="button" confirmed-click="reschedule(app[0].appointment_id, prod.user_id, app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" ><i class="ion-calendar"></i>  Reschedule</a>
         <a ng-if="curTime>=time" class="button" ui-sref="app.patient-join({'id': app[0].appointments.id, 'res': 'json'})"> Join</a>
     </div>
 
