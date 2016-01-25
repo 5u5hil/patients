@@ -69,7 +69,7 @@
                                                     <div class="post-actions  post-footer p0">
                                                         <div class="row cardbtn-small p0">
                                                             <div class="col"><a confirmed-click="cancelAppointment(cApp.appointment_id,prod.user_id,3)" ng-confirm-click="Do you really want to cancel appointment?" id="{{cApp.appointment_id}}" class="cbtn">Cancel</a></div>
-                                                            <div class="col"><a confirmed-click="reschedule(cApp.appointment_id,prod.user_id,3)" ng-confirm-click="Do you really want to reschedule?"  class="cbtn">Reschedule</a></div>
+                                                            <div class="col"><a confirmed-click="reschedule(cApp.appointment_id, prod.user_id, 3, cApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?"  class="cbtn">Reschedule</a></div>
                                                             <div class="col"><a ui-sref="#" class="cbtn">Join</a></div>
                                                         </div>
                                                     </div>
@@ -101,7 +101,7 @@
                                                     <div class="post-actions  post-footer p0">
                                                         <div class="row cardbtn-small p0">
                                                             <div class="col"><a confirmed-click="cancelAppointment(hApp.appointment_id,prod.user_id,4)" ng-confirm-click="Do you really want to cancel appointment?" id="{{hApp.appointment_id}}" class="cbtn">Cancel</a></div>
-                                                            <div class="col"><a confirmed-click="reschedule(hApp.appointment_id,prod.user_id,4)" ng-confirm-click="Do you really want to reschedule?"  class="cbtn">Reschedule</a></div>
+                                                            <div class="col"><a confirmed-click="reschedule(hApp.appointment_id, prod.user_id, 4, hApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?"  class="cbtn">Reschedule</a></div>
                                                             <div class="col"><a ui-sref="#" class="cbtn">Join</a></div>
                                                         </div>
                                                     </div>
@@ -132,7 +132,7 @@
                                                     <div class="post-actions  post-footer p0">
                                                         <div class="row cardbtn-small p0">
                                                             <div class="col"><a confirmed-click="cancelAppointment(vApp.appointment_id,prod.user_id,1)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.appointment_id}}" class="cbtn">Cancel</a></div>
-                                                            <div class="col"><a confirmed-click="reschedule(vApp.appointment_id,prod.user_id,1)" ng-confirm-click="Do you really want to reschedule?" class="cbtn">Reschedule</a></div>
+                                                            <div class="col"><a confirmed-click="reschedule(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn">Reschedule</a></div>
                                                             <div class="col"><a ui-sref="#" class="cbtn">Join</a></div>
                                                         </div>
                                                     </div>

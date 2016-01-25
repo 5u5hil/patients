@@ -65,7 +65,7 @@ angular.module('your_app_name.controllers', [])
             });
         })
         .controller('LogoutCtrl', function ($scope, $state, $templateCache, $q, $rootScope) {
-            localStorage.clear();
+            window.localStorage.clear();
             $rootScope.userLogged = 0;
             $rootScope.$digest;
             $state.go('auth.walkthrough');
@@ -493,36 +493,46 @@ angular.module('your_app_name.controllers', [])
                 console.log(e);
             });
             $scope.cancelAppointment = function (appId, drId, mode) {
-                console.log(mode);
+                $scope.appId = appId;
+                $scope.userId = get('id');
+                //console.log(mode);
                 var from = new Date();
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 var diff = tomorrow - from;
-                console.log(tomorrow - from);
+                //console.log(tomorrow - from);
                 var mm = Math.floor(diff / 1000 / 60 / 60);
-                console.log(mm);
-                /*$http({
-                 method: 'GET',
-                 //url: url,
-                 //params: {_method: 'DELETE', schedule_id: $scope.supId, password: 'RandomTest1*'},
-                 url: domain + 'appointment/cancel-app',
-                 params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.bookingStart, endSlot: $scope.bookingEnd}
-                 }).then(function successCallback(response) {
-                 console.log(response);
-                 alert('Your appointment is cancelled successfully.');
-                 $state.go('app.consultations-list');
-                 }, function errorCallback(response) {
-                 console.log(response);
-                 });*/
+                //console.log(mm);
+                $http({
+                    method: 'GET',
+                    url: domain + 'appointment/cancel-app',
+                    params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    if (response.data == 'success') {
+                        alert('Your appointment is cancelled successfully.');
+                    } else {
+                        alert('Sorry your appointment is not cancelled.');
+                    }
+                    $state.go('app.consultations-list');
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
             };
-            $scope.reschedule = function (appId, drId, mode) {
-                //var twentyMinutesLater = new Date(); //$filter('date')(new Date(endTime), 'yyyy-MM-dd HH:mm:ss');
-                //console.log(twentyMinutesLater);
-                //var canTime = twentyMinutesLater.setMinutes(twentyMinutesLater.getMinutes() + 20);
-                //console.log(endTime + '========' + twentyMinutesLater);
-                //console.log(appId, drId);
-                window.localStorage.setItem('appId', appId);
-                $state.go('app.reschedule-appointment', {'id': drId});
+            $scope.reschedule = function (appId, drId, mode, startTime) {
+                console.log(startTime);
+                var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                console.log(curtime);
+                var timeDiff = getTimeDiff(startTime, curtime);
+                console.log(timeDiff);
+                if (mode == 1) {
+                    if (timeDiff <= 1) {
+                        alert("Sorry, You can not reschedule this appointment now!");
+                    } else {
+                        window.localStorage.setItem('appId', appId);
+                        $state.go('app.reschedule-appointment', {'id': drId});
+                    }
+                }
             };
         })
         .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $filter, $state) {
@@ -647,9 +657,7 @@ angular.module('your_app_name.controllers', [])
                 if ($scope.bookingStart) {
                     $http({
                         method: 'GET',
-                        //url: url,
-                        //params: {_method: 'DELETE', schedule_id: $scope.supId, password: 'RandomTest1*'},
-                        url: domain + 'appointment/delete-app',
+                        url: domain + 'appointment/schedule-new-app',
                         params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.bookingStart, endSlot: $scope.bookingEnd}
                     }).then(function successCallback(response) {
                         console.log(response);
@@ -989,7 +997,7 @@ angular.module('your_app_name.controllers', [])
             ;
         })
 
-        .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $cordovaInAppBrowser) {
+        .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $cordovaInAppBrowser) {
             $scope.mode = window.localStorage.getItem('mode');
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
@@ -1010,19 +1018,23 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.bookNow = function () {
+                $ionicLoading.show({template: 'Loading...'});
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
+
                 $http({
                     method: 'GET',
                     url: domain + 'buy/book-appointment',
                     params: {prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
-                    console.log(response);
+                    $ionicLoading.hide();
                     if (response.data.httpcode == 'success')
                     {
                         $state.go('app.success', {'id': response.data.orderId, 'serviceId': response.data.scheduleId});
+                    } else {
+                        $state.go('app.failure', {'id': response.data.orderId, 'serviceId': response.data.scheduleId});
                     }
                 }, function errorCallback(response) {
                     console.log(response);

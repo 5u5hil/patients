@@ -24,7 +24,7 @@ angular.module('your_app_name', [
     'ngCordova',
     'slugifier',
     'ionic.contrib.ui.tinderCards',
-	'jett.ionic.filter.bar',
+    'jett.ionic.filter.bar',
     'youtube-embed'
 ])
 
@@ -40,7 +40,7 @@ angular.module('your_app_name', [
                 if (window.StatusBar) {
                     StatusBar.styleDefault();
                 }
-				
+
                 PushNotificationsService.register();
             });
 
@@ -212,7 +212,7 @@ angular.module('your_app_name', [
                     .state('app.reschedule-appointment', {
                         url: "/reschedule-appointment/{id:int}",
                         views: {
-                            'menuContent':{
+                            'menuContent': {
                                 templateUrl: "views/app/consultations/reschedule-appointment.html",
                                 controller: 'RescheduleAppointmentCtrl'
                             }
@@ -277,8 +277,8 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-					  .state('app.thankyou', {
-						  url: "/thankyou",
+                    .state('app.thankyou', {
+                        url: "/thankyou",
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/thankyou.html",
@@ -286,7 +286,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-					
+
 
                     .state('app.logout', {
                         url: "/logout",
