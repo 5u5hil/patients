@@ -66,7 +66,7 @@
     <div class="footerbar">
         <a class="button" ui-sref="#" ><i class="ion-close"></i>  Cancel</a>
         <a class="button" ui-sref="#" ><i class="ion-calendar"></i>  Reschedule</a>
-        <a class="button" ui-sref="app.patient-join({'id': app[0].appointments.id, 'res': 'json'})"> Join</a>
+        <a ng-if="curTime>=time" class="button" ui-sref="app.patient-join({'id': app[0].appointments.id, 'res': 'json'})"> Join</a>
     </div>
 
 </ion-view>

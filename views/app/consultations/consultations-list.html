@@ -114,7 +114,7 @@
                                         <div class="posts-list" ng-repeat="vApp in video_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
-                                                    <a ui-sref="app.current-tab({'id': vApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
+                                                    <a  ui-sref="app.current-tab({'id': vApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
                                                         <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}} , 

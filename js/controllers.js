@@ -559,10 +559,6 @@ angular.module('your_app_name.controllers', [])
                     }
                 }
             };
-            $scope.getTime = function(startTime){
-              var ti = getBeforeTime(startTime);  
-              console.log($filter('date')(new Date(ti), 'yyyy-MM-dd HH:mm:ss'));
-            };
         })
         .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $filter, $state) {
             $scope.pSch = [];
@@ -1090,32 +1086,11 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                     //$ionicLoading.hide();
                     $state.go('app.Gopay', {'link': response.data});
-                    /*var href = response.data; //'http://infinisystem.com/';
-                     var options = {
-                     location: 'yes',
-                     clearcache: 'yes',
-                     toolbar: 'yes'
-                     };
-                     $cordovaInAppBrowser.open(href, '_blank', options)
-                     .then(function (e) {
-                     $rootScope.$on('$cordovaInAppBrowser:loadstart', function (e, event) {
-                     console.log('start');
-                     });
-                     $rootScope.$on('$cordovaInAppBrowser:loadstop', function (e, event) {
-                     console.log('stopped');
-                     });
-                     // success
-                     })
-                     .catch(function (e) {
-                     // error
-                     });*/
                 }, function errorCallback(response) {
                     console.log(response);
                 });
-            }
-            ;
-        }
-        )
+            };
+        })
 
         .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $cordovaInAppBrowser) {
             console.log($stateParams.link);
@@ -1176,15 +1151,17 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.removeItem('slot');
             window.localStorage.removeItem('prodid');
         })
-        .controller('CurrentTabCtrl', function ($scope, $http, $stateParams) {
+        .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $filter) {
             $scope.appId = $stateParams.id;
             $scope.userId = get('id');
+            $scope.curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
             $http({
                 method: 'GET',
                 url: domain + 'appointment/get-app-details',
                 params: {id: $scope.appId, userId: $scope.userId}
             }).then(function successCallback(response) {
-                console.log(response.data);
+                //console.log(response.data);
+                $scope.time = response.data.time;
                 $scope.app = response.data.app;
                 $scope.doctor = response.data.doctorsData;
                 $scope.products = response.data.products;
