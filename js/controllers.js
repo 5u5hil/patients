@@ -477,6 +477,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.specializations = response.data.spec;
                 //Video
+                $scope.video_time = response.data.video_time;
                 $scope.video_app = response.data.video_app;
                 $scope.video_doctorsData = response.data.video_doctorsData;
                 $scope.video_products = response.data.video_products;
@@ -492,47 +493,75 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
-            $scope.cancelAppointment = function (appId, drId, mode) {
+            $scope.cancelAppointment = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
                 $scope.userId = get('id');
-                //console.log(mode);
-                var from = new Date();
-                var tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                var diff = tomorrow - from;
-                //console.log(tomorrow - from);
-                var mm = Math.floor(diff / 1000 / 60 / 60);
-                //console.log(mm);
-                $http({
-                    method: 'GET',
-                    url: domain + 'appointment/cancel-app',
-                    params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
-                }).then(function successCallback(response) {
-                    console.log(response.data);
-                    if (response.data == 'success') {
-                        alert('Your appointment is cancelled successfully.');
-                    } else {
-                        alert('Sorry your appointment is not cancelled.');
-                    }
-                    $state.go('app.consultations-list');
-                }, function errorCallback(response) {
-                    console.log(response);
-                });
-            };
-            $scope.reschedule = function (appId, drId, mode, startTime) {
                 console.log(startTime);
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 console.log(curtime);
                 var timeDiff = getTimeDiff(startTime, curtime);
                 console.log(timeDiff);
-                if (mode == 1) {
-                    if (timeDiff <= 1) {
-                        alert("Sorry, You can not reschedule this appointment now!");
+                if (timeDiff < 15) {
+                    if (mode == 1) {
+                        alert("Appointment can not be cancelled now!");
+                    } else {
+                        $http({
+                            method: 'GET',
+                            url: domain + 'appointment/cancel-app',
+                            params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                        }).then(function successCallback(response) {
+                            console.log(response.data);
+                            if (response.data == 'success') {
+                                alert('Your appointment is cancelled successfully.');
+                            } else {
+                                alert('Sorry your appointment is not cancelled.');
+                            }
+                            $state.go('app.consultations-list');
+                        }, function errorCallback(response) {
+                            console.log(response);
+                        });
+                    }
+                } else {
+                    $http({
+                        method: 'GET',
+                        url: domain + 'appointment/cancel-app',
+                        params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                    }).then(function successCallback(response) {
+                        console.log(response.data);
+                        if (response.data == 'success') {
+                            alert('Your appointment is cancelled successfully.');
+                        } else {
+                            alert('Sorry your appointment is not cancelled.');
+                        }
+                        $state.go('app.consultations-list');
+                    }, function errorCallback(response) {
+                        console.log(response);
+                    });
+                }
+            };
+            $scope.reschedule = function (appId, drId, mode, startTime) {
+                var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                var timeDiff = getTimeDiff(startTime, curtime);
+                console.log(timeDiff);
+                if (timeDiff < 15) {
+                    alert("Appointment can not be reschedule now!");
+                } else if (timeDiff > 15) {
+                    if (mode == 1) {
+                        if (timeDiff < 60) {
+                            alert("Appointment can not be reschedule now!");
+                        } else {
+                            window.localStorage.setItem('appId', appId);
+                            $state.go('app.reschedule-appointment', {'id': drId});
+                        }
                     } else {
                         window.localStorage.setItem('appId', appId);
                         $state.go('app.reschedule-appointment', {'id': drId});
                     }
                 }
+            };
+            $scope.getTime = function(startTime){
+              var ti = getBeforeTime(startTime);  
+              console.log($filter('date')(new Date(ti), 'yyyy-MM-dd HH:mm:ss'));
             };
         })
         .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $filter, $state) {
@@ -650,10 +679,8 @@ angular.module('your_app_name.controllers', [])
                 $scope.supId = supid;
             };
             $scope.bookNewAppointment = function (prodId) {
-                console.log($scope.bookId);
                 $scope.prodid = prodId;
                 $scope.userId = get('id');
-                var url = $scope.bookId;
                 if ($scope.bookingStart) {
                     $http({
                         method: 'GET',
@@ -661,6 +688,15 @@ angular.module('your_app_name.controllers', [])
                         params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.bookingStart, endSlot: $scope.bookingEnd}
                     }).then(function successCallback(response) {
                         console.log(response);
+                        if (response.data == 'error') {
+                            alert("Appointment can not be reschedule now!");
+                        } else {
+                            if (response.data.httpcode == 'error') {
+                                alert("Sorry, new appointment is not booked!");
+                            } else {
+                                alert('Your appointment is rescheduled successfully.');
+                            }
+                        }
                     }, function errorCallback(response) {
                         console.log(response);
                     });
