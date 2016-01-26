@@ -10,6 +10,16 @@
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
                 <div ng-repeat="field in fields" >
+                    <div ng-if="field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By'">
+                        <label class="item item-input item-select">
+                            <div class="input-label"> Select {{field.field}}</div>
+                            <select name="{{field.name}}">
+                                <option value=""> Select {{field.field}} </option>
+                                <option ng-repeat="doc in doctrs" value="{{doc.id}}"> Dr. {{doc.fname}} {{doc.lname}} </option>
+                                <option value="other" ng-click="addOther(field.name)"> Add new </option>
+                            </select>
+                        </label>
+                    </div>
                     <div ng-if="field.field_types.value == 'text'">                        
                         <label class="item item-input" ng-if="field.multi_value == 0">
                             <input type="text" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" />                            
@@ -78,9 +88,9 @@
                             <textarea placeholder="Enter {{field.field}}" name="{{field.name}}"></textarea>
                         </label>
                         <div  ng-if="field.multi_value == 1">
-                        <label class="item item-input" >
-                            <textarea placeholder="Enter {{field.field}}" name="{{field.name}}"></textarea>
-                        </label>
+                            <label class="item item-input" >
+                                <textarea placeholder="Enter {{field.field}}" name="{{field.name}}"></textarea>
+                            </label>
                         </div>
                     </div>
                     <div ng-if="field.field_types.value == 'select'">                        

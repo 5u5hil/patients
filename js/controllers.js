@@ -345,18 +345,20 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $sce, $compile) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile) {
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
             $scope.fields = [];
             $http({
                 method: 'GET',
                 url: domain + 'records/add',
-                params: {id: $stateParams.id}
+                params: {id: $stateParams.id, userId: $scope.userId}
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.record = response.data.record;
                 $scope.fields = response.data.fields;
+                $scope.problem = response.data.problems;
+                $scope.doctrs = response.data.doctrs;
                 //angular.forEach(response.data, function (value, key) {
                 //    $scope.fields.push($sce.trustAsHtml(createElement(value)));
                 //});
@@ -364,6 +366,10 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
+            $scope.addOther = function (ele) {
+                //console.log('text' + ele);
+                addOther(ele);
+            };
             $scope.addNewElement = function (ele) {
                 //console.log('text' + ele);
                 addNew(ele);
@@ -1283,6 +1289,12 @@ angular.module('your_app_name.controllers', [])
                 session.on({
                     streamCreated: function (event) {
                         session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+                    },
+                    sessionDisconnected: function (event) {
+                        if (event.reason === 'networkDisconnected') {
+                            alert('You lost your internet connection.'
+                                    + 'Please check your connection and try connecting again.');
+                        }
                     }
                 });
                 session.connect(token, function (error) {
@@ -1292,12 +1304,7 @@ angular.module('your_app_name.controllers', [])
                         session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
                 });
-                session.on(sessionDisconnected, function sessionDisconnectHandler(event) {
-                    // The event is defined by the SessionDisconnectEvent class
-                    if (event.reason == "networkDisconnected") {
-                        alert("Your network connection terminated.")
-                    }
-                });
+
             }, function errorCallback(e) {
                 console.log(e);
             });
