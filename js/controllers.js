@@ -348,7 +348,9 @@ angular.module('your_app_name.controllers', [])
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile) {
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
-            $scope.fields = [];
+            $scope.fields = {};
+            $scope.problem = {};
+            $scope.doctrs = {};
             $http({
                 method: 'GET',
                 url: domain + 'records/add',
@@ -366,9 +368,9 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
-            $scope.addOther = function (ele) {
-                //console.log('text' + ele);
-                addOther(ele);
+            $scope.addOther = function (name, field, val) {
+                console.log('text---' + field + '----'+val);
+                //addOther(name, field);
             };
             $scope.addNewElement = function (ele) {
                 //console.log('text' + ele);
