@@ -39,7 +39,7 @@ angular.module('your_app_name.filters', [])
                     return "";
                 }
 
-                var _date = $filter('date')(new Date(input), 'MMM-dd');
+                var _date = $filter('date')(new Date(input), 'yyyy-MM-dd');
 
                 return _date.toUpperCase();
 

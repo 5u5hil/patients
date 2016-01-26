@@ -166,41 +166,41 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ForgotPasswordCtrl', function ($scope, $state) {
-          
-            $scope.recoverPassword = function (email,phone) {
-                window.localStorage.setItem('email',email);
-                console.log("email:  "+email);
-              
+
+            $scope.recoverPassword = function (email, phone) {
+                window.localStorage.setItem('email', email);
+                console.log("email:  " + email);
+
                 $.ajax({
                     type: 'GET',
                     url: domain + "recovery-password",
-                    data: {email:email,phone:phone},
+                    data: {email: email, phone: phone},
                     cache: false,
                     success: function (response) {
                         console.log(response);
                         window.localStorage.setItem('passcode', response.passcode);
-                        
+
                         $state.go('auth.update-password');
                     }
                 });
             };
-            $scope.updatePassword = function (passcode,password,cpassword) {
-                 var email = window.localStorage.getItem('email');
-               // console.log("email: "+email);
+            $scope.updatePassword = function (passcode, password, cpassword) {
+                var email = window.localStorage.getItem('email');
+                // console.log("email: "+email);
                 $.ajax({
                     type: 'GET',
                     url: domain + "update-password",
-                    data: {passcode:passcode,password:password,cpassword:cpassword,email:email},
+                    data: {passcode: passcode, password: password, cpassword: cpassword, email: email},
                     cache: false,
                     success: function (response) {
                         //console.log(response);
-                        if(response == 1){
-                             alert('please login with your new password.');
-                             $state.go('auth.login');
-                        }else{
+                        if (response == 1) {
+                            alert('please login with your new password.');
+                            $state.go('auth.login');
+                        } else {
                             alert('oops something went wrong.');
                         }
-                       
+
                     }
                 });
             };
@@ -239,29 +239,26 @@ angular.module('your_app_name.controllers', [])
         })
         .controller('AdsCtrl', function ($scope, $http, $state, $ionicActionSheet, AdMob, iAd) {
             //$scope.cats = [];
-            $scope.manageAdMob = function () {
-                $http({
-                    method: 'GET',
-                    url: domain + 'records/get-record-categories',
-                    params: {userId: $scope.userid}
-                }).then(function successCallback(response) {
-                    $scope.cats = [];
-                    //console.log(response);
-                    //$scope.categories = response.data; 
-                    angular.forEach(response.data, function (value, key) {
-                        //console.log(value.category);
-                        $scope.cats.push({text: value.category, id: value.id});
-                    });
-                }, function errorCallback(response) {
-                    console.log(response);
+            $http({
+                method: 'GET',
+                url: domain + 'records/get-record-categories',
+                params: {userId: $scope.userid}
+            }).then(function successCallback(response) {
+                $scope.cats = [];
+                //console.log(response);
+                //$scope.categories = response.data; 
+                angular.forEach(response.data, function (value, key) {
+                    //console.log(value.category);
+                    $scope.cats.push({text: value.category, id: value.id});
                 });
-                //console.log($scope.cats);
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            $scope.manageAdMob = function () {
                 // Show the action sheet
                 var hideSheet = $ionicActionSheet.show({
                     //Here you can add some more buttons                    
-                    buttons:
-                            $scope.cats
-                    ,
+                    buttons: $scope.cats,
                     //destructiveText: 'Remove Ads',
                     titleText: 'Select the Category',
                     cancelText: 'Cancel',
@@ -270,59 +267,14 @@ angular.module('your_app_name.controllers', [])
                     },
                     destructiveButtonClicked: function () {
                         console.log("removing ads");
-                        AdMob.removeAds();
+                        //AdMob.removeAds();
                         return true;
                     },
                     buttonClicked: function (index, button) {
                         console.log(button.id);
-                        AdMob.showBanner(button.id);
+                        //AdMob.showBanner(button.id);
                         //window.location.href = "http://192.168.2.169:8100/#/app/add-category/" + button.id;
                         $state.go('app.add-category', {'id': button.id});
-                        return true;
-                    }
-                });
-            };
-            $scope.manageiAd = function () {
-                $http({
-                    method: 'GET',
-                    url: domain + 'records/get-record-categories'
-                }).then(function successCallback(response) {
-                    $scope.cats = [];
-                    //console.log(response);
-                    //$scope.categories = response.data; 
-                    angular.forEach(response.data, function (value, key) {
-                        //console.log(value.category);
-                        $scope.cats.push({text: value.category, id: value.id});
-                    });
-                }, function errorCallback(response) {
-                    console.log(response);
-                });
-                // Show the action sheet
-                var hideSheet = $ionicActionSheet.show({
-                    //Here you can add some more buttons
-                    buttons: $scope.cats,
-                    destructiveText: 'Remove Ads',
-                    titleText: 'Choose the ad to show - Interstitial only works in iPad',
-                    cancelText: 'Cancel',
-                    cancel: function () {
-                        // add cancel code..
-                    },
-                    destructiveButtonClicked: function () {
-                        console.log("removing ads");
-                        iAd.removeAds();
-                        return true;
-                    },
-                    buttonClicked: function (index, button) {
-                        if (button.text == 'Show iAd Banner')
-                        {
-                            console.log("show iAd banner");
-                            iAd.showBanner();
-                        }
-                        if (button.text == 'Show iAd Interstitial')
-                        {
-                            console.log("show iAd interstitial");
-                            iAd.showInterstitial();
-                        }
                         return true;
                     }
                 });
@@ -402,7 +354,9 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/add',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
-                $scope.fields = response.data;
+                console.log(response.data);
+                $scope.record = response.data.record;
+                $scope.fields = response.data.fields;
                 //angular.forEach(response.data, function (value, key) {
                 //    $scope.fields.push($sce.trustAsHtml(createElement(value)));
                 //});
@@ -473,7 +427,6 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-
         .controller('RecordsViewCtrl', function ($scope, $http, $stateParams) {
             $scope.record = {recordId: ''};
             $scope.record.ids = [];
@@ -497,6 +450,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(cat);
             };
         })
+
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams) {
             $scope.recordId = $stateParams.id;
             $http({
@@ -533,6 +487,7 @@ angular.module('your_app_name.controllers', [])
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
         })
+
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter) {
             $scope.specializations = {};
             $scope.userId = get('id');
@@ -630,6 +585,7 @@ angular.module('your_app_name.controllers', [])
                 }
             };
         })
+
         .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $filter, $state) {
             $scope.pSch = [];
             $scope.schP = [];
@@ -775,6 +731,7 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.consultations-list');
             };
         })
+
         .controller('ConsultationCardsCtrl', function ($scope, $http, $stateParams, $ionicLoading) {
             $ionicLoading.show({template: 'Loading...'});
             $scope.specId = $stateParams.id;
@@ -961,17 +918,17 @@ angular.module('your_app_name.controllers', [])
                         if (serv == 1) {
                             $scope.vSch[key] = responseData.data.slots;
                             $scope.schdate[key] = new Date();
-                            $scope.nextdate[key] = new Date();
+                            $scope.nextdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         } else if (serv == 3) {
                             $scope.cSch[key] = responseData.data.slots;
                             $scope.schCdate[key] = new Date();
-                            $scope.nextCdate[key] = new Date();
+                            $scope.nextCdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         } else if (serv == 4) {
                             $scope.hSch[key] = responseData.data.slots;
                             $scope.schHdate[key] = new Date();
-                            $scope.nextHdate[key] = new Date();
+                            $scope.nextHdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         }
 
@@ -1221,6 +1178,7 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.removeItem('slot');
             window.localStorage.removeItem('prodid');
         })
+
         .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $filter, $state) {
             $scope.appId = $stateParams.id;
             $scope.userId = get('id');

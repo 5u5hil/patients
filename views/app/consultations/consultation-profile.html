@@ -122,7 +122,7 @@
                                                     <div ng-if="schV[$index] == vs.supersaas_id">
                                                         {{vSch[$index]==''? 'No slots available':''}}
                                                         <ul class="timesheet"  ng-repeat="(key,slot) in vSch[$index] track by $index">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextdate[$parent.$parent.$index]" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
                                                                 {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                          
                                                             </li>
                                                         </ul>
@@ -158,14 +158,14 @@
                                                     <div class="sche-date">
                                                         <div class="leftarrow" ng-click="getFirstSlots(cs.supersaas_id, $index, serv)"><i class="ion-android-arrow-back"></i></div> 
                                                         <input type="date" ng-model="schCdate[$index]" value="schCdate[$index]|dateFormat1" ng-click="getNextSlots(schCdate[$index], cs.supersaas_id, $index, serv)"/>
-                                                        <input type="hidden" ng-model="nextCdate[$index]" value="nextCdate[$index]|datetime"/>
+                                                        <input type="hidden" ng-model="nextCdate[$index]" value="nextCdate[$index]|dateFormat"/>
                                                         <div class="rightarrow" ng-click="getNextSlots(nextCdate[$index], cs.supersaas_id, $index, serv)"><i class="ion-android-arrow-forward"></i></div> 
                                                     </div>
                                                     <div ng-if="schC[$index] == cs.supersaas_id">
                                                         {{cSch[$index]==''? 'No slots available':''}}
-                                                        <ul class="timesheet" ng-model="cSch[$index]"  ng-repeat="(key, slot) in cSch[$index]">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextCdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], cs.supersaas_id)"s> 
-                                                                {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                 
+                                                        <ul class="timesheet" ng-model="cSch[$index]"  ng-repeat="slot in cSch[$index]">
+                                                            <li onclick="toggleclass(this);" ng-if="slt['sdate'] < nextCdate[$parent.$parent.$index]" ng-repeat="slt in slot"  ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], cs.supersaas_id)"> 
+                                                                {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                               
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -205,7 +205,7 @@
                                                     <div ng-if="schH[$index] == hs.supersaas_id">
                                                         {{hSch[$index]==''? 'No slots available':''}}
                                                         <ul class="timesheet" ng-model="hSch[$index]"  ng-repeat="(key, slot) in hSch[$index]">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextHdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], hs.supersaas_id)"s> 
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextHdate[$parent.$parent.$index]" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], hs.supersaas_id)"s> 
                                                                 {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                 
                                                             </li>
                                                         </ul>

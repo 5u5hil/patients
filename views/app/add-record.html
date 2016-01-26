@@ -1,10 +1,10 @@
 <ion-view class="add-category-view">
     <ion-nav-title>
-        <span>Add Record</span>
+        <span>Add Record ({{record.category}})</span>
     </ion-nav-title>
     <ion-content>
         <ul class="list mtop40 addform">
-            <div class="item item-divider">Category</div>
+            <div class="item item-divider">{{record.category}}</div>
             <form ng-submit="submit()" name="recordAdd" id="addrecords" enctype="multipart/form-data" >
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
