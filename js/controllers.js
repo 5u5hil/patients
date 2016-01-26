@@ -911,7 +911,6 @@ angular.module('your_app_name.controllers', [])
                     cache: false,
                     params: {id: supsassId, from: from}
                 }).then(function successCallback(responseData) {
-                    console.log(responseData.data.slots);
                     $ionicLoading.hide();
                     if (responseData.data.lastdate == '')
                     {
@@ -968,7 +967,6 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'doctors/get-doctors-availability',
                     params: {id: supsassId, from: new Date()}
                 }).then(function successCallback(responseData) {
-                    console.log(responseData);
                     $ionicLoading.hide();
                     if (serv == 1) {
                         if (responseData.data.slots == '') {
@@ -1018,13 +1016,11 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.bookSlot = function (starttime, endtime, supid) {
-                console.log(starttime + '===' + endtime + '=========' + supid);
                 $scope.bookingStart = starttime;
                 $scope.bookingEnd = endtime;
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId, serv) {
-                console.log($scope.bookingSlot);
                 if ($scope.bookingStart != '') {
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
