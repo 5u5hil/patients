@@ -13,12 +13,18 @@
                     <div ng-if="field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By'">
                         <label class="item item-input item-select">
                             <div class="input-label"> Select {{field.field}}</div>
-                            <select name="{{field.name}}" id="{{field.name}}" ng-options="doc.id as doc.fname for doc in doctrs" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, doc.id)">
-                                <option value=""> Add new </option>
+                            <select name="{{field.name}}" id="{{field.name}}" ng-options="doc.id as doc.fname for doc in doctrs" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
                             </select>
                         </label>
                     </div>
-                    <div ng-if="field.field != 'Prescribed By' || field.field != 'Measured By' || field.field != 'Referred By'">
+                    <div ng-if="field.field == 'Related Problem'">
+                        <label class="item item-input item-select">
+                            <div class="input-label"> Select {{field.field}}</div>
+                            <select name="{{field.name}}" id="{{field.name}}" ng-options="prob.record_id as prob.fname for prob in problems" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
+                            </select>
+                        </label>
+                    </div>
+                    <div ng-if="field.field !== 'Prescribed By' || field.field !== 'Measured By' || field.field !== 'Referred By' || field.field !== 'Related Problem'">
                         <div ng-if="field.field_types.value == 'text'">                        
                             <label class="item item-input" ng-if="field.multi_value == 0">
                                 <input type="text" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" />                            

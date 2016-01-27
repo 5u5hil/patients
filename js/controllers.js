@@ -369,8 +369,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.addOther = function (name, field, val) {
-                console.log('text---' + field + '----'+val);
-                //addOther(name, field);
+                addOther(name, field, val);
             };
             $scope.addNewElement = function (ele) {
                 //console.log('text' + ele);
