@@ -20,7 +20,7 @@
                     <div ng-if="field.field == 'Related Problem'">
                         <label class="item item-input item-select">
                             <div class="input-label"> Select {{field.field}}</div>
-                            <select name="{{field.name}}" id="{{field.name}}" ng-options="prob.record_id as prob.fname for prob in problems" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
+                            <select name="{{field.name}}" id="{{field.name}}" ng-options="prob.record_id as prob.value for prob in problems" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
                             </select>
                         </label>
                     </div>
