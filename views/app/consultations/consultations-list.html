@@ -52,7 +52,7 @@
                                         <div class="posts-list" ng-repeat="cApp in clinic_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in clinic_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
-                                                    <a ui-sref="app.current-tab({'id': cApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in clinic_doctorsData[$index]">
+                                                    <a ui-sref="app.current-tab({'id': cApp.appointment_id,'mode': 3})" class="card-content paraspacing" ng-repeat="doc in clinic_doctorsData[$index]">
                                                         <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}} , 
@@ -70,7 +70,7 @@
                                                         <div class="row cardbtn-small p0">
                                                             <div class="col"><a confirmed-click="cancelAppointment(cApp.appointment_id,prod.user_id,3, cApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{cApp.appointment_id}}" class="cbtn">Cancel</a></div>
                                                             <div class="col"><a confirmed-click="reschedule(cApp.appointment_id, prod.user_id, 3, cApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?"  class="cbtn">Reschedule</a></div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -84,7 +84,7 @@
                                         <div class="posts-list" ng-repeat="hApp in home_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in home_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
-                                                    <a ui-sref="app.current-tab({'id': hApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in home_doctorsData[$index]">
+                                                    <a ui-sref="app.current-tab({'id': hApp.appointment_id,'mode': 4})" class="card-content paraspacing" ng-repeat="doc in home_doctorsData[$index]">
                                                         <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
@@ -114,7 +114,7 @@
                                         <div class="posts-list" ng-repeat="vApp in video_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
-                                                    <a  ui-sref="app.current-tab({'id': vApp.appointment_id,})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
+                                                    <a  ui-sref="app.current-tab({'id': vApp.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
                                                         <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}} , 
@@ -132,7 +132,7 @@
                                                         <div class="row cardbtn-small p0">
                                                             <div class="col"><a confirmed-click="cancelAppointment(vApp.appointment_id,prod.user_id,1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.appointment_id}}" class="cbtn">Cancel</a></div>
                                                             <div class="col"><a confirmed-click="reschedule(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn">Reschedule</a></div>
-                                                            <div ng-if="curTime>=video_time[$index]" class="col"><a  class="cbtn">Join</a></div>
+                                                            <div ng-if="curTime >= video_time[$index]" class="col"><a  class="cbtn">Join</a></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -140,9 +140,33 @@
                                         </div>
                                     </div>
                                 </ion-tab>
-                                <ion-tab title="Chat" >
-                                    <div class="tabcontainer">
-                                        Under Construction
+                                <ion-tab title="Chat<br>{{chat_app.length}} <br/>" >
+                                    <div class="tabcontainer p0" >
+                                        <div class="posts-list" ng-repeat="chApp in chat_app">
+                                            <div  class="list card post-item" ng-repeat="prod in chat_products[$index]">
+                                                <div class="post-content item item-text-wrap p0">
+                                                    <a  ui-sref="app.current-tab({'id': chApp.id, 'mode': 2})" class="card-content paraspacing" ng-repeat="doc in chat_doctorsData[$index]">
+                                                        <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                                            <span ng-repeat="spec in doc.specializations">
+                                                                {{spec.specialization}} , 
+                                                            </span>
+                                                        </p>
+                                                        <p><strong>Appointment : {{chApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                            <span>Valid From {{chApp.appointments.scheduled_start_time|datetime}} To {{chApp.appointments.scheduled_end_time|datetime}}
+                                                            </span>
+                                                        </p>
+                                                        <p>2 Records Shared by you <br/>
+                                                            3 Records Shared by Dr.ABC</p>
+                                                        <div class="clr"></div>
+                                                    </a>
+                                                    <div class="post-actions  post-footer p0">
+                                                        <div class="row cardbtn-small p0">
+                                                            <div  class="col"><a ui-sref="app.join-chat({'id': chApp.appointment_id, 'mode': mode})"  class="cbtn">Start Chat</a></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </ion-tab>
                             </ion-tabs>

@@ -30,12 +30,13 @@ angular.module('your_app_name.controllers', [])
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        //console.log(response);
+                        console.log(response);
                         if (angular.isObject(response)) {
                             $scope.loginError = '';
                             $scope.loginError.digest;
                             store(response);
                             $rootScope.userLogged = 1;
+                            $rootScope.username = response.fname;
                             //if ($rootScope.url != '') {
                             if (window.localStorage.getItem('url') != null) {
                                 $state.go(window.localStorage.getItem('url'));
@@ -168,41 +169,41 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ForgotPasswordCtrl', function ($scope, $state) {
-          
-            $scope.recoverPassword = function (email,phone) {
-                window.localStorage.setItem('email',email);
-                console.log("email:  "+email);
-              
+
+            $scope.recoverPassword = function (email, phone) {
+                window.localStorage.setItem('email', email);
+                console.log("email:  " + email);
+
                 $.ajax({
                     type: 'GET',
                     url: domain + "recovery-password",
-                    data: {email:email,phone:phone},
+                    data: {email: email, phone: phone},
                     cache: false,
                     success: function (response) {
                         console.log(response);
                         window.localStorage.setItem('passcode', response.passcode);
-                        
+
                         $state.go('auth.update-password');
                     }
                 });
             };
-            $scope.updatePassword = function (passcode,password,cpassword) {
-                 var email = window.localStorage.getItem('email');
-               // console.log("email: "+email);
+            $scope.updatePassword = function (passcode, password, cpassword) {
+                var email = window.localStorage.getItem('email');
+                // console.log("email: "+email);
                 $.ajax({
                     type: 'GET',
                     url: domain + "update-password",
-                    data: {passcode:passcode,password:password,cpassword:cpassword,email:email},
+                    data: {passcode: passcode, password: password, cpassword: cpassword, email: email},
                     cache: false,
                     success: function (response) {
                         //console.log(response);
-                        if(response == 1){
-                             alert('please login with your new password.');
-                             $state.go('auth.login');
-                        }else{
+                        if (response == 1) {
+                            alert('please login with your new password.');
+                            $state.go('auth.login');
+                        } else {
                             alert('oops something went wrong.');
                         }
-                       
+
                     }
                 });
             };
@@ -241,29 +242,26 @@ angular.module('your_app_name.controllers', [])
         })
         .controller('AdsCtrl', function ($scope, $http, $state, $ionicActionSheet, AdMob, iAd) {
             //$scope.cats = [];
-            $scope.manageAdMob = function () {
-                $http({
-                    method: 'GET',
-                    url: domain + 'records/get-record-categories',
-                    params: {userId: $scope.userid}
-                }).then(function successCallback(response) {
-                    $scope.cats = [];
-                    //console.log(response);
-                    //$scope.categories = response.data; 
-                    angular.forEach(response.data, function (value, key) {
-                        //console.log(value.category);
-                        $scope.cats.push({text: value.category, id: value.id});
-                    });
-                }, function errorCallback(response) {
-                    console.log(response);
+            $http({
+                method: 'GET',
+                url: domain + 'records/get-record-categories',
+                params: {userId: $scope.userid}
+            }).then(function successCallback(response) {
+                $scope.cats = [];
+                //console.log(response);
+                //$scope.categories = response.data; 
+                angular.forEach(response.data, function (value, key) {
+                    //console.log(value.category);
+                    $scope.cats.push({text: value.category, id: value.id});
                 });
-                //console.log($scope.cats);
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+            $scope.manageAdMob = function () {
                 // Show the action sheet
                 var hideSheet = $ionicActionSheet.show({
                     //Here you can add some more buttons                    
-                    buttons:
-                            $scope.cats
-                    ,
+                    buttons: $scope.cats,
                     //destructiveText: 'Remove Ads',
                     titleText: 'Select the Category',
                     cancelText: 'Cancel',
@@ -272,59 +270,14 @@ angular.module('your_app_name.controllers', [])
                     },
                     destructiveButtonClicked: function () {
                         console.log("removing ads");
-                        AdMob.removeAds();
+                        //AdMob.removeAds();
                         return true;
                     },
                     buttonClicked: function (index, button) {
                         console.log(button.id);
-                        AdMob.showBanner(button.id);
+                        //AdMob.showBanner(button.id);
                         //window.location.href = "http://192.168.2.169:8100/#/app/add-category/" + button.id;
                         $state.go('app.add-category', {'id': button.id});
-                        return true;
-                    }
-                });
-            };
-            $scope.manageiAd = function () {
-                $http({
-                    method: 'GET',
-                    url: domain + 'records/get-record-categories'
-                }).then(function successCallback(response) {
-                    $scope.cats = [];
-                    //console.log(response);
-                    //$scope.categories = response.data; 
-                    angular.forEach(response.data, function (value, key) {
-                        //console.log(value.category);
-                        $scope.cats.push({text: value.category, id: value.id});
-                    });
-                }, function errorCallback(response) {
-                    console.log(response);
-                });
-                // Show the action sheet
-                var hideSheet = $ionicActionSheet.show({
-                    //Here you can add some more buttons
-                    buttons: $scope.cats,
-                    destructiveText: 'Remove Ads',
-                    titleText: 'Choose the ad to show - Interstitial only works in iPad',
-                    cancelText: 'Cancel',
-                    cancel: function () {
-                        // add cancel code..
-                    },
-                    destructiveButtonClicked: function () {
-                        console.log("removing ads");
-                        iAd.removeAds();
-                        return true;
-                    },
-                    buttonClicked: function (index, button) {
-                        if (button.text == 'Show iAd Banner')
-                        {
-                            console.log("show iAd banner");
-                            iAd.showBanner();
-                        }
-                        if (button.text == 'Show iAd Interstitial')
-                        {
-                            console.log("show iAd interstitial");
-                            iAd.showInterstitial();
-                        }
                         return true;
                     }
                 });
@@ -395,16 +348,22 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $sce, $compile) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile) {
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
-            $scope.fields = [];
+            $scope.fields = {};
+            $scope.problems = {};
+            $scope.doctrs = {};
             $http({
                 method: 'GET',
                 url: domain + 'records/add',
-                params: {id: $stateParams.id}
+                params: {id: $stateParams.id, userId: $scope.userId}
             }).then(function successCallback(response) {
-                $scope.fields = response.data;
+                console.log(response.data);
+                $scope.record = response.data.record;
+                $scope.fields = response.data.fields;
+                $scope.problems = response.data.problems;
+                $scope.doctrs = response.data.doctrs;
                 //angular.forEach(response.data, function (value, key) {
                 //    $scope.fields.push($sce.trustAsHtml(createElement(value)));
                 //});
@@ -412,6 +371,9 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
+            $scope.addOther = function (name, field, val) {
+                addOther(name, field, val);
+            };
             $scope.addNewElement = function (ele) {
                 //console.log('text' + ele);
                 addNew(ele);
@@ -475,7 +437,6 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-
         .controller('RecordsViewCtrl', function ($scope, $http, $stateParams) {
             $scope.record = {recordId: ''};
             $scope.record.ids = [];
@@ -499,6 +460,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(cat);
             };
         })
+
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams) {
             $scope.recordId = $stateParams.id;
             $http({
@@ -535,6 +497,7 @@ angular.module('your_app_name.controllers', [])
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
         })
+
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter) {
             $scope.specializations = {};
             $scope.userId = get('id');
@@ -561,6 +524,10 @@ angular.module('your_app_name.controllers', [])
                 $scope.home_app = response.data.home_app;
                 $scope.home_doctorsData = response.data.home_doctorsData;
                 $scope.home_products = response.data.home_products;
+                //Chat 
+                $scope.chat_app = response.data.chat_app;
+                $scope.chat_doctorsData = response.data.chat_doctorsData;
+                $scope.chat_products = response.data.chat_products;
                 //$state.go('app.category-detail');
             }, function errorCallback(e) {
                 console.log(e);
@@ -632,6 +599,7 @@ angular.module('your_app_name.controllers', [])
                 }
             };
         })
+
         .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $filter, $state) {
             $scope.pSch = [];
             $scope.schP = [];
@@ -777,6 +745,7 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.consultations-list');
             };
         })
+
         .controller('ConsultationCardsCtrl', function ($scope, $http, $stateParams, $ionicLoading) {
             $ionicLoading.show({template: 'Loading...'});
             $scope.specId = $stateParams.id;
@@ -862,6 +831,8 @@ angular.module('your_app_name.controllers', [])
                 $scope.clinicProd = response.data.clinic_product;
                 $scope.clinicInc = response.data.clinic_inclusions;
                 $scope.clinicSch = response.data.clinicSch;
+                $scope.chatProd = response.data.chat_product;
+                $scope.chatInc = response.data.chat_inclusions;
                 $scope.packages = response.data.packages;
                 $scope.services = response.data.services;
                 //$ionicLoading.hide();
@@ -956,24 +927,23 @@ angular.module('your_app_name.controllers', [])
                     cache: false,
                     params: {id: supsassId, from: from}
                 }).then(function successCallback(responseData) {
-                    console.log(responseData.data.slots);
                     $ionicLoading.hide();
                     if (responseData.data.lastdate == '')
                     {
                         if (serv == 1) {
                             $scope.vSch[key] = responseData.data.slots;
                             $scope.schdate[key] = new Date();
-                            $scope.nextdate[key] = new Date();
+                            $scope.nextdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         } else if (serv == 3) {
                             $scope.cSch[key] = responseData.data.slots;
                             $scope.schCdate[key] = new Date();
-                            $scope.nextCdate[key] = new Date();
+                            $scope.nextCdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         } else if (serv == 4) {
                             $scope.hSch[key] = responseData.data.slots;
                             $scope.schHdate[key] = new Date();
-                            $scope.nextHdate[key] = new Date();
+                            $scope.nextHdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         }
 
@@ -1013,7 +983,6 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'doctors/get-doctors-availability',
                     params: {id: supsassId, from: new Date()}
                 }).then(function successCallback(responseData) {
-                    console.log(responseData);
                     $ionicLoading.hide();
                     if (serv == 1) {
                         if (responseData.data.slots == '') {
@@ -1063,13 +1032,11 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.bookSlot = function (starttime, endtime, supid) {
-                console.log(starttime + '===' + endtime + '=========' + supid);
                 $scope.bookingStart = starttime;
                 $scope.bookingEnd = endtime;
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId, serv) {
-                console.log($scope.bookingSlot);
                 if ($scope.bookingStart != '') {
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
@@ -1097,8 +1064,18 @@ angular.module('your_app_name.controllers', [])
                 } else {
                     alert('Please select slot');
                 }
-            }
-            ;
+            };
+            $scope.bookChatAppointment = function (prodId, serv) {
+                window.localStorage.setItem('prodid', prodId);
+                window.localStorage.setItem('url', 'app.payment');
+                window.localStorage.setItem('mode', serv);
+                $rootScope.prodid = prodId;
+                $rootScope.url = 'app.payment';
+                if (checkLogin())
+                    $state.go('app.payment');
+                else
+                    $state.go('auth.login');
+            };
         })
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $cordovaInAppBrowser) {
@@ -1289,14 +1266,16 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.removeItem('slot');
             window.localStorage.removeItem('prodid');
         })
+
         .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $filter, $state) {
             $scope.appId = $stateParams.id;
+            $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
             $http({
                 method: 'GET',
                 url: domain + 'appointment/get-app-details',
-                params: {id: $scope.appId, userId: $scope.userId}
+                params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function successCallback(response) {
                 //console.log(response.data);
                 $scope.time = response.data.time;
@@ -1376,11 +1355,13 @@ angular.module('your_app_name.controllers', [])
 
         .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce) {
             $scope.appId = $stateParams.id;
+            $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
+            $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
-                params: {id: $scope.appId, userId: $scope.userId}
+                params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function sucessCallback(response) {
                 console.log(response.data);
                 $scope.user = response.data.user;
@@ -1389,24 +1370,93 @@ angular.module('your_app_name.controllers', [])
                 var apiKey = '45463682';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
-                var session = OT.initSession(apiKey, sessionId);
+                if (OT.checkSystemRequirements() == 1) {
+                    var session = OT.initSession(apiKey, sessionId);
+                } else {
+                    alert("Your device is not compatible");
+                }
                 session.on({
                     streamCreated: function (event) {
                         session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+                    },
+                    sessionDisconnected: function (event) {
+                        if (event.reason === 'networkDisconnected') {
+                            alert('You lost your internet connection.'
+                                    + 'Please check your connection and try connecting again.');
+                        }
                     }
                 });
                 session.connect(token, function (error) {
                     if (error) {
-                        console.log(error.message);
+                        alert("Error connecting: ", error.code, error.message);
                     } else {
                         session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
                 });
+
             }, function errorCallback(e) {
                 console.log(e);
             });
             $scope.trustSrc = function (src) {
                 return $sce.trustAsResourceUrl(src);
             }
+        })
+        .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
+            $scope.appId = $stateParams.id;
+            $scope.mode = $stateParams.mode;
+            $scope.userId = get('id');
+            $scope.msgs = {};
+            $http({
+                method: 'GET',
+                url: domain + 'chat/patient-join-chat',
+                params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
+            }).then(function sucessCallback(response) {
+                console.log(response.data);
+                $scope.user = response.data.user;
+                $scope.app = response.data.app;
+                $scope.msgs = response.data.chat;
+                //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
+                var apiKey = '45463682';
+                var sessionId = response.data.app[0].appointments.opentok_session_id;
+                var token = response.data.oToken;
+                var session = OT.initSession(apiKey, sessionId);
+                session.connect(token, function (error) {
+                    if (error) {
+                        console.log("Error connecting: ", error.code, error.message);
+                    } else {
+                        console.log("Connected to the session.");
+                    }
+                });
+                session.on("signal", function (event) {
+                    console.log("Signal sent from connection " + event.from.id);
+                    $('#subscribersDiv').append(event.data);
+                });
+                $scope.send = function () {
+                    session.signal({data: jQuery("[name='msg']").val()},
+                            function (error) {
+                                if (error) {
+                                    console.log("signal error ("
+                                            + error.code
+                                            + "): " + error.message);
+                                } else {
+                                    var msg = jQuery("[name='msg']").val();
+                                    $http({
+                                        method: 'GET',
+                                        url: domain + 'chat/add-patient-chat',
+                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                                    }).then(function sucessCallback(response) {
+                                        console.log(response);
+                                        jQuery("[name='msg']").val('');
+                                    }, function errorCallback(e) {
+                                        console.log(e.responseText);
+                                    });
+                                    console.log("signal sent.");
+                                }
+                            }
+                    );
+                };
+            }, function errorCallback(e) {
+                console.log(e.responseText);
+            });
         })
         ;

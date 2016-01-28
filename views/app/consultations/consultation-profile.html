@@ -77,16 +77,16 @@
                                     <p>
                                         <br/>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                                     <br/>
-									
+
                                     <p>
                                         <button class="button button-block button-positive" ng-click="countdown();">Check Availability</button>
                                     </p>
                                 </div>
                         </div>
-						
-							
-						
-						
+
+
+
+
                         </ion-tab>
                     </div>
                     <ion-tab icon="ion-checkmark" title="Schedule Now"  >
@@ -122,7 +122,7 @@
                                                     <div ng-if="schV[$index] == vs.supersaas_id">
                                                         {{vSch[$index]==''? 'No slots available':''}}
                                                         <ul class="timesheet"  ng-repeat="(key,slot) in vSch[$index] track by $index">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextdate[$parent.$parent.$index]" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
                                                                 {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                          
                                                             </li>
                                                         </ul>
@@ -158,14 +158,14 @@
                                                     <div class="sche-date">
                                                         <div class="leftarrow" ng-click="getFirstSlots(cs.supersaas_id, $index, serv)"><i class="ion-android-arrow-back"></i></div> 
                                                         <input type="date" ng-model="schCdate[$index]" value="schCdate[$index]|dateFormat1" ng-click="getNextSlots(schCdate[$index], cs.supersaas_id, $index, serv)"/>
-                                                        <input type="hidden" ng-model="nextCdate[$index]" value="nextCdate[$index]|datetime"/>
+                                                        <input type="hidden" ng-model="nextCdate[$index]" value="nextCdate[$index]|dateFormat"/>
                                                         <div class="rightarrow" ng-click="getNextSlots(nextCdate[$index], cs.supersaas_id, $index, serv)"><i class="ion-android-arrow-forward"></i></div> 
                                                     </div>
                                                     <div ng-if="schC[$index] == cs.supersaas_id">
                                                         {{cSch[$index]==''? 'No slots available':''}}
-                                                        <ul class="timesheet" ng-model="cSch[$index]"  ng-repeat="(key, slot) in cSch[$index]">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextCdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], cs.supersaas_id)"s> 
-                                                                {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                 
+                                                        <ul class="timesheet" ng-model="cSch[$index]"  ng-repeat="slot in cSch[$index]">
+                                                            <li onclick="toggleclass(this);" ng-if="slt['sdate'] < nextCdate[$parent.$parent.$index]" ng-repeat="slt in slot"  ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], cs.supersaas_id)"> 
+                                                                {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                               
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -205,7 +205,7 @@
                                                     <div ng-if="schH[$index] == hs.supersaas_id">
                                                         {{hSch[$index]==''? 'No slots available':''}}
                                                         <ul class="timesheet" ng-model="hSch[$index]"  ng-repeat="(key, slot) in hSch[$index]">
-                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot track by $index" ng-if="slt['sdate'] < nextHdate" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], hs.supersaas_id)"s> 
+                                                            <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextHdate[$parent.$parent.$index]" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], hs.supersaas_id)"s> 
                                                                 {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                 
                                                             </li>
                                                         </ul>
@@ -220,9 +220,17 @@
                             <!-- End Schedule-->
                         </div>
                     </ion-tab>
-                    <ion-tab icon="ion-chatbubble" title="Chat <br/>INR 500" >
-                        <div class="tabcontainer">
-                            Under Construction	
+                    <ion-tab icon="ion-chatbubble" title="{{chatProd.mode}} <br/>INR {{chatProd.price}}" >
+                        <div class="tabcontainer">  
+                            <ul class="clist">
+                                <li>{{chatProd.desc}}</li>
+                                <li ng-repeat="chInc in chatInc track by $index">{{chInc.mode}}, {{chInc.desc}},
+                                    <span ng-if="hInc.discount < 100">Discount : {{chInc.discount}} %</span>, {{chInc.validity_in_days}} Days
+                                </li>
+                            </ul>
+
+                            <div class="clr"></div>
+                            <a class="button button-full button-positive" ng-click="bookChatAppointment(chatProd.id, 2)">Proceed</a>
                         </div>
                     </ion-tab>
                     <ion-tab icon="ion-cube" title="Packages " >
@@ -235,17 +243,17 @@
         </div>
     </ion-content>
 
-	<div class="waitingdiv" ng-show="IsVisible" >
-	<div class="waitdiv">
-		<div class="countcounter" ng-bind="counter"></div>
-		<p class="text-center fwhite">Please Wait...</p>
-	</div>
-	
-	<div class="button button-assertive stickfoot" ng-click="hidediv()">Cancel</div>
-	</div>
+    <div class="waitingdiv" ng-show="IsVisible" >
+        <div class="waitdiv">
+            <div class="countcounter" ng-bind="counter"></div>
+            <p class="text-center fwhite">Please Wait...</p>
+        </div>
 
-	
-	
+        <div class="button button-assertive stickfoot" ng-click="hidediv()">Cancel</div>
+    </div>
+
+
+
 </ion-view>
 
 

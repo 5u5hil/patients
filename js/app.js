@@ -120,8 +120,8 @@ angular.module('your_app_name', [
                         templateUrl: "views/auth/update-password.html",
                         controller: 'ForgotPasswordCtrl'
                     })
-                    
-                    
+
+
 
                     .state('app', {
                         url: "/app",
@@ -231,7 +231,7 @@ angular.module('your_app_name', [
                         }
                     })
                     .state('app.current-tab', {
-                        url: "/current-tab/{id:int}",
+                        url: "/current-tab/{id:int}/{mode:int}",
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/current-tab.html",
@@ -241,11 +241,20 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.patient-join', {
-                        url: "/patient-join/{id:int}",
+                        url: "/patient-join/{id:int}/{mode:int}",
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/patient-join.html",
                                 controller: 'PatientJoinCtrl'
+                            }
+                        }
+                    })
+                    .state('app.join-chat', {
+                        url: "/join-chat/{id:int}/{mode:int}",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/join-chat.html",
+                                controller: 'JoinChatCtrl'
                             }
                         }
                     })
