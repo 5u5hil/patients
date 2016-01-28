@@ -30,20 +30,22 @@
                     <ion-tab title="Pay Now" ng-if="mode==1" >
                         <div class="tabcontainer">
                             <div class="pprice">Price: INR {{product[0].price}}</div>
-                            <div class="row">
+                            <div class="row" ng-if="apply!=1">
                                 <div class="col col-75">
-                                    <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly disabled/>
-                                    <!-- <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly/> -->
+                                    <input type="text" class="custominput" id='coupon' Placeholder="Enter Coupon Code" ng-model="ccode" />
+                                    <span id="coupon_error"></span>
                                 </div>
+                               
                                 <div class="col">
-                                    <button class="button button-small button-assertive csbtn" disabled="">Undo</button>
+                                    <button class="button button-small button-assertive csbtn" ng-click="applyCouponCode(ccode)">Undo</button>
                                     <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
                                 </div>
                             </div>
-                            <p class="fg txt-centre">Applied Discount:20%</p>
-                            <h4 class="txt-centre">Final Price: INR {{product[0].price}}</h4>
+                            <p class="fg txt-centre" ng-if="apply==1">Applied Discount</p>
+                            <h4 class="txt-centre">Final Price: INR {{product[0].price-discountApplied}}</h4>
                             <br/>
                             <div class="section-footer"> <!---ui-sref="app.success"-->
+                              
                                 <a ng-if="mode==1" ng-click="payNow()" class="button button-full button-positive">Pay Now</a>
                                 
                             </div>	
@@ -54,11 +56,12 @@
                             <div class="pprice">Price: INR {{product[0].price}}</div>
                             <div class="row">
                                 <div class="col col-75">
-                                    <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly disabled/>
-                                    <!-- <input type="text" class="custominput" Placeholder="Enter Coupon Code" value="Abc" readonly/> -->
+                                    <input type="text" class="custominput" Placeholder="Enter Coupon Code"  ng-model="ccode" />
+                                  
                                 </div>
                                 <div class="col">
-                                    <button class="button button-small button-assertive csbtn" disabled="">Undo</button>
+                                   
+                                    <button class="button button-small button-assertive csbtn " ng-click="applyCouponCode(ccode)">Undo</button>
                                     <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
                                 </div>
                             </div>
@@ -83,19 +86,6 @@
             </div>
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </ion-content>
 </ion-view>

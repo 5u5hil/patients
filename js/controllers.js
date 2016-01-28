@@ -92,6 +92,7 @@ angular.module('your_app_name.controllers', [])
 
                         window.localStorage.setItem('code', response.otpcode);
                         store($scope.user);
+                        alert('Kindly check your mobile for OTP')
                         $state.go('auth.check-otp');
                     }
                 });
@@ -129,6 +130,7 @@ angular.module('your_app_name.controllers', [])
                                 if (window.localStorage.getItem('url') != null) {
                                     $state.go(window.localStorage.getItem('url'));
                                 } else {
+                                    alert('Your sucessfully registered');
                                     $state.go('app.category-list');
                                 }
                             } else {
@@ -1105,6 +1107,9 @@ angular.module('your_app_name.controllers', [])
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
             $scope.prodid = window.localStorage.getItem('prodid');
+            $scope.apply = '';
+            $scope.ccode ='';
+            $scope.discountApplied ="";
             //console.log(supid + '--' + slot + '---' + prodid);
             $http({
                 method: 'GET',
@@ -1145,13 +1150,15 @@ angular.module('your_app_name.controllers', [])
             $scope.payNow = function () {
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
+                
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
-                //console.log($scope.prodid + '--' + $scope.userId);
+                $scope.discount = window.localStorage.getItem('coupondiscount');
+                console.log($scope.discount + '--' + $scope.userId);
                 $http({
                     method: 'GET',
                     url: domain + 'buy/buy-individual',
-                    params: {prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {discount:$scope.discount,disapply:$scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     console.log(response);
                     //$ionicLoading.hide();
@@ -1160,6 +1167,67 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                 });
             };
+            $scope.applyCouponCode = function (ccode) {
+                // console.log(ccode);
+              
+                $scope.startSlot = window.localStorage.getItem('startSlot');
+                $scope.endSlot = window.localStorage.getItem('endSlot');
+                $scope.prodid = window.localStorage.getItem('prodid');
+                $scope.appUrl = $location.absUrl();
+                $scope.userId = get('id');
+                
+               // console.log($scope.prodid + '--' + $scope.userId);
+                $http({
+                    method: 'GET',
+                    url: domain + 'buy/apply-coupon-code',
+                    params: {couponCode:ccode,prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                     if (response.data == '0') {
+                        alert('Please provide a valid coupon code');
+                        $('#coupon').val("");
+                       
+                        $('#coupon_error').html('Please provide a valid coupon code');
+                        window.localStorage.setItem('coupondiscount', '0');
+
+                    } else
+                    if (response.data == '2') {
+                        alert('Sorry, this coupon code has been expired');
+                        $('#coupon').val("");
+                        
+                        $('#coupon_error').html('Sorry, this coupon code has been expired');
+                        window.localStorage.setItem('coupondiscount', '0');
+
+                    } else
+                if (response.data == '3' ||response.data == '5' ) {
+                        alert('Sorry, this coupon is not valid for this doctor');
+                        $('#coupon').val("");
+                        
+                        $('#coupon_error').html('Sorry,  this coupon is not valid for this doctor');
+                        window.localStorage.setItem('coupondiscount', '0');
+
+                    } else
+                if (response.data == '4') {
+                        alert('Sorry, this coupon is not valid for this user');
+                        $('#coupon').val("");
+                        
+                        $('#coupon_error').html('Sorry, this coupon is not valid for this user');
+                        window.localStorage.setItem('coupondiscount', '0');
+
+                    } else
+                    {
+                        $('#coupon').val("");
+                       $scope.apply = 1;
+                       $scope.discountApplied = response.data;
+                       $('#coupon_error').html('Coupon Applied.');
+                        window.localStorage.setItem('coupondiscount', response.data);
+                        
+                    }
+                    
+                
+                });
+            };
+            
         })
 
         .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $cordovaInAppBrowser) {
