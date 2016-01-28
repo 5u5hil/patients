@@ -348,7 +348,8 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
+            $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
             $scope.fields = {};
@@ -468,9 +469,11 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'records/get-record-details',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
-                //console.log(response);
+                console.log(response.data);
                 $scope.recordDetails = response.data.recordsDetails;
                 $scope.category = response.data.record;
+                $scope.problem = response.data.problem;
+                $scope.doctrs = response.data.doctrs;
                 //$ionicLoading.hide();
             }, function errorCallback(response) {
                 console.log(response);
