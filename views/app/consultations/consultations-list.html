@@ -151,14 +151,17 @@
                                                                 {{spec.specialization}} , 
                                                             </span>
                                                         </p>
-                                                        
+                                                        <p><strong>Appointment : {{chApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                            <span>Valid From {{chApp.appointments.scheduled_start_time|datetime}} To {{chApp.appointments.scheduled_end_time|datetime}}
+                                                            </span>
+                                                        </p>
                                                         <p>2 Records Shared by you <br/>
                                                             3 Records Shared by Dr.ABC</p>
                                                         <div class="clr"></div>
                                                     </a>
                                                     <div class="post-actions  post-footer p0">
                                                         <div class="row cardbtn-small p0">
-                                                            <div  class="col"><a ui-sref="app.join-chat({'id': app[0].id, 'mode': mode})"  class="cbtn">Start Chat</a></div>
+                                                            <div  class="col"><a ui-sref="app.join-chat({'id': chApp.appointment_id, 'mode': mode})"  class="cbtn">Start Chat</a></div>
                                                         </div>
                                                     </div>
                                                 </div>

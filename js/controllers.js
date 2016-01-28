@@ -30,12 +30,13 @@ angular.module('your_app_name.controllers', [])
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        //console.log(response);
+                        console.log(response);
                         if (angular.isObject(response)) {
                             $scope.loginError = '';
                             $scope.loginError.digest;
                             store(response);
                             $rootScope.userLogged = 1;
+                            $rootScope.username = response.fname;
                             //if ($rootScope.url != '') {
                             if (window.localStorage.getItem('url') != null) {
                                 $state.go(window.localStorage.getItem('url'));
@@ -524,7 +525,7 @@ angular.module('your_app_name.controllers', [])
                 //Chat 
                 $scope.chat_app = response.data.chat_app;
                 $scope.chat_doctorsData = response.data.chat_doctorsData;
-                $scope.chat_products = response.data.chat_product;
+                $scope.chat_products = response.data.chat_products;
                 //$state.go('app.category-detail');
             }, function errorCallback(e) {
                 console.log(e);
@@ -1209,16 +1210,10 @@ angular.module('your_app_name.controllers', [])
                 params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function successCallback(response) {
                 //console.log(response.data);
-                if ($scope.mode != 2) {
-                    $scope.time = response.data.time;
-                    $scope.app = response.data.app;
-                    $scope.doctor = response.data.doctorsData;
-                    $scope.products = response.data.products;
-                } else {
-                    $scope.app = response.data.chat_app;
-                    $scope.doctor = response.data.chat_doctorsData;
-                    $scope.products = response.data.chat_product;
-                }
+                $scope.time = response.data.time;
+                $scope.app = response.data.app;
+                $scope.doctor = response.data.doctorsData;
+                $scope.products = response.data.products;
             }, function errorCallback(e) {
                 console.log(e);
             });
@@ -1294,6 +1289,7 @@ angular.module('your_app_name.controllers', [])
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
+            $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
@@ -1353,7 +1349,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.msgs = response.data.chat;
                 //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
                 var apiKey = '45463682';
-                var sessionId = response.data.app[0].opentok_session_id;
+                var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 var session = OT.initSession(apiKey, sessionId);
                 session.connect(token, function (error) {
@@ -1379,11 +1375,11 @@ angular.module('your_app_name.controllers', [])
                                     $http({
                                         method: 'GET',
                                         url: domain + 'chat/add-patient-chat',
-                                        params: {from: $scope.userId, to:$scope.user[0].id, msg: msg}
-                                    }).then(function sucessCallback(response){
+                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                                    }).then(function sucessCallback(response) {
                                         console.log(response);
                                         jQuery("[name='msg']").val('');
-                                    }, function errorCallback(e){
+                                    }, function errorCallback(e) {
                                         console.log(e.responseText);
                                     });
                                     console.log("signal sent.");

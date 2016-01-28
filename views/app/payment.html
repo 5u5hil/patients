@@ -13,11 +13,11 @@
                     </p>
                     <!--<p><strong>Qualification</strong><br/>MBBS,MD</p>-->
                     <ul class="clist">
-                        <li ng-repeat="pro in product">{{pro.desc}},{{pro.mode}} </li>
+                        <li ng-repeat="pro in product">{{pro.desc}}, {{pro.mode}} </li>
                         <li ng-repeat="pInc in  prod_inclusion track by $index">{{pInc.mode}}, {{pInc.desc}},
                             <span ng-if="pInc.discount < 100">Discount : {{pInc.discount}} %</span>, {{pInc.validity_in_days}} Days</li>
                     </ul>
-                    <p ng-if="supid!=''"><strong>Appointment Details</strong> <br/> 
+                    <p ng-if="product[0].mode!='Chat'"><strong>Appointment Details</strong> <br/> 
                         <strong>Date: </strong> {{startSlot | dateFormat3}} <br/>
                         <strong>Time: </strong> {{startSlot | time}} To {{endSlot | time}}<br/>
                         <!---<strong>Mode: </strong> Video<br/>
