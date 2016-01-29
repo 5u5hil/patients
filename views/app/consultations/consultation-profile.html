@@ -71,13 +71,11 @@
                 <ion-tabs class="tabs-positive tabs-icon-top" >
                     <div>
                         <div>
-                            <ion-tab icon="ion-videocamera" title="Instant<br> video <br> INR 300" >
+                            <ion-tab icon="ion-videocamera" title="Instant<br> video <br> INR {{instVideo.price}}" >
                                 <!-- Tab 1 content -->
                                 <div class="tabcontainer"> 
                                     <p>
-                                        <br/>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                    <br/>
-
+                                        {{instVideo.desc}}
                                     <p>
                                         <button class="button button-block button-positive" ng-click="countdown();">Check Availability</button>
                                     </p>

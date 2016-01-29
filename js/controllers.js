@@ -801,7 +801,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.IsVisible = false;
                 $timeout.cancel(stopped);
                 $scope.counter = 100;
-            }
+            };
             $scope.vSch = [];
             $scope.schV = [];
             $scope.schdate = [];
@@ -824,6 +824,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.doctor = response.data.user;
                 $scope.videoProd = response.data.video_product;
+                $scope.instVideo = response.data.inst_video;
                 $scope.videoInc = response.data.video_inclusions;
                 $scope.videoSch = response.data.videoSch;
                 $scope.chatProd = response.data.chat_product;
@@ -1129,8 +1130,7 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.payNow = function () {
                 $scope.startSlot = window.localStorage.getItem('startSlot');
-                $scope.endSlot = window.localStorage.getItem('endSlot');
-                
+                $scope.endSlot = window.localStorage.getItem('endSlot');                
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
