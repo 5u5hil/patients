@@ -1041,7 +1041,8 @@ angular.module('your_app_name.controllers', [])
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId, serv) {
-                if ($scope.bookingStart != '') {
+                console.log($scope.bookingStart);
+                if ($scope.bookingStart) {
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
