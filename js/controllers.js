@@ -1275,7 +1275,7 @@ angular.module('your_app_name.controllers', [])
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
-            $scope.curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
             $http({
                 method: 'GET',
                 url: domain + 'appointment/get-app-details',
