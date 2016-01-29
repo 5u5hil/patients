@@ -1083,15 +1083,15 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $cordovaInAppBrowser) {
+        .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
             $scope.mode = window.localStorage.getItem('mode');
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
             $scope.prodid = window.localStorage.getItem('prodid');
             $scope.apply = '';
-            $scope.ccode ='';
-            $scope.discountApplied ="";
+            $scope.ccode = '';
+            $scope.discountApplied = "";
             //console.log(supid + '--' + slot + '---' + prodid);
             $http({
                 method: 'GET',
@@ -1131,15 +1131,18 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.payNow = function () {
                 $scope.startSlot = window.localStorage.getItem('startSlot');
-                $scope.endSlot = window.localStorage.getItem('endSlot');                
+                $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
                 console.log($scope.discount + '--' + $scope.userId);
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $http({
                     method: 'GET',
                     url: domain + 'buy/buy-individual',
-                    params: {discount:$scope.discount,disapply:$scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     console.log(response);
                     //$ionicLoading.hide();
@@ -1150,24 +1153,24 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.applyCouponCode = function (ccode) {
                 // console.log(ccode);
-              
+
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.prodid = window.localStorage.getItem('prodid');
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
-                
-               // console.log($scope.prodid + '--' + $scope.userId);
+
+                // console.log($scope.prodid + '--' + $scope.userId);
                 $http({
                     method: 'GET',
                     url: domain + 'buy/apply-coupon-code',
-                    params: {couponCode:ccode,prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {couponCode: ccode, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     console.log(response.data);
-                     if (response.data == '0') {
+                    if (response.data == '0') {
                         alert('Please provide a valid coupon code');
                         $('#coupon').val("");
-                       
+
                         $('#coupon_error').html('Please provide a valid coupon code');
                         window.localStorage.setItem('coupondiscount', '0');
 
@@ -1175,43 +1178,43 @@ angular.module('your_app_name.controllers', [])
                     if (response.data == '2') {
                         alert('Sorry, this coupon code has been expired');
                         $('#coupon').val("");
-                        
+
                         $('#coupon_error').html('Sorry, this coupon code has been expired');
                         window.localStorage.setItem('coupondiscount', '0');
 
                     } else
-                if (response.data == '3' ||response.data == '5' ) {
+                    if (response.data == '3' || response.data == '5') {
                         alert('Sorry, this coupon is not valid for this doctor');
                         $('#coupon').val("");
-                        
+
                         $('#coupon_error').html('Sorry,  this coupon is not valid for this doctor');
                         window.localStorage.setItem('coupondiscount', '0');
 
                     } else
-                if (response.data == '4') {
+                    if (response.data == '4') {
                         alert('Sorry, this coupon is not valid for this user');
                         $('#coupon').val("");
-                        
+
                         $('#coupon_error').html('Sorry, this coupon is not valid for this user');
                         window.localStorage.setItem('coupondiscount', '0');
 
                     } else
                     {
                         $('#coupon').val("");
-                       $scope.apply = 1;
-                       $scope.discountApplied = response.data;
-                       $('#coupon_error').html('Coupon Applied.');
+                        $scope.apply = 1;
+                        $scope.discountApplied = response.data;
+                        $('#coupon_error').html('Coupon Applied.');
                         window.localStorage.setItem('coupondiscount', response.data);
-                        
+
                     }
-                    
-                
+
+
                 });
             };
-            
+
         })
 
-        .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $cordovaInAppBrowser) {
+        .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
             console.log($stateParams.link);
             $scope.link = $stateParams.link;
             $scope.trustSrc = function (src) {
@@ -1357,7 +1360,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce) {
+        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1401,9 +1404,6 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
-            $scope.trustSrc = function (src) {
-                return $sce.trustAsResourceUrl(src);
-            }
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
             $scope.appId = $stateParams.id;
