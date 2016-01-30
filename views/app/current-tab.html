@@ -16,7 +16,7 @@
                                 <span ng-repeat="spec in doctor[0].specializations">
                                     {{spec.specialization}} , 
                                 </span></p>
-                            <p ng-if="mode != '2'"><strong>Appointment Time: </strong> {{app[0].appointments.scheduled_start_time|time}} to {{app[0].appointments.scheduled_end_time|time}} </p>
+                            <p ng-if="mode != '2'"><strong>Appointment Time: </strong> {{app[0].appointments.scheduled_start_time|dateFormat}} <br/> {{app[0].appointments.scheduled_start_time|time}} to {{app[0].appointments.scheduled_end_time|time}} </p>
                             <p ng-if="mode != '2'"><strong>Mode: </strong> {{app[0].appointments.mode==1? 'Video':''}}{{app[0].appointments.mode==2? 'Chat':''}}{{app[0].appointments.mode==3? 'Clinic':''}}{{app[0].appointments.mode==4? 'Home':''}}</p>
                             <p><strong>Qualification:</strong> 
                                 <span ng-repeat="qual in doctor[0].qualifications">
