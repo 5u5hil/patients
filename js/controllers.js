@@ -212,9 +212,10 @@ angular.module('your_app_name.controllers', [])
                     data: {passcode: passcode, password: password, cpassword: cpassword, email: email},
                     cache: false,
                     success: function (response) {
-                        //console.log(response);
+                        console.log("#######"+passcode);
+                        console.log("@@@@"+window.localStorage.getItem('passcode'));
                         if (response == 1) {
-                            if(passcode == window.localStorage.getItem('passcode')){
+                            if(parseInt(passcode) == parseInt(window.localStorage.getItem('passcode'))){
                             alert('Please login with your new password.');
                             $state.go('auth.login');
                         }else{
@@ -1169,7 +1170,7 @@ angular.module('your_app_name.controllers', [])
                     //$ionicLoading.hide();
                     $state.go('app.Gopay', {'link': response.data});
                 }, function errorCallback(response) {
-                    console.log(response);
+                 console.log(response);
                 });
             };
             $scope.applyCouponCode = function (ccode) {
