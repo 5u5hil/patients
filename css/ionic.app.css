@@ -4652,7 +4652,7 @@ ion-tabs.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs.tabs-color-a
     position: relative;
     z-index: 2;
     display: block;
-    /* margin: -1px; */
+margin: -1px; 
     padding: 14px;
     border-width: 1px;
     border-style: solid;
@@ -7694,7 +7694,7 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
     color: #444444; }
 
 .bar.app-top-bar {
-    background-color: #FF4C4C; }
+    background-color: #387ef5; }
 .bar.app-top-bar .title {
     color: #FFFFFF !important; }
 .bar.app-top-bar .title * {
@@ -8439,8 +8439,10 @@ div.iconbuttons[data-tags="twitter"]{ border:1px #28a9e0 solid; color:#28a9e0;}
 }
 .sign-up-container .item.item-input{border-style: dashed;}
 .sign-up-container  .item-input{padding: 6px 0 5px 5px;}
-.cicon{    font-size: 32px;}
+.cicon{    font-size: 28px;}
 .ctitle{font-size:24px; padding-left:5px;}
+.cicon,.ctitle{color:#387ef5;}
+
 .catlist{margin-top:40px;}
 .catlist p{margin-top:5px;}
 .mtop40{margin-top:40px;}
@@ -8528,7 +8530,7 @@ h4.subhead.inactive{opacity:0.5;}
 .cradio .item-radio .item-content{    padding: 13px 49px 13px 16px;}
 .card.active{    border: 1px rgba(255, 76, 76,0.6) solid;}
 a.posts-list{text-decoration:none;}
-.tab-item.tab-item-active, .tab-item.active, .tab-item.activated{box-shadow:0px 2px 0 #ccc; background:#fff;}
+.tab-item.tab-item-active, .tab-item.active, .tab-item.activated{box-shadow:0px 2px 0 #387ef5; background:#fff; color:#387ef5;}
 
 .footerbar a{width:33.33%; padding:0; border:none; display: block; float:left; text-align:center;}
 .footerbar a:first-child,.footerbar a:nth-child(2){border-right:1px #ccc solid;}
@@ -8557,7 +8559,7 @@ a.posts-list{text-decoration:none;}
             font-size: 16px;
 }
 .clist-data-icon a{text-decoration:none;}
-.consultview{margin-top:55px;}
+.consultview{/* margin-top:55px; */ margin-top:10px;}
 select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 .consultview .post-footer,.consultview .post-footer .row{padding:0;}
 

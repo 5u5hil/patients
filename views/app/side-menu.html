@@ -18,7 +18,7 @@
                 <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="app.profile">
                     <div class="user-image-container">
                         <pre-img ratio="_1_1" helper-class="rounded-image">
-                            <img class="user-image" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" spinner-on-load>
+                            <img class="user-image" ng-src="img/default-profile.jpg" spinner-on-load>
                         </pre-img>
                     </div>
                     <h2 class="greeting">Hi {{username}}, </h2>
@@ -26,12 +26,12 @@
                 </ion-item>
 
                 <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.category-list">
-                    <i class="icon ion-gear-a"></i>
-                    <h2 class="menu-text">Category List</h2>
+                    <i class="icon ion-android-home"></i>
+                    <h2 class="menu-text">Home</h2>
                 </ion-item>
 
                 <ion-item class="item-icon-left" nav-clear menu-close ui-sref="{{ userLogged == 1 ? 'app.logout' : 'auth.login'}}">
-                    <i class="icon ion-gear-a"></i>
+                    <i class="icon ion-android-unlock"></i>
                     <h2 class="menu-text">{{ userLogged == 1 ? 'Logout' : 'Login / Register'}}</h2>
                 </ion-item>
 
