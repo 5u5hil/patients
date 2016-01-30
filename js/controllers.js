@@ -148,12 +148,12 @@ angular.module('your_app_name.controllers', [])
                                 store(response);
                                 $rootScope.userLogged = 1;
                                 //if ($rootScope.url != '') {
-                                if (window.localStorage.getItem('url') != null) {
-                                    $state.go(window.localStorage.getItem('url'));
-                                } else {
+//                                if (window.localStorage.getItem('url') != null) {
+//                                    $state.go(window.localStorage.getItem('url'));
+//                                } else {
                                     alert('Your sucessfully registered');
                                     window.location.href = '#/app/category-list';
-                                }
+                                //}
                             } else {
                                 alert('Please fill all the details for signup');
                             }
@@ -1080,7 +1080,7 @@ angular.module('your_app_name.controllers', [])
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
                     window.localStorage.setItem('prodid', prodId);
-                    window.localStorage.setItem('url', 'app.payment');
+                    //window.localStorage.setItem('url', 'app.payment');
                     window.localStorage.setItem('mode', serv);
                     $rootScope.supid = $scope.supId;
                     $rootScope.startSlot = $scope.bookingStart;
@@ -1105,7 +1105,7 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.bookChatAppointment = function (prodId, serv) {
                 window.localStorage.setItem('prodid', prodId);
-                window.localStorage.setItem('url', 'app.payment');
+                //window.localStorage.setItem('url', 'app.payment');
                 window.localStorage.setItem('mode', serv);
                 $rootScope.prodid = prodId;
                 $rootScope.url = 'app.payment';
