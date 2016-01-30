@@ -3,11 +3,11 @@ var subscriber;
 
 angular.module('your_app_name.controllers', [])
 
-.run(function($rootScope, $templateCache) {
-   $rootScope.$on('$viewContentLoaded', function() {
-      $templateCache.removeAll();
-   });
-})
+        .run(function ($rootScope, $templateCache) {
+            $rootScope.$on('$viewContentLoaded', function () {
+                $templateCache.removeAll();
+            });
+        })
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
@@ -221,17 +221,17 @@ angular.module('your_app_name.controllers', [])
                     data: {passcode: passcode, password: password, cpassword: cpassword, email: email},
                     cache: false,
                     success: function (response) {
-                        console.log("#######"+passcode);
-                        console.log("@@@@"+window.localStorage.getItem('passcode'));
+                        console.log("#######" + passcode);
+                        console.log("@@@@" + window.localStorage.getItem('passcode'));
                         if (response == 1) {
 
-                            if(parseInt(passcode) == parseInt(window.localStorage.getItem('passcode'))){
-                            alert('Please login with your new password.');
-                            $state.go('auth.login');
-                        }else{
-                            alert('Please enter valid OTP.');
-                            
-                        }
+                            if (parseInt(passcode) == parseInt(window.localStorage.getItem('passcode'))) {
+                                alert('Please login with your new password.');
+                                $state.go('auth.login');
+                            } else {
+                                alert('Please enter valid OTP.');
+
+                            }
 
                         } else {
                             alert('Oops something went wrong.');
@@ -1181,7 +1181,7 @@ angular.module('your_app_name.controllers', [])
                     //$ionicLoading.hide();
                     $state.go('app.Gopay', {'link': response.data});
                 }, function errorCallback(response) {
-                 console.log(response);
+                    console.log(response);
                 });
             };
             $scope.applyCouponCode = function (ccode) {
@@ -1469,13 +1469,14 @@ angular.module('your_app_name.controllers', [])
 
             $scope.exitVideo = function () {
                 try {
-                     publisher.destroy();
-                subscriber.destroy();
-                }catch (err){
-                    
+                    publisher.destroy();
+                    subscriber.destroy();
+                    window.location.href = "#/app/category-listing";
+                } catch (err) {
+
                 }
-                
-               
+
+
             };
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
