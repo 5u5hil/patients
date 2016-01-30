@@ -1428,6 +1428,10 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
+            $scope.exitVideo = function(){
+                $scope.publisher.destroy();
+                $scope.subscriber.destroy();
+            };
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
             $scope.appId = $stateParams.id;
