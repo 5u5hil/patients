@@ -1389,7 +1389,7 @@ angular.module('your_app_name.controllers', [])
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-        
+
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
@@ -1409,7 +1409,9 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-                        subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+
+                        subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
+                        session.publish(subscriber);
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1423,7 +1425,9 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
                     } else {
                         jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
-                        publisher = session.publish('myPublisherDiv', {width: "30%", height: "30%"});
+                        publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
+                        session.publish(publisher);
+
                     }
                 });
 
@@ -1432,7 +1436,7 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.exitVideo = function () {
                 publisher.destroy();
-               subscriber.destroy();
+                subscriber.destroy();
             };
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
