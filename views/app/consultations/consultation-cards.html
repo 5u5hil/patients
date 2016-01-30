@@ -2,16 +2,16 @@
     <ion-nav-title>
         <span>{{spec[0].specialization}}</span>
     </ion-nav-title>
-   <!--  <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-person">
-        </button>
-    </ion-nav-buttons>
-    <div class="bar bar-subheader cbar divider-2">
-        <div class="row">
-            <div class="col-50"><a  ui-sref="app.filter"><h4 class="subhead"><i class="icon ion-funnel"></i> Filter</h4></a></div>
-            <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
-        </div>
-    </div> -->
+    <!--  <ion-nav-buttons side="right">
+         <button class="button button-icon button-clear ion-person">
+         </button>
+     </ion-nav-buttons>
+     <div class="bar bar-subheader cbar divider-2">
+         <div class="row">
+             <div class="col-50"><a  ui-sref="app.filter"><h4 class="subhead"><i class="icon ion-funnel"></i> Filter</h4></a></div>
+             <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
+         </div>
+     </div> -->
     <ion-content>
         <div class="list consultview">
             <h4>{{doctors.length==0?'No Doctors': ''}}</h4>
@@ -19,15 +19,15 @@
                 <div  class="list card post-item">
                     <div class="post-content item item-text-wrap p0">
                         <a ui-sref="app.consultation-profile({'id' : doc.id, 'res' : 'json'})" class="card-content" >
-                           <!--  <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div> -->
+                            <!--  <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div> -->
                             <div class="card-left">	
                                 <img class="user-image-circle" ng-src="img/default-user.jpg">
                             </div>
                             <div class="card-detail txt-left">
                                 <p><strong>Mr. {{doc.fname}} {{doc.lname}}</strong><br/>
                                     <span ng-repeat="spec in doc.specializations">
-                                            {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
-                                        </span></p>
+                                        {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
+                                    </span></p>
                             </div>
                             <div class="row txt-left">
                                 <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}} Years of Experience</p></div>	
@@ -46,75 +46,58 @@
                             <div class="clr"></div>
                         </a>
                         <div class="post-actions row post-footer">
-                           <div class="row cardbtn">
+                            <div class="row cardbtn">
                                 <div class="col" ng-repeat="serv in docServices[$index]">
-                                    <div class="cbtn" ng-if="serv.service_id==1">
+                                    <div class="cbtn" ng-if="serv.service_id == 1">
                                         <i class="ion-videocamera f33" ></i>   <br/>                                      
                                         Video
                                     </div>
-                                    <div class="cbtn" ng-if="serv.service_id==2 ">
+                                    <div class="cbtn" ng-if="serv.service_id == 2">
                                         <i class="ion-chatbubble f33" ></i>  <br/>                                      
                                         Chat
                                     </div>
-                                    <div class="cbtn" ng-if="serv.service_id==3">
+                                    <div class="cbtn" ng-if="serv.service_id == 3">
                                         <i class="ion-home f33" ></i>      <br/>                                   
                                         Clinic
                                     </div>
-                                    <div class="cbtn" ng-if="serv.service_id==4">
+                                    <div class="cbtn" ng-if="serv.service_id == 4">
                                         <i class="ion-person f33" ></i>  <br/>                                       
                                         Home
                                     </div>
                                 </div>
-                             
-						</div> 
-							
-							
-						 <!--  <div class="cardopt-row" ng-repeat="serv in docServices[$index]">
-						
-						 <div class="cardoptions">
-						 <span class="bstatus">
-							 <i class="ion-android-done" ng-if="serv.service_id==1 && serv.service_id!=2 && serv.service_id!=3 && serv.service_id!=4"></i>
-							
-						</span>
-						 Instant
-						 </div>
-						 
-						 <div class="cardoptions" ng-if="serv.service_id==2">
-							 <span class="bstatus">
-									<i class="ion-android-done" ng-if="serv.service_id!=1 && serv.service_id==2 && serv.service_id!=3 && serv.service_id!=4"></i>
-									
-							 </span>
-								 Chat
-							</div>
-						
-						
-						  <div class="cardoptions">
-							  <span class="bstatus">
-									 <i class="ion-android-done" ng-if="serv.service_id!=1 && serv.service_id!=2 && serv.service_id==3 && serv.service_id!=4"></i>
-									 
-							</span>
-							Clinic
-						  </div>
-								 
-						 <div class="cardoptions">
-						 <span class="bstatus">
-								 <i class="ion-android-done" ng-if="serv.service_id==1 && serv.service_id!=2 && serv.service_id!=3 && serv.service_id==4"></i>
-							
-						</span>
-						Home
-						</div>
-						
-						 </div>	 -->	
-							
-							
-							
-								
-							
-							
-							
-							
-							
-							
+
+                            </div> 
+
+
+                            <div class="cardopt-row" ng-repeat="serv in docServices[$index]">
+                                <div class="cardoptions">
+                                    <span class="bstatus">
+                                        <i class="ion-android-done" ng-if="serv.service_id == 1 && serv.service_id != 2 && serv.service_id != 3 && serv.service_id != 4"></i>
+                                    </span>
+                                    Instant
+                                </div>
+
+                                <div class="cardoptions" ng-if="serv.service_id == 2">
+                                    <span class="bstatus">
+                                        <i class="ion-android-done" ng-if="serv.service_id != 1 && serv.service_id == 2 && serv.service_id != 3 && serv.service_id != 4"></i>
+                                    </span>
+                                    Chat
+                                </div>
+                                <div class="cardoptions">
+                                    <span class="bstatus">
+                                        <i class="ion-android-done" ng-if="serv.service_id != 1 && serv.service_id != 2 && serv.service_id == 3 && serv.service_id != 4"></i>
+
+                                    </span>
+                                    Clinic
+                                </div>
+                                <div class="cardoptions">
+                                    <span class="bstatus">
+                                        <i class="ion-android-done" ng-if="serv.service_id == 1 && serv.service_id != 2 && serv.service_id != 3 && serv.service_id == 4"></i>
+                                    </span>
+                                    Home
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -636,7 +636,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId, from: new Date()}
+                        params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
                     }).then(function successCallback(responseData) {
                         $scope.pSch[key] = responseData.data.slots;
                         $scope.schP[key] = supsassId;
