@@ -1,14 +1,22 @@
 angular.module('your_app_name.controllers', [])
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
-            if ($rootScope.userLogged == 0)
-                $state.go('auth.login');
+            if (window.localStorage.getItem('id') != null) {
+                $rootScope.userLogged = 1;
+            } else {
+                if ($rootScope.userLogged == 0)
+                    $state.go('auth.login');
+            }
         })
 
 // APP
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
-            if ($rootScope.userLogged == 0)
-                $state.go('auth.login');
+            if (window.localStorage.getItem('id') != null) {
+                $rootScope.userLogged = 1;
+            } else {
+                if ($rootScope.userLogged == 0)
+                    $state.go('auth.login');
+            }
         })
 
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
@@ -38,11 +46,11 @@ angular.module('your_app_name.controllers', [])
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
                             //if ($rootScope.url != '') {
-                            if (window.localStorage.getItem('url') != null) {
-                                $state.go(window.localStorage.getItem('url'));
-                            } else {
-                                $state.go('app.category-list');
-                            }
+                            /*if (window.localStorage.getItem('url') != null) {
+                             $state.go(window.localStorage.getItem('url'));
+                             } else {*/
+                            $state.go('app.category-list');
+                            //}
                         } else {
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
@@ -69,8 +77,8 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.clear();
             $rootScope.userLogged = 0;
             $rootScope.$digest;
-            $state.go('auth.walkthrough');
-            //window.location.href = "#/";
+            //$state.go('auth.walkthrough');
+            window.location.href = "#/";
         })
         .controller('SignupCtrl', function ($scope, $state, $http, $rootScope) {
             $scope.user = {};
@@ -97,8 +105,6 @@ angular.module('your_app_name.controllers', [])
                         $state.go('auth.check-otp');
                     }
                 });
-
-
             };
 
             //check OTP

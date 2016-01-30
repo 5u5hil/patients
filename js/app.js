@@ -121,8 +121,6 @@ angular.module('your_app_name', [
                         controller: 'ForgotPasswordCtrl'
                     })
 
-
-
                     .state('app', {
                         url: "/app",
                         abstract: true,
@@ -179,6 +177,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+                    
                     .state('app.record-details', {
                         url: "/record-details/{id:int}",
                         views: {
@@ -230,6 +229,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+                    
                     .state('app.current-tab', {
                         url: "/current-tab/{id:int}/{mode:int}",
                         views: {
@@ -249,6 +249,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+                    
                     .state('app.join-chat', {
                         url: "/join-chat/{id:int}/{mode:int}",
                         views: {
