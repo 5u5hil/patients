@@ -20,7 +20,7 @@
                              </div>	
                         </div> -->
                         <div class="list miscellaneous-functionalities">
-                            <a class="item  item-icon-right" ui-sref="app.consultation-cards({'id':spec.id, 'res' : 'json'})"  ng-repeat="spec in specializations| filter : searchKeyword">
+                            <a class="item  item-icon-right" ui-sref="app.consultation-cards({'id':spec.id, 'res' : 'json'})"  ng-repeat="spec in specializations| orderBy:'specialization' |filter : searchKeyword ">
                                 <div>
                                     <span class="stitle">{{spec.specialization}}</span>
                                    <!-- <p class=""><label ng-repeat="focus in spec.focuses">{{focus.focus}}, </label>{{spec.description}}</p>-->

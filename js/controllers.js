@@ -27,8 +27,9 @@ angular.module('your_app_name.controllers', [])
 
 
 //LOGIN
-        .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope) {
+        .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope,$ionicLoading) {
             $scope.doLogIn = function () {
+                $ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
                 $.ajax({
                     type: 'POST',
@@ -58,8 +59,10 @@ angular.module('your_app_name.controllers', [])
                             //alert(response);
                         }
                         $rootScope.$digest;
+                        $ionicLoading.hide();
                     },
                     error: function (e) {
+                        $ionicLoading.hide();
                         console.log(e.responseText);
                     }
                 });
@@ -853,7 +856,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId, from: new Date()}
+                        params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
                     }).then(function successCallback(responseData) {
                         $scope.vSch[key] = responseData.data.slots;
                         $scope.schV[key] = supsassId;
@@ -879,7 +882,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId, from: new Date()}
+                        params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
                     }).then(function successCallback(responseData) {
                         $scope.cSch[key] = responseData.data.slots;
                         $scope.schC[key] = supsassId;
@@ -905,7 +908,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctors-availability',
-                        params: {id: supsassId, from: new Date()}
+                        params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
                     }).then(function successCallback(responseData) {
                         $scope.hSch[key] = responseData.data.slots;
                         $scope.schH[key] = supsassId;
@@ -991,7 +994,7 @@ angular.module('your_app_name.controllers', [])
                 $http({
                     method: 'GET',
                     url: domain + 'doctors/get-doctors-availability',
-                    params: {id: supsassId, from: new Date()}
+                    params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
                 }).then(function successCallback(responseData) {
                     $ionicLoading.hide();
                     if (serv == 1) {

@@ -98,6 +98,11 @@ angular.module('your_app_name', [
                         templateUrl: "views/auth/login.html",
                         controller: 'LoginCtrl'
                     })
+                    .state('auth.logout', {
+                        url: '/login',
+                        templateUrl: "views/auth/login.html",
+                        controller: 'LogoutCtrl'
+                    })
 
                     .state('auth.signup', {
                         url: '/signup',
