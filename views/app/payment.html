@@ -4,7 +4,7 @@
     </ion-nav-title>
     <ion-content>
         <div class="content-section">
-            <div class="list card">
+            <div class="list card" style="margin:0;">
                 <div class="item item-body allp" ng-repeat="doc in doctor">
                     <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                         <span ng-repeat="spec in doc.specializations">
@@ -25,7 +25,7 @@
                     </p>
                 </div>
             </div>
-            <div class="ctab commontab">
+            <div class="ctab">
 			
 			  <my-tabs class="themetabs">
 			  

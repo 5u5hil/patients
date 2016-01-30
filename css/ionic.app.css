@@ -8531,6 +8531,7 @@ h4.subhead.inactive{opacity:0.5;}
 .card.active{    border: 1px rgba(255, 76, 76,0.6) solid;}
 a.posts-list{text-decoration:none;}
 .tab-item.tab-item-active, .tab-item.active, .tab-item.activated{box-shadow:0px 2px 0 #387ef5; background:#fff; font-weight:bold; color:#387ef5;}
+.tab-item.tab-item-active i, .tab-item.tab-item-active span.tab-title{color:#387ef5;}
 
 .footerbar a{width:33.33%; padding:0; border:none; display: block; float:left; text-align:center;}
 .footerbar a:first-child,.footerbar a:nth-child(2){border-right:1px #ccc solid;}
