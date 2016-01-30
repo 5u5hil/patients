@@ -3,6 +3,12 @@ var subscriber;
 
 angular.module('your_app_name.controllers', [])
 
+.run(function($rootScope, $templateCache) {
+   $rootScope.$on('$viewContentLoaded', function() {
+      $templateCache.removeAll();
+   });
+})
+
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
@@ -1459,8 +1465,14 @@ angular.module('your_app_name.controllers', [])
 
 
             $scope.exitVideo = function () {
-                publisher.destroy();
+                try {
+                     publisher.destroy();
                 subscriber.destroy();
+                }catch (err){
+                    
+                }
+                
+               
             };
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
