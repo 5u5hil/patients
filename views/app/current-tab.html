@@ -14,17 +14,17 @@
 
                             <p><strong>{{doctor[0].fname}} {{doctor[0].lname}}</strong><br/>
                                 <span ng-repeat="spec in doctor[0].specializations">
-                                    {{spec.specialization}} , 
+                                    {{spec.specialization}} {{$last==true? '': ',&nbsp;'}}
                                 </span></p>
                             <p ng-if="mode != '2'"><strong>Appointment Time: </strong> {{app[0].appointments.scheduled_start_time|dateFormat}} <br/> {{app[0].appointments.scheduled_start_time|time}} to {{app[0].appointments.scheduled_end_time|time}} </p>
                             <p ng-if="mode != '2'"><strong>Mode: </strong> {{app[0].appointments.mode==1? 'Video':''}}{{app[0].appointments.mode==2? 'Chat':''}}{{app[0].appointments.mode==3? 'Clinic':''}}{{app[0].appointments.mode==4? 'Home':''}}</p>
                             <p><strong>Qualification:</strong> 
                                 <span ng-repeat="qual in doctor[0].qualifications">
-                                    {{qual.qualification}} , 
+                                    {{qual.qualification}} {{$last==true? '': ',&nbsp;'}}
                                 </span> </p>
                             <p><strong>Languages: </strong> 
                                 <span ng-repeat="lang in doctor[0].languages">
-                                    {{lang.language}} , 
+                                    {{lang.language}} {{$last==true? '': ',&nbsp;'}}
                                 </span></p>
                             <div class="clr"></div>
                         </div>
@@ -68,7 +68,7 @@
         <a class="button" confirmed-click="cancelAppointment(app[0].appointments.id,prod.user_id,app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" ><i class="ion-close"></i>  Cancel</a>
         <a class="button" confirmed-click="reschedule(app[0].appointment_id, prod.user_id, app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" ><i class="ion-calendar"></i>  Reschedule</a>
         <a ng-if="mode == 2" class="button" ui-sref="app.join-chat({'id': app[0].appointment_id, 'mode': mode})"> Start Chat</a>
-        <a ng-if="mode == 1 && curTime >= time && curTime<=endTime" class="button" ui-sref="app.patient-join({'id': app[0].appointments.id, 'mode': mode})"> Join</a>
+        <a ng-if="mode == 1 && curTime >= time || curTime<=endTime" class="button" ui-sref="app.patient-join({'id': app[0].appointments.id, 'mode': mode})"> Join</a>
     </div>
 
 </ion-view>
