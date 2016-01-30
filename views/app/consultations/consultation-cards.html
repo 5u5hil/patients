@@ -45,8 +45,8 @@
                             </div>
                             <div class="clr"></div>
                         </a>
-                        <div class="post-actions row post-footer">
-                           <!--  <div class="row cardbtn">
+                        <!-- <div class="post-actions row post-footer">
+                           <div class="row cardbtn">
                                 <div class="col" ng-repeat="serv in docServices[$index]">
                                     <div class="cbtn" ng-if="serv.service_id==1">
                                         <i class="ion-videocamera f33" ></i>   <br/>                                      
@@ -66,48 +66,49 @@
                                     </div>
                                 </div>
                              
-                            </div> -->
+						</div>  -->
 							
 							
-						 <div class="row" ng-repeat="serv in docServices[$index]">
+						  <div class="cardopt-row" ng-repeat="serv in docServices[$index]">
 						
-						 <div class="cardoptions" ng-repeat="serv in docServices[$index]">
+						 <div class="cardoptions">
 						 <span class="bstatus">
-							 <i class="ion-android-done" ng-if="serv.service_id==1"></i>
-							 <i class="ion-android-close" ng-if="serv.service_id!=1"></i>
-							 </span>
-						 Instant</div>
-						 <div class="cardoptions mb0">
+							 <i class="ion-android-done" ng-if="serv.service_id==1 && serv.service_id!=2 && serv.service_id!=3 && serv.service_id!=4"></i>
+							
+						</span>
+						 Instant
+						 </div>
+						 
+						 <div class="cardoptions" ng-if="serv.service_id==2">
 							 <span class="bstatus">
-								 <i class="ion-android-done" ng-if="serv.service_id==2"></i>
-							 <i class="ion-android-close" ng-if="serv.service_id!=2"></i>
-								 </span>
-								 Chat</div>
+									<i class="ion-android-done" ng-if="serv.service_id!=1 && serv.service_id==2 && serv.service_id!=3 && serv.service_id!=4"></i>
+									
+							 </span>
+								 Chat
+							</div>
 						
 						
-						  <div class="cardoptions"><span class="bstatus">
-								 <i class="ion-android-done" ng-if="serv.service_id==3"></i>
-							 <i class="ion-android-close" ng-if="serv.service_id!=3"></i>
-								 </span>Clinic</div>
-						 <div class="cardoptions mb0"><span class="bstatus">
-								 <i class="ion-android-done" ng-if="serv.service_id==4"></i>
-							 <i class="ion-android-close" ng-if="serv.service_id!=4"></i>
-								 </span>Home</div>
+						  <div class="cardoptions">
+							  <span class="bstatus">
+									 <i class="ion-android-done" ng-if="serv.service_id!=1 && serv.service_id!=2 && serv.service_id==3 && serv.service_id!=4"></i>
+									 
+							</span>
+							Clinic
+						  </div>
+								 
+						 <div class="cardoptions">
+						 <span class="bstatus">
+								 <i class="ion-android-done" ng-if="serv.service_id==1 && serv.service_id!=2 && serv.service_id!=3 && serv.service_id==4"></i>
+							
+						</span>
+						Home
+						</div>
 						
 						 </div>		
 							
 							
 							
-								 <div class="row">
 								
-								 <div class="cardoptions"><span class="bstatus"><i class="ion-android-done"></i></span>Instant</div>
-								 <div class="cardoptions mb0"><span class="bstatus"><i class="ion-android-close"></i></span>Appointment</div>
-								 
-								
-								  <div class="cardoptions"><span class="bstatus"><i class="ion-android-done"></i></span>Chat</div>
-								 <div class="cardoptions mb0"><span class="bstatus"><i class="ion-android-done"></i></span>Packages</div>
-								
-								 </div>
 							
 							
 							

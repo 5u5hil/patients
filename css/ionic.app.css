@@ -8643,9 +8643,13 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 .rightarrow{right:10px;}
 .addbtn{float:right; margin-top: -37px; z-index: 99;}
 
-.cardoptions{    padding: 5px;
-                 background: #f1f1f1;
-                 margin-bottom: 5px;}
+.cardoptions{     padding: 5px;
+    background: #f1f1f1;
+    margin: 0 1% 1% 1%;
+    width: 48%;
+    float: left;}
+	.cardopt-row{width:100%; padding-top:5px;}			 
+				 
 .cardoptions.mb0{ margin-bottom: 0px;}
 .cardoptions span{        display: inline-block;
                           padding: 1px 5px;
