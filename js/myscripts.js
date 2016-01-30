@@ -3,9 +3,9 @@
 $(document).ready(function () {
 
 
-var elem = angular.element(document.querySelector('[ng-app]'));
-var injector = elem.injector();
-var $rootScope = injector.get('$rootScope');
+    var elem = angular.element(document.querySelector('[ng-app]'));
+    var injector = elem.injector();
+    var $rootScope = injector.get('$rootScope');
 
     if (get('id') != null) {
         $rootScope.$apply(function () {
@@ -17,4 +17,21 @@ var $rootScope = injector.get('$rootScope');
             $rootScope.userLogged = 0;
         });
     }
+
+    $(".muteMic").toggle(
+            function () {
+                $rootScope.publisher.setPublishAudio(false);
+            }, function () {
+        $rootScope.publisher.setPublishAudio(true);
+    }
+    );
+
+
+    $(".muteSub").toggle(
+            function () {
+                $rootScope.subscriber.setPublishAudio(false);
+            }, function () {
+        $rootScope.subscriber.setPublishAudio(true);
+    }
+    );
 });
