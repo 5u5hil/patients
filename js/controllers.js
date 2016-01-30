@@ -1420,6 +1420,7 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
+                        jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
                         $scope.publisher = session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
                 });
