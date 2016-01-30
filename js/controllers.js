@@ -1321,6 +1321,7 @@ angular.module('your_app_name.controllers', [])
             }).then(function successCallback(response) {
                 //console.log(response.data);
                 $scope.time = response.data.time;
+                $scope.endTime = response.data.end_time;
                 $scope.app = response.data.app;
                 $scope.doctor = response.data.doctorsData;
                 $scope.products = response.data.products;
