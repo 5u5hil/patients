@@ -10,7 +10,8 @@ $(document).ready(function () {
     if (get('id') != null) {
         $rootScope.$apply(function () {
             $rootScope.userLogged = 1;
-            window.location.href = "#/app/category-listing";
+            if (document.location.hash == "#/auth/login" || document.location.hash == "#/auth/walkthrough")
+                window.location.href = "#/app/category-listing";
         });
     } else {
         $rootScope.$apply(function () {
@@ -18,5 +19,5 @@ $(document).ready(function () {
         });
     }
 
-    
+
 });
