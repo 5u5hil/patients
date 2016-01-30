@@ -29,7 +29,8 @@ angular.module('your_app_name', [
 ])
 
 
-        .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout) {
+
+        .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout, $ionicLoading) {
 
             $ionicPlatform.on("deviceready", function () {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -43,7 +44,13 @@ angular.module('your_app_name', [
 
                 PushNotificationsService.register();
             });
+            $rootScope.$on('loading:show', function () {
+                $ionicLoading.show({template: 'foo'})
+            })
 
+            $rootScope.$on('loading:hide', function () {
+                $ionicLoading.hide()
+            })
             // This fixes transitions for transparent background views
             $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
                 if (toState.name.indexOf('auth.walkthrough') > -1)
@@ -76,8 +83,20 @@ angular.module('your_app_name', [
 
         })
 
+        .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
+            $httpProvider.interceptors.push(function ($rootScope) {
+                return {
+                    request: function (config) {
+                        $rootScope.$broadcast('loading:show')
+                        return config
+                    },
+                    response: function (response) {
+                        $rootScope.$broadcast('loading:hide')
+                        return response
+                    }
+                }
+            })
 
-        .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             $stateProvider
 
                     //INTRO
@@ -182,7 +201,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-                    
+
                     .state('app.record-details', {
                         url: "/record-details/{id:int}",
                         views: {
@@ -234,7 +253,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-                    
+
                     .state('app.current-tab', {
                         url: "/current-tab/{id:int}/{mode:int}",
                         views: {
@@ -254,7 +273,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-                    
+
                     .state('app.join-chat', {
                         url: "/join-chat/{id:int}/{mode:int}",
                         views: {

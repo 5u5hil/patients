@@ -27,7 +27,7 @@ angular.module('your_app_name.controllers', [])
 
 
 //LOGIN
-        .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope,$ionicLoading) {
+        .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading) {
             $scope.doLogIn = function () {
                 $ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
@@ -50,7 +50,7 @@ angular.module('your_app_name.controllers', [])
                             /*if (window.localStorage.getItem('url') != null) {
                              $state.go(window.localStorage.getItem('url'));
                              } else {*/
-                            $state.go('app.category-list');
+                            window.location.href = "#/app/category-listing";
                             //}
                         } else {
                             $rootScope.userLogged = 0;
@@ -91,6 +91,7 @@ angular.module('your_app_name.controllers', [])
             $scope.user.password = '';
 
             $scope.doSignUp = function () {
+                $ionicLoading.show({template: 'Loading...'});
                 var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
                 //var data = new FormData(jQuery("#signup")[0]);
                 $.ajax({
@@ -101,17 +102,19 @@ angular.module('your_app_name.controllers', [])
                     contentType: false,
                     processData: false,
                     success: function (response) {
-
+                        $ionicLoading.hide();
                         window.localStorage.setItem('code', response.otpcode);
                         store($scope.user);
                         alert('Kindly check your mobile for OTP')
                         $state.go('auth.check-otp');
+                        window.location.href = "#/auth/check-otp";
                     }
                 });
             };
 
             //check OTP
             $scope.checkOTP = function (otp) {
+                $ionicLoading.show({template: 'Loading...'});
                 $scope.user = {};
                 $scope.user.name = window.localStorage.getItem('name');
                 $scope.user.email = window.localStorage.getItem('email');
@@ -122,7 +125,6 @@ angular.module('your_app_name.controllers', [])
                 console.log('data:---' + data);
                 // console.log(window.localStorage.getItem('code'));
                 if (parseInt(code) === parseInt(otp)) {
-
                     //  alert('success');
                     $.ajax({
                         type: 'GET',
@@ -132,7 +134,7 @@ angular.module('your_app_name.controllers', [])
                         contentType: false,
                         processData: false,
                         success: function (response) {
-                            //console.log(response);
+                            $ionicLoading.hide();
                             if (angular.isObject(response)) {
                                 store(response);
                                 $rootScope.userLogged = 1;
@@ -141,7 +143,7 @@ angular.module('your_app_name.controllers', [])
                                     $state.go(window.localStorage.getItem('url'));
                                 } else {
                                     alert('Your sucessfully registered');
-                                    $state.go('app.category-list');
+                                    window.location.href = '#/app/category-list';
                                 }
                             } else {
                                 alert('Please fill all the details for signup');
@@ -149,6 +151,7 @@ angular.module('your_app_name.controllers', [])
                             $rootScope.$digest;
                         },
                         error: function (e) {
+                            $ionicLoading.hide();
                             console.log(e.responseText);
                         }
                     });
@@ -157,11 +160,13 @@ angular.module('your_app_name.controllers', [])
             }
             //Check if email is already registered
             $scope.checkEmail = function (email) {
+                $ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
                     url: domain + 'check-user-email',
                     params: {userEmail: email}
                 }).then(function successCallback(response) {
+                    $ionicLoading.hide();
                     if (response.data > 0) {
                         $scope.user.email = '';
                         $scope.emailError = "This email-id is already registered!";
@@ -172,15 +177,16 @@ angular.module('your_app_name.controllers', [])
                         $scope.emailError.digest;
                     }
                 }, function errorCallback(response) {
+                    $ionicLoading.hide();
                     console.log(response);
                 });
             };
         })
 
-        .controller('ForgotPasswordCtrl', function ($scope, $state) {
-           // 
+.controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
 
             $scope.recoverPassword = function (email, phone) {
+                $ionicLoading.show({template: 'Loading...'});
                 window.localStorage.setItem('email', email);
                 console.log("email:  " + email);
 
@@ -190,14 +196,14 @@ angular.module('your_app_name.controllers', [])
                     data: {email: email, phone: phone},
                     cache: false,
                     success: function (response) {
-                        console.log(response);
+                        $ionicLoading.hide();
                         window.localStorage.setItem('passcode', response.passcode);
-
-                        $state.go('auth.update-password');
+                        window.location.href = '#/auth/update-password';
                     }
                 });
             };
             $scope.updatePassword = function (passcode, password, cpassword) {
+                $ionicLoading.show({template: 'Loading...'});
                 var email = window.localStorage.getItem('email');
                 // console.log("email: "+email);
                 $.ajax({
@@ -218,7 +224,7 @@ angular.module('your_app_name.controllers', [])
                         } else {
                             alert('Oops something went wrong.');
                         }
-
+                        $ionicLoading.hide();
                     }
                 });
             };
