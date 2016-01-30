@@ -1,9 +1,9 @@
 <ion-view class="rjoin-view">
     <ion-nav-title>
-        <span>Dr. {{user[0].fname}} {{user[0].lname}}</span>
+        <span>{{user[0].fname}} {{user[0].lname}}</span>
     </ion-nav-title>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-android-call"> Leave</button>
+        <button class="button button-icon button-clear ion-android-call" ng-click=""> Leave</button>
     </ion-nav-buttons>
 
     <div class="bar bar-subheader cbar">
@@ -15,7 +15,7 @@
         <div class="fltr-mesg"> &nbsp;</div>
         <div class="mediascreen" >
             <div id='myPublisherDiv' style="position:absolute;right: 10px;bottom:10px"></div> 
-           <div id='subscribersDiv' style="position:absolute;top: 0;z-index:-11">Waiting for doctor to join!</div> 
+           <div id='subscribersDiv' class="subscribediv" style="position:absolute;top: 0;z-index:-11">Waiting for doctor to join!</div> 
         </div>
 
 

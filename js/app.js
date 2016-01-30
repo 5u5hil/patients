@@ -45,7 +45,7 @@ angular.module('your_app_name', [
                 PushNotificationsService.register();
             });
             $rootScope.$on('loading:show', function () {
-                $ionicLoading.show({template: 'foo'})
+                $ionicLoading.show({template: 'Loading'})
             })
 
             $rootScope.$on('loading:hide', function () {
