@@ -33,7 +33,8 @@ angular.module('your_app_name.directives', [])
                 restrict: 'E',
                 transclude: true,
                 scope: {
-                    title: '@'
+                    title: '@',
+					
                 },
                 link: function (scope, element, attrs, tabsCtrl) {
                     tabsCtrl.addTab(scope);

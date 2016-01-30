@@ -30,7 +30,7 @@ angular.module('your_app_name', [
 
 
 
-        .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout, $ionicLoading) {
+        .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout, $ionicLoading, $ionicHistory) {
 
             $ionicPlatform.on("deviceready", function () {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -45,7 +45,7 @@ angular.module('your_app_name', [
                 PushNotificationsService.register();
             });
             $rootScope.$on('loading:show', function () {
-                $ionicLoading.show({template: 'foo'})
+                $ionicLoading.show({template: 'Loading'})
             })
 
             $rootScope.$on('loading:hide', function () {
@@ -76,7 +76,10 @@ angular.module('your_app_name', [
                     console.log("enabling swipe back and restoring transition to platform default", $ionicConfig.views.transition());
                 }
             });
-
+//            $rootScope.$on("$ionicView.enter", function () {
+//                $ionicHistory.clearCache();
+//                $ionicHistory.clearHistory();
+//            });
             $ionicPlatform.on("resume", function () {
                 PushNotificationsService.register();
             });

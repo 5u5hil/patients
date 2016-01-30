@@ -46,6 +46,7 @@
                             <div class="clr"></div>
                         </a>
                         <div class="post-actions row post-footer">
+                            <!--
                             <div class="row cardbtn">
                                 <div class="col" ng-repeat="serv in docServices[$index]">
                                     <div class="cbtn" ng-if="serv.service_id == 1">
@@ -66,36 +67,16 @@
                                     </div>
                                 </div>
 
-                            </div> 
+                            </div> --->
 
 
-                            <div class="cardopt-row" ng-repeat="serv in docServices[$index]">
-                                <div class="cardoptions" ng-if="serv.service_id == 1">
+                            <div class="cardopt-row" >
+                                <div class="cardoptions" ng-repeat="serv in docServices[$index]" >
                                     <span class="bstatus">
                                         <i class="ion-android-done"></i>
                                     </span>
-                                    Instant
-                                </div>
-
-                                <div class="cardoptions" ng-if="serv.service_id == 2">
-                                    <span class="bstatus">
-                                        <i class="ion-android-done"></i>
-                                    </span>
-                                    Chat
-                                </div>
-                                <div class="cardoptions" ng-if="serv.service_id == 3">
-                                    <span class="bstatus">
-                                        <i class="ion-android-done" ></i>
-
-                                    </span>
-                                    Clinic
-                                </div>
-                                <div class="cardoptions" ng-if="serv.service_id == 4">
-                                    <span class="bstatus">
-                                        <i class="ion-android-done" ></i>
-                                    </span>
-                                    Home
-                                </div>
+                                    {{serv.service_id == 1? 'Instant': serv.service_id == 2? 'Chat': serv.service_id == 3? 'Clinic': serv.service_id == 4? 'Home':''}}
+                                </div>                                
 
                             </div>
                         </div>

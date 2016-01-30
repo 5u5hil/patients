@@ -1,4 +1,13 @@
+var publisher;
+var subscriber;
+
 angular.module('your_app_name.controllers', [])
+
+.run(function($rootScope, $templateCache) {
+   $rootScope.$on('$viewContentLoaded', function() {
+      $templateCache.removeAll();
+   });
+})
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
@@ -183,7 +192,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-.controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
+        .controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
 
             $scope.recoverPassword = function (email, phone) {
                 $ionicLoading.show({template: 'Loading...'});
@@ -215,6 +224,7 @@ angular.module('your_app_name.controllers', [])
                         console.log("#######"+passcode);
                         console.log("@@@@"+window.localStorage.getItem('passcode'));
                         if (response == 1) {
+
                             if(parseInt(passcode) == parseInt(window.localStorage.getItem('passcode'))){
                             alert('Please login with your new password.');
                             $state.go('auth.login');
@@ -222,6 +232,7 @@ angular.module('your_app_name.controllers', [])
                             alert('Please enter valid OTP.');
                             
                         }
+
                         } else {
                             alert('Oops something went wrong.');
                         }
@@ -1382,13 +1393,12 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter) {
+        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-            $scope.publisher = '';
-            $scope.subscriber = '';
+
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
@@ -1408,7 +1418,9 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-                        $scope.subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+
+                        subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
+                        session.publish(subscriber);
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1421,13 +1433,50 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
-                        $scope.publisher = session.publish('myPublisherDiv', {width: "30%", height: "30%"});
+                        jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
+                        publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
+                        session.publish(publisher);
+                        var mic = 1;
+                        var mute = 1;
+                        jQuery(".muteMic").click(function () {
+                            if (mic == 1) {
+                                publisher.publishAudio(false);
+                                mic = 0;
+                            } else {
+                                publisher.publishAudio(true);
+                                mic = 1;
+                            }
+                        });
+                        jQuery(".muteSub").click(function () {
+                            if (mute == 1) {
+                                subscriber.subscribeToAudio(false);
+                                mute = 0;
+                            } else {
+                                subscriber.subscribeToAudio(true);
+                                mute = 1;
+                            }
+                        });
+
                     }
                 });
 
             }, function errorCallback(e) {
                 console.log(e);
             });
+
+
+
+
+            $scope.exitVideo = function () {
+                try {
+                     publisher.destroy();
+                subscriber.destroy();
+                }catch (err){
+                    
+                }
+                
+               
+            };
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
             $scope.appId = $stateParams.id;

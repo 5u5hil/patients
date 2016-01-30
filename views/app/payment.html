@@ -4,7 +4,7 @@
     </ion-nav-title>
     <ion-content>
         <div class="content-section">
-            <div class="list card">
+            <div class="list card" style="margin:0;">
                 <div class="item item-body allp" ng-repeat="doc in doctor">
                     <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
                         <span ng-repeat="spec in doc.specializations">
@@ -25,12 +25,12 @@
                     </p>
                 </div>
             </div>
-            <div class="ctab commontab">
+            <div class="ctab">
 			
-			  <my-tabs>
+			  <my-tabs class="themetabs">
 			  
 			         <my-tab title="Pay Now" ng-if="mode==1 || mode==2" >
-						<div class="tabcontainer">
+						<div class="tabcontainer" style="margin-top:0;">
                             <div class="pprice">Price: INR {{product[0].price}}</div>
                             <div class="row" ng-if="apply!=1">
                                 <div class="col col-75">
@@ -43,9 +43,9 @@
                                     <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
                                 </div>
                             </div>
-                            <p class="fg txt-centre" ng-if="apply==1">Applied Discount</p>
-                            <h4 class="txt-centre">Final Price: INR {{product[0].price-discountApplied}}</h4>
-                            <br/>
+                            <div class="fg txt-centre" ng-if="apply==1">Applied Discount</div>
+                            <h4 class="txt-centre" style="margin-top:10px; margin-bottom:10px;">Final Price: INR {{product[0].price-discountApplied}}</h4>
+                           
                             <div class="section-footer"> <!---ui-sref="app.success"-->
                                 <a ng-if="mode==1 || mode==2" ng-click="payNow()" class="button button-full button-positive">Pay Now</a>                                
                             </div>	
