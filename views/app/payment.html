@@ -26,9 +26,11 @@
                 </div>
             </div>
             <div class="ctab commontab">
-                <ion-tabs class="tabs-positive tabs-icon-top">
-                    <ion-tab title="Pay Now" ng-if="mode==1 || mode==2" >
-                        <div class="tabcontainer">
+			
+			  <my-tabs>
+			  
+			         <my-tab title="Pay Now" ng-if="mode==1 || mode==2" >
+						<div class="tabcontainer">
                             <div class="pprice">Price: INR {{product[0].price}}</div>
                             <div class="row" ng-if="apply!=1">
                                 <div class="col col-75">
@@ -48,9 +50,10 @@
                                 <a ng-if="mode==1 || mode==2" ng-click="payNow()" class="button button-full button-positive">Pay Now</a>                                
                             </div>	
                         </div>
-                    </ion-tab>
-                      <ion-tab title="Book Now" ng-if="mode==3 || mode==4" >
-                        <div class="tabcontainer">
+                    </my-tab>
+			  
+			    <my-tab title="Book Now" ng-if="mode==3 || mode==4">
+				        <div class="tabcontainer">
                             <div class="pprice">Price: INR {{product[0].price}}</div>
                             <div class="row">
                                 <div class="col col-75">
@@ -71,12 +74,23 @@
                                 
                             </div>	
                         </div>
-                    </ion-tab>
-                    <ion-tab title="I have Package" >
+				
+				</my-tab>
+				<!-- 
+					<my-tab title="I have Package" >
                         <div class="tabcontainer">
                             Under Construction
                         </div>
-                    </ion-tab>
+                    </my-tab> -->
+			  </my-tabs>
+			
+			
+			
+			
+			
+			
+			
+			
 
 
 
