@@ -18,7 +18,7 @@ $(document).ready(function () {
         });
     }
 
-    $(".muteMic").toggle(
+    $("body").on("toggle",".muteMic",
             function () {
                 $rootScope.publisher.setPublishAudio(false);
             }, function () {
@@ -26,8 +26,7 @@ $(document).ready(function () {
     }
     );
 
-
-    $(".muteSub").toggle(
+ $("body").on("toggle",".muteSub",
             function () {
                 $rootScope.subscriber.setSubscribeToAudio(false);
             }, function () {
