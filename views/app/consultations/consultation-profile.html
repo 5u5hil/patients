@@ -93,9 +93,9 @@
                         <div class="tabcontainer">
                             <!-- Schedule-->
                             <div class="schedule">
-                                <ion-tabs class="tabs-positive tabs-icon-top">
+                              <my-tabs class="themetabs">
                                     <div ng-repeat="serv in services">
-                                        <ion-tab  title="{{videoProd.mode}} <br>INR {{videoProd.price}}" ng-if="serv == 1" >
+                                        <my-tab  title="{{videoProd.mode}} INR {{videoProd.price}}" ng-if="serv == 1" >
                                             <div class="tabcontainer"> 
                                                 <ul class="clist">
                                                     <li>{{videoProd.desc}}</li>
@@ -135,9 +135,9 @@
                                                         <a class="button button-full button-positive" ng-click="bookAppointment(videoProd.id, serv)">Proceed</a>
                                                     </div>	
                                                 </div>
-                                            </ion-tab>
+                                            </my-tab>
                                             <!-- clinic -->
-                                            <ion-tab  title="{{clinicProd.mode}} <br>INR {{clinicProd.price}}" ng-if="serv == 3">
+                                            <my-tab  title="{{clinicProd.mode}} INR {{clinicProd.price}}" ng-if="serv == 3">
                                                 <div class="tabcontainer"> 
                                                     <ul class="clist">
                                                         <li>{{clinicProd.desc}}</li>
@@ -178,10 +178,10 @@
                                                         <a class="button button-full button-positive" ng-click="bookAppointment(clinicProd.id, serv)">Proceed</a>
                                                     </div>	
                                                 </div>
-                                            </ion-tab>
+                                            </my-tab>
                                             <!-- End clinic -->
                                             <!-- Home -->
-                                            <ion-tab  title="{{homeProd.mode}} <br>INR {{homeProd.price}}" ng-if="serv == 4">
+                                            <my-tab  title="{{homeProd.mode}} INR {{homeProd.price}}" ng-if="serv == 4">
                                                 <div class="tabcontainer">  
                                                     <ul class="clist">
                                                         <li>{{homeProd.desc}}</li>
@@ -216,9 +216,9 @@
                                                     </div>
                                                     <a class="button button-full button-positive" ng-click="bookAppointment(homeProd.id, serv)">Proceed</a>
                                                 </div>
-                                            </ion-tab>
+                                            </my-tab>
                                         </div>
-                                    </ion-tabs>
+								</my-tabs>
                                 </div>
                                 <!-- End Schedule-->
                             </div>
