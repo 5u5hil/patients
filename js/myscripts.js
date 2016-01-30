@@ -18,23 +18,5 @@ $(document).ready(function () {
         });
     }
 
-    $("body").on("toggle",".muteMic",
-            function () {
-                console.log('false');
-                publisher.setPublishAudio(false);
-            }, function () {
-        console.log('true');
-        publisher.setPublishAudio(true);
-    }
-    );
-
- $("body").on("toggle",".muteSub",
-            function () {
-                console.log('false');
-                subscriber.setSubscribeToAudio(false);
-            }, function () {
-        console.log('true');
-      subscriber.setSubscribeToAudio(true);
-    }
-    );
+    
 });

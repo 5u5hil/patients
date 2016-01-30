@@ -1384,7 +1384,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter) {
+        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1427,6 +1427,26 @@ angular.module('your_app_name.controllers', [])
                         jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
+                        var mic = 1;
+                        var mute = 1;
+                        jQuery(".muteMic").click(function () {
+                            if (mic == 1) {
+                                publisher.publishAudio(false);
+                                mic = 0;
+                            } else {
+                                publisher.publishAudio(true);
+                                mic = 1;
+                            }
+                        });
+                        jQuery(".muteSub").click(function () {
+                            if (mute == 1) {
+                                subscriber.subscribeToAudio(false);
+                                mute = 0;
+                            } else {
+                                subscriber.subscribeToAudio(true);
+                                mute = 1;
+                            }
+                        });
 
                     }
                 });
@@ -1434,6 +1454,10 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
+
+
+
+
             $scope.exitVideo = function () {
                 publisher.destroy();
                 subscriber.destroy();
