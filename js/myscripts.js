@@ -29,9 +29,9 @@ $(document).ready(function () {
 
     $(".muteSub").toggle(
             function () {
-                $rootScope.subscriber.setPublishAudio(false);
+                $rootScope.subscriber.setSubscribeToAudio(false);
             }, function () {
-        $rootScope.subscriber.setPublishAudio(true);
+        $rootScope.subscriber.setSubscribeToAudio(true);
     }
     );
 });
