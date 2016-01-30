@@ -233,6 +233,8 @@ angular.module('your_app_name.controllers', [])
 
                             }
 
+                        } else  if(response== 2){  
+                            alert('Password mismatch.');
                         } else {
                             alert('Oops something went wrong.');
                         }
