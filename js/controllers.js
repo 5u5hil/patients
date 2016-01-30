@@ -151,8 +151,8 @@ angular.module('your_app_name.controllers', [])
 //                                if (window.localStorage.getItem('url') != null) {
 //                                    $state.go(window.localStorage.getItem('url'));
 //                                } else {
-                                    alert('Your sucessfully registered');
-                                    window.location.href = '#/app/category-list';
+                                alert('Your sucessfully registered');
+                                window.location.href = '#/app/category-list';
                                 //}
                             } else {
                                 alert('Please fill all the details for signup');
@@ -233,7 +233,7 @@ angular.module('your_app_name.controllers', [])
 
                             }
 
-                        } else  if(response == 2){  
+                        } else if (response == 2) {
                             alert('Password Mismatch.');
                         } else {
                             alert('Oops something went wrong.');
@@ -765,7 +765,7 @@ angular.module('your_app_name.controllers', [])
                         if (response.data == 'error') {
                             alert("Appointment can not be reschedule now!");
                         } else {
-                            if (response.data.httpcode == 'error') {
+                            if (response.data.code == 'error') {
                                 alert("Sorry, new appointment is not booked!");
                             } else {
                                 alert('Your appointment is rescheduled successfully.');
@@ -1142,6 +1142,9 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.bookNow = function () {
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $ionicLoading.show({template: 'Loading...'});
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
@@ -1309,7 +1312,7 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.removeItem('prodid');
         })
 
-        .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $filter, $state) {
+        .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1328,7 +1331,7 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
-            $scope.cancelAppointment = function (appId, drId, mode, startTime) {
+            $scope.cancelApp = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
                 $scope.userId = get('id');
                 console.log(startTime);
@@ -1374,7 +1377,7 @@ angular.module('your_app_name.controllers', [])
                     });
                 }
             };
-            $scope.reschedule = function (appId, drId, mode, startTime) {
+            $scope.rescheduleApp = function (appId, drId, mode, startTime) {
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 var timeDiff = getTimeDiff(startTime, curtime);
                 console.log(timeDiff);

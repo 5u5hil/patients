@@ -23,7 +23,7 @@
                             <a class="item  item-icon-right" ui-sref="app.consultation-cards({'id':spec.id, 'res' : 'json'})"  ng-repeat="spec in specializations| orderBy:'specialization' |filter : searchKeyword ">
                                 <div>
                                     <span class="stitle">{{spec.specialization}}</span>
-                                   <!-- <p class=""><label ng-repeat="focus in spec.focuses">{{focus.focus}}, </label>{{spec.description}}</p>-->
+                                    <!-- <p class=""><label ng-repeat="focus in spec.focuses">{{focus.focus}}, </label>{{spec.description}}</p>-->
                                 </div>
                                 <i class="icon ion-ios-arrow-right"></i>
                             </a>
@@ -48,11 +48,12 @@
                             <ion-tabs class="tabs-positive tabs-icon-top">
                                 <ion-tab title="Clinic<br>{{clinic_app.length}}" >
                                     <div class="tabcontainer p0" >
+                                        {{clinic_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}
                                         <div class="posts-list" ng-repeat="cApp in clinic_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in clinic_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
                                                     <a ui-sref="app.current-tab({'id': cApp.appointment_id,'mode': 3})" class="card-content paraspacing" ng-repeat="doc in clinic_doctorsData[$index]">
-                                                        <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                                        <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}} , 
                                                             </span>
@@ -80,6 +81,7 @@
 
                                 <ion-tab title="Home<br>{{home_app.length}}" >
                                     <div class="tabcontainer p0" >
+                                        {{home_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}
                                         <div class="posts-list" ng-repeat="hApp in home_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in home_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
@@ -110,6 +112,7 @@
                                 </ion-tab>
                                 <ion-tab title="Video<br>{{video_app.length}} <br/>"  >
                                     <div class="tabcontainer p0" >
+                                        {{video_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}
                                         <div class="posts-list" ng-repeat="vApp in video_app track by $index">
                                             <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
@@ -141,6 +144,7 @@
                                 </ion-tab>
                                 <ion-tab title="Chat<br>{{chat_app.length}} <br/>" >
                                     <div class="tabcontainer p0" >
+                                        {{chat_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}
                                         <div class="posts-list" ng-repeat="chApp in chat_app">
                                             <div  class="list card post-item" ng-repeat="prod in chat_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
@@ -174,7 +178,7 @@
                 </ion-tab>
                 <ion-tab title="Past" ng-if="userLogged = 1">
                     <div class="tabcontainer">
-                        Under Construction	
+                        <p> <span class="text-center">Coming Soon</span></p>
                     </div>
                 </ion-tab>
             </ion-tabs>

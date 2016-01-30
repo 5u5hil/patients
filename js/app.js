@@ -254,17 +254,6 @@ angular.module('your_app_name', [
                         }
                     })
 
-                    .state('app.reschedule-appointment', {
-                        cache: false,
-                        url: "/reschedule-appointment/{id:int}",
-                        views: {
-                            'menuContent': {
-                                templateUrl: "views/app/consultations/reschedule-appointment.html",
-                                controller: 'RescheduleAppointmentCtrl'
-                            }
-                        }
-                    })
-
                     .state('app.current-tab', {
                         cache: false,
                         url: "/current-tab/{id:int}/{mode:int}",
@@ -272,6 +261,17 @@ angular.module('your_app_name', [
                             'menuContent': {
                                 templateUrl: "views/app/current-tab.html",
                                 controller: 'CurrentTabCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.reschedule-appointment', {
+                        cache: false,
+                        url: "/reschedule-appointment/{id:int}",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/consultations/reschedule-appointment.html",
+                                controller: 'RescheduleAppointmentCtrl'
                             }
                         }
                     })

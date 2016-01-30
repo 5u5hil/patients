@@ -1,6 +1,6 @@
 <ion-view class="records-view">
     <ion-nav-title>
-        <span>Dr. {{doctor[0].fname}} {{doctor[0].lname}}</span>
+        <span>{{doctor[0].fname}} {{doctor[0].lname}}</span>
     </ion-nav-title>
     <!-- <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-person">
@@ -12,7 +12,7 @@
                 <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div>
                 <div class="card-left">	<img class="user-image-circle" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"></div>
                 <div class="card-detail txt-left">
-                    <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                    <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
                         <span ng-repeat="spec in doc.specializations">
                             {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
                         </span></p>
