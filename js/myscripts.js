@@ -21,20 +21,20 @@ $(document).ready(function () {
     $("body").on("toggle",".muteMic",
             function () {
                 console.log('false');
-                $rootScope.publisher.setPublishAudio(false);
+                publisher.setPublishAudio(false);
             }, function () {
         console.log('true');
-        $rootScope.publisher.setPublishAudio(true);
+        publisher.setPublishAudio(true);
     }
     );
 
  $("body").on("toggle",".muteSub",
             function () {
                 console.log('false');
-                $rootScope.subscriber.setSubscribeToAudio(false);
+                subscriber.setSubscribeToAudio(false);
             }, function () {
         console.log('true');
-        $rootScope.subscriber.setSubscribeToAudio(true);
+      subscriber.setSubscribeToAudio(true);
     }
     );
 });

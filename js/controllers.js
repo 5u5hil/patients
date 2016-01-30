@@ -1,3 +1,6 @@
+var publisher;
+var subscriber;
+
 angular.module('your_app_name.controllers', [])
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
@@ -1386,8 +1389,7 @@ angular.module('your_app_name.controllers', [])
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-            $scope.publisher = '';
-            $scope.subscriber = '';
+        
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
@@ -1407,7 +1409,7 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-                        $scope.subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+                        subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1421,7 +1423,7 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
                     } else {
                         jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
-                        $scope.publisher = session.publish('myPublisherDiv', {width: "30%", height: "30%"});
+                        publisher = session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
                 });
 
@@ -1429,8 +1431,8 @@ angular.module('your_app_name.controllers', [])
                 console.log(e);
             });
             $scope.exitVideo = function () {
-                $scope.publisher.destroy();
-                $scope.subscriber.destroy();
+                publisher.destroy();
+               subscriber.destroy();
             };
         })
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
