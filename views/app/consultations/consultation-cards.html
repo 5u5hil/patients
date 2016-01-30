@@ -24,13 +24,13 @@
                                 <img class="user-image-circle" ng-src="img/default-user.jpg">
                             </div>
                             <div class="card-detail txt-left">
-                                <p><strong>Mr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
                                     <span ng-repeat="spec in doc.specializations">
                                         {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                     </span></p>
                             </div>
                             <div class="row txt-left">
-                                <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}} Years of Experience</p></div>	
+                                <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
                                 <div class="col"><p><strong>Qualification</strong><br/>
                                         <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span></p></div>	
                             </div>

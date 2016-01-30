@@ -1,6 +1,6 @@
 <ion-view class="records-view">
     <ion-nav-title>
-        <span>Dr. {{doctor[0].fname}} {{doctor[0].lname}}</span>
+        <span>{{doctor[0].fname}} {{doctor[0].lname}}</span>
     </ion-nav-title>
     <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-person">
@@ -32,7 +32,7 @@
                     <div class="list card profile-card">
                         <div class="item item-body">
                             <div class="row txt-left">
-                                <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}} Years of Experience</p></div>	
+                                <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
                                 <div class="col"><p><strong>Qualification</strong><br/>
                                         <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span>
                                     </p></div>	
