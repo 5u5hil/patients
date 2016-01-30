@@ -81,7 +81,7 @@ angular.module('your_app_name.directives', [])
         });
       }
     }
-  }]);
+  }])
 
 
         .directive('showHideContainer', function () {
