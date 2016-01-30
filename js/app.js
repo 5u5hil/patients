@@ -156,6 +156,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.category-list', {
+                        cache: false,
                         url: "/category-listing",
                         views: {
                             'menuContent': {
@@ -166,6 +167,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.category-detail', {
+                        cache: false,
                         url: "/category-detail",
                         views: {
                             'menuContent': {
@@ -176,6 +178,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.add-category', {
+                        cache: false,
                         url: "/add-category/{id:int}",
                         views: {
                             'menuContent': {
@@ -206,6 +209,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.record-details', {
+                        cache: false,
                         url: "/record-details/{id:int}",
                         views: {
                             'menuContent': {
@@ -218,6 +222,7 @@ angular.module('your_app_name', [
                     //Consultations
 
                     .state('app.consultations-list', {
+                        cache: false,
                         url: "/consultations-list",
                         views: {
                             'menuContent': {
@@ -228,6 +233,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.consultation-cards', {
+                        cache: false,
                         url: "/consultation-cards/{id:int}",
                         views: {
                             'menuContent': {
@@ -238,6 +244,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.consultation-profile', {
+                        cache: false,
                         url: "/consultation-profile/{id:int}",
                         views: {
                             'menuContent': {
@@ -248,6 +255,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.reschedule-appointment', {
+                        cache: false,
                         url: "/reschedule-appointment/{id:int}",
                         views: {
                             'menuContent': {
@@ -258,6 +266,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.current-tab', {
+                        cache: false,
                         url: "/current-tab/{id:int}/{mode:int}",
                         views: {
                             'menuContent': {
@@ -268,6 +277,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.patient-join', {
+                        cache: false,
                         url: "/patient-join/{id:int}/{mode:int}",
                         views: {
                             'menuContent': {
@@ -278,6 +288,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.join-chat', {
+                        cache: false,
                         url: "/join-chat/{id:int}/{mode:int}",
                         views: {
                             'menuContent': {
