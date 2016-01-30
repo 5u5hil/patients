@@ -1365,6 +1365,8 @@ angular.module('your_app_name.controllers', [])
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            $scope.publisher = '';
+            $scope.subscriber = '';
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
@@ -1384,7 +1386,7 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-                        session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+                        $scope.subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1397,7 +1399,7 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
-                        session.publish('myPublisherDiv', {width: "30%", height: "30%"});
+                        $scope.publisher = session.publish('myPublisherDiv', {width: "30%", height: "30%"});
                     }
                 });
 
