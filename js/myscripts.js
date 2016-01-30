@@ -1,9 +1,11 @@
+
+
 $(document).ready(function () {
 
 
-    var elem = angular.element(document.querySelector('[ng-app]'));
-    var injector = elem.injector();
-    var $rootScope = injector.get('$rootScope');
+var elem = angular.element(document.querySelector('[ng-app]'));
+var injector = elem.injector();
+var $rootScope = injector.get('$rootScope');
 
     if (get('id') != null) {
         $rootScope.$apply(function () {
