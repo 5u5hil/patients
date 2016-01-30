@@ -183,7 +183,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-.controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
+        .controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
 
             $scope.recoverPassword = function (email, phone) {
                 $ionicLoading.show({template: 'Loading...'});
@@ -214,13 +214,13 @@ angular.module('your_app_name.controllers', [])
                     success: function (response) {
                         //console.log(response);
                         if (response == 1) {
-                            if(passcode == window.localStorage.getItem('passcode')){
-                            alert('Please login with your new password.');
-                            $state.go('auth.login');
-                        }else{
-                            alert('Please enter valid OTP.');
-                            
-                        }
+                            if (passcode == window.localStorage.getItem('passcode')) {
+                                alert('Please login with your new password.');
+                                $state.go('auth.login');
+                            } else {
+                                alert('Please enter valid OTP.');
+
+                            }
                         } else {
                             alert('Oops something went wrong.');
                         }
@@ -1428,7 +1428,7 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
-            $scope.exitVideo = function(){
+            $scope.exitVideo = function () {
                 $scope.publisher.destroy();
                 $scope.subscriber.destroy();
             };
