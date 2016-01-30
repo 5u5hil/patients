@@ -178,6 +178,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ForgotPasswordCtrl', function ($scope, $state) {
+           // 
 
             $scope.recoverPassword = function (email, phone) {
                 window.localStorage.setItem('email', email);
@@ -207,10 +208,15 @@ angular.module('your_app_name.controllers', [])
                     success: function (response) {
                         //console.log(response);
                         if (response == 1) {
-                            alert('please login with your new password.');
+                            if(passcode == window.localStorage.getItem('passcode')){
+                            alert('Please login with your new password.');
                             $state.go('auth.login');
+                        }else{
+                            alert('Please enter valid OTP.');
+                            
+                        }
                         } else {
-                            alert('oops something went wrong.');
+                            alert('Oops something went wrong.');
                         }
 
                     }
