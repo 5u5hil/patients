@@ -27,9 +27,7 @@
         <div class="ioncontent">
             <div ng-repeat="doc in doctor">
                 <div  class="profileslide">
-                    <ion-slide-box show-pager="true">
-                        <ion-slide>
-                            <div class="list card profile-card">
+                   <div class="list card profile-card">
                                 <div class="item item-body">
                                     <div class="row txt-left">
                                         <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
@@ -49,28 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </ion-slide>
-                        <ion-slide>
-                            <div class="list card profile-card">
-                                <div class="item item-body">
-                                    <div class="row txt-left">
-                                        <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}} Years of Experience</p></div>	
-                                        <div class="col"><p><strong>Qualification</strong><br/>
-                                                <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span></p></div>	
-                                    </div>
-                                    <div class="row txt-left">
-                                        <div class="col"><p><strong>Languages</strong><br/><span ng-repeat="lang in doc.languages">
-                                                    {{lang.language}}{{$last==true? '': ',&nbsp;'}}
-                                                </span></p></div>	
-                                        <div class="col"><p><strong>Focus Area</strong><br/>
-                                                <span ng-repeat="focus in doc.focuses">
-                                                    {{focus.focus}}{{$last==true? '': ',&nbsp;'}}
-                                                </span></p></div>	
-                                    </div>
-                                </div>
-                            </div>
-                        </ion-slide>
-                    </ion-slide-box>
+                        
                 </div>
 
                 <div class="ctab profile">
