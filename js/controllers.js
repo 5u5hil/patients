@@ -529,10 +529,13 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter) {
+        .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
             $scope.specializations = {};
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+//            $ionicHistory.nextViewOptions({
+//                disableBack: true
+//            });
             $ionicLoading.show({template: 'Loading...'});
             $http({
                 method: 'GET',
@@ -1146,11 +1149,14 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.removeItem('prodid');
         })
 
-        .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter) {
+        .controller('CurrentTabCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $http({
                 method: 'GET',
                 url: domain + 'appointment/get-app-details',
@@ -1234,11 +1240,14 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout) {
+        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
@@ -1305,6 +1314,7 @@ angular.module('your_app_name.controllers', [])
                 try {
                     publisher.destroy();
                     subscriber.destroy();
+                    $state.go('app.category-list',{},{reload:true});
                     window.location.href = "#/app/category-listing";
                 } catch (err) {
 
