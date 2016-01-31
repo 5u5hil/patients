@@ -997,9 +997,9 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.bookNow = function () {
-                $ionicHistory.nextViewOptions({
-                    disableBack: true
-                });
+//                $ionicHistory.nextViewOptions({
+//                    disableBack: true
+//                });
                 $ionicLoading.show({template: 'Loading...'});
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
@@ -1027,7 +1027,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
-                console.log($scope.discount + '--' + $scope.userId);
+                //console.log($scope.discount + '--' + $scope.userId);
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
