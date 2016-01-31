@@ -531,9 +531,9 @@ angular.module('your_app_name.controllers', [])
             $scope.specializations = {};
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-//            $ionicHistory.nextViewOptions({
-//                disableBack: true
-//            });
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $ionicLoading.show({template: 'Loading...'});
             $http({
                 method: 'GET',
