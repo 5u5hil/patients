@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns="http://www.w3.org/ns/widgets"  xmlns:gap="http://phonegap.com/ns/1.0" id="com.doctrspatiens.in" version="0.0.1">
  
-    <name>Doctrs</name>
+    <name>KES Health</name>
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="false" />
     
@@ -9,7 +9,7 @@
     <gap:platform name="android" />
     
     <description>
-        Doctrs.in
+        KES Health
     </description> 
 
     <author href="http://www.infinisystem.com" email="support@infiniteit.biz">
