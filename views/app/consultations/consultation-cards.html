@@ -21,7 +21,7 @@
                         <a ui-sref="app.consultation-profile({'id' : doc.id, 'res' : 'json'})" class="card-content" >
                             <!--  <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div> -->
                             <div class="card-left">	
-                                <img class="user-image-circle" ng-if="doc.image != ''" ng-src="img/{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg">
+                                <img class="user-image-circle" ng-if="doc.image != ''" ng-src="img/userimg/{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg">
                             </div>
                             <div class="card-detail txt-left">
                                 <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
