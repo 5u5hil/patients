@@ -1237,7 +1237,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory, $state) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1309,7 +1309,7 @@ angular.module('your_app_name.controllers', [])
                     publisher.destroy();
                     subscriber.destroy();
                     $state.go('app.category-list', {}, {reload: true});
-                    window.location.href = "#/app/category-listing";
+                    //window.location.href = "#/app/category-listing";
                 } catch (err) {
 
                 }
