@@ -119,7 +119,6 @@ angular.module('your_app_name.controllers', [])
             };
             //check OTP
             $scope.checkOTP = function (otp) {
-                $ionicLoading.show({template: 'Loading...'});
                 $scope.user = {};
                 $scope.user.name = window.localStorage.getItem('name');
                 $scope.user.email = window.localStorage.getItem('email');
@@ -139,7 +138,6 @@ angular.module('your_app_name.controllers', [])
                         contentType: false,
                         processData: false,
                         success: function (response) {
-                            $ionicLoading.hide();
                             if (angular.isObject(response)) {
                                 store(response);
                                 $rootScope.userLogged = 1;
@@ -156,7 +154,6 @@ angular.module('your_app_name.controllers', [])
                             $rootScope.$digest;
                         },
                         error: function (e) {
-                            $ionicLoading.hide();
                             console.log(e.responseText);
                         }
                     });
@@ -165,13 +162,11 @@ angular.module('your_app_name.controllers', [])
             }
             //Check if email is already registered
             $scope.checkEmail = function (email) {
-                $ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
                     url: domain + 'check-user-email',
                     params: {userEmail: email}
                 }).then(function successCallback(response) {
-                    $ionicLoading.hide();
                     if (response.data > 0) {
                         $scope.user.email = '';
                         $scope.emailError = "This email-id is already registered!";
@@ -182,7 +177,6 @@ angular.module('your_app_name.controllers', [])
                         $scope.emailError.digest;
                     }
                 }, function errorCallback(response) {
-                    $ionicLoading.hide();
                     console.log(response);
                 });
             };
@@ -191,7 +185,6 @@ angular.module('your_app_name.controllers', [])
         .controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
 
             $scope.recoverPassword = function (email, phone) {
-                $ionicLoading.show({template: 'Loading...'});
                 window.localStorage.setItem('email', email);
                 console.log("email:  " + email);
                 $.ajax({
@@ -200,7 +193,6 @@ angular.module('your_app_name.controllers', [])
                     data: {email: email, phone: phone},
                     cache: false,
                     success: function (response) {
-                        $ionicLoading.hide();
                         window.localStorage.setItem('passcode', response.passcode);
                         $state.go('auth.update-password', {}, {reload: true});
                         //window.location.href = '#/auth/update-password';
@@ -208,7 +200,6 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.updatePassword = function (passcode, password, cpassword) {
-                $ionicLoading.show({template: 'Loading...'});
                 var email = window.localStorage.getItem('email');
                 // console.log("email: "+email);
                 $.ajax({
@@ -217,10 +208,7 @@ angular.module('your_app_name.controllers', [])
                     data: {passcode: passcode, password: password, cpassword: cpassword, email: email},
                     cache: false,
                     success: function (response) {
-                        console.log("#######" + passcode);
-                        console.log("@@@@" + window.localStorage.getItem('passcode'));
                         if (response == 1) {
-
                             if (parseInt(passcode) == parseInt(window.localStorage.getItem('passcode'))) {
                                 alert('Please login with your new password.');
                                 $state.go('auth.login', {}, {reload: true});
@@ -233,7 +221,6 @@ angular.module('your_app_name.controllers', [])
                         } else {
                             alert('Oops something went wrong.');
                         }
-                        $ionicLoading.hide();
                     }
                 });
             };
@@ -278,10 +265,7 @@ angular.module('your_app_name.controllers', [])
                 params: {userId: $scope.userid}
             }).then(function successCallback(response) {
                 $scope.cats = [];
-                //console.log(response);
-                //$scope.categories = response.data; 
                 angular.forEach(response.data, function (value, key) {
-                    //console.log(value.category);
                     $scope.cats.push({text: value.category, id: value.id});
                 });
             }, function errorCallback(response) {
