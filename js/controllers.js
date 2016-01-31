@@ -531,9 +531,6 @@ angular.module('your_app_name.controllers', [])
             $scope.specializations = {};
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            });
             $ionicLoading.show({template: 'Loading...'});
             $http({
                 method: 'GET',
@@ -1162,9 +1159,6 @@ angular.module('your_app_name.controllers', [])
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            });
             $http({
                 method: 'GET',
                 url: domain + 'appointment/get-app-details',
@@ -1264,9 +1258,6 @@ angular.module('your_app_name.controllers', [])
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-            $ionicHistory.nextViewOptions({
-                disableBack: true
-            });
             $http({
                 method: 'GET',
                 url: domain + 'appointment/join-doctor',
