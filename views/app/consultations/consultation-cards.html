@@ -70,12 +70,12 @@
                             </div> --->
 
 
-                            <div class="cardopt-row" >
-                                <div class="cardoptions" ng-repeat="serv in docServices[$index]" >
+                            <div class="cardopt-row" ng-repeat="serv in docServices[$index]">
+                                <div class="cardoptions" ng-if="serv.service_id == 1" style="width:100%;">
                                     <span class="bstatus">
                                         <i class="ion-android-done"></i>
                                     </span>
-                                    {{serv.service_id == 1? 'Instant': serv.service_id == 2? 'Chat': serv.service_id == 3? 'Clinic': serv.service_id == 4? 'Home':''}}
+                                    {{serv.service_id == 1? 'Video': ''}}
                                 </div>                                
 
                             </div>

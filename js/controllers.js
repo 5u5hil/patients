@@ -549,6 +549,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.video_app = response.data.video_app;
                 $scope.video_doctorsData = response.data.video_doctorsData;
                 $scope.video_products = response.data.video_products;
+                $scope.video_end_time = response.data.video_end_time;
                 //Clinic
                 $scope.clinic_app = response.data.clinic_app;
                 $scope.clinic_doctorsData = response.data.clinic_doctorsData;
