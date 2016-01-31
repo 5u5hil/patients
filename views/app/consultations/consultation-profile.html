@@ -51,24 +51,7 @@
                 </div>
 
                 <div class="ctab profile">
-                    <ion-tabs class="tabs-positive tabs-icon-top" >
-                        <div>
-                            <div>
-                               <!-- <ion-tab icon="ion-videocamera" title="Instant<br> video " >                                   
-                                    <div class="tabcontainer"> 
-                                        <p>{{instVideo.desc}}</p>
-
-                                        <p><button class="button button-block button-positive" ng-click="countdown();">Check Availability</button>
-                                        </p>
-                                    </div>
-                                </ion-tab>-->
-                            </div>
-                        </div>
-
-                        <ion-tab icon="ion-calendar" title="Schedule Now">
-                            <div class="tabcontainer">
-                                <!-- Schedule-->
-                                <div class="schedule">
+                    <div class="schedule">
                                     <my-tabs class="themetabs">
                                         <div ng-repeat="serv in services">                                        
                                             <!-- clinic 
@@ -199,7 +182,23 @@
                                         </div>
                                     </my-tabs>
                                 </div>
-                                <!-- End Schedule-->
+                    <!--<ion-tabs class="tabs-positive tabs-icon-top" >
+                        <div>
+                            <div>
+                               <!-- <ion-tab icon="ion-videocamera" title="Instant<br> video " >                                   
+                                    <div class="tabcontainer"> 
+                                        <p>{{instVideo.desc}}</p>
+
+                                        <p><button class="button button-block button-positive" ng-click="countdown();">Check Availability</button>
+                                        </p>
+                                    </div>
+                                </ion-tab>
+                            </div>
+                        </div>
+
+                        <ion-tab icon="ion-calendar" title="Schedule Now">
+                            <div class="tabcontainer">
+                                
                             </div>
                         </ion-tab>
                         <!---<ion-tab icon="ion-chatbubble" title="{{chatProd.mode}} <br/>INR {{chatProd.price}}" >
@@ -221,6 +220,8 @@
                                         </div>
                                     </ion-tab>
                         </ion-tabs>-->
+                
+                
                 </div>
             </div>
         </div>
