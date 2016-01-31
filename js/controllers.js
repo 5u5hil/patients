@@ -59,7 +59,7 @@ angular.module('your_app_name.controllers', [])
                             /*if (window.localStorage.getItem('url') != null) {
                              $state.go(window.localStorage.getItem('url'));
                              } else {*/
-                            $state.go('app.category-list',{},{reload:true});
+                            $state.go('app.category-list', {}, {reload: true});
                             //}
                         } else {
                             $rootScope.userLogged = 0;
@@ -85,13 +85,11 @@ angular.module('your_app_name.controllers', [])
                 $scope.selected_tab = data.title;
             });
         })
-        .controller('LogoutCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicHistory) {
+        .controller('LogoutCtrl', function ($scope, $state, $templateCache, $q, $rootScope) {
             window.localStorage.clear();
             $rootScope.userLogged = 0;
-            $rootScope.$digest;            
-            $ionicHistory.clearHistory();
-            //$ionicHistory.clearCache();
-            $state.go('auth.login',{}, {reload: true});
+            $rootScope.$digest;
+            $state.go('auth.login', {}, {reload: true});
             //window.location.href = "#/";
         })
         .controller('SignupCtrl', function ($scope, $state, $http, $rootScope) {
@@ -150,7 +148,7 @@ angular.module('your_app_name.controllers', [])
 //                                    $state.go(window.localStorage.getItem('url'));
 //                                } else {
                                 alert('Your sucessfully registered');
-                                $state.go('app.category-list',{},{reload: true});                                
+                                $state.go('app.category-list', {}, {reload: true});
                                 //}
                             } else {
                                 alert('Please fill all the details for signup');
@@ -309,7 +307,7 @@ angular.module('your_app_name.controllers', [])
                         console.log(button.id);
                         //AdMob.showBanner(button.id);
                         //window.location.href = "http://192.168.2.169:8100/#/app/add-category/" + button.id;
-                        $state.go('app.add-category', {'id': button.id}, {reload:true});
+                        $state.go('app.add-category', {'id': button.id}, {reload: true});
                         return true;
                     }
                 });
@@ -590,7 +588,7 @@ angular.module('your_app_name.controllers', [])
                             } else {
                                 alert('Sorry your appointment is not cancelled.');
                             }
-                            $state.go('app.consultations-list');
+                            $state.go('app.consultations-list', {}, {reload: true});
                         }, function errorCallback(response) {
                             console.log(response);
                         });
@@ -631,6 +629,16 @@ angular.module('your_app_name.controllers', [])
                         window.localStorage.setItem('appId', appId);
                         $state.go('app.reschedule-appointment', {'id': drId});
                     }
+                }
+            };
+            $scope.joinVideo = function (mode, start, end, appId) {
+                console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
+                if ($scope.curTime >= start || $scope.curTime <= end) {
+                    console.log('redirect');
+                    //$state.go('app.patient-join', {}, {reload: true});
+                    $state.go('app.patient-join', {'id': appId, 'mode': mode}, {reload: true});
+                } else {
+                    alert("You can join video before 15 minutes.");
                 }
             };
         })
@@ -1125,7 +1133,7 @@ angular.module('your_app_name.controllers', [])
             window.localStorage.removeItem('prodid');
             $scope.shareRecords = function (drId) {
                 window.localStorage.setItem('shareDrId', drId);
-                $state.go('app.category-detail',{}, {reload:true});
+                $state.go('app.category-detail', {}, {reload: true});
             };
         })
 
@@ -1230,12 +1238,23 @@ angular.module('your_app_name.controllers', [])
                         } else {
                             window.localStorage.setItem('appId', appId);
                             //window.location.href = '#/app/reschedule-appointment/'+drId;
-                            $state.go('app.reschedule-appointment', {'id': drId}, {reload:true});
+                            $state.go('app.reschedule-appointment', {'id': drId}, {reload: true});
                         }
                     } else {
                         window.localStorage.setItem('appId', appId);
-                        $state.go('app.reschedule-appointment', {'id': drId}, {reload:true});
+                        $state.go('app.reschedule-appointment', {'id': drId}, {reload: true});
                     }
+                }
+            };
+
+            $scope.joinDoctor = function (mode, start, end, appId) {
+                console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
+                if ($scope.curTime >= start || $scope.curTime <= end) {
+                    console.log('redirect');
+                    //$state.go('app.patient-join', {}, {reload: true});
+                    $state.go('app.patient-join', {'id': appId, 'mode': mode}, {reload: true});
+                } else {
+                    alert("You can join video before 15 minutes.");
                 }
             };
         })
@@ -1314,7 +1333,7 @@ angular.module('your_app_name.controllers', [])
                 try {
                     publisher.destroy();
                     subscriber.destroy();
-                    $state.go('app.category-list',{},{reload:true});
+                    $state.go('app.category-list', {}, {reload: true});
                     window.location.href = "#/app/category-listing";
                 } catch (err) {
 
@@ -1515,7 +1534,7 @@ angular.module('your_app_name.controllers', [])
                                 alert('Your appointment is rescheduled successfully.');
                                 $ionicHistory.clearHistory();
                                 $ionicHistory.clearCache();
-                                $state.go('app.consultations-list',{},{reload:true});
+                                $state.go('app.consultations-list', {}, {reload: true});
 
                             }
                         }
@@ -1530,7 +1549,7 @@ angular.module('your_app_name.controllers', [])
                 window.localStorage.removeItem('appId');
                 $ionicHistory.clearHistory();
                 $ionicHistory.clearCache();
-                $state.go('app.consultations-list',{},{reload:true});
+                $state.go('app.consultations-list', {}, {reload: true});
             };
         })
         ;
