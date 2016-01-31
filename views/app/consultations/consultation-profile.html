@@ -2,10 +2,10 @@
     <ion-nav-title>
         <span>{{doctor[0].fname}} {{doctor[0].lname}}</span>
     </ion-nav-title>
-   <!--  <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-person">
-        </button>
-    </ion-nav-buttons> -->
+    <!--  <ion-nav-buttons side="right">
+         <button class="button button-icon button-clear ion-person">
+         </button>
+     </ion-nav-buttons> -->
     <div ng-repeat="doc in doctor">
         <div class="profile-head">
             <div class="card-content">
@@ -27,43 +27,42 @@
         <div class="ioncontent">
             <div ng-repeat="doc in doctor">
                 <div  class="profileslide">
-                   <div class="list card profile-card">
-                                <div class="item item-body">
-                                    <div class="row txt-left">
-                                        <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
-                                        <div class="col"><p><strong>Qualification</strong><br/>
-                                                <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span>
-                                            </p></div>	
-                                    </div>
-                                    <div class="row txt-left">
-                                        <div class="col"><p><strong>Languages</strong><br/>
-                                                <span ng-repeat="lang in doc.languages">
-                                                    {{lang.language}}{{$last==true? '': ',&nbsp;'}}
-                                                </span></p></div>	
-                                        <div class="col"><p><strong>Focus Area</strong><br/>
-                                                <span ng-repeat="focus in doc.focuses">
-                                                    {{focus.focus}}{{$last==true? '': ',&nbsp;'}}
-                                                </span></p></div>	
-                                    </div>
-                                </div>
+                    <div class="list card profile-card">
+                        <div class="item item-body">
+                            <div class="row txt-left">
+                                <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
+                                <div class="col"><p><strong>Qualification</strong><br/>
+                                        <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span>
+                                    </p></div>	
                             </div>
-                        
+                            <div class="row txt-left">
+                                <div class="col"><p><strong>Languages</strong><br/>
+                                        <span ng-repeat="lang in doc.languages">
+                                            {{lang.language}}{{$last==true? '': ',&nbsp;'}}
+                                        </span></p></div>	
+                                <div class="col"><p><strong>Focus Area</strong><br/>
+                                        <span ng-repeat="focus in doc.focuses">
+                                            {{focus.focus}}{{$last==true? '': ',&nbsp;'}}
+                                        </span></p></div>	
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="ctab profile">
                     <ion-tabs class="tabs-positive tabs-icon-top" >
                         <div>
                             <div>
-                                <ion-tab icon="ion-videocamera" title="Instant<br> video " >
-                                    <!-- Tab 1 content -->
+                               <!-- <ion-tab icon="ion-videocamera" title="Instant<br> video " >                                   
                                     <div class="tabcontainer"> 
                                         <p>{{instVideo.desc}}</p>
 
                                         <p><button class="button button-block button-positive" ng-click="countdown();">Check Availability</button>
                                         </p>
                                     </div>
+                                </ion-tab>-->
                             </div>
-                            </ion-tab>
                         </div>
 
                         <ion-tab icon="ion-calendar" title="Schedule Now">
@@ -72,7 +71,7 @@
                                 <div class="schedule">
                                     <my-tabs class="themetabs">
                                         <div ng-repeat="serv in services">                                        
-                                            <!-- clinic -->
+                                            <!-- clinic 
                                             <my-tab  title="{{clinicProd.mode}} INR {{clinicProd.price}}"  ng-if="serv == 3">
                                                 <div class="tabcontainer"> 
                                                     <ul class="clist">
@@ -114,9 +113,9 @@
                                                         <a class="button button-full button-positive" ng-click="bookAppointment(clinicProd.id, serv)">Proceed</a>
                                                     </div>	
                                                 </div>
-                                            </my-tab>
+                                            </my-tab>-->
                                             <!-- End clinic -->
-                                            <!-- Home -->
+                                            <!-- Home 
                                             <my-tab  title="{{homeProd.mode}} INR {{homeProd.price}}" ng-if="serv == 4">
                                                 <div class="tabcontainer">  
                                                     <ul class="clist">
@@ -152,7 +151,7 @@
                                                     </div>
                                                     <a class="button button-full button-positive" ng-click="bookAppointment(homeProd.id, serv)">Proceed</a>
                                                 </div>
-                                            </my-tab>
+                                            </my-tab>-->
 
                                             <!----VIDEO --->
                                             <my-tab  title="{{videoProd.mode}} INR {{videoProd.price}}" ng-if="serv == 1" >
@@ -203,7 +202,7 @@
                                 <!-- End Schedule-->
                             </div>
                         </ion-tab>
-                        <ion-tab icon="ion-chatbubble" title="{{chatProd.mode}} <br/>INR {{chatProd.price}}" >
+                        <!---<ion-tab icon="ion-chatbubble" title="{{chatProd.mode}} <br/>INR {{chatProd.price}}" >
                             <div class="tabcontainer">  
                                 <ul class="clist">
                                     <li>{{chatProd.desc}}</li>
