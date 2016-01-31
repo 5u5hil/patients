@@ -53,6 +53,7 @@ angular.module('your_app_name', [
             })
             // This fixes transitions for transparent background views
             $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+                console.log(toState.name.indexOf('auth.walkthrough'));
                 if (toState.name.indexOf('auth.walkthrough') > -1)
                 {
                     // set transitions to android to avoid weird visual effect in the walkthrough transitions
