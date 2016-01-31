@@ -101,7 +101,6 @@ angular.module('your_app_name.controllers', [])
             $scope.user.phone = '';
             $scope.user.password = '';
             $scope.doSignUp = function () {
-                $ionicLoading.show({template: 'Loading...'});
                 var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
                 //var data = new FormData(jQuery("#signup")[0]);
                 $.ajax({
@@ -112,7 +111,6 @@ angular.module('your_app_name.controllers', [])
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        $ionicLoading.hide();
                         window.localStorage.setItem('code', response.otpcode);
                         store($scope.user);
                         alert('Kindly check your mobile for OTP')
