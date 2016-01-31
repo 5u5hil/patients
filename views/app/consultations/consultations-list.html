@@ -134,7 +134,7 @@
                                                         <div class="row cardbtn-small p0">
                                                             <div class="col"><a confirmed-click="cancelAppointment(vApp.appointment_id,prod.user_id,1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.appointment_id}}" class="cbtn">Cancel</a></div>
                                                             <div class="col"><a confirmed-click="reschedule(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn">Reschedule</a></div>
-                                                            <div ng-if="curTime >= video_time[$index]" class="col"><a  class="cbtn">Join</a></div>
+                                                            <div ng-if="mode == 1 && curTime<=video_time[$index] || curTime>=video_end_time[$index]" class="col"><a  class="button" ui-sref="app.patient-join({'id': app[0].appointments.id, 'mode': mode})" ui-sref-opts="{reload: true}"> Join</a></div>
                                                         </div>
                                                     </div>
                                                 </div>
