@@ -86,7 +86,7 @@
                                             <div  class="list card post-item" ng-repeat="prod in home_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
                                                     <a ui-sref="app.current-tab({'id': hApp.appointment_id,'mode': 4})" class="card-content paraspacing" ng-repeat="doc in home_doctorsData[$index]">
-                                                        <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                                        <p><strong> {{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
                                                             </span>
@@ -117,7 +117,7 @@
                                             <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
                                                     <a  ui-sref="app.current-tab({'id': vApp.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
-                                                        <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                                        <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}} , 
                                                             </span>
@@ -149,7 +149,7 @@
                                             <div  class="list card post-item" ng-repeat="prod in chat_products[$index]">
                                                 <div class="post-content item item-text-wrap p0">
                                                     <a  ui-sref="app.current-tab({'id': chApp.id, 'mode': 2})" class="card-content paraspacing" ng-repeat="doc in chat_doctorsData[$index]">
-                                                        <p><strong>Dr. {{doc.fname}} {{doc.lname}}</strong><br/>
+                                                        <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc.specializations">
                                                                 {{spec.specialization}} , 
                                                             </span>
