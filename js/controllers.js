@@ -78,11 +78,22 @@ angular.module('your_app_name.controllers', [])
                 $scope.selected_tab = data.title;
             });
         })
-        .controller('LogoutCtrl', function ($scope, $state, $templateCache, $q, $rootScope) {
+        .controller('LogoutCtrl', function ($scope, $state, $ionicLoading, $ionicHistory, $timeout, $q, $rootScope) {
+//            window.localStorage.clear();
+//            $rootScope.userLogged = 0;
+//            $rootScope.$digest;
+//            $state.go('auth.login', {}, {reload: true});
+            $ionicLoading.show({template: 'Logging out....'});
             window.localStorage.clear();
             $rootScope.userLogged = 0;
             $rootScope.$digest;
-            $state.go('auth.login', {}, {reload: true});
+            $timeout(function () {
+                $ionicLoading.hide();
+                $ionicHistory.clearCache();
+                $ionicHistory.clearHistory();
+                $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
+                $state.go('auth.walkthrough', {}, {reload: true});
+            }, 30);
         })
         .controller('SignupCtrl', function ($scope, $state, $http, $rootScope) {
             $scope.user = {};
@@ -972,11 +983,11 @@ angular.module('your_app_name.controllers', [])
                     params: {discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
-                    if ($scope.discount != $scope.discountApplied) {
-                        $state.go('app.Gopay', {'link': response.data});
-                    } else
-                    {
+                    if (parseInt($scope.discount) == parseInt($scope.discountApplied)) {
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
+
+                    } else {
+                        $state.go('app.Gopay', {'link': response.data});
                     }
                 }, function errorCallback(response) {
                     console.log(response);

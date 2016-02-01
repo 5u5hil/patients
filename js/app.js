@@ -332,7 +332,7 @@ angular.module('your_app_name', [
                         }
                     })
                     .state('app.thankyou', {
-                        url: "/thankyou",
+                        url: "/thankyou/{data:string}",
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/thankyou.html",
