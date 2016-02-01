@@ -10,7 +10,7 @@ $(document).ready(function () {
     if (get('id') != null) {
         $rootScope.$apply(function () {
             $rootScope.userLogged = 1;
-            //if (document.location.hash == "#/auth/login" || document.location.hash == "#/auth/walkthrough")
+            if (document.location.hash == "#/auth/login" || document.location.hash == "#/auth/walkthrough")
                 window.location.href = "#/app/category-listing";
         });
     } else {
