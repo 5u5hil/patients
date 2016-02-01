@@ -194,7 +194,7 @@ angular.module('your_app_name.controllers', [])
                     cache: false,
                     success: function (response) {
 
-                        console.log("respone passcode"+response.passcode);
+                        console.log("respone passcode" + response.passcode);
 
                         window.localStorage.setItem('passcode', response.passcode);
                         $state.go('auth.update-password', {}, {reload: true});
@@ -1014,7 +1014,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
-                //console.log($scope.discount + '--' + $scope.userId);
+               
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -1023,9 +1023,13 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'buy/buy-individual',
                     params: {discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
-                    console.log(response);
-                    //$ionicLoading.hide();
-                    $state.go('app.Gopay', {'link': response.data});
+                   console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
+                    if ($scope.discount != $scope.discountApplied) {
+                        $state.go('app.Gopay', {'link': response.data});
+                    }else
+                    {
+                          $state.go('app.thankyou',  {'data':response.data},{reload:true});
+                    }
                 }, function errorCallback(response) {
                     console.log(response);
                 });
@@ -1038,7 +1042,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.prodid = window.localStorage.getItem('prodid');
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
-                // console.log($scope.prodid + '--' + $scope.userId);
+                console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
                 $http({
                     method: 'GET',
                     url: domain + 'buy/apply-coupon-code',
@@ -1353,26 +1357,26 @@ angular.module('your_app_name.controllers', [])
                 });
                 $scope.send = function () {
                     session.signal({data: jQuery("[name='msg']").val()},
-                            function (error) {
-                                if (error) {
-                                    console.log("signal error ("
-                                            + error.code
-                                            + "): " + error.message);
-                                } else {
-                                    var msg = jQuery("[name='msg']").val();
-                                    $http({
-                                        method: 'GET',
-                                        url: domain + 'chat/add-patient-chat',
-                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
-                                    }).then(function sucessCallback(response) {
-                                        console.log(response);
-                                        jQuery("[name='msg']").val('');
-                                    }, function errorCallback(e) {
-                                        console.log(e.responseText);
-                                    });
-                                    console.log("signal sent.");
-                                }
-                            }
+                    function (error) {
+                        if (error) {
+                            console.log("signal error ("
+                                    + error.code
+                                    + "): " + error.message);
+                        } else {
+                            var msg = jQuery("[name='msg']").val();
+                            $http({
+                                method: 'GET',
+                                url: domain + 'chat/add-patient-chat',
+                                params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                            }).then(function sucessCallback(response) {
+                                console.log(response);
+                                jQuery("[name='msg']").val('');
+                            }, function errorCallback(e) {
+                                console.log(e.responseText);
+                            });
+                            console.log("signal sent.");
+                        }
+                    }
                     );
                 };
             }, function errorCallback(e) {
