@@ -1210,8 +1210,9 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
-            $scope.appId = $stateParams.id;
+        .controller('PatientJoinCtrl', function ($ionicHistory,$window,$scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+                     $ionicHistory.clearCache()
+                    $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1274,6 +1275,15 @@ angular.module('your_app_name.controllers', [])
                         });
                     }
                 });
+                
+                 
+         $timeout(function(){
+           
+             if(jQuery("#myPublisherDiv").html() == ""){
+                 $window.location.reload(true)
+      
+             }
+         },4000);
             }, function errorCallback(e) {
                 console.log(e);
             });
