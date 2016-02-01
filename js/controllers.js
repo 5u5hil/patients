@@ -19,7 +19,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 // APP
-        .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
+        .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
@@ -27,6 +27,19 @@ angular.module('your_app_name.controllers', [])
                 if ($rootScope.userLogged == 0)
                     $state.go('auth.walkthrough');
             }
+            $scope.logout = function () {
+                $ionicLoading.show({template: 'Logging out....'});
+                window.localStorage.clear();
+                $rootScope.userLogged = 0;
+                $rootScope.$digest;
+                $timeout(function () {
+                    $ionicLoading.hide();
+                    $ionicHistory.clearCache();
+                    $ionicHistory.clearHistory();
+                    $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
+                    $state.go('auth.walkthrough', {}, {reload: true});
+                }, 30);
+            };
         })
 
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
@@ -1310,26 +1323,26 @@ angular.module('your_app_name.controllers', [])
                 });
                 $scope.send = function () {
                     session.signal({data: jQuery("[name='msg']").val()},
-                    function (error) {
-                        if (error) {
-                            console.log("signal error ("
-                                    + error.code
-                                    + "): " + error.message);
-                        } else {
-                            var msg = jQuery("[name='msg']").val();
-                            $http({
-                                method: 'GET',
-                                url: domain + 'chat/add-patient-chat',
-                                params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
-                            }).then(function sucessCallback(response) {
-                                console.log(response);
-                                jQuery("[name='msg']").val('');
-                            }, function errorCallback(e) {
-                                console.log(e.responseText);
-                            });
-                            console.log("signal sent.");
-                        }
-                    }
+                            function (error) {
+                                if (error) {
+                                    console.log("signal error ("
+                                            + error.code
+                                            + "): " + error.message);
+                                } else {
+                                    var msg = jQuery("[name='msg']").val();
+                                    $http({
+                                        method: 'GET',
+                                        url: domain + 'chat/add-patient-chat',
+                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                                    }).then(function sucessCallback(response) {
+                                        console.log(response);
+                                        jQuery("[name='msg']").val('');
+                                    }, function errorCallback(e) {
+                                        console.log(e.responseText);
+                                    });
+                                    console.log("signal sent.");
+                                }
+                            }
                     );
                 };
             }, function errorCallback(e) {

@@ -347,7 +347,7 @@ angular.module('your_app_name', [
                         views: {
                             'menuContent': {
                                 //templateUrl: "views/app/bookmarks.html",
-                                controller: 'LogoutCtrl'
+                                controller: 'AppCtrl'
                             }
                         }
                     })

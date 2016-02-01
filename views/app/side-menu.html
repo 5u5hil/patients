@@ -30,10 +30,11 @@
                     <h2 class="menu-text">Home</h2>
                 </ion-item>
 
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="{{ userLogged == 1 ? 'app.logout' : 'auth.login'}}">
+                <ion-item class="item-icon-left logoutbtn" nav-clear menu-close ng-if="userLogged==1" ng-click="logout()" >
                     <i class="icon ion-android-unlock"></i>
-                    <h2 class="menu-text">{{ userLogged == 1 ? 'Logout' : 'Login / Register'}}</h2>
-                </ion-item>
+                    <h2 class="menu-text">Logout</h2>
+                </ion-item> 
+
 
             </ion-list>
         </ion-content>
