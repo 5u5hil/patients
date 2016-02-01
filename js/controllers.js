@@ -1,20 +1,20 @@
 var publisher;
 var subscriber;
-
 angular.module('your_app_name.controllers', [])
 
-        .run(function ($rootScope, $templateCache) {
-            $rootScope.$on('$viewContentLoaded', function () {
-                $templateCache.removeAll();
-            });
-        })
+//        .run(function ($rootScope, $templateCache) {
+//            $rootScope.$on('$viewContentLoaded', function () {
+//                $templateCache.removeAll();
+//            });
+//        })
 
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
+                $rootScope.username = window.localStorage.getItem('fname');
             } else {
                 if ($rootScope.userLogged == 0)
-                    $state.go('auth.login');
+                    $state.go('auth.walkthrough');
             }
         })
 
@@ -22,9 +22,10 @@ angular.module('your_app_name.controllers', [])
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
+                $rootScope.username = window.localStorage.getItem('fname');
             } else {
                 if ($rootScope.userLogged == 0)
-                    $state.go('auth.login');
+                    $state.go('auth.walkthrough');
             }
         })
 
@@ -38,7 +39,6 @@ angular.module('your_app_name.controllers', [])
 //LOGIN
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading) {
             $scope.doLogIn = function () {
-                $ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
                 $.ajax({
                     type: 'POST',
@@ -48,30 +48,23 @@ angular.module('your_app_name.controllers', [])
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        console.log(response);
+                        //console.log(response);
                         if (angular.isObject(response)) {
                             $scope.loginError = '';
                             $scope.loginError.digest;
                             store(response);
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
-                            //if ($rootScope.url != '') {
-                            /*if (window.localStorage.getItem('url') != null) {
-                             $state.go(window.localStorage.getItem('url'));
-                             } else {*/
-                            $state.go('app.category-list', {}, {reload: true});
+                            $state.go('app.category-list');
                             //}
                         } else {
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
-                            //alert(response);
                         }
                         $rootScope.$digest;
-                        $ionicLoading.hide();
                     },
                     error: function (e) {
-                        $ionicLoading.hide();
                         console.log(e.responseText);
                     }
                 });
@@ -90,7 +83,6 @@ angular.module('your_app_name.controllers', [])
             $rootScope.userLogged = 0;
             $rootScope.$digest;
             $state.go('auth.login', {}, {reload: true});
-            //window.location.href = "#/";
         })
         .controller('SignupCtrl', function ($scope, $state, $http, $rootScope) {
             $scope.user = {};
@@ -113,7 +105,6 @@ angular.module('your_app_name.controllers', [])
                         store($scope.user);
                         alert('Kindly check your mobile for OTP')
                         $state.go('auth.check-otp', {}, {reload: true});
-                        //window.location.href = "#/auth/check-otp";
                     }
                 });
             };
@@ -126,10 +117,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.user.password = window.localStorage.getItem('password');
                 var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
                 var code = window.localStorage.getItem('code');
-                console.log('data:---' + data);
-                // console.log(window.localStorage.getItem('code'));
                 if (parseInt(code) === parseInt(otp)) {
-                    //  alert('success');
                     $.ajax({
                         type: 'GET',
                         url: domain + "register",
@@ -141,13 +129,8 @@ angular.module('your_app_name.controllers', [])
                             if (angular.isObject(response)) {
                                 store(response);
                                 $rootScope.userLogged = 1;
-                                //if ($rootScope.url != '') {
-//                                if (window.localStorage.getItem('url') != null) {
-//                                    $state.go(window.localStorage.getItem('url'));
-//                                } else {
                                 alert('Your sucessfully registered');
                                 $state.go('app.category-list', {}, {reload: true});
-                                //}
                             } else {
                                 alert('Please fill all the details for signup');
                             }
@@ -158,8 +141,7 @@ angular.module('your_app_name.controllers', [])
                         }
                     });
                 }
-
-            }
+            };
             //Check if email is already registered
             $scope.checkEmail = function (email) {
                 $http({
@@ -171,7 +153,6 @@ angular.module('your_app_name.controllers', [])
                         $scope.user.email = '';
                         $scope.emailError = "This email-id is already registered!";
                         $scope.emailError.digest;
-                        //alert("This email-id already registered");
                     } else {
                         $scope.emailError = "";
                         $scope.emailError.digest;
@@ -183,7 +164,6 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ForgotPasswordCtrl', function ($scope, $state, $ionicLoading) {
-
             $scope.recoverPassword = function (email, phone) {
                 window.localStorage.setItem('email', email);
                 console.log("email:  " + email);
@@ -193,18 +173,14 @@ angular.module('your_app_name.controllers', [])
                     data: {email: email, phone: phone},
                     cache: false,
                     success: function (response) {
-
                         console.log("respone passcode" + response.passcode);
-
                         window.localStorage.setItem('passcode', response.passcode);
                         $state.go('auth.update-password', {}, {reload: true});
-                        //window.location.href = '#/auth/update-password';
                     }
                 });
             };
             $scope.updatePassword = function (passcode, password, cpassword) {
                 var email = window.localStorage.getItem('email');
-                // console.log("email: "+email);
                 $.ajax({
                     type: 'GET',
                     url: domain + "update-password",
@@ -218,7 +194,6 @@ angular.module('your_app_name.controllers', [])
                             } else {
                                 alert('Please enter valid OTP.');
                             }
-
                         } else if (response == 2) {
                             alert('Password Mismatch.');
                         } else {
@@ -248,7 +223,6 @@ angular.module('your_app_name.controllers', [])
             $scope.sendMail = function () {
                 cordova.plugins.email.isAvailable(
                         function (isAvailable) {
-                            // alert('Service is not available') unless isAvailable;
                             cordova.plugins.email.open({
                                 to: 'envato@startapplabs.com',
                                 cc: 'hello@startapplabs.com',
@@ -261,7 +235,6 @@ angular.module('your_app_name.controllers', [])
             };
         })
         .controller('AdsCtrl', function ($scope, $http, $state, $ionicActionSheet, AdMob, iAd) {
-            //$scope.cats = [];
             $http({
                 method: 'GET',
                 url: domain + 'records/get-record-categories',
@@ -292,8 +265,6 @@ angular.module('your_app_name.controllers', [])
                     },
                     buttonClicked: function (index, button) {
                         console.log(button.id);
-                        //AdMob.showBanner(button.id);
-                        //window.location.href = "http://192.168.2.169:8100/#/app/add-category/" + button.id;
                         $state.go('app.add-category', {'id': button.id}, {reload: true});
                         return true;
                     }
@@ -306,7 +277,6 @@ angular.module('your_app_name.controllers', [])
             if (get('id') != null) {
                 $rootScope.userLogged = 1;
             }
-            //console.log($rootScope.userLogged);
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
         })
@@ -379,9 +349,6 @@ angular.module('your_app_name.controllers', [])
                 $scope.fields = response.data.fields;
                 $scope.problems = response.data.problems;
                 $scope.doctrs = response.data.doctrs;
-                //angular.forEach(response.data, function (value, key) {
-                //    $scope.fields.push($sce.trustAsHtml(createElement(value)));
-                //});
                 $scope.category = $stateParams.id;
             }, function errorCallback(response) {
                 console.log(response);
@@ -390,7 +357,6 @@ angular.module('your_app_name.controllers', [])
                 addOther(name, field, val);
             };
             $scope.addNewElement = function (ele) {
-                //console.log('text' + ele);
                 addNew(ele);
             };
             $scope.submit = function () {
@@ -410,7 +376,6 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
             $http({
@@ -422,7 +387,6 @@ angular.module('your_app_name.controllers', [])
                 angular.forEach(response.data, function (value, key) {
                     $scope.fields.push($sce.trustAsHtml(createElement(value)));
                 });
-                //var modelname = '';
                 $http({
                     method: "GET",
                     url: domain + "records/get-record-value",
@@ -430,7 +394,6 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     angular.forEach(response.data, function (value, key) {
-                        //console.log(value.field_id + ' : ' + value.value + '-------' + key);
                         modelname = value.field_id;
                         if (!$scope.$$phase) {
                             $timeout(function () {
@@ -445,7 +408,6 @@ angular.module('your_app_name.controllers', [])
                 }, function errorCallback(e) {
                     console.log(e.responseText);
                 });
-                //console.log($scope.fields);
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -466,7 +428,6 @@ angular.module('your_app_name.controllers', [])
                 $scope.records = response.data.records;
                 $scope.category = response.data.category;
                 $scope.category.category = $stateParams.id;
-                //$ionicLoading.hide();
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -487,21 +448,16 @@ angular.module('your_app_name.controllers', [])
                 $scope.category = response.data.record;
                 $scope.problem = response.data.problem;
                 $scope.doctrs = response.data.doctrs;
-                //$ionicLoading.hide();
             }, function errorCallback(response) {
                 console.log(response);
             });
             //DELETE Modal
             $scope.delete = function (id) {
-                //console.log(id);
-                //$ionicLoading.show({ template: 'Loading...' });
                 $http({
                     method: 'POST',
                     url: domain + 'records/delete',
                     params: {id: id}
                 }).then(function successCallback(response) {
-                    //$ionicLoading.hide();
-                    //console.log(response);
                     $state.go('app.category-detail');
                 }, function errorCallback(e) {
                     console.log(e);
@@ -525,7 +481,6 @@ angular.module('your_app_name.controllers', [])
                 params: {userId: $scope.userId}
             }).then(function successCallback(response) {
                 $ionicLoading.hide();
-                console.log(response.data);
                 $scope.specializations = response.data.spec;
                 //Video
                 $scope.video_time = response.data.video_time;
@@ -552,11 +507,9 @@ angular.module('your_app_name.controllers', [])
             $scope.cancelAppointment = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
                 $scope.userId = get('id');
-                console.log(startTime);
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-                console.log(curtime);
                 var timeDiff = getTimeDiff(startTime, curtime);
-                console.log(timeDiff);
+                console.log(curtime + "===" + startTime + "====" + timeDiff);
                 if (timeDiff < 15) {
                     if (mode == 1) {
                         alert("Appointment can not be cancelled now!");
@@ -659,7 +612,6 @@ angular.module('your_app_name.controllers', [])
 
         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $timeout) {
             $scope.IsVisible = false;
-            //$ionicLoading.show({ template: 'Loading...' });
             $scope.counter = 100;
             var stopped;
             $scope.countdown = function () {
@@ -984,9 +936,6 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.bookNow = function () {
-//                $ionicHistory.nextViewOptions({
-//                    disableBack: true
-//                });
                 $ionicLoading.show({template: 'Loading...'});
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
@@ -1014,7 +963,6 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
-               
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -1023,20 +971,18 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'buy/buy-individual',
                     params: {discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
-                   console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
+                    console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
                     if ($scope.discount != $scope.discountApplied) {
                         $state.go('app.Gopay', {'link': response.data});
-                    }else
+                    } else
                     {
-                          $state.go('app.thankyou',  {'data':response.data},{reload:true});
+                        $state.go('app.thankyou', {'data': response.data}, {reload: true});
                     }
                 }, function errorCallback(response) {
                     console.log(response);
                 });
             };
             $scope.applyCouponCode = function (ccode) {
-                // console.log(ccode);
-
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.prodid = window.localStorage.getItem('prodid');
@@ -1094,7 +1040,6 @@ angular.module('your_app_name.controllers', [])
             };
             $timeout(function () {
                 jQuery("iframe").css("height", jQuery(window).height());
-                //console.log('huu' + jQuery(window).height());
             }, 100);
         })
 
@@ -1107,7 +1052,6 @@ angular.module('your_app_name.controllers', [])
                 params: {id: $stateParams.id, serviceId: $stateParams.serviceId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
             }).then(function successCallback(responseData) {
                 console.log(responseData.data);
-                //$ionicLoading.hide();
                 $scope.product = responseData.data.prod;
                 $scope.prod_inclusion = responseData.data.prod_inclusion;
                 $scope.doctor = responseData.data.doctor;
@@ -1126,14 +1070,11 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('FailureCtrl', function ($scope, $http, $stateParams) {
-            //$scope.slot = window.localStorage.getItem('slot');
             $http({
                 method: 'GET',
                 url: domain + 'orders/get-failure-order-details',
                 params: {id: $stateParams.id, serviceId: $stateParams.serviceId}
             }).then(function successCallback(responseData) {
-                console.log(responseData.data);
-                //$ionicLoading.hide();
                 $scope.product = responseData.data.prod;
                 $scope.prod_inclusion = responseData.data.prod_inclusion;
                 $scope.doctor = responseData.data.doctor;
@@ -1155,7 +1096,6 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'appointment/get-app-details',
                 params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function successCallback(response) {
-                //console.log(response.data);
                 $scope.time = response.data.time;
                 $scope.endTime = response.data.end_time;
                 $scope.app = response.data.app;
@@ -1167,11 +1107,9 @@ angular.module('your_app_name.controllers', [])
             $scope.cancelApp = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
                 $scope.userId = get('id');
-                console.log(startTime);
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-                console.log(curtime);
                 var timeDiff = getTimeDiff(startTime, curtime);
-                console.log(timeDiff);
+                console.log(curtime + "===" + startTime + "===" + timeDiff);
                 if (timeDiff < 15) {
                     if (mode == 1) {
                         alert("Appointment can not be cancelled now!");
@@ -1222,7 +1160,6 @@ angular.module('your_app_name.controllers', [])
                             alert("Appointment can not be reschedule now!");
                         } else {
                             window.localStorage.setItem('appId', appId);
-                            //window.location.href = '#/app/reschedule-appointment/'+drId;
                             $state.go('app.reschedule-appointment', {'id': drId}, {reload: true});
                         }
                     } else {
@@ -1236,7 +1173,6 @@ angular.module('your_app_name.controllers', [])
                 console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
                 if ($scope.curTime >= start || $scope.curTime <= end) {
                     console.log('redirect');
-                    //$state.go('app.patient-join', {}, {reload: true});
                     $state.go('app.patient-join', {'id': appId, 'mode': mode}, {reload: true});
                 } else {
                     alert("You can join video before 15 minutes.");
