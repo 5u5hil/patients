@@ -13,7 +13,7 @@ angular.module('your_app_name.controllers', [])
                 $rootScope.userLogged = 1;
             } else {
                 if ($rootScope.userLogged == 0)
-                    $state.go('auth.login');
+                    $state.go('auth.walkthrough');
             }
         })
 
@@ -23,7 +23,7 @@ angular.module('your_app_name.controllers', [])
                 $rootScope.userLogged = 1;
             } else {
                 if ($rootScope.userLogged == 0)
-                    $state.go('auth.login');
+                    $state.go('auth.walkthrough');
             }
         })
 
