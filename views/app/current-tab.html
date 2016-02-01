@@ -66,10 +66,10 @@
     </ion-content>
 
     <div class="footerbar">
-        <a class="button" confirmed-click="cancelApp(app[0].appointments.id,prod.user_id,app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" ><i class="ion-close"></i>  Cancel</a>
-        <a class="button" confirmed-click="rescheduleApp(app[0].appointment_id, prod.user_id, app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" ><i class="ion-calendar"></i>  Reschedule</a>
-        <a ng-if="app[0].appointments.mode == 2" class="button" ui-sref="app.join-chat({'id': app[0].appointment_id, 'mode': mode})" ui-sref-opts="{reload: true}"> Start Chat</a>
-        <a ng-if="app[0].appointments.mode == 1" class="button" ng-click="joinDoctor(app[0].appointment_id, time, endTime, app[0].appointment_id)" > Join</a>
+        <a class="button cancel" confirmed-click="cancelApp(app[0].appointments.id,prod.user_id,app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" ><i class="ion-close"></i>  Cancel</a>
+        <a class="button reschedule" confirmed-click="rescheduleApp(app[0].appointment_id, prod.user_id, app[0].appointments.mode, app[0].appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" ><i class="ion-calendar"></i>  Reschedule</a>
+        <a ng-if="app[0].appointments.mode == 2" class="button startchat" ui-sref="app.join-chat({'id': app[0].appointment_id, 'mode': mode})" ui-sref-opts="{reload: true}"> Start Chat</a>
+        <a ng-if="app[0].appointments.mode == 1" class="button join" ng-click="joinDoctor(app[0].appointment_id, time, endTime, app[0].appointment_id)" > Join</a>
     </div>
     <!------- ui-sref="app.patient-join({'id': app[0].appointments.id, 'mode': mode})  ui-sref-opts="{reload: true}" --->
 </ion-view>

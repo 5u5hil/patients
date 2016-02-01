@@ -31,7 +31,7 @@
 			  
 			         <my-tab title="Pay Now" ng-if="mode==1 || mode==2" >
 						<div class="tabcontainer" style="margin-top:0;">
-                            <div class="pprice">Price: INR {{product[0].price}}</div>
+                             <h4 class="txt-centre" style="margin-top:10px; margin-bottom:10px;">Price: INR {{product[0].price}}</h4>
                             <div class="row" ng-if="apply!=1">
                                 <div class="col col-75">
                                     <input type="text" class="custominput" id='coupon' Placeholder="Enter Coupon Code" ng-model="ccode" />
@@ -44,7 +44,8 @@
                                 </div>
                             </div>
                             <div class="fg txt-centre" ng-if="apply==1">Applied Discount</div>
-                            <h4 class="txt-centre" style="margin-top:10px; margin-bottom:10px;">Final Price: INR {{product[0].price-discountApplied}}</h4>
+                          
+								 <div class="pprice">Final Price: INR {{product[0].price-discountApplied}}</div>
                            
                             <div class="section-footer"> <!---ui-sref="app.success"-->
                                 <a ng-if="mode==1 || mode==2" ng-click="payNow()" class="button button-full button-positive">Pay Now</a>                                
