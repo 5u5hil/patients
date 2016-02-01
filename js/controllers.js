@@ -1042,6 +1042,12 @@ angular.module('your_app_name.controllers', [])
                 });
             };
         })
+        
+         .controller('ThankyouCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
+            console.log($stateParams.data);
+            $scope.data = $stateParams.data;
+            
+        })
 
         .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
             console.log($stateParams.link);
