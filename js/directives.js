@@ -180,7 +180,7 @@ angular.module('your_app_name.directives', [])
                         root_element.classList.remove("post-size-" + current_size_str);
                         root_element.classList.add("post-size-" + new_size_str);
                     }, element);
-                }
+					}
             };
         })
 
