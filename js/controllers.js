@@ -205,6 +205,7 @@ angular.module('your_app_name.controllers', [])
                     data: {email: email, phone: phone},
                     cache: false,
                     success: function (response) {
+                        console.log("respone passcode"+response.passcode);
                         $ionicLoading.hide();
                         window.localStorage.setItem('passcode', response.passcode);
                         window.location.href = '#/auth/update-password';
