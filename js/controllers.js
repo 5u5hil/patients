@@ -11,6 +11,7 @@ angular.module('your_app_name.controllers', [])
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
+                $rootScope.username = window.localStorage.getItem('fname');
             } else {
                 if ($rootScope.userLogged == 0)
                     $state.go('auth.walkthrough');
@@ -21,6 +22,7 @@ angular.module('your_app_name.controllers', [])
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
+                $rootScope.username = window.localStorage.getItem('fname');
             } else {
                 if ($rootScope.userLogged == 0)
                     $state.go('auth.walkthrough');
@@ -46,7 +48,7 @@ angular.module('your_app_name.controllers', [])
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        console.log(response);
+                        //console.log(response);
                         if (angular.isObject(response)) {
                             $scope.loginError = '';
                             $scope.loginError.digest;
@@ -1128,7 +1130,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.userId = get('id');
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 var timeDiff = getTimeDiff(startTime, curtime);
-                console.log(curtime +"==="+startTime+"==="+timeDiff);
+                console.log(curtime + "===" + startTime + "===" + timeDiff);
                 if (timeDiff < 15) {
                     if (mode == 1) {
                         alert("Appointment can not be cancelled now!");
