@@ -216,7 +216,7 @@ angular.module('your_app_name', [
                     //Consultations
 
                     .state('app.consultations-list', {
-                        cache: false,
+                        //cache: false,
                         url: "/consultations-list",
                         views: {
                             'menuContent': {
