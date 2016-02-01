@@ -27,9 +27,6 @@ angular.module('your_app_name', [
     'jett.ionic.filter.bar',
     'youtube-embed'
 ])
-
-
-
         .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout, $ionicLoading, $ionicHistory) {
 
             $ionicPlatform.on("deviceready", function () {
@@ -53,7 +50,6 @@ angular.module('your_app_name', [
             })
             // This fixes transitions for transparent background views
             $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-                console.log(toState.name.indexOf('auth.walkthrough'));
                 if (toState.name.indexOf('auth.walkthrough') > -1)
                 {
                     // set transitions to android to avoid weird visual effect in the walkthrough transitions
@@ -77,10 +73,7 @@ angular.module('your_app_name', [
                     console.log("enabling swipe back and restoring transition to platform default", $ionicConfig.views.transition());
                 }
             });
-//            $rootScope.$on("$ionicView.enter", function () {
-//                $ionicHistory.clearCache();
-//                $ionicHistory.clearHistory();
-//            });
+
             $ionicPlatform.on("resume", function () {
                 PushNotificationsService.register();
             });
@@ -122,10 +115,10 @@ angular.module('your_app_name', [
                         controller: 'LoginCtrl'
                     })
                     /*.state('auth.logout', {
-                        url: '/login',
-                        templateUrl: "views/auth/login.html",
-                        controller: 'LogoutCtrl'
-                    })*/
+                     url: '/login',
+                     templateUrl: "views/auth/login.html",
+                     controller: 'LogoutCtrl'
+                     })*/
 
                     .state('auth.signup', {
                         url: '/signup',
