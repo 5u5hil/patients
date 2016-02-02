@@ -1108,8 +1108,7 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-                        subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
-                        session.publish(subscriber);
+                        subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
                         $http({
                             method: 'GET',
                             url: domain + 'appointment/update-join',
