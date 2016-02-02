@@ -1108,7 +1108,6 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-
                         subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
                         session.publish(subscriber);
                     },
@@ -1128,7 +1127,7 @@ angular.module('your_app_name.controllers', [])
                             url: domain + 'appointment/update-join',
                             params: {id: $scope.appId, userId: $scope.userId, role: '4'}
                         }).then(function sucessCallback(response) {
-
+                            console.log(response);
                         }, function errorCallback(e) {
                             console.log(e);
                         });
