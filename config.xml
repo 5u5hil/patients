@@ -4,19 +4,25 @@
     <name>KES Health</name>
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="false" />
-    
     <gap:platform name="ios" />
     <gap:platform name="android" />
-    
     <description>
         KES Health
     </description> 
-
     <author href="http://www.infinisystem.com" email="support@infiniteit.biz">
         Infini Systems
     </author>
-    
     <icon src="icon.png" />
+	<splash src="splash/splash.png" />
+	<splash src="splash/drawable-port-ldpi-screen.png" platform="android" qualifier="ldpi" />
+	<splash src="splash/drawable-port-mdpi-screen.png" platform="android" qualifier="mdpi" />
+	<splash src="splash/drawable-port-hdpi-screen.png" platform="android" qualifier="hdpi" />
+	<splash src="splash/drawable-port-xhdpi-screen.png" platform="android" qualifier="xhdpi" />
+<!-- 	<splash src="splash/fr-xhdpi.png" platform="android" qualifier="fr-xhdpi" /> -->
+	<splash src="splash/drawable-port-xxhdpi-screen.png" platform="android" qualifier="port-xxhdpi" />
+<!-- 	<splash src="splash/landscape-xxhdpi.png" platform="android" qualifier="land-xxhdpi" /> -->
+	
+	
 <!--    
     <icon src="icon-57.png" platform="ios" width="57" height="57" />
      iPad 
@@ -40,7 +46,7 @@
   
      Retina iPad 
     <splash src="splash/ios/Defaultipr.png" platform="ios" width="1536" height="2048" />
-    -->
+-->
     <preference name="phonegap-version" value="cli-5.2.0" />
     <preference name="webviewbounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
