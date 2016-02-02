@@ -1126,7 +1126,7 @@ angular.module('your_app_name.controllers', [])
                         $http({
                             method: 'GET',
                             url: domain + 'appointment/update-join',
-                            params: {id: $scope.appId, userId: $scope.userId, role:'4'}
+                            params: {id: $scope.appId, userId: $scope.userId, role: '4'}
                         }).then(function sucessCallback(response) {
 
                         }, function errorCallback(e) {
@@ -1253,7 +1253,7 @@ angular.module('your_app_name.controllers', [])
                         $http({
                             method: 'GET',
                             url: domain + 'appointment/cancel-app',
-                            params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                            params: {appId: $scope.appId, userId: $scope.userId}
                         }).then(function successCallback(response) {
                             console.log(response.data);
                             if (response.data == 'success') {
@@ -1270,7 +1270,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'appointment/cancel-app',
-                        params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                        params: {appId: $scope.appId, userId: $scope.userId}
                     }).then(function successCallback(response) {
                         console.log(response.data);
                         if (response.data == 'success') {
@@ -1285,7 +1285,7 @@ angular.module('your_app_name.controllers', [])
                 }
             };
             $scope.rescheduleApp = function (appId, drId, mode, startTime) {
-                console.log(appId+"==="+drId+"==="+mode+"==="+startTime);
+                console.log(appId + "===" + drId + "===" + mode + "===" + startTime);
                 $scope.appId = appId;
                 $scope.userId = get('id');
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1411,7 +1411,6 @@ angular.module('your_app_name.controllers', [])
                         tomorrow.setDate(tomorrow.getDate() + 1);
                         $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                     }
-
                 }, function errorCallback(response) {
                     console.log(response);
                 });
@@ -1442,7 +1441,6 @@ angular.module('your_app_name.controllers', [])
                                 $ionicHistory.clearHistory();
                                 $ionicHistory.clearCache();
                                 $state.go('app.consultations-list', {}, {reload: true});
-
                             }
                         }
                     }, function errorCallback(response) {
@@ -1454,8 +1452,9 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.cancelReschedule = function () {
                 window.localStorage.removeItem('appId');
-                $ionicHistory.clearHistory();
-                $ionicHistory.clearCache();
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $state.go('app.consultations-list', {}, {reload: true});
             };
         })
