@@ -22,7 +22,6 @@
 	<splash src="splash/drawable-port-xxhdpi-screen.png" platform="android" qualifier="port-xxhdpi" />
 <!-- 	<splash src="splash/landscape-xxhdpi.png" platform="android" qualifier="land-xxhdpi" /> -->
 	
-	
 <!--    
     <icon src="icon-57.png" platform="ios" width="57" height="57" />
      iPad 
