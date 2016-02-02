@@ -1084,7 +1084,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('PatientJoinCtrl', function ($ionicHistory, $window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
-            $ionicHistory.clearCache();
+            //$ionicHistory.clearCache();
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1257,10 +1257,10 @@ angular.module('your_app_name.controllers', [])
                             console.log(response.data);
                             if (response.data == 'success') {
                                 alert('Your appointment is cancelled successfully.');
+                                $state.go('app.consultations-list', {}, {reload: true});
                             } else {
                                 alert('Sorry your appointment is not cancelled.');
                             }
-                            $state.go('app.consultations-list');
                         }, function errorCallback(response) {
                             console.log(response);
                         });
@@ -1274,10 +1274,10 @@ angular.module('your_app_name.controllers', [])
                         console.log(response.data);
                         if (response.data == 'success') {
                             alert('Your appointment is cancelled successfully.');
+                            $state.go('app.consultations-list', {}, {reload: true});
                         } else {
                             alert('Sorry your appointment is not cancelled.');
                         }
-                        $state.go('app.consultations-list');
                     }, function errorCallback(response) {
                         console.log(response);
                     });
