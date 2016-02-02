@@ -1084,7 +1084,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('PatientJoinCtrl', function ($ionicHistory, $window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
-            $ionicHistory.clearCache();
+            //$ionicHistory.clearCache();
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1109,7 +1109,17 @@ angular.module('your_app_name.controllers', [])
                 session.on({
                     streamCreated: function (event) {
                         subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
+                        $http({
+                            method: 'GET',
+                            url: domain + 'appointment/update-join',
+                            params: {id: $scope.appId, userId: $scope.userId}
+                        }).then(function sucessCallback(response) {
+                            console.log(response);
+                        }, function errorCallback(e) {
+                            console.log(e);
+                        });
                         session.publish(subscriber);
+                        
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1122,15 +1132,6 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
-                        $http({
-                            method: 'GET',
-                            url: domain + 'appointment/update-join',
-                            params: {id: $scope.appId, userId: $scope.userId, role: '4'}
-                        }).then(function sucessCallback(response) {
-                            console.log(response);
-                        }, function errorCallback(e) {
-                            console.log(e);
-                        });
                         jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
