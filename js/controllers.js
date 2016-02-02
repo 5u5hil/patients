@@ -1084,7 +1084,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('PatientJoinCtrl', function ($ionicHistory, $window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
-            //$ionicHistory.clearCache();
+            $ionicHistory.clearCache();
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
