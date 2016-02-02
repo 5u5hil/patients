@@ -1083,9 +1083,9 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($ionicHistory,$window,$scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
-                     $ionicHistory.clearCache()
-                    $scope.appId = $stateParams.id;
+        .controller('PatientJoinCtrl', function ($ionicHistory, $window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+            $ionicHistory.clearCache();
+            $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1123,6 +1123,15 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
+                        $http({
+                            method: 'GET',
+                            url: domain + 'appointment/update-join',
+                            params: {id: $scope.appId, userId: $scope.userId, role:'4'}
+                        }).then(function sucessCallback(response) {
+
+                        }, function errorCallback(e) {
+                            console.log(e);
+                        });
                         jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
@@ -1148,15 +1157,12 @@ angular.module('your_app_name.controllers', [])
                         });
                     }
                 });
-                
-                 
-         $timeout(function(){
-           
-             if(jQuery("#myPublisherDiv").html() == ""){
-                 $window.location.reload(true)
-      
-             }
-         },4000);
+                $timeout(function () {
+                    if (jQuery("#myPublisherDiv").html() == "") {
+                        $window.location.reload(true)
+
+                    }
+                }, 4000);
             }, function errorCallback(e) {
                 console.log(e);
             });
@@ -1184,7 +1190,7 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'chat/patient-join-chat',
                 params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function sucessCallback(response) {
-                console.log(response.data);
+                //console.log(response.data);
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
                 $scope.msgs = response.data.chat;
@@ -1279,6 +1285,7 @@ angular.module('your_app_name.controllers', [])
                 }
             };
             $scope.rescheduleApp = function (appId, drId, mode, startTime) {
+                console.log(appId+"==="+drId+"==="+mode+"==="+startTime);
                 $scope.appId = appId;
                 $scope.userId = get('id');
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1293,7 +1300,6 @@ angular.module('your_app_name.controllers', [])
                         } else {
                             console.log('redirect');
                             window.localStorage.setItem('appId', appId);
-                            //window.location = "#/app/reschedule-appointment/" + drId;
                             $state.go('app.reschedule-appointment', {'id': drId}, {reload: true});
                         }
                     } else {
