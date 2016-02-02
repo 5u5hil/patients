@@ -1083,9 +1083,9 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($ionicHistory,$window,$scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
-                     $ionicHistory.clearCache()
-                    $scope.appId = $stateParams.id;
+        .controller('PatientJoinCtrl', function ($ionicHistory, $window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+            //$ionicHistory.clearCache();
+            $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1108,9 +1108,18 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamCreated: function (event) {
-
                         subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
                         session.publish(subscriber);
+                        $http({
+                            method: 'GET',
+                            url: domain + 'appointment/update-join',
+                            params: {id: $scope.appId, userId: $scope.userId}
+                        }).then(function sucessCallback(response) {
+                            console.log(response);
+                        }, function errorCallback(e) {
+                            console.log(e);
+                        });
+
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1123,7 +1132,6 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
-                        jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
                         var mic = 1;
@@ -1148,15 +1156,12 @@ angular.module('your_app_name.controllers', [])
                         });
                     }
                 });
-                
-                 
-         $timeout(function(){
-           
-             if(jQuery("#myPublisherDiv").html() == ""){
-                 $window.location.reload(true)
-      
-             }
-         },4000);
+                $timeout(function () {
+                    if (jQuery("#myPublisherDiv").html() == "") {
+                        $window.location.reload(true)
+
+                    }
+                }, 4000);
             }, function errorCallback(e) {
                 console.log(e);
             });
@@ -1184,7 +1189,7 @@ angular.module('your_app_name.controllers', [])
                 url: domain + 'chat/patient-join-chat',
                 params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function sucessCallback(response) {
-                console.log(response.data);
+                //console.log(response.data);
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
                 $scope.msgs = response.data.chat;
@@ -1247,7 +1252,7 @@ angular.module('your_app_name.controllers', [])
                         $http({
                             method: 'GET',
                             url: domain + 'appointment/cancel-app',
-                            params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                            params: {appId: $scope.appId, userId: $scope.userId}
                         }).then(function successCallback(response) {
                             console.log(response.data);
                             if (response.data == 'success') {
@@ -1264,7 +1269,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'appointment/cancel-app',
-                        params: {appId: $scope.appId, prodId: $scope.prodid, userId: $scope.userId}
+                        params: {appId: $scope.appId, userId: $scope.userId}
                     }).then(function successCallback(response) {
                         console.log(response.data);
                         if (response.data == 'success') {
@@ -1279,6 +1284,7 @@ angular.module('your_app_name.controllers', [])
                 }
             };
             $scope.rescheduleApp = function (appId, drId, mode, startTime) {
+                console.log(appId + "===" + drId + "===" + mode + "===" + startTime);
                 $scope.appId = appId;
                 $scope.userId = get('id');
                 var curtime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1293,7 +1299,6 @@ angular.module('your_app_name.controllers', [])
                         } else {
                             console.log('redirect');
                             window.localStorage.setItem('appId', appId);
-                            //window.location = "#/app/reschedule-appointment/" + drId;
                             $state.go('app.reschedule-appointment', {'id': drId}, {reload: true});
                         }
                     } else {
@@ -1405,7 +1410,6 @@ angular.module('your_app_name.controllers', [])
                         tomorrow.setDate(tomorrow.getDate() + 1);
                         $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                     }
-
                 }, function errorCallback(response) {
                     console.log(response);
                 });
@@ -1436,7 +1440,6 @@ angular.module('your_app_name.controllers', [])
                                 $ionicHistory.clearHistory();
                                 $ionicHistory.clearCache();
                                 $state.go('app.consultations-list', {}, {reload: true});
-
                             }
                         }
                     }, function errorCallback(response) {
@@ -1448,8 +1451,9 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.cancelReschedule = function () {
                 window.localStorage.removeItem('appId');
-                $ionicHistory.clearHistory();
-                $ionicHistory.clearCache();
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $state.go('app.consultations-list', {}, {reload: true});
             };
         })
