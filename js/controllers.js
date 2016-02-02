@@ -1109,6 +1109,7 @@ angular.module('your_app_name.controllers', [])
                 session.on({
                     streamCreated: function (event) {
                         subscriber = OT.initSubscriber('subscribersDiv', {width: "100%", height: "100%"});
+                        session.publish(subscriber);
                         $http({
                             method: 'GET',
                             url: domain + 'appointment/update-join',
@@ -1118,8 +1119,7 @@ angular.module('your_app_name.controllers', [])
                         }, function errorCallback(e) {
                             console.log(e);
                         });
-                        session.publish(subscriber);
-                        
+
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1132,7 +1132,6 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         alert("Error connecting: ", error.code, error.message);
                     } else {
-                        jQuery('#myPublisherDiv').html('Waiting for doctor to join!');
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
                         var mic = 1;
