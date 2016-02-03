@@ -47,7 +47,7 @@
                         <div class="ctab commontab">
                             <ion-tabs class="tabs-positive tabs-icon-top">
 							
-							<ion-tab title="Video<br>{{video_app.length}} <br/>"  >
+							<ion-tab title="Video : {{video_app.length}} <br/>"  >
                                     <div class="tabcontainer p0" >
                                         <p class="txt-center">  {{video_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}</p>
                                         <div class="posts-list" ng-repeat="vApp in video_app track by $index">
@@ -69,9 +69,9 @@
                                                         <div class="row cardbtn-small p0">
                                                             
 
-                                                            <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(vApp.appointment_id,prod.user_id,1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.appointment_id}}" class="cbtn cancel">Cancel</a></div>
-                                                            <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule">Reschedule</a></div>
-                                                            <div ng-if="vApp.appointments.mode==1" class="col"><a  class="cbtn join" ng-click="joinVideo(vApp.appointments.mode,video_time[$parent.$index],video_end_time[$parent.$index],vApp.appointments.id)"> Join</a></div>
+                                                            <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(vApp.appointment_id,prod.user_id,1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.appointment_id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
+                                                            <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule"><i class="ion-calendar"></i>  Reschedule</a></div>
+                                                            <div ng-if="vApp.appointments.mode==1" class="col"><a  class="cbtn join" ng-click="joinVideo(vApp.appointments.mode,video_time[$parent.$index],video_end_time[$parent.$index],vApp.appointments.id)"><i class="ion-ios-videocam"></i> Join</a></div>
 
                                                         </div>
                                                         <!---  ng-if="mode == 1 && curTime <= video_time[$parent.$index] || curTime >= video_end_time[$parent.$index]"  ui-sref="app.patient-join({'id': app[0].appointments.id, 'mode': mode})" ui-sref-opts="{reload: true}"  -->
@@ -82,8 +82,8 @@
                                     </div>
                                 </ion-tab>
                               
-								  
-							  <ion-tab title="Chat<br>{{chat_app.length}} <br/>" >
+							<!--	  
+							  <ion-tab title="Chat : {{chat_app.length}} <br/>" >
                                     <div class="tabcontainer p0" >
                                         <p class="txt-center">  {{chat_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}} </p>
                                         <div class="posts-list" ng-repeat="chApp in chat_app">
@@ -184,7 +184,7 @@
                                     </div>
                                 </ion-tab>
                                
-							 
+							 -->
 						  
 						  </ion-tabs>
                         </div>
