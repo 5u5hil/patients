@@ -28,7 +28,9 @@ angular.module('your_app_name', [
     'youtube-embed'
 ])
         .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout, $ionicLoading, $ionicHistory) {
-
+            $ionicPlatform.onHardwareBackButton(function (event) {
+                event.preventDefault();
+            });
             $ionicPlatform.on("deviceready", function () {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
