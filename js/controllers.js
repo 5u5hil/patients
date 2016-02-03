@@ -54,7 +54,7 @@ angular.module('your_app_name.controllers', [])
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading) {
             $scope.doLogIn = function () {
                 var data = new FormData(jQuery("#loginuser")[0]);
-				  $ionicLoading.show({template: 'Loading...'});
+				 
                 $.ajax({
                     type: 'POST',
                     url: domain + "chk-user",
@@ -70,6 +70,7 @@ angular.module('your_app_name.controllers', [])
                             store(response);
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
+							 $ionicLoading.show({template: 'Loading...'});
                             $state.go('app.category-list');
                             //}
                         } else {
@@ -561,7 +562,7 @@ angular.module('your_app_name.controllers', [])
                         url: domain + 'doctors/get-doctor-services',
                         params: {id: value.id}
                     }).then(function successCallback(responseData) {
-                        //$ionicLoading.hide();
+                        $ionicLoading.hide();
                         $scope.docServices[key] = responseData.data;
                     }, function errorCallback(response) {
                         console.log(response);
@@ -1089,15 +1090,16 @@ angular.module('your_app_name.controllers', [])
 
            // $ionicHistory.clearCache();
 
-      .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+      .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory,$ionicLoading) {
             if (!get('loadedOnce')) {
                    store({'loadedOnce':'true'});
                    $window.location.reload(true);
                    // don't reload page, but clear localStorage value so it'll get reloaded next time
-
+					 $ionicLoading.hide();
                } else {
                    // set the flag and reload the page
                    window.localStorage.removeItem('loadedOnce');
+				    $ionicLoading.hide();
 
                }
                     // $ionicHistory.clearCache();
@@ -1111,6 +1113,7 @@ angular.module('your_app_name.controllers', [])
                 params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function sucessCallback(response) {
                 console.log(response.data);
+				 $ionicLoading.hide();
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
                 //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
@@ -1118,8 +1121,10 @@ angular.module('your_app_name.controllers', [])
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 if (OT.checkSystemRequirements() == 1) {
-                    session = OT.initSession(apiKey, sessionId);
+				 session = OT.initSession(apiKey, sessionId);
+				  $ionicLoading.hide();
                 } else {
+				 $ionicLoading.hide();
                     alert("Your device is not compatible");
                 }
                 session.on({
@@ -1131,13 +1136,16 @@ angular.module('your_app_name.controllers', [])
                             params: {id: $scope.appId, userId: $scope.userId}
                         }).then(function sucessCallback(response) {
                             console.log(response);
+							 $ionicLoading.hide();
                         }, function errorCallback(e) {
+						 $ionicLoading.hide();
                             console.log(e);
                         });
 
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
+						 $ionicLoading.hide();
                             alert('You lost your internet connection.'
                                     + 'Please check your connection and try connecting again.');
                         }
@@ -1145,7 +1153,9 @@ angular.module('your_app_name.controllers', [])
                 });
                 session.connect(token, function (error) {
                     if (error) {
+					 $ionicLoading.hide();
                         alert("Error connecting: ", error.code, error.message);
+						
                     } else {
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
@@ -1155,30 +1165,30 @@ angular.module('your_app_name.controllers', [])
                             if (mic == 1) {
                                 publisher.publishAudio(false);
                                 mic = 0;
+								 $ionicLoading.hide();
                             } else {
                                 publisher.publishAudio(true);
                                 mic = 1;
+								 $ionicLoading.hide();
                             }
                         });
                         jQuery(".muteSub").click(function () {
                             if (mute == 1) {
                                 subscriber.subscribeToAudio(false);
                                 mute = 0;
+								 $ionicLoading.hide();
                             } else {
                                 subscriber.subscribeToAudio(true);
                                 mute = 1;
+								 $ionicLoading.hide();
                             }
                         });
                     }
                 });
-                $timeout(function () {
-                    if (jQuery("#myPublisherDiv").html() == "") {
-                        $window.location.reload(true)
-
-                    }
-                }, 4000);
+              
             }, function errorCallback(e) {
                 console.log(e);
+				 $ionicLoading.hide();
             });
             $scope.exitVideo = function () {
                 try {

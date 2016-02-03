@@ -8659,7 +8659,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
     margin: 0 1% 1% 1%;
     width: 48%;
     float: left;}
-	.cardopt-row{width:100%; padding-top:5px;}			 
+	.cardopt-row{width:100%; padding-top:5px; display:none;}			 
 				 
 .cardoptions.mb0{ margin-bottom: 0px;}
 .cardoptions span{        display: inline-block;
