@@ -1,4 +1,5 @@
 var publisher;
+var session;
 var subscriber;
 angular.module('your_app_name.controllers', [])
 
@@ -1084,8 +1085,22 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+
+
            // $ionicHistory.clearCache();
+
+      .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory) {
+            if (!get('loadedOnce')) {
+                   store({'loadedOnce':'true'});
+                   $window.location.reload(true);
+                   // don't reload page, but clear localStorage value so it'll get reloaded next time
+
+               } else {
+                   // set the flag and reload the page
+                   window.localStorage.removeItem('loadedOnce');
+
+               }
+                    // $ionicHistory.clearCache();
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1103,7 +1118,7 @@ angular.module('your_app_name.controllers', [])
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 if (OT.checkSystemRequirements() == 1) {
-                    var session = OT.initSession(apiKey, sessionId);
+                    session = OT.initSession(apiKey, sessionId);
                 } else {
                     alert("Your device is not compatible");
                 }
@@ -1167,8 +1182,10 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.exitVideo = function () {
                 try {
+                    
                     publisher.destroy();
                     subscriber.destroy();
+                    session.disconnect();
 					$ionicHistory.nextViewOptions({
 						  historyRoot: true
 							})
