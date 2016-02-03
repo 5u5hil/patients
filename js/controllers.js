@@ -534,7 +534,7 @@ angular.module('your_app_name.controllers', [])
                 if ($scope.curTime >= start || $scope.curTime <= end) {
                     console.log('redirect');
                     //$state.go('app.patient-join', {}, {reload: true});
-                    $state.go('app.patient-join', {'id': appId, 'mode': mode}, {reload: true});
+                    $state.go('app.patient-join', {'id': appId, 'mode': mode},{cache: false}, {reload: true});
                 } else {
                     alert("You can join video before 15 minutes.");
                 }
