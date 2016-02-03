@@ -1,4 +1,5 @@
 var publisher;
+var session;
 var subscriber;
 angular.module('your_app_name.controllers', [])
 
@@ -1113,7 +1114,7 @@ angular.module('your_app_name.controllers', [])
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 if (OT.checkSystemRequirements() == 1) {
-                    var session = OT.initSession(apiKey, sessionId);
+                    session = OT.initSession(apiKey, sessionId);
                 } else {
                     alert("Your device is not compatible");
                 }
@@ -1177,8 +1178,10 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.exitVideo = function () {
                 try {
+                    
                     publisher.destroy();
                     subscriber.destroy();
+                    session.disconnect();
 					$ionicHistory.nextViewOptions({
 						  historyRoot: true
 							})
