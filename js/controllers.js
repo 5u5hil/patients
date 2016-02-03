@@ -53,6 +53,7 @@ angular.module('your_app_name.controllers', [])
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading) {
             $scope.doLogIn = function () {
                 var data = new FormData(jQuery("#loginuser")[0]);
+				  $ionicLoading.show({template: 'Loading...'});
                 $.ajax({
                     type: 'POST',
                     url: domain + "chk-user",
@@ -536,7 +537,7 @@ angular.module('your_app_name.controllers', [])
                     //$state.go('app.patient-join', {}, {reload: true});
                     $state.go('app.patient-join', {'id': appId, 'mode': mode},{cache: false}, {reload: true});
                 } else {
-                    alert("You can join video before 15 minutes.");
+                    alert("You can join video 15 minutes before the appointment");
                 }
             };
         })
@@ -1171,13 +1172,13 @@ angular.module('your_app_name.controllers', [])
 					$ionicHistory.nextViewOptions({
 						  historyRoot: true
 							})
-				 $state.go('app.category-list', {}, {reload: true});
+				 $state.go('app.consultations-list', {}, {reload: true});
                     //window.location.href = "#/app/category-listing";
                 } catch (err) {
 				$ionicHistory.nextViewOptions({
 						  historyRoot: true
 							})
-				$state.go('app.category-list', {}, {reload: true});
+				$state.go('app.consultations-list', {}, {reload: true});
                 }
 
 
