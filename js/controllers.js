@@ -1195,7 +1195,7 @@ angular.module('your_app_name.controllers', [])
                     
                     publisher.destroy();
                     subscriber.destroy();
-                    session.disconnect();
+                   // session.disconnect();
 					$ionicHistory.nextViewOptions({
 						  historyRoot: true
 							})
