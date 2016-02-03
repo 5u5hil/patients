@@ -1168,10 +1168,16 @@ angular.module('your_app_name.controllers', [])
                 try {
                     publisher.destroy();
                     subscriber.destroy();
-					 $state.go('app.category-list', {}, {reload: true});
+					$ionicHistory.nextViewOptions({
+						  historyRoot: true
+							})
+				 $state.go('app.category-list', {}, {reload: true});
                     //window.location.href = "#/app/category-listing";
                 } catch (err) {
-                    $state.go('app.category-list', {}, {reload: true});
+				$ionicHistory.nextViewOptions({
+						  historyRoot: true
+							})
+				$state.go('app.category-list', {}, {reload: true});
                 }
 
 

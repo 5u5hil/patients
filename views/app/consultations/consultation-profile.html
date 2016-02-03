@@ -137,7 +137,7 @@
                                             </my-tab>-->
 
                                             <!----VIDEO --->
-                                            <my-tab  title="{{videoProd.mode}} INR {{videoProd.price}}" ng-if="serv == 1" >
+                                            <my-tab  title="{{videoProd.mode}}: INR {{videoProd.price}}" ng-if="serv == 1" >
                                                 <div class="tabcontainer"> 
                                                     <ul class="clist">
                                                         <li>{{videoProd.desc}}</li>
@@ -168,7 +168,8 @@
                                                             {{vSch[$index]==''? 'No slots available':''}}
                                                             <ul class="timesheet"  ng-repeat="(key,slot) in vSch[$index] track by $index">
                                                                 <li onclick="toggleclass(this);" ng-repeat="slt in slot" ng-if="slt['sdate'] < nextdate[$parent.$parent.$index]" ng-model="timeslot" ng-click="bookSlot(slt['start'][0], slt['finish'][0], vs.supersaas_id)"> 
-                                                                    {{slt['start'][0]|time}}-{{slt['finish'][0]|time}}                                                          
+                                                                    {{slt['start'][0]|time}}
+																	<!--{{slt['finish'][0]|time}}   -->                    
                                                                 </li>
                                                             </ul>
                                                         </div>
