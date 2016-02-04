@@ -206,7 +206,7 @@
                                         <div class="posts-list" ng-repeat="vAppPast in video_app_past track by $index">
                                             <div  class="list card post-item" ng-repeat="prod_past in video_products_past[$index]">
                                                 <div class="post-content item item-text-wrap p0">
-                                                    <a  ui-sref="app.current-tab({'id': vAppPast.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc_past in video_doctorsData_past[$index]">
+                                                    <a  ui-sref="" class="card-content paraspacing" ng-repeat="doc_past in video_doctorsData_past[$index]">
                                                         <p><strong>{{doc_past.fname}} {{doc_past.lname}}</strong><br/>
                                                             <span ng-repeat="spec in doc_past.specializations">
                                                                 {{spec.specialization}} , 
@@ -220,7 +220,12 @@
                                                     </a>
                                                      <div class="post-actions  post-footer p0">
                                                         <div class="row cardbtn-small p0">
-                                                       <div class="cardpast-bar fred"><i class="ion-close"></i> &nbsp; Canceled</div>
+                                                       <div class="cardpast-bar {{vAppPast.appointments.status==3 ?'fgreen':'fred'}}"><i class="{{vAppPast.appointments.status==3 ?'ion-checkmark':'ion-close'}}"></i> {{vAppPast.appointments.status==4 ? 'Cancelled':''}}
+                                                           {{vAppPast.appointments.status==6 ? 'Patient no-show':''}}
+                                                           {{vAppPast.appointments.status==7 ? 'Doctor no-show':''}}
+                                                           {{vAppPast.appointments.status==3 ? 'Consulted':''}}
+                                                           
+                                                     </div>
                                                         </div>
                                                      </div>
                                                 </div>

@@ -521,6 +521,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.video_doctorsData_past = response.data.video_doctorsData_past;
                 $scope.video_products_past = response.data.video_products_past;
                 $scope.video_end_time_past = response.data.video_end_time_past;
+                //console.log('##########'+ $scope.video_app_past);
                 //Clinic
                 $scope.clinic_app = response.data.clinic_app;
                 $scope.clinic_doctorsData = response.data.clinic_doctorsData;
