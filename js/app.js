@@ -161,6 +161,20 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+					
+					.state('app.checkavailable', {
+                        cache: false,
+                        url: "/checkavailable",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/checkavailable.html",
+                                controller: 'CheckavailableCtrl'
+                            }
+                        }
+                    })
+					
+					
+					
 
                     .state('app.category-detail', {
                         cache: false,

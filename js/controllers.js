@@ -1283,6 +1283,19 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
+		
+
+		 .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $ionicModal) {
+            $scope.category_sources = [];
+            $scope.categoryId = $stateParams.categoryId;
+
+        })
+		
+		
+		
+		
+		
+		
         .controller('RescheduleCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $ionicHistory, $filter, $state) {
             $scope.cancelApp = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
