@@ -1129,7 +1129,8 @@ angular.module('your_app_name.controllers', [])
                 }
                 session.on({
                     streamDestroyed: function (event) {
-                        jQuery("#subscribersDiv").html("Doctor Left the Consultation");
+                        event.preventDefault();
+						jQuery("#subscribersDiv").html("Doctor Left the Consultation");
                     },
                     streamCreated: function (event) {
                         subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
@@ -1197,16 +1198,17 @@ angular.module('your_app_name.controllers', [])
                 try {
 
                     publisher.destroy();
+					subscriber.destroy();
                     session.disconnect();
-                    // $ionicHistory.nextViewOptions({
-                        // historyRoot: true
-                    // })
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    })
                     $state.go('app.consultations-list', {}, {reload: true});
                     //window.location.href = "#/app/category-listing";
                 } catch (err) {
-                    // $ionicHistory.nextViewOptions({
-                        // historyRoot: true
-                    // })
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    })
                     $state.go('app.consultations-list', {}, {reload: true});
 
                 }
