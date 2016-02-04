@@ -8822,7 +8822,13 @@ iframe.videochat{position:absolute; width:100%; height: 100%;}
     right: 18px;
     top: 20px;}
 	  
-	  
+	.cardpast-bar{    text-align: center;
+    width: 100%;
+   padding: 8px 0;
+    font-weight: bold;}
+	
+	.fred, .fred i{ color: #f00;}
+	.fgreen,.fgreen i{ color:#579511;}
 	  
 	  
 	
