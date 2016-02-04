@@ -200,20 +200,20 @@
                         <div class="ctab">
                             <ion-tabs class="tabs-positive tabs-icon-top">
 							
-							<ion-tab title="Video : {{video_app.length}} <br/>"  >
+							<ion-tab title="Video : {{video_app_past.length}} <br/>"  >
                                     <div class="tabcontainer p0" >
-                                        <p class="txt-center">  {{video_app.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}</p>
-                                        <div class="posts-list" ng-repeat="vApp in video_app track by $index">
-                                            <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
+                                        <p class="txt-center">  {{video_app_past.length==0 ? 'Nothing to see here. Book a consult to get going.':''}}</p>
+                                        <div class="posts-list" ng-repeat="vAppPast in video_app_past track by $index">
+                                            <div  class="list card post-item" ng-repeat="prod_past in video_products_past[$index]">
                                                 <div class="post-content item item-text-wrap p0">
-                                                    <a  ui-sref="app.current-tab({'id': vApp.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
-                                                        <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
-                                                            <span ng-repeat="spec in doc.specializations">
+                                                    <a  ui-sref="app.current-tab({'id': vAppPast.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc_past in video_doctorsData_past[$index]">
+                                                        <p><strong>{{doc_past.fname}} {{doc_past.lname}}</strong><br/>
+                                                            <span ng-repeat="spec in doc_past.specializations">
                                                                 {{spec.specialization}} , 
                                                             </span>
                                                         </p>
-                                                        <p><strong>Appointment Time : {{vApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
-                                                            <span>{{vApp.appointments.scheduled_start_time|time}} To {{vApp.appointments.scheduled_end_time|time}}
+                                                        <p><strong>Appointment Time : {{vAppPast.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                            <span>{{vAppPast.appointments.scheduled_start_time|time}} To {{vAppPast.appointments.scheduled_end_time|time}}
                                                             </span>
                                                         </p>
                                                         <div class="clr"></div>
@@ -227,29 +227,7 @@
                                             </div>
                                         </div>
                                    
-								   <div class="posts-list" ng-repeat="vApp in video_app track by $index">
-                                            <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
-                                                <div class="post-content item item-text-wrap p0">
-                                                    <a  ui-sref="app.current-tab({'id': vApp.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
-                                                        <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
-                                                            <span ng-repeat="spec in doc.specializations">
-                                                                {{spec.specialization}} , 
-                                                            </span>
-                                                        </p>
-                                                        <p><strong>Appointment Time : {{vApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
-                                                            <span>{{vApp.appointments.scheduled_start_time|time}} To {{vApp.appointments.scheduled_end_time|time}}
-                                                            </span>
-                                                        </p>
-                                                        <div class="clr"></div>
-                                                    </a>
-                                                     <div class="post-actions  post-footer p0">
-                                                        <div class="row cardbtn-small p0">
-                                                       <div class="cardpast-bar fgreen"><i class="ion-checkmark"></i> &nbsp; Canceled</div>
-                                                        </div>
-                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
+								
                                    
 								   
 								   </div>
