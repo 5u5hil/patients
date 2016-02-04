@@ -1196,15 +1196,15 @@ angular.module('your_app_name.controllers', [])
                     publisher.destroy();
                     subscriber.destroy();
                     session.disconnect();
-					$ionicHistory.nextViewOptions({
-						  historyRoot: true
-							})
+					// $ionicHistory.nextViewOptions({
+						  // historyRoot: true
+							// })
 				 $state.go('app.consultations-list', {}, {reload: true});
                     //window.location.href = "#/app/category-listing";
                 } catch (err) {
-				$ionicHistory.nextViewOptions({
-						  historyRoot: true
-							})
+				// $ionicHistory.nextViewOptions({
+						  // historyRoot: true
+							// })
 				$state.go('app.consultations-list', {}, {reload: true});
                 }
 
