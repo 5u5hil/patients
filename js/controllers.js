@@ -54,7 +54,7 @@ angular.module('your_app_name.controllers', [])
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading) {
             $scope.doLogIn = function () {
                 var data = new FormData(jQuery("#loginuser")[0]);
-				 
+
                 $.ajax({
                     type: 'POST',
                     url: domain + "chk-user",
@@ -70,7 +70,7 @@ angular.module('your_app_name.controllers', [])
                             store(response);
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
-							 $ionicLoading.show({template: 'Loading...'});
+                            $ionicLoading.show({template: 'Loading...'});
                             $state.go('app.category-list');
                             //}
                         } else {
@@ -537,7 +537,7 @@ angular.module('your_app_name.controllers', [])
                 if ($scope.curTime >= start || $scope.curTime <= end) {
                     console.log('redirect');
                     //$state.go('app.patient-join', {}, {reload: true});
-                    $state.go('app.patient-join', {'id': appId, 'mode': mode},{cache: false}, {reload: true});
+                    $state.go('app.patient-join', {'id': appId, 'mode': mode}, {cache: false}, {reload: true});
                 } else {
                     alert("You can join video 15 minutes before the appointment");
                 }
@@ -1088,21 +1088,21 @@ angular.module('your_app_name.controllers', [])
 
 
 
-           // $ionicHistory.clearCache();
+        // $ionicHistory.clearCache();
 
-      .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory,$ionicLoading) {
+        .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory, $ionicLoading) {
             if (!get('loadedOnce')) {
-                   store({'loadedOnce':'true'});
-                   $window.location.reload(true);
-                   // don't reload page, but clear localStorage value so it'll get reloaded next time
-					 $ionicLoading.hide();
-               } else {
-                   // set the flag and reload the page
-                   window.localStorage.removeItem('loadedOnce');
-				    $ionicLoading.hide();
+                store({'loadedOnce': 'true'});
+                $window.location.reload(true);
+                // don't reload page, but clear localStorage value so it'll get reloaded next time
+                $ionicLoading.hide();
+            } else {
+                // set the flag and reload the page
+                window.localStorage.removeItem('loadedOnce');
+                $ionicLoading.hide();
 
-               }
-                    // $ionicHistory.clearCache();
+            }
+            // $ionicHistory.clearCache();
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
             $scope.userId = get('id');
@@ -1113,7 +1113,7 @@ angular.module('your_app_name.controllers', [])
                 params: {id: $scope.appId, userId: $scope.userId, mode: $scope.mode}
             }).then(function sucessCallback(response) {
                 console.log(response.data);
-				 $ionicLoading.hide();
+                $ionicLoading.hide();
                 $scope.user = response.data.user;
                 $scope.app = response.data.app;
                 //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
@@ -1121,13 +1121,16 @@ angular.module('your_app_name.controllers', [])
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 if (OT.checkSystemRequirements() == 1) {
-				 session = OT.initSession(apiKey, sessionId);
-				  $ionicLoading.hide();
+                    session = OT.initSession(apiKey, sessionId);
+                    $ionicLoading.hide();
                 } else {
-				 $ionicLoading.hide();
+                    $ionicLoading.hide();
                     alert("Your device is not compatible");
                 }
                 session.on({
+                    streamDestroyed: function (event) {
+                        jQuery("#subscribersDiv").html("Doctor Left the Consultation");
+                    },
                     streamCreated: function (event) {
                         subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
                         $http({
@@ -1136,16 +1139,16 @@ angular.module('your_app_name.controllers', [])
                             params: {id: $scope.appId, userId: $scope.userId}
                         }).then(function sucessCallback(response) {
                             console.log(response);
-							 $ionicLoading.hide();
+                            $ionicLoading.hide();
                         }, function errorCallback(e) {
-						 $ionicLoading.hide();
+                            $ionicLoading.hide();
                             console.log(e);
                         });
 
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
-						 $ionicLoading.hide();
+                            $ionicLoading.hide();
                             alert('You lost your internet connection.'
                                     + 'Please check your connection and try connecting again.');
                         }
@@ -1153,9 +1156,9 @@ angular.module('your_app_name.controllers', [])
                 });
                 session.connect(token, function (error) {
                     if (error) {
-					 $ionicLoading.hide();
+                        $ionicLoading.hide();
                         alert("Error connecting: ", error.code, error.message);
-						
+
                     } else {
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
@@ -1165,47 +1168,47 @@ angular.module('your_app_name.controllers', [])
                             if (mic == 1) {
                                 publisher.publishAudio(false);
                                 mic = 0;
-								 $ionicLoading.hide();
+                                $ionicLoading.hide();
                             } else {
                                 publisher.publishAudio(true);
                                 mic = 1;
-								 $ionicLoading.hide();
+                                $ionicLoading.hide();
                             }
                         });
                         jQuery(".muteSub").click(function () {
                             if (mute == 1) {
                                 subscriber.subscribeToAudio(false);
                                 mute = 0;
-								 $ionicLoading.hide();
+                                $ionicLoading.hide();
                             } else {
                                 subscriber.subscribeToAudio(true);
                                 mute = 1;
-								 $ionicLoading.hide();
+                                $ionicLoading.hide();
                             }
                         });
                     }
                 });
-              
+
             }, function errorCallback(e) {
                 console.log(e);
-				 $ionicLoading.hide();
+                $ionicLoading.hide();
             });
             $scope.exitVideo = function () {
                 try {
-                    
+
                     publisher.destroy();
-                    subscriber.destroy();
                     session.disconnect();
-					// $ionicHistory.nextViewOptions({
-						  // historyRoot: true
-							// })
-				 $state.go('app.consultations-list', {}, {reload: true});
+                    // $ionicHistory.nextViewOptions({
+                        // historyRoot: true
+                    // })
+                    $state.go('app.consultations-list', {}, {reload: true});
                     //window.location.href = "#/app/category-listing";
                 } catch (err) {
-				// $ionicHistory.nextViewOptions({
-						  // historyRoot: true
-							// })
-				$state.go('app.consultations-list', {}, {reload: true});
+                    // $ionicHistory.nextViewOptions({
+                        // historyRoot: true
+                    // })
+                    $state.go('app.consultations-list', {}, {reload: true});
+
                 }
 
 
