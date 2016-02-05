@@ -401,6 +401,9 @@ angular.module('your_app_name.controllers', [])
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
+	
+		
+			
         })
 
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
@@ -934,7 +937,11 @@ angular.module('your_app_name.controllers', [])
                     if (parseInt($scope.discount) == parseInt($scope.discountApplied)) {
                         $scope.discountval = response.data.discount;
                         //$scope.discountval = response.data.discount;
-                        $state.go('app.thankyou', {'data': response.data}, {reload: true});
+						$ionicHistory.nextViewOptions({
+							disableBack: true
+						});
+						 $state.go('app.thankyou', {'data': response.data}, {reload: true});
+						
 
                     } else {
                         $state.go('app.Gopay', {'link': response.data});
@@ -946,6 +953,7 @@ angular.module('your_app_name.controllers', [])
             $scope.applyCouponCode = function (ccode) {
                 $scope.apply = '0';
                 $scope.discountApplied = '0';
+				window.localStorage.setItem('coupondiscount', '0');
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.prodid = window.localStorage.getItem('prodid');
@@ -998,6 +1006,15 @@ angular.module('your_app_name.controllers', [])
         .controller('ThankyouCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
             console.log($stateParams.data);
             $scope.data = $stateParams.data;
+			$scope.gotohome=function(){
+			console.log('test');
+				$ionicHistory.nextViewOptions({
+							disableBack: true
+						});
+				$ionicHistory.clearCache();
+                $ionicHistory.clearHistory();
+			$state.go('app.category-list', {}, {reload: true});
+			}
 
         })
 
