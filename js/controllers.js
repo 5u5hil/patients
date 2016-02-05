@@ -582,6 +582,8 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $timeout) {
+            $scope.apply = '0';
+            $scope.discountApplied = '0';
             $scope.IsVisible = false;
             $scope.counter = 100;
             var stopped;
@@ -841,6 +843,9 @@ angular.module('your_app_name.controllers', [])
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId, serv) {
+                $scope.apply = '0';
+                $scope.discountApplied = '0';
+                window.localStorage.setItem('coupondiscount', '0');
                 console.log($scope.bookingStart);
                 if ($scope.bookingStart) {
                     window.localStorage.setItem('supid', $scope.supId);
@@ -889,9 +894,9 @@ angular.module('your_app_name.controllers', [])
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
             $scope.prodid = window.localStorage.getItem('prodid');
-            $scope.apply = '';
+            $scope.apply = '0';
             $scope.ccode = '';
-            $scope.discountApplied = "";
+            $scope.discountApplied = '0';
             //console.log(supid + '--' + slot + '---' + prodid);
             $http({
                 method: 'GET',
@@ -942,8 +947,12 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'buy/buy-individual',
                     params: {discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
+                    localStorage.removeItem('coupondiscount');
+                    window.localStorage.setItem('coupondiscount', '')
                     console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
                     if (parseInt($scope.discount) == parseInt($scope.discountApplied)) {
+                        $scope.discountval = response.data.discount;
+                        //$scope.discountval = response.data.discount;
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
 
                     } else {
@@ -954,6 +963,8 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.applyCouponCode = function (ccode) {
+                $scope.apply = '0';
+                $scope.discountApplied = '0';
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.prodid = window.localStorage.getItem('prodid');
@@ -1137,7 +1148,7 @@ angular.module('your_app_name.controllers', [])
                 session.on({
                     streamDestroyed: function (event) {
                         event.preventDefault();
-						jQuery("#subscribersDiv").html("Doctor Left the Consultation");
+                        jQuery("#subscribersDiv").html("Doctor Left the Consultation");
                     },
                     streamCreated: function (event) {
                         subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
@@ -1205,7 +1216,7 @@ angular.module('your_app_name.controllers', [])
                 try {
 
                     publisher.destroy();
-					subscriber.destroy();
+                    subscriber.destroy();
                     session.disconnect();
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
@@ -1256,26 +1267,26 @@ angular.module('your_app_name.controllers', [])
                 });
                 $scope.send = function () {
                     session.signal({data: jQuery("[name='msg']").val()},
-                            function (error) {
-                                if (error) {
-                                    console.log("signal error ("
-                                            + error.code
-                                            + "): " + error.message);
-                                } else {
-                                    var msg = jQuery("[name='msg']").val();
-                                    $http({
-                                        method: 'GET',
-                                        url: domain + 'chat/add-patient-chat',
-                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
-                                    }).then(function sucessCallback(response) {
-                                        console.log(response);
-                                        jQuery("[name='msg']").val('');
-                                    }, function errorCallback(e) {
-                                        console.log(e.responseText);
-                                    });
-                                    console.log("signal sent.");
-                                }
-                            }
+                    function (error) {
+                        if (error) {
+                            console.log("signal error ("
+                                    + error.code
+                                    + "): " + error.message);
+                        } else {
+                            var msg = jQuery("[name='msg']").val();
+                            $http({
+                                method: 'GET',
+                                url: domain + 'chat/add-patient-chat',
+                                params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                            }).then(function sucessCallback(response) {
+                                console.log(response);
+                                jQuery("[name='msg']").val('');
+                            }, function errorCallback(e) {
+                                console.log(e.responseText);
+                            });
+                            console.log("signal sent.");
+                        }
+                    }
                     );
                 };
             }, function errorCallback(e) {
