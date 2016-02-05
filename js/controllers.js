@@ -581,27 +581,14 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $timeout) {
-            $scope.IsVisible = false;
-            $scope.counter = 100;
-            var stopped;
-            $scope.countdown = function () {
-                $scope.IsVisible = true;
-                stopped = $timeout(function () {
-                    console.log($scope.counter);
-                    $scope.counter--;
-                    $scope.countdown();
-                }, 1000);
-                if ($scope.counter == 0) {
-                    $scope.IsVisible = false;
-                    $timeout.cancel(stopped);
-                }
-            };
-            $scope.hidediv = function () {
-                $scope.IsVisible = false;
-                $timeout.cancel(stopped);
-                $scope.counter = 100;
-            };
+
+		
+		
+		
+		
+		
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading) {
+           
             $scope.vSch = [];
             $scope.schV = [];
             $scope.schdate = [];
@@ -1285,9 +1272,52 @@ angular.module('your_app_name.controllers', [])
 
 		
 
-		 .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $ionicModal) {
+		 .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout,	$ionicModal,$ionicPopup) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
+			
+				/* patient confirm */
+			$scope.showConfirm = function() {
+			   var confirmPopup = $ionicPopup.confirm({
+				 title: 'Confirmation',
+				 template: '<p align="center"><strong>Doctor is Available</strong></p><div>Are you sure you want to Proceed for instant video ?</div>'
+			   });
+
+			   confirmPopup.then(function(res) {
+				 if(res) {
+				   console.log('No');
+				 } else {
+				   console.log('Yes');
+				 }
+			   });
+			 };
+			
+			/*timer */
+			$scope.IsVisible = false;
+			 $scope.counter = 20;
+            var stopped;
+            $scope.countdown = function () {
+                $scope.IsVisible = true;
+                stopped = $timeout(function () {
+                    console.log($scope.counter);
+                    $scope.counter--;
+                    $scope.countdown();
+                }, 1000);
+                if ($scope.counter == 0) {
+					 $scope.IsVisible = false;
+                     $scope.showConfirm();
+					 $timeout.cancel(stopped);
+                }
+            };
+            $scope.hidediv = function () {
+                $scope.IsVisible = false;
+                $timeout.cancel(stopped);
+                $scope.counter = 20;
+            };
+			
+		
+			
+			
 
         })
 		
