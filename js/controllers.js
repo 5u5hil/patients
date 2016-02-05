@@ -707,6 +707,17 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
             });
+            $scope.checkAvailability = function (prodId) {
+                console.log("prodId"+prodId);
+                 $http({
+                    method: 'GET',
+                    url: domain + 'kookoo/check-doctor-availability',
+                    params: {id: prodId}
+                }).then(function successCallback(responseData) {
+                
+                });
+                 
+             };
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
                 var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
@@ -1294,9 +1305,10 @@ angular.module('your_app_name.controllers', [])
 
 		
 
-		 .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout,	$ionicModal,$ionicPopup) {
+	 .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout,$ionicModal,$ionicPopup) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
+            
 			
 				/* patient confirm */
 			$scope.showConfirm = function() {
@@ -1315,20 +1327,23 @@ angular.module('your_app_name.controllers', [])
 			 };
 			
 			/*timer */
-			$scope.IsVisible = false;
-			 $scope.counter = 20;
-            var stopped;
-            $scope.countdown = function () {
+		$scope.IsVisible = false;
+		$scope.counter = 20;
+                var stopped;
+                $scope.countdown = function () {
                 $scope.IsVisible = true;
+                
+                
+                
                 stopped = $timeout(function () {
                     console.log($scope.counter);
                     $scope.counter--;
                     $scope.countdown();
                 }, 1000);
                 if ($scope.counter == 0) {
-					 $scope.IsVisible = false;
+		     $scope.IsVisible = false;
                      $scope.showConfirm();
-					 $timeout.cancel(stopped);
+		$timeout.cancel(stopped);
                 }
             };
             $scope.hidediv = function () {
