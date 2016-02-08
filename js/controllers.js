@@ -1150,8 +1150,8 @@ angular.module('your_app_name.controllers', [])
                 var apiKey = '45463682';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
-               
-                 if (TB.checkSystemRequirements() == 1) {
+
+                if (TB.checkSystemRequirements() == 1) {
                     session = TB.initSession(apiKey, sessionId);
                     $ionicLoading.hide();
                 } else {
@@ -1165,7 +1165,7 @@ angular.module('your_app_name.controllers', [])
                         jQuery("#subscribersDiv").html("Doctor Left the Consultation");
                     },
                     streamCreated: function (event) {
-                        subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%"});
+                        subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%", subscribeToAudio: true});
                         $http({
                             method: 'GET',
                             url: domain + 'appointment/update-join',
@@ -1193,7 +1193,7 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
 
                     } else {
-                        publisher = TB.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
+                        publisher = TB.initPublisher(event.stream, 'myPublisherDiv', {publishAudio: true});
                         session.publish(publisher);
 
                         var mic = 1;
