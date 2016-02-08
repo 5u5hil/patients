@@ -1228,7 +1228,7 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.exitVideo = function () {
                 try {
-
+jQuery("#subscribersDiv").remove();
                     publisher.destroy();
                     subscriber.destroy();
                     session.disconnect();
