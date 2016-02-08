@@ -401,9 +401,9 @@ angular.module('your_app_name.controllers', [])
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
-	
-		
-			
+
+
+
         })
 
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
@@ -708,16 +708,16 @@ angular.module('your_app_name.controllers', [])
                 });
             });
             $scope.checkAvailability = function (prodId) {
-                console.log("prodId"+prodId);
-                 $http({
+                console.log("prodId" + prodId);
+                $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-doctor-availability',
                     params: {id: prodId}
                 }).then(function successCallback(responseData) {
-                
+
                 });
-                 
-             };
+
+            };
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
                 var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
@@ -948,11 +948,11 @@ angular.module('your_app_name.controllers', [])
                     if (parseInt($scope.discount) == parseInt($scope.discountApplied)) {
                         $scope.discountval = response.data.discount;
                         //$scope.discountval = response.data.discount;
-						$ionicHistory.nextViewOptions({
-							disableBack: true
-						});
-						 $state.go('app.thankyou', {'data': response.data}, {reload: true});
-						
+                        $ionicHistory.nextViewOptions({
+                            disableBack: true
+                        });
+                        $state.go('app.thankyou', {'data': response.data}, {reload: true});
+
 
                     } else {
                         $state.go('app.Gopay', {'link': response.data});
@@ -964,7 +964,7 @@ angular.module('your_app_name.controllers', [])
             $scope.applyCouponCode = function (ccode) {
                 $scope.apply = '0';
                 $scope.discountApplied = '0';
-				window.localStorage.setItem('coupondiscount', '0');
+                window.localStorage.setItem('coupondiscount', '0');
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.prodid = window.localStorage.getItem('prodid');
@@ -1017,15 +1017,15 @@ angular.module('your_app_name.controllers', [])
         .controller('ThankyouCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
             console.log($stateParams.data);
             $scope.data = $stateParams.data;
-			$scope.gotohome=function(){
-			console.log('test');
-				$ionicHistory.nextViewOptions({
-							disableBack: true
-						});
-				$ionicHistory.clearCache();
+            $scope.gotohome = function () {
+                console.log('test');
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
+                $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
-			$state.go('app.category-list', {}, {reload: true});
-			}
+                $state.go('app.category-list', {}, {reload: true});
+            }
 
         })
 
@@ -1147,13 +1147,11 @@ angular.module('your_app_name.controllers', [])
                 var apiKey = '45463682';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
-                if (OT.checkSystemRequirements() == 1) {
-                    session = OT.initSession(apiKey, sessionId);
-                    $ionicLoading.hide();
-                } else {
-                    $ionicLoading.hide();
-                    alert("Your device is not compatible");
-                }
+
+                var publisher = TB.initPublisher(apiKey, 'myPublisherDiv', {width: "30%", height: "30%"});
+                var session = TB.initSession(apiKey, sessionId);
+                $ionicLoading.hide();
+
                 session.on({
                     streamDestroyed: function (event) {
                         event.preventDefault();
@@ -1188,7 +1186,6 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
 
                     } else {
-                        publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
                         var mic = 1;
                         var mute = 1;
@@ -1276,26 +1273,26 @@ angular.module('your_app_name.controllers', [])
                 });
                 $scope.send = function () {
                     session.signal({data: jQuery("[name='msg']").val()},
-                    function (error) {
-                        if (error) {
-                            console.log("signal error ("
-                                    + error.code
-                                    + "): " + error.message);
-                        } else {
-                            var msg = jQuery("[name='msg']").val();
-                            $http({
-                                method: 'GET',
-                                url: domain + 'chat/add-patient-chat',
-                                params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
-                            }).then(function sucessCallback(response) {
-                                console.log(response);
-                                jQuery("[name='msg']").val('');
-                            }, function errorCallback(e) {
-                                console.log(e.responseText);
-                            });
-                            console.log("signal sent.");
-                        }
-                    }
+                            function (error) {
+                                if (error) {
+                                    console.log("signal error ("
+                                            + error.code
+                                            + "): " + error.message);
+                                } else {
+                                    var msg = jQuery("[name='msg']").val();
+                                    $http({
+                                        method: 'GET',
+                                        url: domain + 'chat/add-patient-chat',
+                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                                    }).then(function sucessCallback(response) {
+                                        console.log(response);
+                                        jQuery("[name='msg']").val('');
+                                    }, function errorCallback(e) {
+                                        console.log(e.responseText);
+                                    });
+                                    console.log("signal sent.");
+                                }
+                            }
                     );
                 };
             }, function errorCallback(e) {
@@ -1303,47 +1300,47 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-		
 
-	 .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout,$ionicModal,$ionicPopup) {
+
+        .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
-            
-			
-				/* patient confirm */
-			$scope.showConfirm = function() {
-			   var confirmPopup = $ionicPopup.confirm({
-				 title: 'Confirmation',
-				 template: '<p align="center"><strong>Doctor is Available</strong></p><div>Are you sure you want to Proceed for instant video ?</div>'
-			   });
 
-			   confirmPopup.then(function(res) {
-				 if(res) {
-				   console.log('No');
-				 } else {
-				   console.log('Yes');
-				 }
-			   });
-			 };
-			
-			/*timer */
-		$scope.IsVisible = false;
-		$scope.counter = 20;
-                var stopped;
-                $scope.countdown = function () {
+
+            /* patient confirm */
+            $scope.showConfirm = function () {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Confirmation',
+                    template: '<p align="center"><strong>Doctor is Available</strong></p><div>Are you sure you want to Proceed for instant video ?</div>'
+                });
+
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        console.log('No');
+                    } else {
+                        console.log('Yes');
+                    }
+                });
+            };
+
+            /*timer */
+            $scope.IsVisible = false;
+            $scope.counter = 20;
+            var stopped;
+            $scope.countdown = function () {
                 $scope.IsVisible = true;
-                
-                
-                
+
+
+
                 stopped = $timeout(function () {
                     console.log($scope.counter);
                     $scope.counter--;
                     $scope.countdown();
                 }, 1000);
                 if ($scope.counter == 0) {
-		     $scope.IsVisible = false;
-                     $scope.showConfirm();
-		$timeout.cancel(stopped);
+                    $scope.IsVisible = false;
+                    $scope.showConfirm();
+                    $timeout.cancel(stopped);
                 }
             };
             $scope.hidediv = function () {
@@ -1351,18 +1348,18 @@ angular.module('your_app_name.controllers', [])
                 $timeout.cancel(stopped);
                 $scope.counter = 20;
             };
-			
-		
-			
-			
+
+
+
+
 
         })
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
         .controller('RescheduleCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $ionicHistory, $filter, $state) {
             $scope.cancelApp = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
