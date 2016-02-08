@@ -241,6 +241,32 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+					
+					.state('app.consultations-current', {
+                        url: "/consultations/current",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/consultations/consultations-current.html",
+                                controller: 'ConsultationsListCtrl'
+                            }
+                        }
+                    })
+					
+					.state('app.consultations-past', {
+                        url: "/consultations/past",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/consultations/consultations-past.html",
+                                controller: 'ConsultationsListCtrl'
+                            }
+                        }
+                    })
+					
+					
+					
+					
+					
+					
 
                     .state('app.consultation-cards', {
                         cache: false,
@@ -369,6 +395,10 @@ angular.module('your_app_name', [
                     })
                     ;
 
+					
+					
+					
+					
             // if none of the above states are matched, use this as the fallback
             $urlRouterProvider.otherwise('/auth/walkthrough');
         });

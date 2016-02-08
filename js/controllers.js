@@ -401,10 +401,10 @@ angular.module('your_app_name.controllers', [])
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
-	
+		})
 		
-			
-        })
+	 
+		
 
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
@@ -501,6 +501,11 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
+		
+			$scope.dnlink=function($nurl){
+				$state.go($nurl);
+				}
+		
             $scope.specializations = {};
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1024,7 +1029,8 @@ angular.module('your_app_name.controllers', [])
 						});
 				$ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
-			$state.go('app.category-list', {}, {reload: true});
+			//$state.go('app.category-list', {}, {reload: true});
+			$state.go('app.consultations-current', {}, {reload: true});
 			}
 
         })
