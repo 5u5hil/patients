@@ -247,7 +247,7 @@ angular.module('your_app_name', [
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/consultations/consultations-current.html",
-                                controller: 'ConsultationsListCtrl'
+                                controller: 'ConsultationsListCtrl' 
                             }
                         }
                     })

@@ -1017,7 +1017,6 @@ angular.module('your_app_name.controllers', [])
             console.log($stateParams.data);
             $scope.data = $stateParams.data;
             $scope.gotohome = function () {
-                console.log('test');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -1383,6 +1382,7 @@ angular.module('your_app_name.controllers', [])
                             if (response.data == 'success') {
                                 alert('Your appointment is cancelled successfully.');
                                 $state.go('app.consultations-current', {}, {reload: true});
+								
                             } else {
                                 alert('Sorry your appointment is not cancelled.');
                             }
