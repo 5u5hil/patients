@@ -1228,10 +1228,12 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.exitVideo = function () {
                 try {
-jQuery("#subscribersDiv").remove();
+                    session.unsubscribe();
+                    session.unpublish(publisher);
+                    session.disconnect();
                     publisher.destroy();
                     subscriber.destroy();
-                    session.disconnect();
+
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     })
@@ -1383,7 +1385,7 @@ jQuery("#subscribersDiv").remove();
                             if (response.data == 'success') {
                                 alert('Your appointment is cancelled successfully.');
                                 $state.go('app.consultations-current', {}, {reload: true});
-								
+
                             } else {
                                 alert('Sorry your appointment is not cancelled.');
                             }
