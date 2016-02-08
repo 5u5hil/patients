@@ -3,12 +3,6 @@ var session;
 var subscriber;
 angular.module('your_app_name.controllers', [])
 
-//        .run(function ($rootScope, $templateCache) {
-//            $rootScope.$on('$viewContentLoaded', function () {
-//                $templateCache.removeAll();
-//            });
-//        })
-
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
@@ -958,10 +952,8 @@ angular.module('your_app_name.controllers', [])
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-                        $state.go('app.thankyou', {'data': response.data}, {reload: true});
-
-
-                    } else {
+					$state.go('app.thankyou', {'data': response.data}, {reload: true});
+					} else {
                         $state.go('app.Gopay', {'link': response.data});
                     }
                 }, function errorCallback(response) {
@@ -1365,11 +1357,6 @@ angular.module('your_app_name.controllers', [])
                 $timeout.cancel(stopped);
                 $scope.counter = 20;
             };
-
-
-
-
-
         })
 
 
@@ -1396,7 +1383,7 @@ angular.module('your_app_name.controllers', [])
                             console.log(response.data);
                             if (response.data == 'success') {
                                 alert('Your appointment is cancelled successfully.');
-                                $state.go('app.consultations-list', {}, {reload: true});
+                                $state.go('app.consultations-current', {}, {reload: true});
                             } else {
                                 alert('Sorry your appointment is not cancelled.');
                             }
@@ -1413,7 +1400,7 @@ angular.module('your_app_name.controllers', [])
                         console.log(response.data);
                         if (response.data == 'success') {
                             alert('Your appointment is cancelled successfully.');
-                            $state.go('app.consultations-list', {}, {reload: true});
+                            $state.go('app.consultations-current', {}, {reload: true});
                         } else {
                             alert('Sorry your appointment is not cancelled.');
                         }
@@ -1595,5 +1582,4 @@ angular.module('your_app_name.controllers', [])
                 });
                 $state.go('app.consultations-list', {}, {reload: true});
             };
-        })
-        ;
+        });
