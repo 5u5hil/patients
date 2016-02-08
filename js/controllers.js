@@ -503,11 +503,11 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
-		
-			$scope.dnlink=function($nurl){
-				$state.go($nurl);
-				}
-		
+
+            $scope.dnlink = function ($nurl) {
+                $state.go($nurl);
+            }
+
             $scope.specializations = {};
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1032,9 +1032,9 @@ angular.module('your_app_name.controllers', [])
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
 
-			//$state.go('app.category-list', {}, {reload: true});
-			$state.go('app.consultations-current', {}, {reload: true});
-			}
+                //$state.go('app.category-list', {}, {reload: true});
+                $state.go('app.consultations-current', {}, {reload: true});
+            }
 
 
 
@@ -1158,9 +1158,14 @@ angular.module('your_app_name.controllers', [])
                 var apiKey = '45463682';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
-                var session = TB.initSession(apiKey, sessionId);
-
-                $ionicLoading.hide();
+               
+                 if (TB.checkSystemRequirements() == 1) {
+                    session = TB.initSession(apiKey, sessionId);
+                    $ionicLoading.hide();
+                } else {
+                    $ionicLoading.hide();
+                    alert("Your device is not compatible");
+                }
 
                 session.on({
                     streamDestroyed: function (event) {
@@ -1196,9 +1201,9 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
 
                     } else {
-                        publisher = TB.initPublisher(apiKey, 'myPublisherDiv', {width: "30%", height: "30%"});
-
+                        publisher = TB.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
+
                         var mic = 1;
                         var mute = 1;
                         jQuery(".muteMic").click(function () {
