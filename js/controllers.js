@@ -1228,11 +1228,11 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.exitVideo = function () {
                 try {
-                    session.unsubscribe();
-                    session.unpublish(publisher);
-                    session.disconnect();
                     publisher.destroy();
                     subscriber.destroy();
+                    session.unsubscribe();
+                    session.disconnect();
+
 
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
