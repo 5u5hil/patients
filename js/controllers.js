@@ -1161,8 +1161,7 @@ angular.module('your_app_name.controllers', [])
 
                 session.on({
                     streamDestroyed: function (event) {
-                        event.preventDefault();
-                        jQuery("#subscribersDiv").html("Doctor Left the Consultation");
+                         jQuery("#subscribersDiv").html("Doctor Left the Consultation");
                     },
                     streamCreated: function (event) {
                         subscriber = session.subscribe(event.stream, 'subscribersDiv', {width: "100%", height: "100%", subscribeToAudio: true});
@@ -1193,7 +1192,7 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
 
                     } else {
-                        publisher = TB.initPublisher(event.stream, 'myPublisherDiv', {publishAudio: true});
+                        publisher = TB.initPublisher(event.stream, 'myPublisherDiv', {width: "200", height: "200",publishAudio: true});
                         session.publish(publisher);
 
                         var mic = 1;
