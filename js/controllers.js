@@ -1167,8 +1167,8 @@ angular.module('your_app_name.controllers', [])
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
 
-                if (TB.checkSystemRequirements() == 1) {
-                    session = TB.initSession(apiKey, sessionId);
+                if (OT.checkSystemRequirements() == 1) {
+                    session = OT.initSession(apiKey, sessionId);
                     $ionicLoading.hide();
                 } else {
                     $ionicLoading.hide();
@@ -1209,7 +1209,7 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
 
                     } else {
-                        publisher = TB.initPublisher(event.stream, 'myPublisherDiv', {width: "200", height: "200", publishAudio: true});
+                        publisher = OT.initPublisher(event.stream, 'myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
 
                         var mic = 1;
