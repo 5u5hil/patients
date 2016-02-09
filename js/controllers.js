@@ -1209,8 +1209,9 @@ angular.module('your_app_name.controllers', [])
                         alert("Error connecting: ", error.code, error.message);
 
                     } else {
-                        publisher = OT.initPublisher(event.stream, 'myPublisherDiv', {width: "30%", height: "30%"});
+                        publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
+                     
 
                         var mic = 1;
                         var mute = 1;
