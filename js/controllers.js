@@ -848,13 +848,13 @@ angular.module('your_app_name.controllers', [])
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId, serv) {
-				$ionicLoading.show({template: 'Loading...'});
+				
                 $scope.apply = '0';
                 $scope.discountApplied = '0';
                 window.localStorage.setItem('coupondiscount', '0');
                 console.log($scope.bookingStart);
                 if ($scope.bookingStart) {
-					
+					$ionicLoading.show({template: 'Loading...'});
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
@@ -867,6 +867,7 @@ angular.module('your_app_name.controllers', [])
                     $rootScope.prodid = prodId;
                     $rootScope.url = 'app.payment';
                     $rootScope.$digest;
+					
                     if (serv == 1) {
                         if (checkLogin())
                             $state.go('app.payment');
@@ -896,6 +897,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
+			
             $scope.mode = window.localStorage.getItem('mode');
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
@@ -905,6 +907,7 @@ angular.module('your_app_name.controllers', [])
             $scope.ccode = '';
             $scope.discountApplied = '0';
             //console.log(supid + '--' + slot + '---' + prodid);
+			
             $http({
                 method: 'GET',
                 url: domain + 'doctors/get-order-review',
