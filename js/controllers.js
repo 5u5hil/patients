@@ -404,13 +404,22 @@ angular.module('your_app_name.controllers', [])
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
+		})
 
 
-
-
-        })
-
-
+	      .controller('TestCtrl', function ($scope, $http, $stateParams) {
+            $scope.category_sources = [];
+            $scope.categoryId = $stateParams.categoryId;
+		})
+	
+		
+		
+		
+		
+		
+		
+		
+		
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
             $http({
@@ -962,9 +971,9 @@ angular.module('your_app_name.controllers', [])
                             disableBack: true
                         });
 						
-						 $state.go('app.thankyou', {'data': response.data}, {reload: true});
+						$state.go('app.thankyou', {'data': response.data}, {reload: true});
 						 
-                    } else {
+						  } else {
 					
                         $state.go('app.Gopay', {'link': response.data});
                     }

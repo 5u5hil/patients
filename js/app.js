@@ -171,6 +171,17 @@ angular.module('your_app_name', [
                                 controller: 'CheckavailableCtrl'
                             }
                         }
+                    })	
+					
+					.state('app.test', {
+                        cache: false,
+                        url: "/test",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/test.php",
+                                controller: 'TestCtrl'
+                            }
+                        }
                     })
 					
 					
