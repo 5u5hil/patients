@@ -19,7 +19,7 @@
 	
 	
 	<platform name="android">
-		<splash src="splash/splash.png" />
+	<splash src="splash/splash.png" />
 	<splash src="splash/drawable-port-ldpi-screen.png" platform="android" qualifier="ldpi" />
 	<splash src="splash/drawable-port-mdpi-screen.png" platform="android" qualifier="mdpi" />
 	<splash src="splash/drawable-port-hdpi-screen.png" platform="android" qualifier="hdpi" />
@@ -89,7 +89,7 @@
     <allow-navigation href="*" />
     
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <plugin name="com.tokbox.cordova.opentok" spec="1.0.3" source="pgb" />
+<!--    <plugin name="com.tokbox.cordova.opentok" spec="1.0.3" source="pgb" />-->
 
     
     
