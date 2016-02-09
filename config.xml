@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets"  xmlns:gap="http://phonegap.com/ns/1.0" id="com.kes.patients" version="0.0.1">
+<widget xmlns="http://www.w3.org/ns/widgets"  xmlns:gap="http://phonegap.com/ns/1.0" id="com.kes.health" version="0.0.1">
  
     <name>KES Health</name>
     <preference name="orientation" value="portrait" />
@@ -81,7 +81,6 @@
     <gap:plugin name="cordova-plugin-x-toast" source="npm" />
     <gap:plugin name="org.apache.cordova.statusbar" source="npm" />
 
-    <gap:plugin name="nl.x-services.plugins.socialsharing" version="4.3.8" />
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay"  version="1.2.0" />
     <gap:plugin name="com.pushwoosh.plugins.pushwoosh" version="3.4.2" />
     
