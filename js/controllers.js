@@ -45,8 +45,9 @@ angular.module('your_app_name.controllers', [])
 
 
 //LOGIN
-        .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading) {
+        .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading,$timeout) {
             $scope.doLogIn = function () {
+			console.log('test login');
                 var data = new FormData(jQuery("#loginuser")[0]);
 
                 $.ajax({
@@ -68,11 +69,19 @@ angular.module('your_app_name.controllers', [])
                             $state.go('app.category-list');
                             //}
                         } else {
+								
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
+							$timeout(function() {
+							$scope.loginError = response;
+                            $scope.loginError.digest;
+							})
+							
+							//console.log('else part login');
                         }
                         $rootScope.$digest;
+                        $rootScope.$response;
                     },
                     error: function (e) {
                         console.log(e.responseText);
@@ -934,7 +943,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
-                $scope.discount = window.localStorage.getItem('coupondiscount');
+               $scope.discount = window.localStorage.getItem('coupondiscount');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -943,17 +952,20 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'buy/buy-individual',
                     params: {discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
-                    localStorage.removeItem('coupondiscount');
+                    window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                     console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
-                    if (parseInt($scope.discount) == parseInt($scope.discountApplied)) {
+                    if (parseInt($scope.discount) == parseInt($scope.discountApplied) && parseInt($scope.discount)>0) {
                         $scope.discountval = response.data.discount;
                         //$scope.discountval = response.data.discount;
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-                        $state.go('app.thankyou', {'data': response.data}, {reload: true});
+						
+						 $state.go('app.thankyou', {'data': response.data}, {reload: true});
+						 
                     } else {
+					
                         $state.go('app.Gopay', {'link': response.data});
                     }
                 }, function errorCallback(response) {

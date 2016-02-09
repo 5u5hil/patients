@@ -11,9 +11,9 @@
 			<div class="col"><a nav-clear menu-close ui-sref="app.consultations-list" class="active">Book</a></div>
 		<div class="col"><a nav-clear menu-close ui-sref="app.consultations-current" >Current</a></div>
 		<div class="col"><a nav-clear menu-close ui-sref="app.consultations-past">Past</a></div>
-		 </div>
+		</div>
 		 
-	<div class="page-data" on-swipe-left="dnlink('app.consultations-current')">
+	<div class="page-data">
 	<div class="list miscellaneous-functionalities">
                             <a class="item  item-icon-right" ui-sref="app.consultation-cards({'id':spec.id, 'res' : 'json'})"  ng-repeat="spec in specializations| orderBy:'specialization' |filter : searchKeyword ">
                                 <div>

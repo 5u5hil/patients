@@ -16,9 +16,12 @@
                                         <input type="password" placeholder="Password" id="password" name="password" ng-model="user.password" required show-hide-input>                                        
                                     </label>                                    
                                 </div>
-                                <div class='error text-center' ><span class='error text-center' style="color:#e42012;" ng-model='loginError' ng-bind-html='loginError' ></span></div>
+                                <div class='error text-center' >
+								<span class='error text-center'  style="color:#e42012;" ng-model='loginError' ng-bind-html='loginError' ></span>
+								</div>
+								
                                 <div class="item item-body bottom-content">
-                                    <button type="submit" class="button button-positive button-block" ng-click="" ng-disabled="(selected_tab == 'Login') ? (login_form.email.$invalid || login_form.password.$invalid) : ((selected_tab == 'Phone') ? (login_form.user_phone.$invalid || login_form.user_pin.$invalid) : false)">
+                                    <button type="submit" class="button button-positive button-block"  ng-disabled="(selected_tab == 'Login') ? (login_form.email.$invalid || login_form.password.$invalid) : ((selected_tab == 'Phone') ? (login_form.user_phone.$invalid || login_form.user_pin.$invalid) : false)">
                                         Log In
                                     </button>
                                 </div>
