@@ -727,7 +727,7 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(responseData) {
                     // console.log("sjdafhsdjhfs"+responseData.data);
                      if(responseData.data==1){
-                         alert('check here');
+                        // alert('check here');
                          $state.go('app.checkavailable');
                      }else{
                          alert('Sorry, Doctor not available for this time!');
