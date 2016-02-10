@@ -915,17 +915,19 @@ angular.module('your_app_name.controllers', [])
             $scope.ccode = '';
             $scope.discountApplied = '0';
             //console.log(supid + '--' + slot + '---' + prodid);
-			
+		
             $http({
                 method: 'GET',
                 url: domain + 'doctors/get-order-review',
                 params: {id: $scope.supid, prodId: $scope.prodid}
             }).then(function successCallback(responseData) {
                 console.log(responseData.data);
+				
                 //$ionicLoading.hide();
                 $scope.product = responseData.data.prod;
                 $scope.prod_inclusion = responseData.data.prod_inclusion;
                 $scope.doctor = responseData.data.doctor;
+				
             }, function errorCallback(response) {
                 console.log(response);
             });
