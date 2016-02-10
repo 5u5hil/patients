@@ -49,8 +49,7 @@ angular.module('your_app_name.controllers', [])
             $scope.doLogIn = function () {
 			$ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
-
-                $.ajax({
+				$.ajax({
                     type: 'POST',
                     url: domain + "chk-user",
                     data: data,
