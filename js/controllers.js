@@ -994,6 +994,7 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'buy/apply-coupon-code',
                     params: {couponCode: ccode, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
+                    // console.log(response);
                     console.log(response.data);
                     if (response.data == '0') {
                         alert('Please provide a valid coupon code');
