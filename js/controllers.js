@@ -725,7 +725,13 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'kookoo/check-doctor-availability',
                     params: {id: prodId}
                 }).then(function successCallback(responseData) {
-
+                    // console.log("sjdafhsdjhfs"+responseData.data);
+                     if(responseData.data==1){
+                         alert('check here');
+                         $state.go('app.checkavailable');
+                     }else{
+                         alert('Sorry, Doctor not available for this time!');
+                     }
                 });
 
             };
@@ -1388,7 +1394,7 @@ angular.module('your_app_name.controllers', [])
             $scope.showConfirm = function () {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirmation',
-                    template: '<p align="center"><strong>Doctor is Available</strong></p><div>Are you sure you want to Proceed for instant video ?</div>'
+                    template: '<p align="center"><strong>Doctor is Unavailable</strong></p><div>Please try again for instant video ?</div>'
                 });
 
                 confirmPopup.then(function (res) {
