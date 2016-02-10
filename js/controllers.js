@@ -856,7 +856,7 @@ angular.module('your_app_name.controllers', [])
                 window.localStorage.setItem('coupondiscount', '0');
                 console.log($scope.bookingStart);
                 if ($scope.bookingStart) {
-					$ionicLoading.show({template: 'Loading...'});
+					
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
@@ -872,14 +872,20 @@ angular.module('your_app_name.controllers', [])
 					
                     if (serv == 1) {
                         if (checkLogin())
-                            $state.go('app.payment');
-                        else
-                            $state.go('auth.login');
+						{$ionicLoading.show({template: 'Loading...'});
+						console.log('1')
+						$state.go('app.payment');}
+                        else{
+						$ionicLoading.show({template: 'Loading...'});	
+						$state.go('auth.login');}
                     } else if (serv == 3 || serv == 4) {
                         if (checkLogin())
-                            $state.go('app.payment');
-                        else
-                            $state.go('auth.login');
+						{  $ionicLoading.show({template: 'Loading...'});
+							console.log('2')
+						$state.go('app.payment');}
+                        else{
+						$ionicLoading.show({template: 'Loading...'});	
+						$state.go('auth.login');}
                     }
                 } else {
                     alert('Please select slot');
