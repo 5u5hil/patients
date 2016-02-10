@@ -959,19 +959,20 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(response) {
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
-                    console.log($scope.discount + '--' + $scope.discountApplied + '++++ ' + $scope.userId);
-                    if (parseInt($scope.discount) == parseInt($scope.discountApplied) && parseInt($scope.discount)>0) {
+                   console.log(response.data);
+                    if ((parseInt($scope.discount) == parseInt($scope.discountApplied)) && (parseInt($scope.discount) > 0)) {
+                       // alert('IN');
                         $scope.discountval = response.data.discount;
                         //$scope.discountval = response.data.discount;
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
 						
-						 $state.go('app.thankyou', {'data': response.data}, {reload: true});
+			 $state.go('app.thankyou', {'data': response.data}, {reload: true});
 						 
                     } else {
-					
-                       //$state.go('app.Gopay', {'link': response.data});
+			alert('out');		
+                       $state.go('app.Gopay', {'link': response.data});
 						console.log(response.data)
                       window.location.href=response.data
                     }
