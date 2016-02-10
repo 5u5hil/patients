@@ -41,6 +41,8 @@
                                 <div class="col">
                                     <button class="button button-small button-assertive csbtn" ng-click="applyCouponCode(ccode)">Apply</button>
                                     <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
+									
+									
                                 </div>
                             </div>
                             <div class="fg txt-centre" ng-if="apply==1">Applied Discount</div>
@@ -50,7 +52,10 @@
                            
                             <div class="section-footer"> <!---ui-sref="app.success"-->
                                 <a ng-if="mode==1 || mode==2" ng-click="payNow()" class="button button-full button-positive">Pay Now</a>                                
-                            </div>	
+                            </div>
+							<p>
+									You agree to the terms and conditions of using our services	
+									</p>
                         </div>
                     </my-tab>
 			  
@@ -66,6 +71,11 @@
                                    
                                     <button class="button button-small button-assertive csbtn " ng-click="applyCouponCode(ccode)">Apply</button>
                                     <!-- 	<button class="button button-small button-assertive csbtn">Undo</button> -->
+									
+									<p>
+									You agree to the terms and conditions of using our services	
+									</p>
+									
                                 </div>
                             </div>
                             <p class="fg txt-centre">Applied Discount:20%</p>

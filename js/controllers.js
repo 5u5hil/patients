@@ -47,7 +47,7 @@ angular.module('your_app_name.controllers', [])
 //LOGIN
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading,$timeout) {
             $scope.doLogIn = function () {
-			console.log('test login');
+			$ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
 
                 $.ajax({
@@ -65,7 +65,8 @@ angular.module('your_app_name.controllers', [])
                             store(response);
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
-                            $ionicLoading.show({template: 'Loading...'});
+                            
+							 $ionicLoading.hide();
                             $state.go('app.category-list');
                             //}
                         } else {
@@ -73,6 +74,7 @@ angular.module('your_app_name.controllers', [])
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
+							$ionicLoading.hide();
 							$timeout(function() {
 							$scope.loginError = response;
                             $scope.loginError.digest;
