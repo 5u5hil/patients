@@ -1257,13 +1257,13 @@ angular.module('your_app_name.controllers', [])
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     })
-                    $state.go('app.consultations-list', {}, {reload: true});
+                    $state.go('app.consultations-current', {}, {reload: true});
                     //window.location.href = "#/app/category-listing";
                 } catch (err) {
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     })
-                    $state.go('app.consultations-list', {}, {reload: true});
+                    $state.go('app.consultations-current', {}, {reload: true});
 
                 }
 
