@@ -84,7 +84,7 @@ angular.module('your_app_name.controllers', [])
                         $rootScope.$response;
                     },
                     error: function (e) {
-                        console.log(e.responseText);
+                      //  console.log(e.responseText);
                     }
                 });
             };
