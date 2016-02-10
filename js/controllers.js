@@ -979,9 +979,9 @@ angular.module('your_app_name.controllers', [])
 						 
                     } else {
 					
-                       //$state.go('app.Gopay', {'link': response.data});
+                      $state.go('app.Gopay', {'link': response.data});
 						console.log(response.data)
-                      window.location.href=response.data
+                      //window.location.href=response.data
                     }
                 }, function errorCallback(response) {
                     console.log(response);
