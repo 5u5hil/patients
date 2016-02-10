@@ -922,12 +922,12 @@ angular.module('your_app_name.controllers', [])
                 params: {id: $scope.supid, prodId: $scope.prodid}
             }).then(function successCallback(responseData) {
                 console.log(responseData.data);
-				
+				 $ionicLoading.show({template: 'Loading...'});
                 //$ionicLoading.hide();
                 $scope.product = responseData.data.prod;
                 $scope.prod_inclusion = responseData.data.prod_inclusion;
                 $scope.doctor = responseData.data.doctor;
-				
+				 $ionicLoading.hide();
             }, function errorCallback(response) {
                 console.log(response);
             });
