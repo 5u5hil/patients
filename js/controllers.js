@@ -47,7 +47,7 @@ angular.module('your_app_name.controllers', [])
 //LOGIN
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading,$timeout) {
             $scope.doLogIn = function () {
-			console.log('test login');
+			$ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
 
                 $.ajax({
@@ -65,7 +65,8 @@ angular.module('your_app_name.controllers', [])
                             store(response);
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
-                            $ionicLoading.show({template: 'Loading...'});
+                            
+							 $ionicLoading.hide();
                             $state.go('app.category-list');
                             //}
                         } else {
@@ -73,6 +74,7 @@ angular.module('your_app_name.controllers', [])
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
+							$ionicLoading.hide();
 							$timeout(function() {
 							$scope.loginError = response;
                             $scope.loginError.digest;
@@ -854,7 +856,7 @@ angular.module('your_app_name.controllers', [])
                 window.localStorage.setItem('coupondiscount', '0');
                 console.log($scope.bookingStart);
                 if ($scope.bookingStart) {
-					$ionicLoading.show({template: 'Loading...'});
+					
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
@@ -870,14 +872,20 @@ angular.module('your_app_name.controllers', [])
 					
                     if (serv == 1) {
                         if (checkLogin())
-                            $state.go('app.payment');
-                        else
-                            $state.go('auth.login');
+						{$ionicLoading.show({template: 'Loading...'});
+						console.log('1')
+						$state.go('app.payment');}
+                        else{
+						$ionicLoading.show({template: 'Loading...'});	
+						$state.go('auth.login');}
                     } else if (serv == 3 || serv == 4) {
                         if (checkLogin())
-                            $state.go('app.payment');
-                        else
-                            $state.go('auth.login');
+						{  $ionicLoading.show({template: 'Loading...'});
+							console.log('2')
+						$state.go('app.payment');}
+                        else{
+						$ionicLoading.show({template: 'Loading...'});	
+						$state.go('auth.login');}
                     }
                 } else {
                     alert('Please select slot');
@@ -971,10 +979,11 @@ angular.module('your_app_name.controllers', [])
 			 $state.go('app.thankyou', {'data': response.data}, {reload: true});
 						 
                     } else {
-			alert('out');		
-                       $state.go('app.Gopay', {'link': response.data});
+				
+                      $state.go('app.Gopay', {'link': response.data});
+
 						console.log(response.data)
-                      window.location.href=response.data
+                      //window.location.href=response.data
                     }
                 }, function errorCallback(response) {
                     console.log(response);
@@ -1288,7 +1297,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.app = response.data.app;
                 $scope.msgs = response.data.chat;
                 //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
-                var apiKey = '45463682';
+                var apiKey = '45121182';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
                 var session = OT.initSession(apiKey, sessionId);
