@@ -951,7 +951,8 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                 });
             };
-            $scope.payNow = function () {
+            $scope.payNow = function (finalamount) {
+                //alert(finalamount);
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.appUrl = $location.absUrl();
@@ -968,8 +969,12 @@ angular.module('your_app_name.controllers', [])
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                    console.log(response.data);
-                    if ((parseInt($scope.discount) == parseInt($scope.discountApplied)) && (parseInt($scope.discount) > 0)) {
-                       // alert('IN');
+                   if(finalamount>0){
+                        $state.go('app.Gopay', {'link': response.data});
+
+						console.log(response.data)
+                     
+                   }else{
                         $scope.discountval = response.data.discount;
                         //$scope.discountval = response.data.discount;
                         $ionicHistory.nextViewOptions({
@@ -977,14 +982,23 @@ angular.module('your_app_name.controllers', [])
                         });
 						
 			 $state.go('app.thankyou', {'data': response.data}, {reload: true});
-						 
-                    } else {
-				
-                      $state.go('app.Gopay', {'link': response.data});
-
-						console.log(response.data)
-                      //window.location.href=response.data
-                    }
+                       
+                   }
+//                    if ((parseInt($scope.discount) == parseInt($scope.discountApplied)) && (parseInt($scope.discount) > 0)) {
+//                     
+//                        $scope.discountval = response.data.discount;
+//                        $ionicHistory.nextViewOptions({
+//                            disableBack: true
+//                        });
+//						
+//			 $state.go('app.thankyou', {'data': response.data}, {reload: true});
+//				 
+//                    } else {
+//				
+//                      $state.go('app.Gopay', {'link': response.data});
+//						console.log(response.data)
+//                      //window.location.href=response.data
+//                    }
                 }, function errorCallback(response) {
                     console.log(response);
                 });
