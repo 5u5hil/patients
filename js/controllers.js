@@ -725,9 +725,11 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'kookoo/check-doctor-availability',
                     params: {id: prodId}
                 }).then(function successCallback(responseData) {
-  if(responseData.data==1){
+                    var dataInfo = responseData.data.split('-');
+                    console.log(dataInfo);
+                    if(dataInfo[0]==1){
                         // alert('check here');
-                         $state.go('app.checkavailable');
+                         $state.go('app.checkavailable', {'data': prodId});
                      }else{
                          alert('Sorry, Doctor not available for this time!');
                      }
@@ -1409,10 +1411,11 @@ angular.module('your_app_name.controllers', [])
             $scope.IsVisible = false;
             $scope.counter = 20;
             var stopped;
-            $scope.countdown = function () {
+            $scope.countdown = function (dataId) {
+                alert(dataId);
                  $http({
                             method: 'GET',
-                            url: domain + 'kookoo/check-doctrs',
+                            url: domain + 'kookoo/check-doctrs-response',
                             params: {appId: $scope.appId, userId: $scope.userId}
                         }).then(function successCallback(response) {
                             console.log(response.data);
