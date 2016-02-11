@@ -596,7 +596,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading,$ionicTabsDelegate,$timeout) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading) {
             $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
@@ -613,8 +613,6 @@ angular.module('your_app_name.controllers', [])
             $scope.nextHdate = [];
             $scope.bookingSlot = '';
             $scope.supId = '';
-
-			  
             $http({
                 method: 'GET',
                 url: domain + 'doctors/get-details',
@@ -638,7 +636,6 @@ angular.module('your_app_name.controllers', [])
                 $scope.chatInc = response.data.chat_inclusions;
                 $scope.packages = response.data.packages;
                 $scope.services = response.data.services;
-
                 //$ionicLoading.hide();
                 angular.forEach($scope.videoSch, function (value, key) {
                     var supsassId = value.supersaas_id;

@@ -30,9 +30,9 @@
                 <div class="whitetab profile" style="margin-top:87px;">
                     <div class="schedule">
 					
-					<div class="statictab"><a><i class="icon ion-calendar"></i>Scheduled Video</a></div> 
+					<ion-tabs class="tabs-positive tabs-icon-top">
 					<div ng-repeat="serv in services">  
-					 
+					  <ion-tab  icon="ion-calendar" title="Scheduled Video" ng-if="serv == 1">
 						<div class="tabc2">
 							<div class="item-price">Price : INR {{videoProd.price}}</div>
                                                 <div class="mt15"> 
@@ -76,30 +76,45 @@
                                                     </div>	
                                                 </div>
 						</div>
-					 
+					  </ion-tab>
 					  </div>
+					  <ion-tab title="Instant Video" icon="ion-ios-videocam" >
+						<div class="tabc2">
+						 <div class="item-price">Price : INR 450</div>
+									  <div class="tabcontainer"> 
+												<ul class="clist">
+                                                        <li>Lorem ipsum text come here</li>
+                                                        <li>Lorem ipsum text come here Lorem ipsum text come here</li>
+                                                        <li>Lorem ipsum text come here</li>
+                                                        <li>Lorem ipsum text come here Lorem ipsum text come here</li>
+                                                      
+                                                    </ul>
+													
+													<p>
+													<!-- <a ui-sref="" class="button button-block button-positive" ng-click="checkAvailability(videoProd.id)"> Check Availability</a> -->
+													<a ui-sref="" class="button button-block button-positive"> Check Availability</a>
+													
+													
+													
+                                        </p>
+									  </div>
+						</div>
+						</ion-tab>
+
+
+					</ion-tabs>
 					
- </div>
+					
+					
+					
+					
+					
+				
+                                </div>
                   
-            
-				       
- 
-		   
-	   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-			   
-</div>
+                
+                
+                </div>
             </div>
         </div>
     </ion-content>
