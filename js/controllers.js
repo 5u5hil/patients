@@ -725,7 +725,12 @@ angular.module('your_app_name.controllers', [])
                     url: domain + 'kookoo/check-doctor-availability',
                     params: {id: prodId}
                 }).then(function successCallback(responseData) {
-
+  if(responseData.data==1){
+                        // alert('check here');
+                         $state.go('app.checkavailable');
+                     }else{
+                         alert('Sorry, Doctor not available for this time!');
+                     }
                 });
 
             };
