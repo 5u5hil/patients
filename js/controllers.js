@@ -1399,7 +1399,6 @@ angular.module('your_app_name.controllers', [])
                         console.log('No');
                     } else {
                         console.log('Yes');
-                        
                     }
                 });
             };
@@ -1409,18 +1408,11 @@ angular.module('your_app_name.controllers', [])
             $scope.counter = 20;
             var stopped;
             $scope.countdown = function () {
-                $http({
-                            method: 'GET',
-                            url: domain + 'kookoo/check-doctrs',
-                            params: {appId: $scope.appId, userId: $scope.userId}
-                        }).then(function successCallback(response) {
-                            console.log(response.data);
-                         }, function errorCallback(response) {
-                            console.log(response.data);
-                        });
-                
                 $scope.IsVisible = true;
-                 stopped = $timeout(function () {
+
+
+
+                stopped = $timeout(function () {
                     console.log($scope.counter);
                     $scope.counter--;
                     $scope.countdown();
