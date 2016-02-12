@@ -15,6 +15,9 @@ angular.module('your_app_name.controllers', [])
 
 // APP
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
+		
+		 $rootScope.imgpath = domain + "/public/frontend/user/";
+		 
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
@@ -718,24 +721,25 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
             });
-            $scope.checkAvailability = function (prodId) {
-                console.log("prodId" + prodId);
-                $http({
-                    method: 'GET',
-                    url: domain + 'kookoo/check-doctor-availability',
-                    params: {id: prodId}
-                }).then(function successCallback(responseData) {
-                    var dataInfo = responseData.data.split('-');
-                    console.log(dataInfo);
-                    if(dataInfo[0]==1){
-                        // alert('check here');
-                         $state.go('app.checkavailable', {'data': prodId});
-                     }else{
-                         alert('Sorry, Doctor not available for this time!');
-                     }
-                });
+           $scope.checkAvailability = function (prodId) {
+               console.log("prodId "+ prodId);
+               $http({
+                   method: 'GET',
+                   url: domain + 'kookoo/check-doctor-availability',
+                   params: {id: prodId}
+               }).then(function successCallback(responseData) {
+                   var dataInfo = responseData.data.split('-');
+                   console.log(dataInfo);
+                   if (responseData.data == 1) {
+//                         alert('check here');
+//                         alert(prodId);
+                       $state.go('app.checkavailable', {'data': prodId});
+                   } else {
+                       alert('Sorry, Doctor not available for this time!');
+                   }
+               });
 
-            };
+           };
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
                 var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
@@ -1389,7 +1393,7 @@ angular.module('your_app_name.controllers', [])
         .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
-
+			 $scope.data = $stateParams.data;
 
             /* patient confirm */
             $scope.showConfirm = function () {
@@ -1407,37 +1411,46 @@ angular.module('your_app_name.controllers', [])
                 });
             };
 
+			
+			
+			
+			
+			
             /*timer */
             $scope.IsVisible = false;
             $scope.counter = 20;
             var stopped;
+			
+			
+			
             $scope.countdown = function (dataId) {
-                alert(dataId);
-                 $http({
-                            method: 'GET',
-                            url: domain + 'kookoo/check-doctrs-response',
-                            params: {appId: $scope.appId, userId: $scope.userId}
-                        }).then(function successCallback(response) {
-                            console.log(response.data);
-                         }, function errorCallback(response) {
-                            console.log(response.data);
-                        });
-                        
+                
                 $scope.IsVisible = true;
-
-
-
-                stopped = $timeout(function () {
+				stopped = $timeout(function () {
                     console.log($scope.counter);
                     $scope.counter--;
                     $scope.countdown();
                 }, 1000);
+				
+				if($scope.counter == 1){
+					
+					}
+				
+				
                 if ($scope.counter == 0) {
                     $scope.IsVisible = false;
                     $scope.showConfirm();
                     $timeout.cancel(stopped);
                 }
             };
+			
+			
+			 
+			
+			
+			
+			
+			
             $scope.hidediv = function () {
                 $scope.IsVisible = false;
                 $timeout.cancel(stopped);

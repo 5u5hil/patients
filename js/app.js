@@ -163,7 +163,7 @@ angular.module('your_app_name', [
                     })
 					
 					.state('app.checkavailable', {
-                        cache: false,
+                       // cache: false,
                         url: "/checkavailable",
                         views: {
                             'menuContent': {
