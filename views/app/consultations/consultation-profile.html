@@ -17,6 +17,7 @@
                         <span ng-repeat="spec in doc.specializations">
                             {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
                         </span></p>
+						<div class="button button-small button-outline button-positive viewmore" ng-click="modal.show()">View more</div>
 				</div>
                 <div class="clr"></div>
             </div>
@@ -92,7 +93,7 @@
 													
 													<p>
 													
-													<a ui-sref="" class="button button-block button-positive" ng-click="checkAvailability(videoProd.id)"> Check Availability</a>
+													<button class="button button-block button-positive" ng-click="checkAvailability(videoProd.id)"> Check Availability</button>
 													
 													
 													
@@ -100,22 +101,58 @@
 									  </div>
 						</div>
 						</ion-tab>
-
-
 					</ion-tabs>
-					
-					
-					
-					
-					
-					
-				
-                                </div>
-                  
-                
-                
-                </div>
+					 </div>
+                  </div>
             </div>
         </div>
     </ion-content>
+	
+	    <script id="viewmoreprofile.html" type="text/ng-template">
+		<ion-modal-view>
+       <div class="profile-head detailhead" ng-repeat="doc in doctor">
+            <div class="card-content">
+               <div class="card-left"><img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg"></div>
+                <div class="card-detail txt-left">
+                    <p><strong> {{doc.fname}} {{doc.lname}}</strong><br/>
+                        <span ng-repeat="spec in doc.specializations">
+                            {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
+                        </span></p>
+						<div class="button button-small button-outline button-positive viewmore" ng-click="modal.hide()">Cancel</div>
+				</div>
+                <div class="clr"></div>
+            </div>
+        </div>
+		
+        <ion-content>
+		
+        <div class="list" ng-repeat="doc in doctor" style="margin-top:65px;">
+			<div class="item item-body">
+			
+			
+				<div class="row txt-left">
+				
+				
+					<div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
+					<div class="col"><p><strong>Qualification</strong><br/>
+							<span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span>
+						</p></div>	
+				</div>
+				<div class="row txt-left">
+					<div class="col"><p><strong>Languages</strong><br/>
+							<span ng-repeat="lang in doc.languages">
+								{{lang.language}}{{$last==true? '': ',&nbsp;'}}
+							</span></p></div>	
+					<div class="col"><p><strong>Focus Area</strong><br/>
+							<span ng-repeat="focus in doc.focuses">
+								{{focus.focus}}{{$last==true? '': ',&nbsp;'}}
+							</span></p></div>	
+				</div>
+			</div>
+        </div>
+		
+        </ion-content>
+        </ion-modal-view>
+		</script>
+	
 </ion-view>

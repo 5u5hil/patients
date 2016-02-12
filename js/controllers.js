@@ -592,7 +592,9 @@ angular.module('your_app_name.controllers', [])
                         params: {id: value.id}
                     }).then(function successCallback(responseData) {
                         $ionicLoading.hide();
+						 $scope.getDprice = responseData.price;
                         $scope.docServices[key] = responseData.data;
+						
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -604,7 +606,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading,$ionicModal) {
             $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
@@ -924,8 +926,28 @@ angular.module('your_app_name.controllers', [])
                 else
                     $state.go('auth.login');
             };
+			
+		/* view more doctor profile modalbox*/	
+		$ionicModal.fromTemplateUrl('viewmoreprofile.html', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+            };	
+			
+			/* end profile */
+			
+			
         })
 
+
+		
+		
+		
+		
         .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
 
             $scope.mode = window.localStorage.getItem('mode');
@@ -1083,15 +1105,6 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('privacyCtrl', function () {
-
-            $ionicModal.fromTemplateUrl('modals.html', function ($ionicModal) {
-                $scope.modal = $ionicModal;
-            }, {
-                scope: $scope,
-                animation: 'slide-in-up'
-            });
-        })
 
 
 
