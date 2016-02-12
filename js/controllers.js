@@ -16,7 +16,9 @@ angular.module('your_app_name.controllers', [])
 
 // APP
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
+
             $rootScope.imgpath = domain + "/public/frontend/user/";
+
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
@@ -590,7 +592,9 @@ angular.module('your_app_name.controllers', [])
                         params: {id: value.id}
                     }).then(function successCallback(responseData) {
                         $ionicLoading.hide();
+						 $scope.getDprice = responseData.price;
                         $scope.docServices[key] = responseData.data;
+						
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -602,7 +606,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading,$ionicModal) {
             $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
@@ -724,6 +728,7 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
             });
+
             $scope.checkAvailability = function (prodId) {
                 console.log("prodId " + prodId);
                 $http({
@@ -742,7 +747,7 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
 
-            };
+           };
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
                 var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
@@ -921,8 +926,28 @@ angular.module('your_app_name.controllers', [])
                 else
                     $state.go('auth.login');
             };
+			
+		/* view more doctor profile modalbox*/	
+		$ionicModal.fromTemplateUrl('viewmoreprofile.html', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+            };	
+			
+			/* end profile */
+			
+			
         })
 
+
+		
+		
+		
+		
         .controller('PaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
 
             $scope.mode = window.localStorage.getItem('mode');
@@ -1080,15 +1105,6 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('privacyCtrl', function () {
-
-            $ionicModal.fromTemplateUrl('modals.html', function ($ionicModal) {
-                $scope.modal = $ionicModal;
-            }, {
-                scope: $scope,
-                animation: 'slide-in-up'
-            });
-        })
 
 
 
@@ -1402,8 +1418,8 @@ angular.module('your_app_name.controllers', [])
         .controller('CheckavailableCtrl', function ($scope, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
-            $scope.data = $stateParams.data;
 
+            $scope.data = $stateParams.data;
 
             /* patient confirm */
             $scope.showConfirm = function () {
@@ -1421,10 +1437,18 @@ angular.module('your_app_name.controllers', [])
                 });
             };
 
+			
+			
+			
+			
+			
             /*timer */
             $scope.IsVisible = false;
             $scope.counter = 30;
             var stopped;
+			
+			
+			
             $scope.countdown = function (dataId) {
                 // alert(dataId);
                 $scope.kookooID = window.localStorage.getItem('kookooid');
@@ -1460,6 +1484,7 @@ angular.module('your_app_name.controllers', [])
                     $scope.counter--;
                     $scope.countdown();
                 }, 1000);
+
                 if ($scope.counter == 29) {
                     $http({
                         method: 'GET',
@@ -1473,12 +1498,21 @@ angular.module('your_app_name.controllers', [])
                         alert('Oops something went wrong!');
                     });
                 }
+
                 if ($scope.counter == 0) {
                     $scope.IsVisible = false;
                    // $scope.showConfirm();
                     $timeout.cancel(stopped);
                 }
             };
+			
+			
+			 
+			
+			
+			
+			
+			
             $scope.hidediv = function () {
                 $scope.IsVisible = false;
                 $timeout.cancel(stopped);
