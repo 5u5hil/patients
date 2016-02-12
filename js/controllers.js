@@ -1485,6 +1485,7 @@ angular.module('your_app_name.controllers', [])
                     $scope.countdown();
                 }, 1000);
 
+
                 if ($scope.counter == 29) {
                     $http({
                         method: 'GET',
