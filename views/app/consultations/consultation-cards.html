@@ -24,7 +24,7 @@
                                 <img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg">
                             </div>
                             <div class="card-detail txt-left">
-                                <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
+                                <p><strong>{{doc.fname}} {{doc.lname}}{{doc.price}}</strong><br/>
                                     <span ng-repeat="spec in doc.specializations">
                                         {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                     </span></p>

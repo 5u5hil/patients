@@ -725,7 +725,7 @@ angular.module('your_app_name.controllers', [])
                 });
             });
             $scope.checkAvailability = function (prodId) {
-                console.log("prodId "+ prodId);
+                console.log("prodId " + prodId);
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-doctor-availability',
@@ -734,8 +734,8 @@ angular.module('your_app_name.controllers', [])
                     var dataInfo = responseData.data.split('-');
                     console.log(dataInfo);
                     if (responseData.data == 1) {
-                         alert('check here');
-                         alert(prodId);
+                        alert('check here');
+                        alert(prodId);
                         $state.go('app.checkavailable', {'data': prodId});
                     } else {
                         alert('Sorry, Doctor not available for this time!');
@@ -1399,7 +1399,7 @@ angular.module('your_app_name.controllers', [])
 
 
 
-        .controller('CheckavailableCtrl', function ($scope, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
+        .controller('CheckavailableCtrl', function ($scope, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
             $scope.data = $stateParams.data;
@@ -1423,21 +1423,59 @@ angular.module('your_app_name.controllers', [])
 
             /*timer */
             $scope.IsVisible = false;
-            $scope.counter = 20;
+            $scope.counter = 30;
             var stopped;
             $scope.countdown = function (dataId) {
-                alert(dataId);
+                // alert(dataId);
+                $scope.kookooID = window.localStorage.getItem('kookooid');
+
+                $http({
+                    method: 'GET',
+                    url: domain + 'kookoo/check-kookoo-value',
+                    params: {kookooId: $scope.kookooID}
+                }).then(function successCallback(responsekookoo) {
+                    console.log(responsekookoo.data);
+                    if (responsekookoo.data == 1)
+                    {
+                        $timeout.cancel(stopped);
+                        $state.go('app.payment');
+                        
+                        
+                    }
+                   else
+                    {
+                        alert('Doctor reject call');
+                    }
+                }, function errorCallback(responsekookoo) {
+                    if (responsekookoo.data == 0)
+                    {
+                        //  alert('No doctrs available');
+                    }
+                });
 
                 $scope.IsVisible = true;
 
                 stopped = $timeout(function () {
-                    console.log($scope.counter);
+                    // console.log($scope.counter);
                     $scope.counter--;
                     $scope.countdown();
                 }, 1000);
+                if ($scope.counter == 29) {
+                    $http({
+                        method: 'GET',
+                        url: domain + 'kookoo/check-doctrs-response',
+                        params: {dataId: dataId}
+                    }).then(function successCallback(response) {
+                        //console.log($scope.counter);
+                        window.localStorage.setItem('kookooid', response.data);
+
+                    }, function errorCallback(response) {
+                        alert('Oops something went wrong!');
+                    });
+                }
                 if ($scope.counter == 0) {
                     $scope.IsVisible = false;
-                    $scope.showConfirm();
+                   // $scope.showConfirm();
                     $timeout.cancel(stopped);
                 }
             };
@@ -1446,6 +1484,11 @@ angular.module('your_app_name.controllers', [])
                 $timeout.cancel(stopped);
                 $scope.counter = 20;
             };
+            
+            $scope.$on("$destroy", function() {
+        window.localStorage.removeItem('kookooid');
+        console.log('cleared');
+    });
         })
 
 
