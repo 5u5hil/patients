@@ -81,7 +81,7 @@
 					  </div>
 					  <ion-tab title="Instant Video" icon="ion-ios-videocam" >
 						<div class="tabc2">
-						 <div class="item-price">Price : INR 450</div>
+						 <div class="item-price">Price : INR {{instVideo.price}}</div>
 									  <div class="tabcontainer"> 
 												<ul class="clist">
                                                         <li>Lorem ipsum text come here</li>
@@ -94,7 +94,7 @@
 													<p>
 
 													
-													<button class="button button-block button-positive" ng-click="checkAvailability(videoProd.id)"> Check Availability</button>
+													<button class="button button-block button-positive" ng-click="checkAvailability(instVideo.user_id,instVideo.id)"> Check Availability</button>
 
 													
 													
@@ -125,7 +125,7 @@
 
 	
 	    <script id="viewmoreprofile.html" type="text/ng-template">
-		<ion-modal-view>
+		 <ion-modal-view>
        <div class="profile-head detailhead" ng-repeat="doc in doctor">
             <div class="card-content">
                <div class="card-left"><img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg"></div>
