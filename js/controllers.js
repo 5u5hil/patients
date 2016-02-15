@@ -614,8 +614,9 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $timeout ,$ionicTabsDelegate) {
-            $scope.apply = '0';
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $ionicTabsDelegate, $timeout) {
+		
+		 $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
             $scope.schV = [];
@@ -945,10 +946,11 @@ angular.module('your_app_name.controllers', [])
                 $scope.modal.hide();
             };
             /* end profile */
-			$timeout(function(){
-				$ionicTabsDelegate.select(0);
-			},0);
-			
+			$ionicLoading.show({template: 'Loading...'});
+			  $timeout(function(){
+			  $ionicLoading.hide();
+			$ionicTabsDelegate.select(0);
+		  },10);
 
         })
 

@@ -282,7 +282,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.consultation-profile', {
-                        cache: false,
+                      //  cache: false,
                         url: "/consultation-profile/{id:int}",
                         views: {
                             'menuContent': {
@@ -291,6 +291,20 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 
                     .state('app.current-tab', {
                         cache: false,
