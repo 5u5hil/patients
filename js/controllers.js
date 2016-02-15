@@ -328,7 +328,12 @@ angular.module('your_app_name.controllers', [])
             // }
 
             // getItems();
-
+			
+			$scope.selectMe = function (event){
+				   $(event.target).toggleClass('active');
+				}
+				
+				
             $scope.showFilterBar = function () {
                 filterBarInstance = $ionicFilterBar.show({
                     items: $scope.items,
@@ -366,6 +371,9 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
+			
+			
+			
         })
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
@@ -606,7 +614,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading,$ionicModal) {
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading,$ionicModal, $timeout ,$ionicTabsDelegate) {
             $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
@@ -939,7 +947,10 @@ angular.module('your_app_name.controllers', [])
             };	
 			
 			/* end profile */
-			
+		
+			$timeout(function(){
+			$ionicTabsDelegate.select(0);
+			},0);
 			
         })
 

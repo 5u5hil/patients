@@ -28,11 +28,15 @@
 	</ion-content>
 
 	<div class="list cdetail-list">
-	<a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
+	<a  class="item item-icon-left item-icon-right" on-hold='selectMe($event)'  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
 		<span class="title">{{cat.category}}</span>	
 		<span class="count">{{cat.count}}</span>	
 	</a>
 	</div>
+  
+  
+
+  
   
 </ion-content>
 		
