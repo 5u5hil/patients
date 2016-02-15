@@ -646,7 +646,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.chatInc = response.data.chat_inclusions;
                 $scope.packages = response.data.packages;
                 $scope.services = response.data.services;
-                console.log("prodId " + $scope.instVideo + "popopo");
+                //console.log("prodId " + $scope.instVideo + "popopo");
                 //$ionicLoading.hide();
                 angular.forEach($scope.videoSch, function (value, key) {
                     var supsassId = value.supersaas_id;
@@ -870,18 +870,15 @@ angular.module('your_app_name.controllers', [])
                 $scope.supId = supid;
             };
             $scope.bookAppointment = function (prodId, serv) {
-
                 $scope.apply = '0';
                 $scope.discountApplied = '0';
                 window.localStorage.setItem('coupondiscount', '0');
                 console.log($scope.bookingStart);
                 if ($scope.bookingStart) {
-
                     window.localStorage.setItem('supid', $scope.supId);
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
                     window.localStorage.setItem('prodId', prodId);
-                    //window.localStorage.setItem('url', 'app.payment');
                     window.localStorage.setItem('mode', serv);
                     $rootScope.supid = $scope.supId;
                     $rootScope.startSlot = $scope.bookingStart;
@@ -939,19 +936,10 @@ angular.module('your_app_name.controllers', [])
             $scope.submitmodal = function () {
                 $scope.modal.hide();
             };
-
             /* end profile */
-
-
         })
 
-
-
-
-
-
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
-
             $scope.mode = window.localStorage.getItem('mode');
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
@@ -974,6 +962,8 @@ angular.module('your_app_name.controllers', [])
                 $scope.doctor = responseData.data.doctor;
                 $scope.IVstartSlot = responseData.data.IVstart;
                 $scope.IVendSlot = responseData.data.IVend;
+                window.localStorage.setItem('IVstartSlot', $scope.IVstartSlot);
+                window.localStorage.setItem('IVendSlot', $scope.IVendSlot);
                 $ionicLoading.hide();
             }, function errorCallback(response) {
                 console.log(response);
@@ -1002,8 +992,13 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.payNow = function (finalamount) {
                 //alert(finalamount);
-                $scope.startSlot = window.localStorage.getItem('startSlot');
-                $scope.endSlot = window.localStorage.getItem('endSlot');
+                if (window.localStorage.getItem('mode') == 5) {
+                    $scope.startSlot = window.localStorage.getItem('IVstartSlot');
+                    $scope.endSlot = window.localStorage.getItem('IVendSlot');
+                } else {
+                    $scope.startSlot = window.localStorage.getItem('startSlot');
+                    $scope.endSlot = window.localStorage.getItem('endSlot');
+                }
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
@@ -1020,16 +1015,12 @@ angular.module('your_app_name.controllers', [])
                     console.log(response.data);
                     if (finalamount > 0) {
                         $state.go('app.Gopay', {'link': response.data});
-
-                        console.log(response.data)
-
+                        console.log(response.data);
                     } else {
                         $scope.discountval = response.data.discount;
-                        //$scope.discountval = response.data.discount;
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
 
                     }
@@ -1101,11 +1092,8 @@ angular.module('your_app_name.controllers', [])
                         $('#coupon_error').html('Coupon Applied.');
                         window.localStorage.setItem('coupondiscount', response.data);
                     }
-
-
                 });
             };
-
         })
 
 
@@ -1456,7 +1444,7 @@ angular.module('your_app_name.controllers', [])
                 // console.log("dataId"+dataId);
                 // console.log("uid"+uid)
                 window.localStorage.setItem('prodId', $scope.data);
-                
+
                 window.localStorage.setItem('mode', 5);
                 //alert(dataId);
                 $scope.kookooID = window.localStorage.getItem('kookooid');
@@ -1476,7 +1464,9 @@ angular.module('your_app_name.controllers', [])
                     }
                     else if (responsekookoo.data == 2)
                     {
+                         $timeout.cancel(stopped);
                         alert('Doctor reject call');
+                        $state.go('app.consultations-list',{}, {reload: true});
                     }
                 }, function errorCallback(responsekookoo) {
                     if (responsekookoo.data == 0)
