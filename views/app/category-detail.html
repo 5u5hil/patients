@@ -13,32 +13,28 @@
         </div>
     </div>
  <ion-content>
-	 <ion-content direction="y" scrollbar-y="false">
-
-    <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
-    </ion-refresher>
-
-	 <div ng-if="items !== undefined && !items.length" class="no-results">
-      <p>No Results</p>
-	  <div class="fltr-mesg"> &nbsp;</div>
-    </div>
-	
-	<ion-list>
-		<ion-item collection-repeat="item in items" >
-        <p>{{item.text}}</p>
-      </ion-item>
-	 </ion-list>
-
-  </ion-content>
+	<ion-content direction="y" scrollbar-y="false">
+		<ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
+		</ion-refresher>
+		 <div ng-if="items !== undefined && !items.length" class="no-results">
+		  <p>No Results</p>
+		  <div class="fltr-mesg"> &nbsp;</div>
+		</div>
+		 <ion-list>
+			<ion-item collection-repeat="item in items" >
+			<p>{{item.text}}</p> 
+		  </ion-item>
+		 </ion-list>
+	</ion-content>
 
 	<div class="list cdetail-list">
-		<a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
-			<span class="title">{{cat.category}}</span>	
-			<span class="count">{{cat.count}}</span>	
-		</a>
-		</div>
+	<a class="item item-icon-left item-icon-right" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
+		<span class="title">{{cat.category}}</span>	
+		<span class="count">{{cat.count}}</span>	
+	</a>
+	</div>
   
-    </ion-content>
+</ion-content>
 		
     <div class="footerbar">
         <a class="button" ui-sref="#"><i class="icon ion-trash-b"></i> Delete</a>
