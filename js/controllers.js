@@ -614,8 +614,9 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $timeout ,$ionicTabsDelegate) {
-            $scope.apply = '0';
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $ionicTabsDelegate, $timeout) {
+		
+		 $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
             $scope.schV = [];
@@ -945,10 +946,11 @@ angular.module('your_app_name.controllers', [])
                 $scope.modal.hide();
             };
             /* end profile */
-			$timeout(function(){
-				$ionicTabsDelegate.select(0);
-			},0);
-			
+			$ionicLoading.show({template: 'Loading...'});
+			  $timeout(function(){
+			  $ionicLoading.hide();
+			$ionicTabsDelegate.select(0);
+		  },10);
 
         })
 
@@ -1005,7 +1007,7 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.payNow = function (finalamount) {
                 //alert(finalamount);
-                if (window.localStorage.getItem('instantV') =='instantV') {
+                if (window.localStorage.getItem('mode') == 5) {
                     $scope.startSlot = window.localStorage.getItem('IVstartSlot');
                     $scope.endSlot = window.localStorage.getItem('IVendSlot');
                 } else {
@@ -1457,8 +1459,8 @@ angular.module('your_app_name.controllers', [])
                 // console.log("dataId"+dataId);
                 // console.log("uid"+uid)
                 window.localStorage.setItem('prodId', $scope.data);
-                window.localStorage.setItem('instantV', 'instantV'); 
-                window.localStorage.setItem('mode', 1);
+
+                window.localStorage.setItem('mode', 5);
                 //alert(dataId);
                 $scope.kookooID = window.localStorage.getItem('kookooid');
 
@@ -1477,9 +1479,9 @@ angular.module('your_app_name.controllers', [])
                     }
                     else if (responsekookoo.data == 2)
                     {
-                        $timeout.cancel(stopped);
+                         $timeout.cancel(stopped);
                         alert('Doctor reject call');
-                        $state.go('app.consultations-list', {}, {reload: true});
+                        $state.go('app.consultations-list',{}, {reload: true});
                     }
                 }, function errorCallback(responsekookoo) {
                     if (responsekookoo.data == 0)
@@ -1501,7 +1503,7 @@ angular.module('your_app_name.controllers', [])
                     $http({
                         method: 'GET',
                         url: domain + 'kookoo/check-doctrs-response',
-                        params: {uid: $scope.uid}
+                        params: {uid: uid}
                     }).then(function successCallback(response) {
                         //console.log($scope.counter);
                         window.localStorage.setItem('kookooid', response.data);
