@@ -33,7 +33,7 @@
             </div>
             <div class="ctab">
                 <my-tabs class="themetabs">
-                    <my-tab title="Pay Now" ng-if="mode == 1 || mode == 2 || mode == 5">
+                    <my-tab title="Pay Now" ng-if="mode == 1 || mode == 2 ">
                         <div class="tabcontainer" style="margin-top:0;">
                             <h4 class="txt-centre" style="margin-top:10px; margin-bottom:10px;">Price: INR {{product[0].price}}</h4>
                             <div class="row" ng-if="apply != 1">
@@ -49,7 +49,7 @@
                             <div class="fg txt-centre" ng-if="apply == 1">Applied Discount</div>
                             <div class="pprice" ng-if="apply == 1">Final Price: INR {{product[0].price - discountApplied}}</div>
                             <div class="section-footer"> <!---ui-sref="app.success"-->
-                                <a ng-if="mode == 1 || mode == 2 || mode == 5" ng-click="payNow(product[0].price - discountApplied)" class="button button-full button-positive">Pay Now</a>                                
+                                <a ng-if="mode == 1 || mode == 2 " ng-click="payNow(product[0].price - discountApplied)" class="button button-full button-positive">Pay Now</a>                                
                             </div>
                             <p class="agreelink">
                                 By Clicking on the button above, you agree to the <span dynamic-anchor-fix><a href="https://doctrs.in/termsandconditions.pdf" target="_blank">terms & conditions</a></span> and have read the <span dynamic-anchor-fix><a href="https://doctrs.in/privacypolicy.pdf" target="_blank">privacy policy</a> </span> & <span dynamic-anchor-fix><a href="https://doctrs.in/CancellationPolicy.pdf" target="_blank">cancellation policy.</a></span>
