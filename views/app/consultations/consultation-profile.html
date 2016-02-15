@@ -30,11 +30,12 @@
 
                 <div class="whitetab profile" style="margin-top:87px;">
                     <div class="schedule">
-
+ {{services}}
                         <ion-tabs class="tabs-positive tabs-icon-top">
                             <div ng-repeat="serv in services">  
-                                <ion-tab  icon="ion-calendar" title="Scheduled Video" ng-if="serv == 1">
-                                    <div class="tabc2">
+                               
+                                <ion-tab  icon="ion-calendar" title="Scheduled Video"  ng-if="serv == 1">
+                                    <div class="tabc2" nav-view="active">
                                         <div class="item-price">Price : INR {{videoProd.price}}</div>
                                         <div class="mt15"> 
                                             <ul class="clist">
