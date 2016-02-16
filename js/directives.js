@@ -30,15 +30,17 @@ angular.module('your_app_name.directives', [])
         .directive('myTab', function () {
             return {
                 require: '^myTabs',
-                restrict: 'E',
+                restrict: 'EA',
                 transclude: true,
                 scope: {
                     title: '@',
+					icon:'@',
+				
 				},
                 link: function (scope, element, attrs, tabsCtrl) {
                     tabsCtrl.addTab(scope);
                 },
-                templateUrl: 'views/common/my-tab.html'
+				 templateUrl: 'views/common/my-tab.html'
             };
         })
 
