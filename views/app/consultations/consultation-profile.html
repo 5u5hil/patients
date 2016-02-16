@@ -30,11 +30,14 @@
 
                 <div class="whitetab profile" style="margin-top:87px;">
                     <div class="schedule">
-		
-					<my-tabs class="themetabs">
-					<div ng-repeat="serv in services" ng-if="serv == 1"> 
-					<my-tab icon="ion-calendar tabicon" title="Scheduled Video">
-						<div class="tabc2">
+				<my-tabs class="themetabs">
+
+                            <div ng-repeat="serv in services">  
+                               
+                                <my-tabs  icon="ion-calendar tabicon" title="Scheduled Video"  ng-if="serv == 1">
+                                    <div class="tabc2">
+
+
                                         <div class="item-price">Price : INR {{videoProd.price}}</div>
                                         <div class="mt15"> 
                                             <ul class="clist">
@@ -116,20 +119,6 @@
 					
                         
 
-
-
-
-
-			
-						
-						
-						
-						
-						
-						
-						
-						
-
                     </div>
 
 
@@ -184,7 +173,7 @@
         </div>
 
         </ion-content>
-        </ion-modal-view>
+        </ion-modal-view> 
     </script>
 
 </ion-view>
