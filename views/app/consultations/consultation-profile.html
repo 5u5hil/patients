@@ -6,6 +6,7 @@
          <button class="button button-icon button-clear ion-person">
          </button>
      </ion-nav-buttons> -->
+    {{print_r(instVideo)}}
     <div ng-repeat="doc in doctor">
         <div class="profile-head">
             <div class="card-content">
@@ -85,7 +86,7 @@
 					<div ng-if="instVideo != ''">
 					<my-tab title="Instant Video" icon="ion-ios-videocam tabicon">
 						<div class="tabc2">
-                                        <div class="item-price">Price : INR {{instVideo.price}}</div>
+                                        <div class="item-price">Price : INR {{instVideo.price}} {{instVideo.id}} {{instVideo.user_id}}</div>
                                         <div class="tabcontainer"> 
                                             <ul class="clist">
                                                 <li>Lorem ipsum text come here</li>
