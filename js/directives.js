@@ -34,7 +34,7 @@ angular.module('your_app_name.directives', [])
                 transclude: true,
                 scope: {
                     title: '@',
-					icon:'@',
+		icon:'@',
 				
 				},
                 link: function (scope, element, attrs, tabsCtrl) {
