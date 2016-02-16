@@ -30,47 +30,13 @@
 
                 <div class="whitetab profile" style="margin-top:87px;">
                     <div class="schedule">
-
-		<!-- 	<div class="row tabnav tabwhite">
-				<div class="col wbtn">
-					<a ui-sref="app.consultation-instant" class="active"><i class="ion-ios-videocam"></i> Instant Video</a>
-					</div>
-				<div class="col wbtn"><a  ui-sref="app.consultations-current" ><i class="ion-calendar"></i>Scheduled Video</a></div>
-			
-			</div> -->
-					
-	<!-- 			 <ion-tabs class="tabs-positive tabs-icon-top">
-                            <div>
-                                <ion-tab  icon="ion-calendar" title="Scheduled Video" >
-                                    <div class="tabc2">	fads fasdf</div>
-								</ion-tab>
-								</div>
-							<div>
-					 <ion-tab  icon="ion-calendar" title="test" >
-                                    <div class="tabc2">	132165433
-										</div>
-									</ion-tab>
-					</div>
-				 </ion-tabs> -->
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-                        <ion-tabs class="tabs-positive tabs-icon-top">
+				<my-tabs class="themetabs">
 
                             <div ng-repeat="serv in services">  
                                
-                                <ion-tab  icon="ion-calendar" title="Scheduled Video"  ng-if="serv == 1">
+                                <my-tabs  icon="ion-calendar tabicon" title="Scheduled Video"  ng-if="serv == 1">
                                     <div class="tabc2">
+
 
                                         <div class="item-price">Price : INR {{videoProd.price}}</div>
                                         <div class="mt15"> 
@@ -114,12 +80,11 @@
                                             </div>	
                                         </div>
                                     </div>
-                                </ion-tab>
-                            </div>
-                            <div ng-if="instVideo != ''">
-                                <ion-tab title="Instant Video" icon="ion-ios-videocam" >
-
-                                    <div class="tabc2">
+					</my-tab>
+					</div>
+					<div ng-if="instVideo != ''">
+					<my-tab title="Instant Video" icon="ion-ios-videocam tabicon">
+						<div class="tabc2">
                                         <div class="item-price">Price : INR {{instVideo.price}}</div>
                                         <div class="tabcontainer"> 
                                             <ul class="clist">
@@ -141,11 +106,18 @@
                                             </p>
                                         </div>
                                     </div>
-                                </ion-tab>
-                            </div>
-
-
-                        </ion-tabs>
+					</my-tab>
+					</my-tabs>
+		
+		
+		
+		
+		
+		
+		
+					
+					
+                        
 
                     </div>
 

@@ -74,7 +74,7 @@ angular.module('your_app_name.controllers', [])
                             $state.go('app.category-list');
                             //}
                         } else {
-
+							
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
