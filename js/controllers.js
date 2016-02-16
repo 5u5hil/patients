@@ -317,7 +317,7 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar,$ionicModal) {
             var filterBarInstance;
             // function getItems () {
             // var items = [];
@@ -375,20 +375,15 @@ angular.module('your_app_name.controllers', [])
             });
 			
 			
-			  $scope.data = {
-				showDelete: false
-			  };
-			  
-			 
-			  
-			  $scope.moveItem = function(item, fromIndex, toIndex) {
-				$scope.userRecords.splice(fromIndex, 1);
-				$scope.userRecords.splice(toIndex, 0, item);
-			  };
-			  
-			  $scope.onItemDelete = function(item) {
-				$scope.userRecords.splice($scope.userRecords.indexOf(item), 1);
-			  };
+			 $ionicModal.fromTemplateUrl('deletecategory.html', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+            };
 		})
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {

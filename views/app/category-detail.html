@@ -8,7 +8,7 @@
 	    <div class="buttons">
         <button class="button button-icon icon ion-ios-minus-outline"
           ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
-      </div>
+      </div> 
     </ion-nav-buttons>
 
 	
@@ -34,15 +34,16 @@
 		 </ion-list>
 	</ion-content>
 	
-<!-- 	<div class="list cdetail-list">
+ <!-- 	<div class="list cdetail-list">
 	<a  class="item item-icon-left item-icon-right" on-hold='selectMe($event)'  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
+
 	  <span class="title">{{cat.category}}</span>	
 		<span class="count">{{cat.count}}</span>	
 	</a>
-	</div> -->
+	</div>  -->
 	
-	
- <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+	<div class="list cdetail-list">
+	<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 
         <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
                   item="item" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})"  class="item-remove-animate">
@@ -60,7 +61,7 @@
 
       </ion-list>
 	
-	
+	</div>
 	
 	
 	
