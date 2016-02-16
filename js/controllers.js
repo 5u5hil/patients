@@ -44,7 +44,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
 
-        })
+})
 
 
 
@@ -329,6 +329,8 @@ angular.module('your_app_name.controllers', [])
 
             // getItems();
 			
+
+			
 			$scope.selectMe = function (event){
 				   $(event.target).toggleClass('active');
 				}
@@ -373,8 +375,21 @@ angular.module('your_app_name.controllers', [])
             });
 			
 			
-			
-        })
+			  $scope.data = {
+				showDelete: false
+			  };
+			  
+			 
+			  
+			  $scope.moveItem = function(item, fromIndex, toIndex) {
+				$scope.userRecords.splice(fromIndex, 1);
+				$scope.userRecords.splice(toIndex, 0, item);
+			  };
+			  
+			  $scope.onItemDelete = function(item) {
+				$scope.userRecords.splice($scope.userRecords.indexOf(item), 1);
+			  };
+		})
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
             $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
