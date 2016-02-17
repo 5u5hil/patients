@@ -6,12 +6,15 @@
        <button class="button button-icon button-clear ion-android-search " ng-click="showFilterBar()">
 	   </button> 
     </ion-nav-buttons>
+
+	
     <div class="bar bar-subheader cbar divider-2">
         <div class="row">
             <div class="col-50"><a  ui-sref="app.settings"><h4 class="subhead"><i class="icon ion-funnel"></i> Filter</h4></a></div>
             <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
         </div>
     </div>
+	
  <ion-content>
 	<ion-content direction="y" scrollbar-y="false">
 		<ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
@@ -26,22 +29,48 @@
 		  </ion-item>
 		 </ion-list>
 	</ion-content>
-
-	<div class="list cdetail-list">
+	
+ <!-- 	<div class="list cdetail-list">
 	<a  class="item item-icon-left item-icon-right" on-hold='selectMe($event)'  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
-		<span class="title">{{cat.category}}</span>	
+
+	  <span class="title">{{cat.category}}</span>	
 		<span class="count">{{cat.count}}</span>	
 	</a>
-	</div>
-  
-  
+	</div>  -->
+	
+	<div class="list cdetail-list">
+	<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 
-  
-  
+        <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
+                  item="item" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})"  class="item-remove-animate">
+          {{cat.category}}
+          <ion-delete-button class="" 
+                             ng-click="onItemDelete(item)">
+							 <input type="checkbox">
+          </ion-delete-button>
+          
+        </ion-item>
+
+      </ion-list>
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </ion-content>
 		
     <div class="footerbar">
-        <a class="button" ui-sref="#"><i class="icon ion-trash-b"></i> Delete</a>
+        <a class="button" ui-sref="#" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"
+		
+		><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button" ui-sref="#"><i class="icon ion-android-share-alt" ></i> Share</a>
 	<a class="button" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a>
     </div>

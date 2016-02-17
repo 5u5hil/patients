@@ -74,7 +74,7 @@ angular.module('your_app_name.controllers', [])
                             $state.go('app.category-list');
                             //}
                         } else {
-							
+
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
@@ -328,12 +328,14 @@ angular.module('your_app_name.controllers', [])
             // }
 
             // getItems();
+
 			
             $scope.selectMe = function (event) {
 				   $(event.target).toggleClass('active');
 				}
 				
 				
+
             $scope.showFilterBar = function () {
                 filterBarInstance = $ionicFilterBar.show({
                     items: $scope.items,
@@ -371,8 +373,7 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
-			
-			
+
 			 $ionicModal.fromTemplateUrl('deletecategory.html', {
                 scope: $scope
             }).then(function (modal) {
@@ -383,6 +384,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.modal.hide();
             };
 		})
+
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
             $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
@@ -622,7 +624,9 @@ angular.module('your_app_name.controllers', [])
         })
 
 
+
        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $timeout, $ionicTabsDelegate) {
+
             $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
