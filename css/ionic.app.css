@@ -8925,11 +8925,12 @@ iframe.videochat{position:absolute; width:100%; height: 100%;}
     width: 50px;
     border: 0;
     padding: 14px 5px 0 0;
-    background: #fff;
+    /* background: #fff; */
     height: 95%;}
 	.crecordlist{position:relative;}
 	.crecordlist .item-checkbox{padding-left: 11px;
     border: 0;}
+	.crecordlist .item-checkbox{background:none;}
 	.crecordlist .item-content.disable-pointer-events{display:none !important; }
 	
 	/* endcss */

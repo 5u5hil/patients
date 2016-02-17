@@ -14,10 +14,26 @@
         </div>
     </div>
 
-    <ion-content>
-       
+  <ion-content>
+        <div class="list recordview" >
+            <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index">
+                <div  class="list card post-item">
+                    <div class="post-content item item-text-wrap">
+                        <div class="row pr-b10">
+                            <div class="col" ng-repeat="detail in rec.record_metadata | limitTo:limit">
+                                <p><strong>{{detail.fields.field | capitalize}}</strong><br/>
+                                    {{detail.value}}</p>
+                            </div>	
+                        </div>
+                        <div class="post-actions row post-footer">
+                            <span>Created {{rec.created_at | datetime3 }} by You</span>
+                        </div>
 
-    </ion-content>
+                    </div>
+                </div>
+            </a>
+		</div>
+</ion-content>
     <div class="footerbar">
         <a class="button"><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button"><i class="icon ion-android-share-alt"></i> Share</a>
