@@ -352,6 +352,7 @@ angular.module('your_app_name', [
 
                     //Payment
                     .state('app.payment', {
+                        cache: false,
                         url: "/payment",
                         views: {
                             'menuContent': {
