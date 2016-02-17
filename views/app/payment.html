@@ -18,11 +18,11 @@
                             <span ng-if="pInc.discount < 100">Discount : {{pInc.discount}} %</span>, {{pInc.validity_in_days}} Days</li>
                     </ul>
                     <p ng-if="product[0].mode!='Chat'"><strong>Appointment Details</strong> <br/> 
-                        <span ng-if="IVstartSlot==''">
+                        <span ng-if="startSlot">
                         <strong>Date: </strong> {{startSlot | dateFormat3}} <br/>
                         <strong>Time: </strong> {{startSlot | time}} To {{endSlot | time}}<br/>
                         </span>
-                         <span ng-if="IVstartSlot!=''">
+                         <span ng-if="!startSlot">
                             <strong>Date: </strong> {{curTime| dateFormat3}} <br/>
                         <strong>Time: </strong> {{IVstartSlot| time}} To {{IVendSlot| time}}<br/>
                         </span>
