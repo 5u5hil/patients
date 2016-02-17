@@ -107,6 +107,7 @@
                                 </label>
                             </div>
                             <label class="item item-input" ng-if="field.multi_value == 0 && field.field != 'Frequency' ">
+                            <span class="input-label" >Enter {{field.field}}</span>
                                 <input type="number" placeholder="Enter {{field.field}}" id="{{field.name}}" name="{{field.name}}" />                            
                             </label>
                             <div  ng-if="field.multi_value == 1">
