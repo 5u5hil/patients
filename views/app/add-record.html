@@ -4,7 +4,7 @@
     </ion-nav-title>
     <ion-content>
         <ul class="list mtop40 addform">
-            <div class="item item-divider">{{record.category}}</div>
+            <!-- <div class="item item-divider">{{record.category}}</div> -->
             <form ng-submit="submit()" name="recordAdd" id="addrecords" enctype="multipart/form-data" >
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
@@ -43,9 +43,16 @@
                                 <input type="text" placeholder="Enter To" name="{{field.name}}-2" required />
                             </label>
                         </div>
-                            <label class="item item-input" ng-if="field.multi_value == 0">
+                        <div ng-if="field.multi_value == 0">
+                            <label class="item item-input" ng-if="field.field=='Name'">
+                            <span class="input-label" >{{field.field}}</span>
                                 <input type="text" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" maxlength="{{max_length}}"/>                            
                             </label>
+                            <label class="item item-input item-floating-label" ng-if="field.field!='Name'">
+                            <span class="input-label" >Enter {{field.field}}</span>
+                                <input type="text" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" maxlength="{{max_length}}"/>                            
+                            </label>
+                            </div>
                             <div  ng-if="field.multi_value == 1">
                                 <label class="item item-input">
                                     <input type="text" placeholder="Enter {{field.field}}" id="{{field.name}}" class="toClone"  name="{{field.name}}[]" />                                
@@ -63,20 +70,24 @@
 
                         <div ng-if="field.field_types.value == 'file'">                        
                             <label class="item item-input" ng-if="field.multi_value == 0">
+                            <span class="input-label" >Enter {{field.field}}</span>
                                 <input type="file" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" />                            
                             </label>
                             <div  ng-if="field.multi_value == 1">
                                 <label class="item item-input" ng-if="field.multi_value == 1">
+                                <span class="input-label" >Enter {{field.field}}</span>
                                     <input type="file" placeholder="Enter {{field.field}}" multiple="" id="{{field.name}}"  name="{{field.name}}[]" />
                                 </label>
                             </div>
                         </div>
                         <div ng-if="field.field_types.value == 'files'">                        
                             <label class="item item-input" ng-if="field.multi_value == 0">
+                            <span class="input-label" >Enter {{field.field}}</span>
                                 <input type="file" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" />                            
                             </label>
                             <div  ng-if="field.multi_value == 1">
                                 <label class="item item-input" ng-if="field.multi_value == 1">
+                                <span class="input-label" >Enter {{field.field}}</span>
                                     <input type="file" placeholder="Enter {{field.field}}" id="{{field.name}}" class="toClone"  name="{{field.name}}[]" />
                                     <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                                 </label>
@@ -96,10 +107,12 @@
                                 </label>
                             </div>
                             <label class="item item-input" ng-if="field.multi_value == 0 && field.field != 'Frequency' ">
+                            <span class="input-label" >Enter {{field.field}}</span>
                                 <input type="number" placeholder="Enter {{field.field}}" id="{{field.name}}" name="{{field.name}}" />                            
                             </label>
                             <div  ng-if="field.multi_value == 1">
                                 <label class="item item-input" ng-if="field.multi_value == 1">
+                                <span class="input-label" >Enter {{field.field}}</span>
                                     <input type="number" placeholder="Enter {{field.field}}" id="{{field.name}}" class="toClone"  name="{{field.name}}[]" />
                                     <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                                 </label>
@@ -113,20 +126,24 @@
                         </div>
                         <div ng-if="field.field_types.value == 'time'">                        
                             <label class="item item-input" ng-if="field.multi_value == 0">
+                            <span class="input-label" >Enter {{field.field}}</span>
                                 <input type="time" placeholder="Enter {{field.field}}" id="{{field.name}}"  name="{{field.name}}" />                            
                             </label>
                             <label class="item item-input" ng-if="field.multi_value == 1">
+                            <span class="input-label" >Enter {{field.field}}</span>
                                 <input type="time" placeholder="Enter {{field.field}}" id="{{field.name}}" class="toClone"  name="{{field.name}}[]" />
                                 <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                             </label>
                         </div>
                         <div ng-if="field.field_types.value == 'textarea'">
                             <label class="item item-input" ng-if="field.multi_value == 0">
-                                <textarea placeholder="Enter {{field.field}}" name="{{field.name}}" maxlength="{{max_length}}"></textarea>
+                            <span class="input-label" >Enter {{field.field}}</span>
+                                <textarea placeholder="Enter {{field.field}}" name="{{field.name}}" maxlength="{{max_length}}" rows="4" cols="50"></textarea>
                             </label>
                             <div  ng-if="field.multi_value == 1">
                                 <label class="item item-input" >
-                                    <textarea placeholder="Enter {{field.field}}" name="{{field.name}}"></textarea>
+                                <span class="input-label" >Enter {{field.field}}</span>
+                                    <textarea placeholder="Enter {{field.field}}" name="{{field.name}}" rows="4" cols="50"></textarea>
                                 </label>
                             </div>
                         </div>
@@ -134,7 +151,8 @@
                             <label class="item item-input item-select" ng-if="field.multi_value == 0">
                                 <div class="input-label"> Select {{field.field}}</div>
                                 <select ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
-                                    <option ng-repeat="sel in selData"> {{sel}} </option>
+                                <option value="0"> Select {{field.field}}</option>
+                                    <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
                                 </select>
                             </label>
                             <label class="item item-input item-select" ng-if="field.multi_value == 1">

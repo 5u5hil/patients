@@ -8932,6 +8932,10 @@ iframe.videochat{position:absolute; width:100%; height: 100%;}
     border: 0;}
 	.crecordlist .item-checkbox{background:none;}
 	.crecordlist .item-content.disable-pointer-events{display:none !important; }
+	.action-sheet-cancel{background:#387ef5;}
+	.action-sheet-cancel .button{color:#fff; text-align:center !important;}
+	
+	
 	
 	/* endcss */
 	

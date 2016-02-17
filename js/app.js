@@ -86,7 +86,7 @@ angular.module('your_app_name', [
             $httpProvider.interceptors.push(function ($rootScope) {
                 return {
                     request: function (config) {
-                        $rootScope.$broadcast('loading:show')
+						$rootScope.$broadcast('loading:show')
                         return config
                     },
                     response: function (response) {
