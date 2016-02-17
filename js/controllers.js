@@ -978,7 +978,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
 
-            $scope.counter1 = 5;
+            $scope.counter1 = 10000;
             var stopped1;
             $scope.paynowcountdown = function () {
 
@@ -1550,7 +1550,7 @@ angular.module('your_app_name.controllers', [])
 
             /*timer */
             $scope.IsVisible = false;
-            $scope.counter = 30;
+            $scope.counter = 60;
             var stopped;
 
 
@@ -1623,7 +1623,7 @@ angular.module('your_app_name.controllers', [])
                 }, 1000);
 
 
-                if ($scope.counter == 29) {
+                if ($scope.counter == 59) {
                     $http({
                         method: 'GET',
                         url: domain + 'kookoo/check-doctrs-response',
