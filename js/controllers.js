@@ -1847,4 +1847,5 @@ angular.module('your_app_name.controllers', [])
                 });
                 $state.go('app.consultations-list', {}, {reload: true});
             };
+			
         });
