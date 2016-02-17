@@ -317,7 +317,7 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar,$ionicModal) {
             var filterBarInstance;
             // function getItems () {
             // var items = [];

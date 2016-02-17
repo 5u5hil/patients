@@ -30,15 +30,24 @@
 		 </ion-list>
 	</ion-content>
 	
- <!-- 	<div class="list cdetail-list">
-	<a  class="item item-icon-left item-icon-right" on-hold='selectMe($event)'  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})" ng-repeat="cat in userRecords | orderBy:'-count'">
-
-	  <span class="title">{{cat.category}}</span>	
-		<span class="count">{{cat.count}}</span>	
-	</a>
-	</div>  -->
+	
+	<!-- for select list long pressing  - on-hold='selectMe($event)' -->
 	
 	<div class="list cdetail-list">
+	<div class="crecordlist" ng-repeat="cat in userRecords | orderBy:'-count'">
+	<div class="clistck">
+	<ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox></div>
+	<a  class="item item-icon-left item-icon-right "  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})">
+	<span class="title">{{cat.category}}</span>	
+		<span class="count">{{cat.count}}</span>	
+	</a>
+	
+	</div>
+	</div>  
+	
+	
+	
+<!-- 	<div class="list cdetail-list">
 	<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 
         <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
@@ -52,7 +61,7 @@
 
       </ion-list>
 	
-	</div>
+	</div> -->
 	
 	
 	
