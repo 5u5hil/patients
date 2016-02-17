@@ -980,7 +980,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
 
-            $scope.counter1 = 5;
+            $scope.counter1 = 30;
             var stopped1;
             $scope.paynowcountdown = function () {
 
@@ -1100,6 +1100,7 @@ angular.module('your_app_name.controllers', [])
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
+                        $timeout.cancel(stopped1);
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
 
                     }
@@ -1497,7 +1498,7 @@ angular.module('your_app_name.controllers', [])
 
 
 
-        .controller('CheckavailableCtrl', function ($scope, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup,$ionicLoading, $rootScope) {
+        .controller('CheckavailableCtrl', function ($scope, $rootScope, $ionicLoading, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.data = $stateParams.data;
             $scope.uid = $stateParams.uid;
 
@@ -1566,11 +1567,14 @@ angular.module('your_app_name.controllers', [])
                 window.localStorage.setItem('mode', 1);
                 //alert(dataId);
                 $scope.kookooID = window.localStorage.getItem('kookooid');
-				
-				var myListener = $rootScope.$on('loading:show', function (event, data) {  $ionicLoading.hide();});
+                var myListener = $rootScope.$on('loading:show', function (event, data) {
+                    $ionicLoading.hide();
+                });
 				$scope.$on('$destroy', myListener); 
 						
-				var myListenern = $rootScope.$on('loading:hide', function (event, data) {  $ionicLoading.hide();});
+                var myListenern = $rootScope.$on('loading:hide', function (event, data) {
+                    $ionicLoading.hide();
+                });
 				$scope.$on('$destroy', myListenern); 
 				
 				
@@ -1596,26 +1600,27 @@ angular.module('your_app_name.controllers', [])
                         alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
                         $state.go('app.consultation-profile', {'id': $scope.uid}, {reload: true});
                     }
-                    if ($scope.counter == 1) {
-                        if (responsekookoo.data == 0)
-                        {
-                            $timeout.cancel(stopped);
-                            // $scope.showConfirm();
-                            // $state.go('app.payment');
-
-                            $http({
-                                method: 'GET',
-                                url: domain + 'kookoo/update-timer-expired',
-                                params: {kookooId: $scope.kookooID}
-                            }).then(function successCallback(responseexpired) {
-                                  window.localStorage.removeItem('kookooid');
-                                alert("Sorry. Your transaction's time limit has expired. Please try booking again");
-                                $state.go('app.consultations-list', {}, {reload: true});
-                            }, function errorCallback(responseexpired) {
-
-                            });
-                        }
-                    }
+//                    if ($scope.counter == 1) {
+//                        if (responsekookoo.data == 0)
+//                        {
+//                            $timeout.cancel(stopped);
+//                            // $scope.showConfirm();
+//                            // $state.go('app.payment');
+//                            
+//                            $http({
+//                                method: 'GET',
+//                                url: domain + 'kookoo/update-timer-expired',
+//                                params: {kookooId: $scope.kookooID}
+//                            }).then(function successCallback(responseexpired) {
+//                                  window.localStorage.removeItem('kookooid');
+//                                alert("Sorry. Your transaction's time limit has expired. Please try booking again");
+//                                //$state.go('app.consultations-list', {}, {reload: true});
+//                                 $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
+//                            }, function errorCallback(responseexpired) {
+//
+//                            });
+//                        }
+//                    }
                 }, function errorCallback(responsekookoo) {
                     if (responsekookoo.data == 0)
                     {
@@ -1634,13 +1639,32 @@ angular.module('your_app_name.controllers', [])
 
 
                 if ($scope.counter == 29) {
+                    $scope.kookooID = window.localStorage.getItem('kookooid');
+                    var myListener = $rootScope.$on('loading:show', function (event, data) {
+                        $ionicLoading.hide();
+                    });
+                    $scope.$on('$destroy', myListener);
+
+                    var myListenern = $rootScope.$on('loading:hide', function (event, data) {
+                        $ionicLoading.hide();
+                    });
+                    $scope.$on('$destroy', myListenern);
+
                     $http({
                         method: 'GET',
                         url: domain + 'kookoo/check-doctrs-response',
-                        params: {uid: $scope.uid}
+                        params: {uid: $scope.uid, pid: window.localStorage.getItem('id')}
                     }).then(function successCallback(response) {
-                        //console.log($scope.counter);
+                        console.log(response.data);
+                        if (response.data == '0')
+                        {
+                            alert("Doctor Not Available");
+                             $timeout.cancel(stopped);
+                             $state.go('app.consultations-list', {}, {reload: true});
+                           // alert('Doctor Not Available');
+                        } else {
                         window.localStorage.setItem('kookooid', response.data);
+                        }
 
                     }, function errorCallback(response) {
                         alert('Oops something went wrong!');
@@ -1653,13 +1677,6 @@ angular.module('your_app_name.controllers', [])
                     $timeout.cancel(stopped);
                 }
             };
-
-
-
-
-
-
-
 
             $scope.hidediv = function () {
                 $scope.IsVisible = false;
