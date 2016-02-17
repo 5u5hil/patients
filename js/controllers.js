@@ -759,6 +759,8 @@ angular.module('your_app_name.controllers', [])
             $scope.checkAvailability = function (uid, prodId) {
                 console.log("prodId " + prodId);
                 console.log("uid " + uid);
+				$rootScope.$broadcast('loading:hide');
+				 $ionicLoading.show();
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-doctor-availability',
@@ -1495,7 +1497,7 @@ angular.module('your_app_name.controllers', [])
 
 
 
-        .controller('CheckavailableCtrl', function ($scope, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
+        .controller('CheckavailableCtrl', function ($scope, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup,$ionicLoading, $rootScope) {
             $scope.data = $stateParams.data;
             $scope.uid = $stateParams.uid;
 
@@ -1564,7 +1566,15 @@ angular.module('your_app_name.controllers', [])
                 window.localStorage.setItem('mode', 1);
                 //alert(dataId);
                 $scope.kookooID = window.localStorage.getItem('kookooid');
-
+				
+				var myListener = $rootScope.$on('loading:show', function (event, data) {  $ionicLoading.hide();});
+				$scope.$on('$destroy', myListener); 
+						
+				var myListenern = $rootScope.$on('loading:hide', function (event, data) {  $ionicLoading.hide();});
+				$scope.$on('$destroy', myListenern); 
+				
+				
+				
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-kookoo-value',
