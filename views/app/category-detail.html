@@ -5,10 +5,6 @@
    	 <ion-nav-buttons side="right">
        <button class="button button-icon button-clear ion-android-search " ng-click="showFilterBar()">
 	   </button> 
-	    <div class="buttons">
-        <button class="button button-icon icon ion-ios-minus-outline"
-          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
-      </div> 
     </ion-nav-buttons>
 
 	
@@ -48,15 +44,11 @@
         <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
                   item="item" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})"  class="item-remove-animate">
           {{cat.category}}
-          <ion-delete-button class="ion-minus-circled" 
+          <ion-delete-button class="" 
                              ng-click="onItemDelete(item)">
+							 <input type="checkbox">
           </ion-delete-button>
-          <ion-option-button class="button-assertive"
-                             ng-click="edit(item)">
-            Edit
-          </ion-option-button>
           
-          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
         </ion-item>
 
       </ion-list>

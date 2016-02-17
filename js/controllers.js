@@ -44,7 +44,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
 
-})
+        })
 
 
 
@@ -74,7 +74,7 @@ angular.module('your_app_name.controllers', [])
                             $state.go('app.category-list');
                             //}
                         } else {
-							
+
                             $rootScope.userLogged = 0;
                             $scope.loginError = response;
                             $scope.loginError.digest;
@@ -317,7 +317,7 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar,$ionicModal) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar) {
             var filterBarInstance;
             // function getItems () {
             // var items = [];
@@ -328,14 +328,12 @@ angular.module('your_app_name.controllers', [])
             // }
 
             // getItems();
-			
 
-			
-			$scope.selectMe = function (event){
-				   $(event.target).toggleClass('active');
-				}
-				
-				
+            $scope.selectMe = function (event) {
+                $(event.target).toggleClass('active');
+            }
+
+
             $scope.showFilterBar = function () {
                 filterBarInstance = $ionicFilterBar.show({
                     items: $scope.items,
@@ -373,18 +371,10 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
-			
-			
-			 $ionicModal.fromTemplateUrl('deletecategory.html', {
-                scope: $scope
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
 
-            $scope.submitmodal = function () {
-                $scope.modal.hide();
-            };
-		})
+
+
+        })
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
             $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
@@ -624,8 +614,8 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $timeout ,$ionicTabsDelegate) {
-		 $scope.apply = '0';
+        .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $timeout, $ionicTabsDelegate) {
+            $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
             $scope.schV = [];
@@ -747,6 +737,12 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
             });
+            
+            $scope.doit = function(){
+               console.log("removeitem");
+                    window.localStorage.removeItem('startSlot');
+                    window.localStorage.removeItem('endSlot');
+            }
 
             $scope.checkAvailability = function (uid, prodId) {
                 console.log("prodId " + prodId);
@@ -759,8 +755,7 @@ angular.module('your_app_name.controllers', [])
                     var dataInfo = responseData.data.split('-');
                     console.log(dataInfo);
                     if (responseData.data == 1) {
-                        alert('check here');
-                        alert(prodId);
+                      
                         $state.go('app.checkavailable', {'data': prodId, 'uid': uid});
                     } else {
                         alert('Sorry, Doctor not available for this time!');
@@ -894,6 +889,12 @@ angular.module('your_app_name.controllers', [])
                 console.log($scope.bookingStart);
                 if ($scope.bookingStart) {
                     window.localStorage.setItem('supid', $scope.supId);
+                    // added code//
+                    window.localStorage.removeItem('IVendSlot');
+                    window.localStorage.removeItem('IVstartSlot');
+                    window.localStorage.removeItem('instantV');
+                    //end code
+                    
                     window.localStorage.setItem('startSlot', $scope.bookingStart);
                     window.localStorage.setItem('endSlot', $scope.bookingEnd);
                     window.localStorage.setItem('prodId', prodId);
@@ -955,11 +956,11 @@ angular.module('your_app_name.controllers', [])
                 $scope.modal.hide();
             };
             /* end profile */
-			$ionicLoading.show({template: 'Loading...'});
-			  $timeout(function(){
-			  $ionicLoading.hide();
-			$ionicTabsDelegate.select(0);
-		  },10);
+            $ionicLoading.show({template: 'Loading...'});
+            $timeout(function () {
+                $ionicLoading.hide();
+                $ionicTabsDelegate.select(0);
+            }, 10);
 
         })
 
@@ -1016,7 +1017,7 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.payNow = function (finalamount) {
                 //alert(finalamount);
-                if (window.localStorage.getItem('instantV') =='instantV') {
+                if (window.localStorage.getItem('instantV') == 'instantV') {
                     $scope.startSlot = window.localStorage.getItem('IVstartSlot');
                     $scope.endSlot = window.localStorage.getItem('IVendSlot');
                 } else {
@@ -1026,13 +1027,14 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
+                $scope.kookooID = window.localStorage.getItem('kookooid');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
                 $http({
                     method: 'GET',
                     url: domain + 'buy/buy-individual',
-                    params: {ccode: $scope.ccode, discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {kookooID: $scope.kookooID, ccode: $scope.ccode, discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
@@ -1138,8 +1140,17 @@ angular.module('your_app_name.controllers', [])
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
+                window.localStorage.removeItem('kookooid');
+                    window.localStorage.removeItem('coupondiscount');
+                    window.localStorage.removeItem('IVendSlot');
+                    window.localStorage.removeItem('IVstartSlot');
+                    window.localStorage.removeItem('instantV');
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
+//                $scope.$on("$destroy", function () {
+//                    
+//                    console.log('cleared');
+ // });
 
                 //$state.go('app.category-list', {}, {reload: true});
                 $state.go('app.consultations-current', {}, {reload: true});
@@ -1439,14 +1450,42 @@ angular.module('your_app_name.controllers', [])
             $scope.showConfirm = function () {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirmation',
-                    template: '<p align="center"><strong>Doctor is Available</strong></p><div>Are you sure you want to Proceed for instant video ?</div>'
+                    template: '<p align="center"><strong>Doctor is Available</strong></p><div>The specialist has accepted your request for an instant video call. Do you want to continue?</div>'
                 });
 
                 confirmPopup.then(function (res) {
-                    if (res) {
-                        console.log('No');
+                   
+                    if (res != true) {
+                       
+                          $scope.kookooID = window.localStorage.getItem('kookooid');
+                           $scope.prodid = window.localStorage.getItem('prodId');
+                      $http({
+                        method: 'GET',
+                        url: domain + 'kookoo/reject-by-patient',
+                        params: {kookooid: $scope.kookooID }
+                    }).then(function successCallback(patientresponse) {
+                        console.log(patientresponse.data);
+                        
+                        //$state.go('app.consultations-profile', {'data': $scope.prodid}, {reload: true});
+                         $state.go('app.consultations-list', {reload: true});
+                    }, function errorCallback(patientresponse) {
+                      //  alert('Oops something went wrong!');
+                    });
                     } else {
-                        console.log('Yes');
+                        $http({
+                        method: 'GET',
+                        url: domain + 'kookoo/accept-by-patient',
+                        params: {kookooid: $scope.kookooID }
+                    }).then(function successCallback(patientresponse) {
+                        console.log(patientresponse.data);
+                        // window.localStorage.setItem('kookooid', response.data);
+                         $state.go('app.payment');
+
+                    }, function errorCallback(patientresponse) {
+                      //  alert('Oops something went wrong!');
+                    });
+                        
+                    
                     }
                 });
             };
@@ -1468,7 +1507,7 @@ angular.module('your_app_name.controllers', [])
                 // console.log("dataId"+dataId);
                 // console.log("uid"+uid)
                 window.localStorage.setItem('prodId', $scope.data);
-                window.localStorage.setItem('instantV', 'instantV'); 
+                window.localStorage.setItem('instantV', 'instantV');
                 window.localStorage.setItem('mode', 1);
                 //alert(dataId);
                 $scope.kookooID = window.localStorage.getItem('kookooid');
@@ -1482,20 +1521,42 @@ angular.module('your_app_name.controllers', [])
                     if (responsekookoo.data == 1)
                     {
                         $timeout.cancel(stopped);
-                        $state.go('app.payment');
+                        $scope.showConfirm();
+                       // $state.go('app.payment');
 
 
                     }
                     else if (responsekookoo.data == 2)
                     {
-                         $timeout.cancel(stopped);
-                        alert('Doctor reject call');
-                        $state.go('app.consultations-list',{}, {reload: true});
+                        $timeout.cancel(stopped);
+                         window.localStorage.removeItem('kookooid');
+                        alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
+                        $state.go('app.consultations-list', {}, {reload: true});
+                    }
+                    if ($scope.counter == 1) {
+                        if (responsekookoo.data == 0)
+                    {
+                        $timeout.cancel(stopped);
+                       // $scope.showConfirm();
+                       // $state.go('app.payment');
+                       
+                    $http({
+                    method: 'GET',
+                    url: domain + 'kookoo/update-timer-expired',
+                    params: {kookooId: $scope.kookooID}
+                        }).then(function successCallback(responseexpired) {
+                            alert("Sorry. Your transaction's time limit has expired. Please try booking again");
+                            $state.go('app.consultations-list', {}, {reload: true});
+                    }, function errorCallback(responseexpired) {
+                        
+                    });
+                    }
                     }
                 }, function errorCallback(responsekookoo) {
                     if (responsekookoo.data == 0)
                     {
                         alert('No doctrs available');
+                        $state.go('app.consultations-list', {}, {reload: true});
                     }
                 });
 
@@ -1539,13 +1600,27 @@ angular.module('your_app_name.controllers', [])
             $scope.hidediv = function () {
                 $scope.IsVisible = false;
                 $timeout.cancel(stopped);
-                $scope.counter = 20;
+                 $scope.prodid = window.localStorage.getItem('prodId');
+                 $scope.kookooID = window.localStorage.getItem('kookooid');
+                 $http({
+                        method: 'GET',
+                        url: domain + 'kookoo/cancel-by-patient',
+                        params: {kookooid: $scope.kookooID }
+                    }).then(function successCallback(patientresponse) {
+                        console.log(patientresponse.data);
+                       
+                        $state.go('app.consultations-list', {reload: true});
+
+                    }, function errorCallback(patientresponse) {
+                      
+                    });
+                 
+                  
+                
+               // $scope.counter = 20;
             };
 
-            $scope.$on("$destroy", function () {
-                window.localStorage.removeItem('kookooid');
-                console.log('cleared');
-            });
+
         })
 
 
