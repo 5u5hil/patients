@@ -44,9 +44,8 @@
         <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
                   item="item" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})"  class="item-remove-animate">
           {{cat.category}}
-          <ion-delete-button class="" 
-                             ng-click="onItemDelete(item)">
-							 <input type="checkbox">
+          <ion-delete-button  ng-click="onItemDelete(item)">
+							 <input type="checkbox" class="listck" />
           </ion-delete-button>
           
         </ion-item>
