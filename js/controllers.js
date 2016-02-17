@@ -1663,7 +1663,8 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(patientresponse) {
                     console.log(patientresponse.data);
 
-                    $state.go('app.consultations-list', {reload: true});
+                   // $state.go('app.consultations-list', {reload: true});
+                   $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
 
                 }, function errorCallback(patientresponse) {
 
