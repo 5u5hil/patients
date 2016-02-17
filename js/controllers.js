@@ -44,7 +44,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
 
-})
+        })
 
 
 
@@ -317,7 +317,7 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar,$ionicModal) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar) {
             var filterBarInstance;
             // function getItems () {
             // var items = [];
@@ -329,12 +329,10 @@ angular.module('your_app_name.controllers', [])
 
             // getItems();
 
-			
+            $scope.selectMe = function (event) {
+                $(event.target).toggleClass('active');
+            }
 
-			
-			$scope.selectMe = function (event){
-				   $(event.target).toggleClass('active');
-				}
 
             $scope.showFilterBar = function () {
                 filterBarInstance = $ionicFilterBar.show({
@@ -374,19 +372,9 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
 
-			
-			
-			 $ionicModal.fromTemplateUrl('deletecategory.html', {
-                scope: $scope
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
 
-            $scope.submitmodal = function () {
-                $scope.modal.hide();
-            };
-		})
 
+        })
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
             $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
