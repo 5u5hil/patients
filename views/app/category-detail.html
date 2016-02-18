@@ -2,85 +2,85 @@
     <ion-nav-title>
         <span>Records</span>
     </ion-nav-title>
-   	 <ion-nav-buttons side="right">
-       <button class="button button-icon button-clear ion-android-search " ng-click="showFilterBar()">
-	   </button> 
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-android-search " ng-click="showFilterBar()">
+        </button> 
     </ion-nav-buttons>
 
-	
+
     <div class="bar bar-subheader cbar divider-2">
         <div class="row">
             <div class="col-50"><a  ui-sref="#"><h4 class="subhead"><i class="icon ion-funnel"></i> Filter</h4></a></div>
             <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
         </div>
     </div>
-	
- <ion-content>
-	<ion-content direction="y" scrollbar-y="false">
-		<ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
-		</ion-refresher>
-		 <div ng-if="items !== undefined && !items.length" class="no-results">
-		  <p>No Results</p>
-		  <div class="fltr-mesg"> &nbsp;</div>
-		</div>
-		 <ion-list>
-			<ion-item collection-repeat="item in items" >
-			<p>{{item.text}}</p> 
-		  </ion-item>
-		 </ion-list>
-	</ion-content>
-	
-	
-	<!-- for select list long pressing  - on-hold='selectMe($event)' -->
-	
-	<div class="list cdetail-list">
-	<div class="crecordlist" ng-repeat="cat in userRecords | orderBy:'-count'">
-	<div class="clistck">
-	<ion-checkbox ng-model="isChecked">Checkbox Label</ion-checkbox></div>
-	<a  class="item item-icon-left item-icon-right "  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})">
-	<span class="title">{{cat.category}}</span>	
-		<span class="count">{{cat.count}}</span>	
-	</a>
-	
-	</div>
-	</div>  
-	
-	
-	
-<!-- 	<div class="list cdetail-list">
-	<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 
-        <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
-                  item="item" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})"  class="item-remove-animate">
-          {{cat.category}}
-          <ion-delete-button  ng-click="onItemDelete(item)">
-							 <input type="checkbox" class="listck" />
-          </ion-delete-button>
-          
-        </ion-item>
+    <ion-content>
+        <ion-content direction="y" scrollbar-y="false">
+            <ion-refresher pulling-icon="ion-arrow-down-b" on-refresh="refreshItems()">
+            </ion-refresher>
+            <div ng-if="items !== undefined && !items.length" class="no-results">
+                <p>No Results</p>
+                <div class="fltr-mesg"> &nbsp;</div>
+            </div>
+            <ion-list>
+                <ion-item collection-repeat="item in items" >
+                    <p>{{item.text}}</p> 
+                </ion-item>
+            </ion-list>
+        </ion-content>
 
-      </ion-list>
-	
-	</div> -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</ion-content>
-		
+
+        <!-- for select list long pressing  - on-hold='selectMe($event)' -->
+
+        <div class="list cdetail-list">
+            <div class="crecordlist" ng-repeat="cat in userRecords| orderBy:'-count'">
+                <div class="clistck">
+                    <ion-checkbox ng-model="isChecked" ng-value="{{cat.id}}" ng-checked="getIds(isChecked)">Checkbox Label</ion-checkbox></div>
+                <a  class="item item-icon-left item-icon-right "  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})">
+                    <span class="title">{{cat.category}}</span>	
+                    <span class="count">{{cat.count}}</span>	
+                </a>
+
+            </div>
+        </div>  
+
+
+
+        <!-- 	<div class="list cdetail-list">
+                <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+        
+                <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
+                          item="item" ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})"  class="item-remove-animate">
+                  {{cat.category}}
+                  <ion-delete-button  ng-click="onItemDelete(item)">
+                                                                 <input type="checkbox" class="listck" />
+                  </ion-delete-button>
+                  
+                </ion-item>
+        
+              </ion-list>
+                
+                </div> -->
+
+
+
+
+
+
+
+
+
+
+
+    </ion-content>
+
     <div class="footerbar">
         <a class="button" ui-sref="#" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"
-		
-		><i class="icon ion-trash-b"></i> Delete</a>
+
+           ><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button" ui-sref="#"><i class="icon ion-android-share-alt" ></i> Share</a>
-	<a class="button" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a>
+        <a class="button" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a>
     </div>
 
 </ion-view>

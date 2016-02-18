@@ -468,9 +468,8 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('RecordsViewCtrl', function ($scope, $http, $stateParams) {
-            $scope.record = {recordId: ''};
-            $scope.record.ids = [];
+        .controller('RecordsViewCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
+            $scope.category = '';
             $scope.catId = $stateParams.id;
             $scope.limit = 4;
             $scope.userId = get('id');
@@ -482,12 +481,28 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.records = response.data.records;
                 $scope.category = response.data.category;
-                $scope.category.category = $stateParams.id;
+                //$scope.category.category = $stateParams.id;
             }, function errorCallback(response) {
                 console.log(response);
             });
             $scope.getRecords = function (cat) {
                 console.log(cat);
+                $scope.catId = cat;
+                //$stateParams.id = cat;
+                $http({
+                    method: 'GET',
+                    url: domain + 'records/get-records-details',
+                    params: {id: cat, userId: $scope.userId}
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    $scope.records = response.data.records;
+                    //$scope.category = response.data.category;
+                    console.log($scope.catId);
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+                $rootScope.$digest;
+                //$state.go('app.records-view', {'id': cat}, {reload: true});
             };
         })
 
@@ -979,7 +994,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
 
-            $scope.counter1 = 30;
+            $scope.counter1 = 250;
             var stopped1;
             $scope.paynowcountdown = function () {
 
@@ -1656,7 +1671,7 @@ angular.module('your_app_name.controllers', [])
                         console.log(response.data);
                         if (response.data == '0')
                         {
-                            alert("Doctor Not Available");
+                             alert('Sorry, Doctor not available for this time!');
                             $timeout.cancel(stopped);
                             $state.go('app.consultations-list', {}, {reload: true});
                             // alert('Doctor Not Available');
