@@ -417,12 +417,12 @@ angular.module('your_app_name.controllers', [])
                 var data = new FormData(jQuery("#addrecords")[0]);
                 callAjax("POST", domain + "records/save", data, function (response) {
                     console.log(response);
-                    if (angular.isObject(response)) {
-                        alert("Record added successfully!");
-                        $timeout(function () {
-                            $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
-                        }, 1000);
-                    }
+                    //if (angular.isObject(response)) {
+                    alert("Record added successfully!");
+                    $timeout(function () {
+                        $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                    }, 1000);
+                    //}
                 });
             };
         })
