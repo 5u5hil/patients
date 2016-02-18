@@ -86,7 +86,7 @@ angular.module('your_app_name', [
             $httpProvider.interceptors.push(function ($rootScope) {
                 return {
                     request: function (config) {
-						$rootScope.$broadcast('loading:show')
+                        $rootScope.$broadcast('loading:show')
                         return config
                     },
                     response: function (response) {
@@ -161,9 +161,9 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-					
-					.state('app.checkavailable', {
-						cache: false,
+
+                    .state('app.checkavailable', {
+                        cache: false,
                         url: "/checkavailable/{data:int}/{uid:int}",
                         views: {
                             'menuContent': {
@@ -171,12 +171,7 @@ angular.module('your_app_name', [
                                 controller: 'CheckavailableCtrl'
                             }
                         }
-                    })	
-					
-	
-					
-					
-					
+                    })
 
                     .state('app.category-detail', {
                         cache: false,
@@ -243,18 +238,18 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-					
-					.state('app.consultations-current', {
+
+                    .state('app.consultations-current', {
                         url: "/consultations/current",
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/consultations/consultations-current.html",
-                                controller: 'ConsultationsListCtrl' 
+                                controller: 'ConsultationsListCtrl'
                             }
                         }
                     })
-					
-					.state('app.consultations-past', {
+
+                    .state('app.consultations-past', {
                         url: "/consultations/past",
                         views: {
                             'menuContent': {
@@ -263,12 +258,6 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-					
-					
-					
-					
-					
-					
 
                     .state('app.consultation-cards', {
                         cache: false,
@@ -282,7 +271,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.consultation-profile', {
-                      //  cache: false,
+                        //  cache: false,
                         url: "/consultation-profile/{id:int}",
                         views: {
                             'menuContent': {
@@ -291,21 +280,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-
+                    
                     .state('app.current-tab', {
                         cache: false,
                         url: "/current-tab/{id:int}/{mode:int}",
@@ -412,10 +387,6 @@ angular.module('your_app_name', [
                     })
                     ;
 
-					
-					
-					
-					
             // if none of the above states are matched, use this as the fallback
             $urlRouterProvider.otherwise('/auth/walkthrough');
         });
