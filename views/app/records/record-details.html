@@ -13,20 +13,24 @@
                     <!-- Tab 1 content -->
                     <div class="tabcontainer">
                         <ul class="clistdata">
-                            <li ng-repeat="rec in recordDetails track by $index">                                 
-                                <span ng-if="rec.field.field == 'Prescribed By' || rec.field.field == 'Measured By' || rec.field.field == 'Referred By' || rec.field.field == 'Performed By' || rec.field.field == 'Consultant'" >
-                                    <span ng-if="angular.isNumber(rec.value)">{{doctrs[$index][0]}}</span>
+                            <li ng-repeat="rec in recordDetails track by $index">
+                                <span >{{rec.fields.field}}: </span>
+                                <span ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
+                                    <!--- ng-show="angular.isNumber(rec.value)"  -->
+                                    <span>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</span>
                                 </span>
-                                <span ng-if="rec.field.field == 'Related Problem'">
-                                    <span ng-if="angular.isNumber(rec.value)">{{problem[$index][0].value}}</span>
+                                <span ng-if="rec.fields.field == 'Related Problem'">
+                                    {{problem[$index].value}}
                                 </span>
-                                    <span >{{rec.fields.field}}: </span>{{rec.value}}
+                                <span ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'">
+                                    <span ng-if="rec.fields.field_type == 8">{{rec.value|dateFormat4}}</span>
+                                    <span ng-if="rec.fields.field_type != 8">{{rec.value}}</span>
+                                </span>
                                 <div class="clist-data-icon" ngIf="{{rec.attachments.length != 0}}" >
                                     <a href="#" class="button button-outline button-positive" style="width:100%" ngIf="{{rec.attachments.length != 0}}" ng-repeat="attach in rec.attachments" >
                                         <span class="ico"><i class="ion-paperclip"></i></span>  
                                         Attached Files ({{rec.attachments.length}})</a>
                                 </div>
-                                    {{angular.isNumber(rec.value)}}
                             </li>
                         </ul>
 

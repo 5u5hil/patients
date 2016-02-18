@@ -22,8 +22,19 @@
                     <div class="post-content item item-text-wrap">
                         <div class="row pr-b10">
                             <div class="col" ng-repeat="detail in rec.record_metadata| limitTo:limit">
-                                <p><strong>{{detail.fields.field| capitalize}}</strong><br/>
-                                    {{detail.value}}</p>
+
+                                <p><strong>{{detail.fields.field| capitalize}}</strong><br/>{{$parent.$parent.$index}}
+                                    <span ng-if="detail.fields.field == 'Prescribed By' || detail.fields.field == 'Measured By' || detail.fields.field == 'Referred By' || detail.fields.field == 'Performed By' || detail.fields.field == 'Consultant'">
+                                        {{doctors[$parent.$parent.$index].fname}} {{doctors[$parent.$parent.$index].lname}}
+                                    </span>
+                                    <span ng-if="detail.fields.field == 'Related Problem'" >
+                                        {{problems[$parent.$parent.$index].value}}
+                                    </span>
+                                    <span ng-if="detail.fields.field != 'Prescribed By' && detail.fields.field != 'Measured By' && detail.fields.field != 'Referred By' && detail.fields.field != 'Performed By' && detail.fields.field != 'Consultant' && detail.fields.field != 'Related Problem'">
+                                        <span ng-if="detail.fields.field_type == 8">{{detail.value|dateFormat4}}</span>
+                                        <span ng-if="detail.fields.field_type != 8">{{detail.value}}</span>
+                                    </span>
+                                </p>
                             </div>	
                         </div>
                         <div class="post-actions row post-footer">
