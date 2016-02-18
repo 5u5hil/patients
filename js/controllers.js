@@ -994,7 +994,7 @@ angular.module('your_app_name.controllers', [])
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
 
-            $scope.counter1 = 250;
+            $scope.counter1 = 300;
             var stopped1;
             $scope.paynowcountdown = function () {
 
@@ -1014,7 +1014,7 @@ angular.module('your_app_name.controllers', [])
                         params: {kookooid: $scope.kookooID}
 
                     }).then(function successCallback(responseData) {
-                        //  alert('payment timer has been expired');
+                        alert('Sorry, Doctor not available for this time!');
                         window.localStorage.removeItem('kookooid');
                         $timeout(function () {
                             // $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
@@ -1567,7 +1567,7 @@ angular.module('your_app_name.controllers', [])
 
             /*timer */
             $scope.IsVisible = false;
-            $scope.counter = 30;
+            $scope.counter = 60;
             var stopped;
 
 
@@ -1651,7 +1651,7 @@ angular.module('your_app_name.controllers', [])
                 }, 1000);
 
 
-                if ($scope.counter == 29) {
+                if ($scope.counter == 59) {
                     $scope.kookooID = window.localStorage.getItem('kookooid');
                     var myListener = $rootScope.$on('loading:show', function (event, data) {
                         $ionicLoading.hide();
