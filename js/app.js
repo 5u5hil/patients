@@ -206,6 +206,7 @@ angular.module('your_app_name', [
                     })
 
                     .state('app.records-view', {
+                        cache: false,
                         url: "/records-view/{id:int}",
                         views: {
                             'menuContent': {
@@ -280,7 +281,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-                    
+
                     .state('app.current-tab', {
                         cache: false,
                         url: "/current-tab/{id:int}/{mode:int}",
@@ -374,7 +375,6 @@ angular.module('your_app_name', [
                             }
                         }
                     })
-
 
                     .state('app.logout', {
                         url: "/logout",

@@ -317,7 +317,7 @@ angular.module('your_app_name.controllers', [])
             $scope.categoryId = $stateParams.categoryId;
         })
 
-.controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar,$ionicModal) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar, $ionicModal) {
             var filterBarInstance;
             // function getItems () {
             // var items = [];
@@ -386,7 +386,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout) {
             $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
@@ -418,22 +418,18 @@ angular.module('your_app_name.controllers', [])
                 callAjax("POST", domain + "records/save", data, function (response) {
                     console.log(response);
                     if (angular.isObject(response)) {
-                        $state.go('app.records-view', {'id': $scope.categoryId});
-                        //window.location.href = "http://192.168.2.169:8100/#/app/records-view/" + $scope.categoryId;
+                        alert("Record added successfully!");
+                        $timeout(function () {
+                            $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                        }, 1000);
                     }
                 });
             };
         })
 
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
-            $scope.category_sources = [];
-            $scope.categoryId = $stateParams.categoryId;
-
-
-
 
         })
-
 
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
@@ -495,7 +491,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams) {
+        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout) {
             $scope.recordId = $stateParams.id;
             $http({
                 method: 'POST',
@@ -512,12 +508,17 @@ angular.module('your_app_name.controllers', [])
             });
             //DELETE Modal
             $scope.delete = function (id) {
+                console.log($scope.category[0].category);
                 $http({
                     method: 'POST',
                     url: domain + 'records/delete',
                     params: {id: id}
                 }).then(function successCallback(response) {
-                    $state.go('app.category-detail');
+                    alert("Record deleted successfully!");
+                    $timeout(function () {
+                        $state.go('app.records-view', {'id': $scope.category[0].category}, {}, {reload: true});
+                        //$state.go('app.category-detail');
+                    }, 1000);
                 }, function errorCallback(e) {
                     console.log(e);
                 });
@@ -759,8 +760,8 @@ angular.module('your_app_name.controllers', [])
             $scope.checkAvailability = function (uid, prodId) {
                 console.log("prodId " + prodId);
                 console.log("uid " + uid);
-				$rootScope.$broadcast('loading:hide');
-				 $ionicLoading.show();
+                $rootScope.$broadcast('loading:hide');
+                $ionicLoading.show();
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-doctor-availability',
@@ -926,8 +927,7 @@ angular.module('your_app_name.controllers', [])
                             $ionicLoading.show({template: 'Loading...'});
                             console.log('1')
                             $state.go('app.payment');
-                        }
-                        else {
+                        } else {
                             $ionicLoading.show({template: 'Loading...'});
                             $state.go('auth.login');
                         }
@@ -937,8 +937,7 @@ angular.module('your_app_name.controllers', [])
                             $ionicLoading.show({template: 'Loading...'});
                             console.log('2')
                             $state.go('app.payment');
-                        }
-                        else {
+                        } else {
                             $ionicLoading.show({template: 'Loading...'});
                             $state.go('auth.login');
                         }
@@ -1469,26 +1468,26 @@ angular.module('your_app_name.controllers', [])
                 });
                 $scope.send = function () {
                     session.signal({data: jQuery("[name='msg']").val()},
-                    function (error) {
-                        if (error) {
-                            console.log("signal error ("
-                                    + error.code
-                                    + "): " + error.message);
-                        } else {
-                            var msg = jQuery("[name='msg']").val();
-                            $http({
-                                method: 'GET',
-                                url: domain + 'chat/add-patient-chat',
-                                params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
-                            }).then(function sucessCallback(response) {
-                                console.log(response);
-                                jQuery("[name='msg']").val('');
-                            }, function errorCallback(e) {
-                                console.log(e.responseText);
-                            });
-                            console.log("signal sent.");
-                        }
-                    }
+                            function (error) {
+                                if (error) {
+                                    console.log("signal error ("
+                                            + error.code
+                                            + "): " + error.message);
+                                } else {
+                                    var msg = jQuery("[name='msg']").val();
+                                    $http({
+                                        method: 'GET',
+                                        url: domain + 'chat/add-patient-chat',
+                                        params: {from: $scope.userId, to: $scope.user[0].id, msg: msg}
+                                    }).then(function sucessCallback(response) {
+                                        console.log(response);
+                                        jQuery("[name='msg']").val('');
+                                    }, function errorCallback(e) {
+                                        console.log(e.responseText);
+                                    });
+                                    console.log("signal sent.");
+                                }
+                            }
                     );
                 };
             }, function errorCallback(e) {
@@ -1570,15 +1569,15 @@ angular.module('your_app_name.controllers', [])
                 var myListener = $rootScope.$on('loading:show', function (event, data) {
                     $ionicLoading.hide();
                 });
-				$scope.$on('$destroy', myListener); 
-						
+                $scope.$on('$destroy', myListener);
+
                 var myListenern = $rootScope.$on('loading:hide', function (event, data) {
                     $ionicLoading.hide();
                 });
-				$scope.$on('$destroy', myListenern); 
-				
-				
-				
+                $scope.$on('$destroy', myListenern);
+
+
+
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-kookoo-value',
@@ -1592,8 +1591,7 @@ angular.module('your_app_name.controllers', [])
                         // $state.go('app.payment');
 
 
-                    }
-                    else if (responsekookoo.data == 2)
+                    } else if (responsekookoo.data == 2)
                     {
                         $timeout.cancel(stopped);
                         window.localStorage.removeItem('kookooid');
@@ -1659,11 +1657,11 @@ angular.module('your_app_name.controllers', [])
                         if (response.data == '0')
                         {
                             alert("Doctor Not Available");
-                             $timeout.cancel(stopped);
-                             $state.go('app.consultations-list', {}, {reload: true});
-                           // alert('Doctor Not Available');
+                            $timeout.cancel(stopped);
+                            $state.go('app.consultations-list', {}, {reload: true});
+                            // alert('Doctor Not Available');
                         } else {
-                        window.localStorage.setItem('kookooid', response.data);
+                            window.localStorage.setItem('kookooid', response.data);
                         }
 
                     }, function errorCallback(response) {
@@ -1690,8 +1688,8 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(patientresponse) {
                     console.log(patientresponse.data);
 
-                   // $state.go('app.consultations-list', {reload: true});
-                   $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
+                    // $state.go('app.consultations-list', {reload: true});
+                    $state.go('app.consultation-profile', {'id': $scope.product[0].user_id}, {reload: true});
 
                 }, function errorCallback(patientresponse) {
 
