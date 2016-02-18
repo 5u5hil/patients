@@ -162,7 +162,6 @@
                             </label>
                         </div>                    
                         <div ng-if="field.field_types.value == 'radio'">
-                            <div class="item item-divider">{{field.field}}</div> 
                             <ion-list>
                                 <div class="row" ng-init="radioData = (field.field_values).split(',')" ng-model="radioData">                   
                                     <div class="col cradio" ng-repeat="rad in radioData"><ion-radio  name="{{field.name}}" value="{{rad}}">{{rad}}</ion-radio></div>
@@ -170,7 +169,6 @@
                             </ion-list>
                         </div>
                         <div ng-if="field.field_types.value == 'checkbox'">
-                            <div class="item item-divider">{{field.field}}</div>
                             <ion-list ng-init="checkData = (field.field_values).split(',')" ng-model="checkData">
                                 <ion-checkbox ng-repeat="chk in checkData" name="{{field.name}}" value="{{chk}}">{{chk}}</ion-checkbox>
                             </ion-list>
