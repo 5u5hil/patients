@@ -374,15 +374,15 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
 
-            $ionicModal.fromTemplateUrl('deletecategory.html', {
-                scope: $scope
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
-
-            $scope.submitmodal = function () {
-                $scope.modal.hide();
-            };
+//            $ionicModal.fromTemplateUrl('deletecategory.html', {
+//                scope: $scope
+//            }).then(function (modal) {
+//                $scope.modal = modal;
+//            });
+//
+//            $scope.submitmodal = function () {
+//                $scope.modal.hide();
+//            };
         })
 
 
@@ -1683,10 +1683,7 @@ angular.module('your_app_name.controllers', [])
                     params: {kookooid: $scope.kookooID}
                 }).then(function successCallback(patientresponse) {
                     console.log(patientresponse.data);
-<<<<<<< HEAD
                     $timeout.cancel(stopped);
-=======
->>>>>>> origin/master
                     // $state.go('app.consultations-list', {reload: true});
                     $state.go('app.consultation-profile', {'id': $scope.product[0].user_id}, {reload: true});
                 }, function errorCallback(patientresponse) {
