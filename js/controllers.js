@@ -481,7 +481,27 @@ angular.module('your_app_name.controllers', [])
                 console.log(response.data);
                 $scope.records = response.data.records;
                 $scope.category = response.data.category;
-                //$scope.category.category = $stateParams.id;
+                $scope.doctors = response.data.doctors;
+                $scope.problems = response.data.problems;
+//                angular.forEach($scope.records, function (value, key) {
+//                    console.log(value.record_metadata);
+//                    angular.forEach(value.record_metadata, function (val, k) {
+//                        console.log(val.fields.field);
+//                        
+//                    });
+////                    $http({
+////                        method: 'GET',
+////                        url: domain + 'doctors/get-doctors-availability',
+////                        params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
+////                    }).then(function successCallback(responseData) {
+////
+////                    }, function errorCallback(response) {
+////                        console.log(response);
+////                    });
+//                    //$scope.category.category = $stateParams.id;
+//                }, function errorCallback(response) {
+//                    console.log(response);
+//                });
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -508,8 +528,11 @@ angular.module('your_app_name.controllers', [])
 
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout) {
             $scope.recordId = $stateParams.id;
+            $scope.isNumber = function (num) {
+                return angular.isNumber(num);
+            }
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: domain + 'records/get-record-details',
                 params: {id: $stateParams.id}
             }).then(function successCallback(response) {
@@ -551,7 +574,6 @@ angular.module('your_app_name.controllers', [])
                 $state.go($nurl);
             }
             $scope.imgpath = domain;
-
             $scope.specializations = {};
             $scope.userId = get('id');
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -592,7 +614,6 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
-
             $scope.joinVideo = function (mode, start, end, appId) {
                 console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
                 if ($scope.curTime >= start || $scope.curTime <= end) {
@@ -610,8 +631,6 @@ angular.module('your_app_name.controllers', [])
             $scope.specId = $stateParams.id;
             $scope.userId = get('id');
             $scope.docServices = [];
-
-
             $http({
                 method: 'GET',
                 url: domain + 'doctors/list',
@@ -628,7 +647,6 @@ angular.module('your_app_name.controllers', [])
                         $ionicLoading.hide();
                         $scope.getDprice = responseData.price;
                         $scope.docServices[key] = responseData.data;
-
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -765,7 +783,6 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
             });
-
             $scope.doit = function () {
                 console.log("removeitem");
                 window.localStorage.removeItem('startSlot');
@@ -791,7 +808,6 @@ angular.module('your_app_name.controllers', [])
                         alert('Sorry, Doctor not available for this time!');
                     }
                 });
-
             };
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
@@ -935,7 +951,6 @@ angular.module('your_app_name.controllers', [])
                     $rootScope.prodid = prodId;
                     $rootScope.url = 'app.payment';
                     $rootScope.$digest;
-
                     if (serv == 1) {
                         if (checkLogin())
                         {
@@ -972,14 +987,12 @@ angular.module('your_app_name.controllers', [])
                 else
                     $state.go('auth.login');
             };
-
             /* view more doctor profile modalbox*/
             $ionicModal.fromTemplateUrl('viewmoreprofile.html', {
                 scope: $scope
             }).then(function (modal) {
                 $scope.modal = modal;
             });
-
             $scope.submitmodal = function () {
                 $scope.modal.hide();
             };
@@ -989,7 +1002,6 @@ angular.module('your_app_name.controllers', [])
                 $ionicLoading.hide();
                 $ionicTabsDelegate.select(0);
             }, 10);
-
         })
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
@@ -1020,19 +1032,14 @@ angular.module('your_app_name.controllers', [])
                             // $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
                             $state.go('app.consultations-list', {reload: true});
                         }, 3000);
-
-
                     }, function errorCallback(response) {
                         console.log(response);
                     });
-
                 }
             };
-
             $timeout(function () {
                 $scope.paynowcountdown();
             }, 0);
-
             $scope.mode = window.localStorage.getItem('mode');
             $scope.supid = window.localStorage.getItem('supid');
             $scope.startSlot = window.localStorage.getItem('startSlot');
@@ -1116,7 +1123,6 @@ angular.module('your_app_name.controllers', [])
                         });
                         $timeout.cancel(stopped1);
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
-
                     }
                     //                    if ((parseInt($scope.discount) == parseInt($scope.discountApplied)) && (parseInt($scope.discount) > 0)) {
                     //                     
@@ -1137,7 +1143,6 @@ angular.module('your_app_name.controllers', [])
                     console.log(response);
                 })
             };
-
             $scope.applyCouponCode = function (ccode) {
                 $scope.apply = '0';
                 $scope.discountApplied = '0';
@@ -1302,7 +1307,6 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
-
             $scope.joinDoctor = function (mode, start, end, appId) {
                 console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
                 if ($scope.curTime >= start || $scope.curTime <= end) {
@@ -1328,7 +1332,6 @@ angular.module('your_app_name.controllers', [])
                 // set the flag and reload the page
                 window.localStorage.removeItem('loadedOnce');
                 $ionicLoading.hide();
-
             }
             // $ionicHistory.clearCache();
             $scope.appId = $stateParams.id;
@@ -1348,7 +1351,6 @@ angular.module('your_app_name.controllers', [])
                 var apiKey = '45121182';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
                 var token = response.data.oToken;
-
                 if (OT.checkSystemRequirements() == 1) {
                     session = OT.initSession(apiKey, sessionId);
                     $ionicLoading.hide();
@@ -1375,7 +1377,6 @@ angular.module('your_app_name.controllers', [])
                             $ionicLoading.hide();
                             console.log(e);
                         });
-
                     },
                     sessionDisconnected: function (event) {
                         if (event.reason === 'networkDisconnected') {
@@ -1389,12 +1390,9 @@ angular.module('your_app_name.controllers', [])
                     if (error) {
                         $ionicLoading.hide();
                         alert("Error connecting: ", error.code, error.message);
-
                     } else {
                         publisher = OT.initPublisher('myPublisherDiv', {width: "30%", height: "30%"});
                         session.publish(publisher);
-
-
                         var mic = 1;
                         var mute = 1;
                         jQuery(".muteMic").click(function () {
@@ -1421,7 +1419,6 @@ angular.module('your_app_name.controllers', [])
                         });
                     }
                 });
-
             }, function errorCallback(e) {
                 console.log(e);
                 $ionicLoading.hide();
@@ -1432,8 +1429,6 @@ angular.module('your_app_name.controllers', [])
                     subscriber.destroy();
                     session.unsubscribe();
                     session.disconnect();
-
-
                     $ionicHistory.nextViewOptions({
                         historyRoot: true
                     })
@@ -1444,7 +1439,6 @@ angular.module('your_app_name.controllers', [])
                         historyRoot: true
                     })
                     $state.go('app.consultations-current', {}, {reload: true});
-
                 }
 
 
@@ -1515,14 +1509,12 @@ angular.module('your_app_name.controllers', [])
         .controller('CheckavailableCtrl', function ($scope, $rootScope, $ionicLoading, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.data = $stateParams.data;
             $scope.uid = $stateParams.uid;
-
             /* patient confirm */
             $scope.showConfirm = function () {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Confirmation',
                     template: '<p align="center"><strong>Doctor is Available</strong></p><div>The specialist has accepted your request for an instant video call. Do you want to continue?</div>'
                 });
-
                 confirmPopup.then(function (res) {
 
                     if (res != true) {
@@ -1550,28 +1542,16 @@ angular.module('your_app_name.controllers', [])
                             console.log(patientresponse.data);
                             // window.localStorage.setItem('kookooid', response.data);
                             $state.go('app.payment', {}, {reload: true});
-
                         }, function errorCallback(patientresponse) {
                             //  alert('Oops something went wrong!');
                         });
-
-
                     }
                 });
             };
-
-
-
-
-
-
             /*timer */
             $scope.IsVisible = false;
             $scope.counter = 60;
             var stopped;
-
-
-
             $scope.countdown = function (dataId, uid) {
                 // dataId product id , uid =>user id
                 // console.log("dataId"+dataId);
@@ -1585,13 +1565,12 @@ angular.module('your_app_name.controllers', [])
                     $ionicLoading.hide();
                 });
                 $scope.$on('$destroy', myListener);
-
                 var myListenern = $rootScope.$on('loading:hide', function (event, data) {
                     
                     $ionicLoading.hide();
                 });
                 $scope.$on('$destroy', myListenern);
-                
+
                 $scope.$on('$destroy', function(){
                 $scope.checkavailval = 0;
                     console.log("jhffffhjfhj" +$scope.checkavailval);
@@ -1650,28 +1629,22 @@ angular.module('your_app_name.controllers', [])
                         $state.go('app.consultations-list', {}, {reload: true});
                     }
                 });
-
                 $scope.IsVisible = true;
-
                 stopped = $timeout(function () {
                     // console.log($scope.counter);
                     $scope.counter--;
                     $scope.countdown();
                 }, 1000);
-
-
                 if ($scope.counter == 59) {
                     $scope.kookooID = window.localStorage.getItem('kookooid');
                     var myListener = $rootScope.$on('loading:show', function (event, data) {
                         $ionicLoading.hide();
                     });
                     $scope.$on('$destroy', myListener);
-
                     var myListenern = $rootScope.$on('loading:hide', function (event, data) {
                         $ionicLoading.hide();
                     });
                     $scope.$on('$destroy', myListenern);
-
                     $http({
                         method: 'GET',
                         url: domain + 'kookoo/check-doctrs-response',
@@ -1680,7 +1653,7 @@ angular.module('your_app_name.controllers', [])
                         console.log(response.data);
                         if (response.data == '0')
                         {
-                             alert('Sorry, Doctor not available for this time!');
+                            alert('Sorry, Doctor not available for this time!');
                             $timeout.cancel(stopped);
                             $state.go('app.consultations-list', {}, {reload: true});
                             // alert('Doctor Not Available');
@@ -1699,7 +1672,6 @@ angular.module('your_app_name.controllers', [])
                     $timeout.cancel(stopped);
                 }
             };
-
             $scope.hidediv = function () {
                 $scope.IsVisible = false;
                 $timeout.cancel(stopped);
@@ -1711,20 +1683,17 @@ angular.module('your_app_name.controllers', [])
                     params: {kookooid: $scope.kookooID}
                 }).then(function successCallback(patientresponse) {
                     console.log(patientresponse.data);
+<<<<<<< HEAD
                     $timeout.cancel(stopped);
+=======
+>>>>>>> origin/master
                     // $state.go('app.consultations-list', {reload: true});
                     $state.go('app.consultation-profile', {'id': $scope.product[0].user_id}, {reload: true});
-
                 }, function errorCallback(patientresponse) {
 
                 });
-
-
-
                 // $scope.counter = 20;
             };
-
-
         })
 
 
@@ -1750,7 +1719,6 @@ angular.module('your_app_name.controllers', [])
                             if (response.data == 'success') {
                                 alert('Your appointment is cancelled successfully.');
                                 $state.go('app.consultations-current', {}, {reload: true});
-
                             } else {
                                 alert('Sorry your appointment is not cancelled.');
                             }
@@ -1949,5 +1917,4 @@ angular.module('your_app_name.controllers', [])
                 });
                 $state.go('app.consultations-list', {}, {reload: true});
             };
-
         });
