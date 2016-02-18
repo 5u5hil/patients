@@ -136,12 +136,12 @@
                             </label>
                         </div>
                         <div ng-if="field.field_types.value == 'textarea'">
-                            <label class="item item-input" ng-if="field.multi_value == 0">
+                            <label class="item item-input item-floating-label " ng-if="field.multi_value == 0">
                             <span class="input-label" >Enter {{field.field}}</span>
                                 <textarea placeholder="Enter {{field.field}}" name="{{field.name}}" maxlength="{{max_length}}" rows="4" cols="50"></textarea>
                             </label>
                             <div  ng-if="field.multi_value == 1">
-                                <label class="item item-input" >
+                                <label class="item item-input  item-floating-label" >
                                 <span class="input-label" >Enter {{field.field}}</span>
                                     <textarea placeholder="Enter {{field.field}}" name="{{field.name}}" rows="4" cols="50"></textarea>
                                 </label>
