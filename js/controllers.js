@@ -1014,7 +1014,7 @@ angular.module('your_app_name.controllers', [])
                         params: {kookooid: $scope.kookooID}
 
                     }).then(function successCallback(responseData) {
-                        alert('Sorry, Doctor not available for this time!');
+                        alert('Sorry, Your payment time expired');
                         window.localStorage.removeItem('kookooid');
                         $timeout(function () {
                             // $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
@@ -1587,11 +1587,18 @@ angular.module('your_app_name.controllers', [])
                 $scope.$on('$destroy', myListener);
 
                 var myListenern = $rootScope.$on('loading:hide', function (event, data) {
+                    
                     $ionicLoading.hide();
                 });
                 $scope.$on('$destroy', myListenern);
-
-
+                
+                $scope.$on('$destroy', function(){
+                $scope.checkavailval = 0;
+                    console.log("jhffffhjfhj" +$scope.checkavailval);
+                      $timeout.cancel(stopped);
+                     window.localStorage.removeItem('kookooid');
+                     
+                });
 
                 $http({
                     method: 'GET',
@@ -1599,14 +1606,16 @@ angular.module('your_app_name.controllers', [])
                     params: {kookooId: $scope.kookooID}
                 }).then(function successCallback(responsekookoo) {
                     console.log(responsekookoo.data);
-                    if (responsekookoo.data == 1)
+                    $scope.checkavailval = responsekookoo.data;
+                    
+                    if ( $scope.checkavailval == 1)
                     {
                         $timeout.cancel(stopped);
                         $scope.showConfirm();
                         // $state.go('app.payment');
 
 
-                    } else if (responsekookoo.data == 2)
+                    } else if ($scope.checkavailval == 2)
                     {
                         $timeout.cancel(stopped);
                         window.localStorage.removeItem('kookooid');
@@ -1702,7 +1711,7 @@ angular.module('your_app_name.controllers', [])
                     params: {kookooid: $scope.kookooID}
                 }).then(function successCallback(patientresponse) {
                     console.log(patientresponse.data);
-
+                    $timeout.cancel(stopped);
                     // $state.go('app.consultations-list', {reload: true});
                     $state.go('app.consultation-profile', {'id': $scope.product[0].user_id}, {reload: true});
 
