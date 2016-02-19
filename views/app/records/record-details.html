@@ -2,40 +2,77 @@
     <ion-nav-title>
         <span>Specific Record ({{category[0].categories.category}})</span>
     </ion-nav-title>
-
-
-
     <ion-content>
+        <div class="tabcontainer">
+            <ul class="clistdata">
+                <li ng-repeat="rec in recordDetails track by $index">
+                    <div ng-if="category[0].category == 3">
+                        <span >{{rec.fields.field}} </span>
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
+                            <!--- ng-show="angular.isNumber(rec.value)"  -->
+                            <div>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</div>
+                        </div>
+                        <div ng-if="rec.fields.field == 'Related Problem'">
+                            {{problem[$index].value}}
+                        </div>
+                        <div ng-if="rec.fields.field=='Frequency'" ng-init="fdata = (rec.value).split('-')">
+                            {{fdata[0]}} times in {{fdata[1]}}
+                        </div>
+                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field!='Frequency'">
+                            <div ng-if="rec.fields.field_type == 8"> {{rec.value|dateFormat4}}</div>
+                            <div ng-if="rec.fields.field_type != 8"> {{rec.value}}</div>
+                        </div>
+                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
+                            <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a>
+                        </div>
+                    </div>
+                    <div ng-if="category[0].category == 7" >
+                        <span >{{rec.fields.field}} </span>
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
+                            <!--- ng-show="angular.isNumber(rec.value)"  -->
+                            <div>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</div>
+                        </div>
+                        <div ng-if="rec.fields.field == 'Related Problem'">
+                            {{problem[$index].value}}
+                        </div>
+                        <div ng-if="rec.fields.field == 'Payment Mode'">
+                            <div ng-if="rec.value=='0'">NA</div>
+                        </div>
+                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'">
+                            <div ng-if="rec.fields.field_type == 8"> {{rec.value|dateFormat4}}</div>
+                            <div ng-if="rec.fields.field_type != 8"> {{rec.value}}</div>
+                        </div>
+                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
+                            <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a>
+                        </div>
+                    </div>
+                    <div ng-if="category[0].category != 3 && category[0].category != 7">
+                        <span >{{rec.fields.field}} </span>
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
+                            <!--- ng-show="angular.isNumber(rec.value)"  -->
+                            <div>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</div>
+                        </div>
+                        <div ng-if="rec.fields.field == 'Related Problem'">
+                            {{problem[$index].value}}
+                        </div>
+                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'">
+                            <div ng-if="rec.fields.field_type == 8"> {{rec.value|dateFormat4}}</div>
+                            <div ng-if="rec.fields.field_type != 8"> {{rec.value}}</div>
+                        </div>
+                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
+                            <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!---
         <div class="ctab">
             <ion-tabs class="tabs-positive tabs-icon-top">
-
-                <ion-tab title="View" >
-                    <!-- Tab 1 content -->
-                    <div class="tabcontainer">
-                        <ul class="clistdata">
-                            <li ng-repeat="rec in recordDetails track by $index">
-                                <span >{{rec.fields.field}}: </span>
-                                <span ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
-                                    <!--- ng-show="angular.isNumber(rec.value)"  -->
-                                    <span>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</span>
-                                </span>
-                                <span ng-if="rec.fields.field == 'Related Problem'">
-                                    {{problem[$index].value}}
-                                </span>
-                                <span ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'">
-                                    <span ng-if="rec.fields.field_type == 8">{{rec.value|dateFormat4}}</span>
-                                    <span ng-if="rec.fields.field_type != 8">{{rec.value}}</span>
-                                </span>
-                                <div class="clist-data-icon" ngIf="{{rec.attachments.length != 0}}" >
-                                    <a href="#" class="button button-outline button-positive" style="width:100%" ngIf="{{rec.attachments.length != 0}}" ng-repeat="attach in rec.attachments" >
-                                        <span class="ico"><i class="ion-paperclip"></i></span>  
-                                        Attached Files ({{rec.attachments.length}})</a>
-                                </div>
-                            </li>
-                        </ul>
-
-
-                    </div>
+                <ion-tab title="View" >                    
                 </ion-tab>
                 <ion-tab title="Track" >
                     <div class="tabcontainer"> Under Construction	</div>
@@ -46,7 +83,7 @@
                     </div>
                 </ion-tab>
             </ion-tabs>
-        </div>
+        </div>-->
     </ion-content>
     <div class="footerbar">
         <a class="button" confirmed-click="delete(category[0].id)" ng-confirm-click="Do you really want to delete?" ><i class="icon ion-trash-b"></i> Delete</a>
