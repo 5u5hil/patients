@@ -2936,10 +2936,10 @@ a.subdued:last-child {
     border-radius: 0;
     border-color: #d1d3d6 !important;
     background-color: transparent;
-    color: #007aff;
+    /* color: #007aff; */
     font-size: 21px; }
 .action-sheet .button:hover {
-    color: #007aff; }
+   /*  color: #007aff;  */}
 .action-sheet .button.destructive {
     color: #ff3b30; }
 .action-sheet .button.destructive:hover {
@@ -2947,8 +2947,8 @@ a.subdued:last-child {
 .action-sheet .button.active, .action-sheet .button.activated {
     box-shadow: none;
     border-color: #d1d3d6;
-    color: #007aff;
-    background: #e4e5e7; }
+    /* color: #007aff; */
+    background: #e4e5e7; color :#fff;}
 
 .action-sheet-has-icons .icon {
     position: absolute;
@@ -2997,7 +2997,11 @@ a.subdued:last-child {
     padding: 16px;
     color: #666; }
 .platform-android .action-sheet .button.active, .platform-android .action-sheet .button.activated {
-    background: #e8e8e8; }
+    background: #e8e8e8; color:#fff;}
+	
+	.action-sheet .button.activated{  background: #387ef5}
+	
+	
 .platform-android .action-sheet-group {
     margin: 0;
     border-radius: 0;
@@ -8933,7 +8937,7 @@ iframe.videochat{position:absolute; width:100%; height: 100%;}
 	.crecordlist .item-checkbox{background:none;}
 	.crecordlist .item-content.disable-pointer-events{display:none !important; }
 	.action-sheet-cancel{background:#387ef5;}
-	.action-sheet-cancel .button{color:#fff; text-align:center !important;}
+	.action-sheet-cancel .button{color:#fff !important; text-align:center !important;}
 	
 	
 	
