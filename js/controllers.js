@@ -824,7 +824,7 @@ angular.module('your_app_name.controllers', [])
 
                         $state.go('app.checkavailable', {'data': prodId, 'uid': uid});
                     } else {
-                        alert('Sorry, Doctor not available for this time!');
+                        alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
                     }
                 });
             };
@@ -1672,7 +1672,7 @@ angular.module('your_app_name.controllers', [])
                         console.log(response.data);
                         if (response.data == '0')
                         {
-                            alert('Sorry, Doctor not available for this time!');
+                            alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
                             $timeout.cancel(stopped);
                             $state.go('app.consultations-list', {}, {reload: true});
                             // alert('Doctor Not Available');
@@ -1681,7 +1681,7 @@ angular.module('your_app_name.controllers', [])
                         }
 
                     }, function errorCallback(response) {
-                        alert('Sorry, Doctor not available for this time!');
+                        alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
                     });
                 }
 
