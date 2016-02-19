@@ -104,10 +104,6 @@ angular.module('your_app_name.controllers', [])
             });
         })
         .controller('LogoutCtrl', function ($scope, $state, $ionicLoading, $ionicHistory, $timeout, $q, $rootScope) {
-//            window.localStorage.clear();
-//            $rootScope.userLogged = 0;
-//            $rootScope.$digest;
-//            $state.go('auth.login', {}, {reload: true});
             $ionicLoading.show({template: 'Logging out....'});
             window.localStorage.clear();
             $rootScope.userLogged = 0;
@@ -319,22 +315,10 @@ angular.module('your_app_name.controllers', [])
 
         .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar, $ionicModal) {
             var filterBarInstance;
-            // function getItems () {
-            // var items = [];
-            // for (var x = 1; x < 2000; x++) {
-            // items.push({text: 'This is item number ' + x + ' which is an ' + (x % 2 === 0 ? 'EVEN' : 'ODD') + ' number.'});
-            // }
-            // $scope.items = items;
-            // }
-
-            // getItems();
-
 
             $scope.selectMe = function (event) {
                 $(event.target).toggleClass('active');
             }
-
-
 
             $scope.showFilterBar = function () {
                 filterBarInstance = $ionicFilterBar.show({
@@ -347,6 +331,7 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
             };
+            
             $scope.refreshItems = function () {
                 if (filterBarInstance) {
                     filterBarInstance();
@@ -358,7 +343,6 @@ angular.module('your_app_name.controllers', [])
                     $scope.$broadcast('scroll.refreshComplete');
                 }, 1000);
             };
-            $scope.category_sources = [];
             $scope.categoryId = $stateParams.categoryId;
             //console.log(get('id'));
             $scope.userid = get('id');
