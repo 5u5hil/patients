@@ -4265,7 +4265,7 @@ ion-tabs.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs.tabs-color-a
     width: 275px;
     background-color: #fff; }
 .menu .scroll-content {
-    z-index: 10; }
+    z-index: 10;  }
 .menu .bar-header {
     z-index: 11; }
 
@@ -8580,7 +8580,7 @@ select.selectheader{ width:80%; padding:3px; border:0; text-indent:35%;}
 
 .card-content{    padding: 15px 15px 5px 15px; text-align:justify; position:relative; display:block; text-decoration:none;}
 .user-image-circle{width:55px; height:55px; border-radius:50%; border:1px #ccc solid; margin:0 15px 0px 0; float:left; display:inline-block;}
-.cbtn{ text-align:center; padding:3px 0; margin:1px; background:#eee; display:block; text-decoration:none;}
+.cbtn{ text-align:center; padding:3px 0; margin:1px; background:#fff; display:block; text-decoration:none;}
 .cbtn i{line-height: 24px;}
 .cbtn i,.cbtn span{color:#387ef5;}
 
@@ -8938,7 +8938,10 @@ iframe.videochat{position:absolute; width:100%; height: 100%;}
 	.crecordlist .item-content.disable-pointer-events{display:none !important; }
 	.action-sheet-cancel{background:#387ef5;}
 	.action-sheet-cancel .button{color:#fff !important; text-align:center !important;}
-	
+	.cselect{    position: static;
+    width: 100%;
+    direction: ltr;
+    padding: 8px 0 8px 0px;}
 	
 	
 	/* endcss */
