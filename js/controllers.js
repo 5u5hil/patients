@@ -1646,7 +1646,7 @@ angular.module('your_app_name.controllers', [])
                         }
 
                     }, function errorCallback(response) {
-                        alert('Oops something went wrong!');
+                        alert('Sorry, Doctor not available for this time!');
                     });
                 }
 
