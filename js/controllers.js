@@ -18,6 +18,7 @@ angular.module('your_app_name.controllers', [])
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
 
             $rootScope.imgpath = domain + "/public/frontend/user/";
+            $rootScope.attachpath = domain + "/public";
 
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
@@ -331,7 +332,7 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
             };
-            
+
             $scope.refreshItems = function () {
                 if (filterBarInstance) {
                     filterBarInstance();
@@ -370,8 +371,8 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout) {
-            $scope.curTime = $filter('date')(new Date(), 'MM/dd/yyyy');
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading) {
+            $scope.curTime = $filter('date')(new Date(), 'MM dd yyyy');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
             $scope.fields = {};
@@ -398,9 +399,11 @@ angular.module('your_app_name.controllers', [])
                 addNew(ele);
             };
             $scope.submit = function () {
-                var data = new FormData(jQuery("#addrecords")[0]);
+                $ionicLoading.show({template: 'Adding...'});
+                var data = new FormData(jQuery("#addRecordForm")[0]);
                 callAjax("POST", domain + "records/save", data, function (response) {
                     console.log(response);
+                    $ionicLoading.hide();
                     //if (angular.isObject(response)) {
                     alert("Record added successfully!");
                     $timeout(function () {
@@ -408,6 +411,48 @@ angular.module('your_app_name.controllers', [])
                     }, 1000);
                     //}
                 });
+            };
+            $scope.check = function (val) {
+                console.log(val);
+                if ($scope.categoryId == 7) {
+                    if (val) {
+                        jQuery('#billStatus').val('Paid');
+                        jQuery('#billmode').removeClass('hide');
+                    } else {
+                        jQuery('#billStatus').val('Unpaid');
+                        jQuery('#billmode').addClass('hide');
+                    }
+                }
+                if ($scope.categoryId == 2) {
+                    if (val) {
+                        jQuery('#immrcvdate').val('Received');
+                        jQuery('#imdtrcv').removeClass('hide');
+                    } else {
+                        jQuery('#immrcvdate').val('To be received');
+                        jQuery('#imdtrcv').addClass('hide');
+                    }
+                }
+                if ($scope.categoryId == 5) {
+                    if (val) {
+                        jQuery('#immrcvdate').val('Conducted On');
+                        jQuery('#invconon').removeClass('hide');
+                        jQuery('#invconbef').addClass('hide');
+                    } else {
+                        jQuery('#immrcvdate').val('To be conducted before');
+                        jQuery('#invconon').addClass('hide');
+                        jQuery('#invconbef').removeClass('hide');
+                    }
+                }
+            };
+            $scope.rcheck = function (val) {
+                console.log(val);
+                if ($scope.categoryId == 2) {
+                    if (val == 'Yes') {
+                        jQuery('#imrpton').removeClass('hide');
+                    } else {
+                        jQuery('#imrpton').addClass('hide');
+                    }
+                }
             };
         })
 
@@ -455,7 +500,7 @@ angular.module('your_app_name.controllers', [])
         .controller('RecordsViewCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
             $scope.category = '';
             $scope.catId = $stateParams.id;
-            $scope.limit = 4;
+            $scope.limit = 3;
             $scope.userId = get('id');
             $http({
                 method: 'GET',
@@ -464,28 +509,12 @@ angular.module('your_app_name.controllers', [])
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.records = response.data.records;
+                if ($scope.records[0].record_metadata.length == 6) {
+                    $scope.limit = 3; //$scope.records[0].record_metadata.length;
+                }
                 $scope.category = response.data.category;
                 $scope.doctors = response.data.doctors;
                 $scope.problems = response.data.problems;
-//                angular.forEach($scope.records, function (value, key) {
-//                    console.log(value.record_metadata);
-//                    angular.forEach(value.record_metadata, function (val, k) {
-//                        console.log(val.fields.field);
-//                        
-//                    });
-////                    $http({
-////                        method: 'GET',
-////                        url: domain + 'doctors/get-doctors-availability',
-////                        params: {id: supsassId, from: $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')}
-////                    }).then(function successCallback(responseData) {
-////
-////                    }, function errorCallback(response) {
-////                        console.log(response);
-////                    });
-//                    //$scope.category.category = $stateParams.id;
-//                }, function errorCallback(response) {
-//                    console.log(response);
-//                });
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -500,6 +529,9 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     $scope.records = response.data.records;
+                    if ($scope.records[0].record_metadata.length == 6) {
+                        $scope.limit = 3; //$scope.records[0].record_metadata.length;
+                    }
                     //$scope.category = response.data.category;
                     console.log($scope.catId);
                 }, function errorCallback(response) {
@@ -507,6 +539,9 @@ angular.module('your_app_name.controllers', [])
                 });
                 $rootScope.$digest;
                 //$state.go('app.records-view', {'id': cat}, {reload: true});
+            };
+            $scope.addRecord = function () {
+                $state.go('app.add-category', {'id': button.id}, {reload: true});
             };
         })
 
@@ -1550,17 +1585,17 @@ angular.module('your_app_name.controllers', [])
                 });
                 $scope.$on('$destroy', myListener);
                 var myListenern = $rootScope.$on('loading:hide', function (event, data) {
-                    
+
                     $ionicLoading.hide();
                 });
                 $scope.$on('$destroy', myListenern);
 
-                $scope.$on('$destroy', function(){
-                $scope.checkavailval = 0;
-                    console.log("jhffffhjfhj" +$scope.checkavailval);
-                      $timeout.cancel(stopped);
-                     window.localStorage.removeItem('kookooid');
-                     
+                $scope.$on('$destroy', function () {
+                    $scope.checkavailval = 0;
+                    console.log("jhffffhjfhj" + $scope.checkavailval);
+                    $timeout.cancel(stopped);
+                    window.localStorage.removeItem('kookooid');
+
                 });
 
                 $http({
@@ -1570,8 +1605,8 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(responsekookoo) {
                     console.log(responsekookoo.data);
                     $scope.checkavailval = responsekookoo.data;
-                    
-                    if ( $scope.checkavailval == 1)
+
+                    if ($scope.checkavailval == 1)
                     {
                         $timeout.cancel(stopped);
                         $scope.showConfirm();
