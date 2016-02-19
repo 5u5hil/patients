@@ -12,25 +12,27 @@
                 <div ng-repeat="field in fields" >
                     <div ng-if="field.is_dependent == 1 && field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By' || field.field == 'Performed By' || field.field == 'Consultant'">
                         <label class="item item-input item-select">
-<!--                            <span class="input-label" >{{field.field}}</span>-->
+                            <!--                            <span class="input-label" >{{field.field}}</span>-->
                             <select class="cselect" name="{{field.name}}" id="{{field.name}}" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
+                                <option value="" ng-selected="1">Select {{field.field}}</option>
                                 <option value="0">Add New</option>
                                 <option ng-repeat="doc in doctrs" value="{{doc.id}}">{{doc.fname}}</option>
                             </select>
                         </label>
                     </div>
-<!--                    <div ng-if="field.is_dependent == 1 && field.field == 'Conducted By'">
-                        <label class="item item-input item-select">
-                            <div class="input-label"> Select {{field.field}}</div>
-                            <select name="{{field.name}}" id="{{field.name}}" ng-model="records.field.name" ng-change="addOther(field.name, field.field, records.field.name)">
-                                <option ng-repeat="doc in doctrs" value="{{doc.id}}">{{doc.fname}}</option>
-                            </select>
-                        </label>
-                    </div>-->
+                    <!--                    <div ng-if="field.is_dependent == 1 && field.field == 'Conducted By'">
+                                            <label class="item item-input item-select">
+                                                <div class="input-label"> Select {{field.field}}</div>
+                                                <select name="{{field.name}}" id="{{field.name}}" ng-model="records.field.name" ng-change="addOther(field.name, field.field, records.field.name)">
+                                                    <option ng-repeat="doc in doctrs" value="{{doc.id}}">{{doc.fname}}</option>
+                                                </select>
+                                            </label>
+                                        </div>-->
                     <div ng-if="field.is_dependent == 1 && field.field == 'Related Problem'">
                         <label class="item item-input item-select">
-<!--                            <div class="input-label"> Select {{field.field}}</div>-->
+                            <!--                            <div class="input-label"> Select {{field.field}}</div>-->
                             <select class="cselect" name="{{field.name}}" id="{{field.name}}" ng-model="prob.record_id" ng-change="addOther(field.name, field.field, prob.record_id)">
+                                <option value="" ng-selected="1">Select {{field.field}}</option>
                                 <option ng-repeat="prob in problems"  value="{{prob.record_id}}">{{prob.value}}</option>
                             </select>
                         </label>
@@ -209,14 +211,14 @@
                         <div ng-if="field.field_types.value == 'select'"> 
                             <div ng-if="field.multi_value == 0 && category == 7">
                                 <label class="item item-input item-select hide" ng-if="field.field == 'Payment Mode'" id="billmode">
-<!--                                    <span class="input-label" >{{field.field}}</span>-->
+                                    <!--                                    <span class="input-label" >{{field.field}}</span>-->
                                     <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
                                         <option value="0"> Select {{field.field}}</option>
                                         <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
                                     </select>
                                 </label>
                                 <label class="item item-input item-select" ng-if="field.field != 'Payment Mode'">
-<!--                                    <span class="input-label" >{{field.field}}</span>-->
+                                    <!--                                    <span class="input-label" >{{field.field}}</span>-->
                                     <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
                                         <option value="0"> Select {{field.field}}</option>
                                         <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
@@ -224,14 +226,14 @@
                                 </label>
                             </div>
                             <label class="item item-input item-select" ng-if="field.multi_value == 0 && category != 7">
-<!--                                <span class="input-label" >{{field.field}}</span>-->
+                                <!--                                <span class="input-label" >{{field.field}}</span>-->
                                 <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
                                     <option value="0"> Select {{field.field}}</option>
                                     <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
                                 </select>
                             </label>
                             <label class="item item-input item-select " ng-if="field.multi_value == 1">
-<!--                                <span class="input-label" >{{field.field}}</span>-->
+                                <!--                                <span class="input-label" >{{field.field}}</span>-->
                                 <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}[]" multiple="">
                                     <option ng-repeat="sel in selData"> {{sel}} </option>
                                 </select>
@@ -288,9 +290,9 @@
                     </button></div>
 
             </form>
-			
+
         </ul>
-		
+
     </ion-content>
-	
+
 </ion-view>

@@ -7,7 +7,7 @@
             <ul class="clistdata">
                 <li ng-repeat="rec in recordDetails track by $index">
                     <div ng-if="category[0].category == 3">
-                        <span >{{rec.fields.field}} </span>
+                        <span >{{rec.fields.field}} {{rec.fields.is_mandatory==1? '*':''}}</span>
                         <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
                             <div>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</div>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div ng-if="category[0].category == 7" >
-                        <span >{{rec.fields.field}} </span>
+                        <span >{{rec.fields.field}} {{rec.fields.is_mandatory==1? '*':''}}</span>
                         <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
                             <div>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</div>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div ng-if="category[0].category != 3 && category[0].category != 7">
-                        <span >{{rec.fields.field}} </span>
+                        <span >{{rec.fields.field}} {{rec.fields.is_mandatory==1? '*':''}}</span>
                         <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
                             <div>{{doctrs[$index].fname}} {{doctrs[$index].lname}}</div>
