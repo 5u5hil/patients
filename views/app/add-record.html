@@ -146,7 +146,7 @@
                                     <select name="freq-duration" >
                                         <option value="0">Select</option>
                                         <option value="Days">Days</option>
-                                        <option value="Weeks">Week</option>
+                                        <option value="Weeks">Weeks</option>
                                         <option value="Months">Months</option>
                                         <option value="Lifetime">Lifetime</option>
                                     </select>
@@ -169,7 +169,7 @@
                             <div ng-if="category == 2">
                                 <div ng-if="field.field == 'Date received'">
                                     <label class="item item-input item-stacked-label hide" id="imdtrcv"><span class='input-label'>{{field.field}}</span>
-                                        <input type="date" placeholder="{{field.field}}" value="{{curTime|dateFormat}}"  name="{{field.name}}" />                            
+                                        <input type="date" placeholder="{{field.field}}" value="{{curTime}}"  name="{{field.name}}" />                            
                                     </label>
 									 
 									
@@ -179,36 +179,48 @@
                                 </div>
                                 <div ng-if="field.field == 'Repeat On'">
                                     <label class="item item-input item-stacked-label hide" id="imrpton"><span class='input-label'>{{field.field}}</span>
-                                        <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime|dateFormat}}"  name="{{field.name}}" />                            
+                                        <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime}}"  name="{{field.name}}" />                            
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-if="category == 4">
+                                <div ng-if="field.field == 'Conducted On'">
+                                    <label class="item item-input item-stacked-label hide" id="proconon"><span class='input-label'>{{field.field}}</span>
+                                        <input type="date" placeholder="{{field.field}}" value="{{curTime}}"  name="{{field.name}}" />                            
+                                    </label>
+                                </div>
+                                <div ng-if="field.field == 'To be conducted before'">
+                                    <label class="item item-input item-stacked-label" id="proconbef"><span class='input-label'>{{field.field}}</span>
+                                        <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime}}"  name="{{field.name}}" />                            
                                     </label>
                                 </div>
                             </div>
                             <div ng-if="category == 5">
                                 <div ng-if="field.field == 'Conducted On'">
                                     <label class="item item-input item-stacked-label hide" id="invconon"><span class='input-label'>{{field.field}}</span>
-                                        <input type="date" placeholder="{{field.field}}" value="{{curTime|dateFormat}}"  name="{{field.name}}" />                            
+                                        <input type="date" placeholder="{{field.field}}" value="{{curTime}}"  name="{{field.name}}" />                            
                                     </label>
                                 </div>
                                 <div ng-if="field.field == 'To be conducted before'">
                                     <label class="item item-input item-stacked-label" id="invconbef"><span class='input-label'>{{field.field}}</span>
-                                        <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime|dateFormat}}"  name="{{field.name}}" />                            
+                                        <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime}}"  name="{{field.name}}" />                            
                                     </label>
                                 </div>
                             </div>
-                            <div ng-if="category != 2 && category != 5">
+                            <div ng-if="category != 2 && category != 5 && category != 4">
                                 <label class="item item-input item-stacked-label"><span class='input-label'>{{field.field}}</span>
-                                    <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime|dateFormat}}"  name="{{field.name}}" />                            
+                                    <input type="date" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime}}"  name="{{field.name}}" />                            
                                 </label>
                             </div>
                         </div>
                         <div ng-if="field.field_types.value == 'time'">                        
                             <label class="item item-input" ng-if="field.multi_value == 0">
                                 <span class="input-label" >{{field.field}}</span>
-                                <input type="time" placeholder="{{field.field}}" value="{{curT|time1}}" name="{{field.name}}" />                            
+                                <input type="time" placeholder="{{field.field}}" value="{{curT}}" name="{{field.name}}" />                            
                             </label>
                             <label class="item item-input" ng-if="field.multi_value == 1">
                                 <span class="input-label" >{{field.field}}</span>
-                                <input type="time" placeholder="{{field.field}}" value="{{curT|time1}}" class="toClone" name="{{field.name}}[]" />
+                                <input type="time" placeholder="{{field.field}}" value="{{curT}}" class="toClone" name="{{field.name}}[]" />
                                 <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                             </label>
                         </div>
@@ -273,11 +285,15 @@
                                     </ion-list>
                                 </div>
                             </div>
+                            <div ng-if="category == 4" >
+                                <ion-toggle ng-model="proStatus" ng-checked="0" ng-click="check(proStatus)" toggle-class="toggle-positive"> Conducted </ion-toggle>
+                                <input type="hidden" value="To be conducted" id="proconduct" name="{{field.name}}" />
+                            </div>
                             <div ng-if="category == 5" >
                                 <ion-toggle ng-model="billStatus" ng-checked="0" ng-click="check(billStatus)" toggle-class="toggle-positive"> Conducted </ion-toggle>
                                 <input type="hidden" value="To be conducted" id="invconduct" name="{{field.name}}" />
                             </div>
-                            <ion-list ng-if="category != 7 && category != 2 && category != 5">
+                            <ion-list ng-if="category != 7 && category != 2 && category != 5 && category != 4">
                                 <div class="row" ng-init="radioData = (field.field_values).split(',')" ng-model="radioData">                   
                                     <div class="col cradio" ng-repeat="rad in radioData"><ion-radio  name="{{field.name}}" value="{{rad}}" >{{rad}}</ion-radio></div>
                                 </div>

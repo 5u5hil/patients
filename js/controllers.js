@@ -433,13 +433,24 @@ angular.module('your_app_name.controllers', [])
                         jQuery('#imdtrcv').addClass('hide');
                     }
                 }
+                if ($scope.categoryId == 4) {
+                    if (val) {
+                        jQuery('#proconduct').val('Conducted On');
+                        jQuery('#proconon').removeClass('hide');
+                        jQuery('#proconbef').addClass('hide');
+                    } else {
+                        jQuery('#proconduct').val('To be conducted');
+                        jQuery('#proconon').addClass('hide');
+                        jQuery('#proconbef').removeClass('hide');
+                    }
+                }
                 if ($scope.categoryId == 5) {
                     if (val) {
-                        jQuery('#immrcvdate').val('Conducted On');
+                        jQuery('#invconduct').val('Conducted On');
                         jQuery('#invconon').removeClass('hide');
                         jQuery('#invconbef').addClass('hide');
                     } else {
-                        jQuery('#immrcvdate').val('To be conducted before');
+                        jQuery('#invconduct').val('To be conducted');
                         jQuery('#invconon').addClass('hide');
                         jQuery('#invconbef').removeClass('hide');
                     }

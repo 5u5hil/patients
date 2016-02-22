@@ -15,12 +15,21 @@
                         <div ng-if="rec.fields.field == 'Related Problem'">
                             {{problem[$index].value}}
                         </div>
-                        <div ng-if="rec.fields.field=='Frequency'" ng-init="fdata = (rec.value).split('-')">
+                        <div ng-if="rec.fields.field == 'Frequency'" ng-init="fdata = (rec.value).split('-')">
                             {{fdata[0]}} times in {{fdata[1]}}
                         </div>
-                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field!='Frequency'">
-                            <div ng-if="rec.fields.field_type == 8"> {{rec.value|dateFormat4}}</div>
-                            <div ng-if="rec.fields.field_type != 8"> {{rec.value}}</div>
+                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Frequency'">
+                            <div ng-if="rec.fields.field_type == 8">
+                                <div ng-if="rec.value == ''">NA</div>
+                                <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                <div ng-if="rec.value != '0000-00-00'">{{rec.value|dateFormat4}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type == 12">
+                                <div ng-if="rec.value == ''"> NA </div>
+                                <div ng-if="rec.value == '00:00:00'"> NA </div>
+                                <div ng-if="rec.value != '00:00:00'">{{rec.value|time1}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
                         <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
                             <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
@@ -37,11 +46,20 @@
                             {{problem[$index].value}}
                         </div>
                         <div ng-if="rec.fields.field == 'Payment Mode'">
-                            <div ng-if="rec.value=='0'">NA</div>
+                            <div ng-if="rec.value == '0'">NA</div>
                         </div>
                         <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'">
-                            <div ng-if="rec.fields.field_type == 8"> {{rec.value|dateFormat4}}</div>
-                            <div ng-if="rec.fields.field_type != 8"> {{rec.value}}</div>
+                            <div ng-if="rec.fields.field_type == 8">
+                                <div ng-if="rec.value == ''">NA</div>
+                                <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                <div ng-if="rec.value != '0000-00-00'">{{rec.value|dateFormat4}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type == 12">
+                                <div ng-if="rec.value == ''"> NA </div>
+                                <div ng-if="rec.value == '00:00:00'"> NA </div>
+                                <div ng-if="rec.value != '00:00:00'">{{rec.value|time1}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
                         <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
                             <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
@@ -58,8 +76,17 @@
                             {{problem[$index].value}}
                         </div>
                         <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'">
-                            <div ng-if="rec.fields.field_type == 8"> {{rec.value|dateFormat4}}</div>
-                            <div ng-if="rec.fields.field_type != 8"> {{rec.value}}</div>
+                            <div ng-if="rec.fields.field_type == 8">
+                                <div ng-if="rec.value == ''">NA</div>
+                                <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                <div ng-if="rec.value != '0000-00-00'">{{rec.value|dateFormat4}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type == 12">
+                                <div ng-if="rec.value == ''"> NA </div>
+                                <div ng-if="rec.value == '00:00:00'"> NA </div>
+                                <div ng-if="rec.value != '00:00:00'">{{rec.value|time1}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
                         <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
                             <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
