@@ -34,13 +34,12 @@ angular.module('your_app_name.directives', [])
                 transclude: true,
                 scope: {
                     title: '@',
-		icon:'@',
-				
-				},
+                    icon: '@',
+                },
                 link: function (scope, element, attrs, tabsCtrl) {
                     tabsCtrl.addTab(scope);
                 },
-				 templateUrl: 'views/common/my-tab.html'
+                templateUrl: 'views/common/my-tab.html'
             };
         })
 
@@ -69,22 +68,22 @@ angular.module('your_app_name.directives', [])
                 }
             };
         })
-        
+
         .directive('pwCheck', function () {
-    return {
-      require: 'ngModel',
-      link: function (scope, elem, attrs, ctrl) {
-        var firstPassword = '#' + attrs.pwCheck;
-        console.log(scope);
+            return {
+                require: 'ngModel',
+                link: function (scope, elem, attrs, ctrl) {
+                    var firstPassword = '#' + attrs.pwCheck;
+                    console.log(scope);
 //        elem.add(firstPassword).on('keyup', function () {
 //          scope.$apply(function () {
 //            var v = elem.val()===$(firstPassword).val();
 //            ctrl.$setValidity('pwmatch', v);
 //          });
 //        });
-      }
-    }
-  })
+                }
+            }
+        })
 
 
         .directive('showHideContainer', function () {
@@ -181,7 +180,7 @@ angular.module('your_app_name.directives', [])
                         root_element.classList.remove("post-size-" + current_size_str);
                         root_element.classList.add("post-size-" + new_size_str);
                     }, element);
-					}
+                }
             };
         })
 
@@ -395,5 +394,29 @@ angular.module('your_app_name.directives', [])
                     }
                 };
             }])
+        .directive('validfile', function validFile() {
 
-        ;
+            var validFormats = ['jpg', 'gif'];
+            return {
+                require: 'ngModel',
+                link: function (scope, elem, attrs, ctrl) {
+                    ctrl.$validators.validFile = function () {
+                        elem.on('change', function () {
+                            var value = elem.val(),
+                                    ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+                                    console.log(elem.length);
+                                    if(elem.length>0){
+                                        jQuery('#convalid').removeClass('hide');
+                                        jQuery('#coninprec').removeClass('hide');
+                                    }
+                                    else{
+                                        jQuery('#convalid').addClass('hide');
+                                        jQuery('#coninprec').addClass('hide');
+                                    }
+                            //return validFormats.indexOf(ext) !== -1;
+                        });
+                    };
+                }
+            };
+        });
+;
