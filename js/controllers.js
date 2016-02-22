@@ -372,6 +372,7 @@ angular.module('your_app_name.controllers', [])
 
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading) {
+			$scope.currDate = new Date();
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd');
             $scope.curT = $filter('date')(new Date(), 'HH:mm');
             $scope.userId = get('id');
