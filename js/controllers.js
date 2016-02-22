@@ -372,7 +372,7 @@ angular.module('your_app_name.controllers', [])
 
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading) {
-			
+
             $scope.curTime = new Date(); //$filter('date')(, 'yyyy-MM-dd');
             //$scope.curT = new Date()$filter('date')(new Date(), 'HH:mm');
             $scope.userId = get('id');
@@ -467,6 +467,25 @@ angular.module('your_app_name.controllers', [])
                     }
                 }
             };
+            $scope.setFile = function (element) {
+                $scope.currentFile = element.files[0];
+                console.log('length = ' + element.files.length);
+                if (element.files.length > 0) {
+                    jQuery('#convalid').removeClass('hide');
+                    jQuery('#coninprec').removeClass('hide');
+                } else {
+                    jQuery('#convalid').addClass('hide');
+                    jQuery('#coninprec').addClass('hide');
+                }
+//                var reader = new FileReader();
+//                reader.onload = function (event) {
+//                    $scope.image_source = event.target.result
+//                    $scope.$apply()
+//
+//                }
+//                // when the file is read it triggers the onload event above.
+//                reader.readAsDataURL(element.files[0]);
+            }
         })
 
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
@@ -1608,7 +1627,7 @@ angular.module('your_app_name.controllers', [])
                     $scope.checkavailval = 0;
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
-                  //  window.localStorage.removeItem('kookooid');
+                    //  window.localStorage.removeItem('kookooid');
 
                 });
 
