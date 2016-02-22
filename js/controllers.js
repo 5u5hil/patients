@@ -374,7 +374,7 @@ angular.module('your_app_name.controllers', [])
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading) {
 			
             $scope.curTime = ''; //$filter('date')(new Date(), 'yyyy-MM-dd');
-            $scope.curT = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+            $scope.curT = ''; //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
             $scope.fields = {};
@@ -392,7 +392,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.doctrs = response.data.doctrs;
                 $scope.category = $stateParams.id;
 				$scope.curTime = response.data.curdate;
-				//$scope.curT = response.data.curtime;
+				$scope.curT = response.data.curtime;
             }, function errorCallback(response) {
                 console.log(response);
             });
