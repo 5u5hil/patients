@@ -1152,7 +1152,8 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
-                $scope.kookooID = window.localStorage.getItem('kookooid');
+				$scope.kookooID = window.localStorage.getItem('kookooid');
+                $scope.kookooID = window.localStorage.getItem('kookooid1');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -1626,7 +1627,7 @@ angular.module('your_app_name.controllers', [])
                     $scope.checkavailval = 0;
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
-                  //  window.localStorage.removeItem('kookooid');
+                    window.localStorage.removeItem('kookooid');
 
                 });
 
@@ -1710,6 +1711,7 @@ angular.module('your_app_name.controllers', [])
                             // alert('Doctor Not Available');
                         } else {
                             window.localStorage.setItem('kookooid', response.data);
+                            window.localStorage.setItem('kookooid1', response.data);
                         }
 
                     }, function errorCallback(response) {
