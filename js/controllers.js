@@ -460,7 +460,7 @@ angular.module('your_app_name.controllers', [])
             $scope.rcheck = function (val) {
                 console.log(val);
                 if ($scope.categoryId == 2) {
-                    if (val == 'Yes') {
+                    if (val) {
                         jQuery('#imrpton').removeClass('hide');
                     } else {
                         jQuery('#imrpton').addClass('hide');

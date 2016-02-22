@@ -5,7 +5,7 @@
     <ion-content>
         <ul class="list addform">
             <!-- <div class="item item-divider">{{record.category}}</div> -->
-            <form ng-submit="submit()" name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
+            <form name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
@@ -49,7 +49,7 @@
                             <div ng-if="field.multi_value == 0 && field.field != 'Result'">                            
                                 <label class="item item-input item-floating-label"  ng-if="field.is_mandatory == 1">
                                     <span class="input-label" >{{field.field}} {{field.is_mandatory==1? '*':''}}</span>
-                                    <input type="text" placeholder="{{field.field}}" id="{{field.name}}"  name="{{field.name}}" maxlength="{{field.max_length}}" required/>                            
+                                    <input type="text" placeholder="{{field.field}}" id="{{field.name}}"  name="{{field.name}}" maxlength="{{field.max_length}}" required ng-model="formText"/>
                                 </label>
                                 <label class="item item-input item-floating-label"  ng-if="field.is_mandatory != 1">
                                     <span class="input-label" >{{field.field}}</span>
@@ -154,18 +154,12 @@
                                 </label>
                             </div>
                         </div>
-									
                         <div ng-if="field.field_types.value == 'date'">
                             <div ng-if="category == 2">
                                 <div ng-if="field.field == 'Date received'">
                                     <label class="item item-input item-stacked-label hide" id="imdtrcv"><span class='input-label'>{{field.field}}</span>
                                         <input type="date" ng-model="curTime" placeholder="{{field.field}}" value="{{curTime|dateFormat1}}"  name="{{field.name}}" />                            
                                     </label>
-									 
-									
-									
-									
-									
                                 </div>
                                 <div ng-if="field.field == 'Repeat On'">
                                     <label class="item item-input item-stacked-label hide" id="imrpton"><span class='input-label'>{{field.field}}</span>
@@ -229,58 +223,78 @@
                         <div ng-if="field.field_types.value == 'select'"> 
                             <div ng-if="field.multi_value == 0 && category == 7">
                                 <label class="item item-input item-select hide" ng-if="field.field == 'Payment Mode'" id="billmode">
-                                    <!--                                    <span class="input-label" >{{field.field}}</span>-->
+                                    <!--<span class="input-label" >{{field.field}}</span>-->
                                     <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
                                         <option value="0"> Select {{field.field}}</option>
                                         <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
                                     </select>
                                 </label>
-                                <label class="item item-input item-select" ng-if="field.field != 'Payment Mode'">
-                                    <!--                                    <span class="input-label" >{{field.field}}</span>-->
-                                    <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
-                                        <option value="0"> Select {{field.field}}</option>
+                                <div ng-if="field.field != 'Payment Mode'">
+                                    <label class="item item-input item-select" ng-if="field.is_mandatory == 1">
+                                        <!--<span class="input-label" >{{field.field}}</span>-->
+                                        <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}" required="" ng-model="formSelect">
+                                            <option value="" ng-selected="1"> Select {{field.field}}</option>
+                                            <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
+                                        </select>
+                                    </label>
+                                    <label class="item item-input item-select" ng-if="field.is_mandatory != 1">
+                                        <!--<span class="input-label" >{{field.field}}</span>-->
+                                        <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
+                                            <option value="0"> Select {{field.field}}</option>
+                                            <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-if="field.multi_value == 0 && category != 7">
+                                <label class="item item-input item-select" ng-if="field.is_mandatory == 1">
+                                    <!--<span class="input-label" >{{field.field}}</span>-->
+                                    <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}" required="" ng-model="formSelect">
+                                        <option value="" ng-selected="1"> Select {{field.field}}</option>
                                         <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
+                                    </select>
+                                </label>
+                                <label class="item item-input item-select" ng-if="field.is_mandatory != 1">
+                                    <!--<span class="input-label" >{{field.field}}</span>-->
+                                    <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
+                                        <option value="0" ng-selected="1"> Select {{field.field}}</option>
+                                        <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
+                                    </select>
+                                </label>
+                                <label class="item item-input item-select " ng-if="field.multi_value == 1">
+                                    <!--<span class="input-label" >{{field.field}}</span>-->
+                                    <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}[]" multiple="">
+                                        <option ng-repeat="sel in selData"> {{sel}} </option>
                                     </select>
                                 </label>
                             </div>
-                            <label class="item item-input item-select" ng-if="field.multi_value == 0 && category != 7">
-                                <!--                                <span class="input-label" >{{field.field}}</span>-->
-                                <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}">
-                                    <option value="0"> Select {{field.field}}</option>
-                                    <option ng-repeat="sel in selData" value="{{sel}}"> {{sel}} </option>
-                                </select>
-                            </label>
-                            <label class="item item-input item-select " ng-if="field.multi_value == 1">
-                                <!--                                <span class="input-label" >{{field.field}}</span>-->
-                                <select class="cselect" ng-init="selData = (field.field_values).split(',')" name="{{field.name}}[]" multiple="">
-                                    <option ng-repeat="sel in selData"> {{sel}} </option>
-                                </select>
-                            </label>
                         </div>                    
                         <div ng-if="field.field_types.value == 'radio'">
                             <div ng-if="category == 7" >
-                                <ion-toggle ng-model="billStatus" ng-checked="0" ng-click="check(billStatus)" toggle-class="toggle-positive"> Paid </ion-toggle>
+                                <ion-toggle ng-model="billStatus" ng-checked="0"  ng-click="check(billStatus)" ng-change="check(billStatus)" toggle-class="toggle-positive"> Paid </ion-toggle>
                                 <input type="hidden" value="Unpaid" id="billStatus" name="{{field.name}}" />
                             </div>
                             <div ng-if="category == 2">
                                 <div ng-if="field.field == 'Status'">
-                                    <ion-toggle ng-model="recv" ng-checked="0" ng-click="check(recv)" toggle-class="toggle-positive"> Received </ion-toggle>
+                                    <ion-toggle ng-model="recv" ng-checked="0" ng-click="check(recv)" ng-change="check(recv)" toggle-class="toggle-positive"> Received </ion-toggle>
                                     <input type="hidden" value="To be received" id="immrcvdate" name="{{field.name}}" />
                                 </div>
                                 <div ng-if="field.field == 'Repeat'">
-                                    <ion-list>
+                                    <ion-toggle ng-model="recv" ng-checked="0" ng-click="rcheck(recv)" ng-change="rcheck(recv)" toggle-class="toggle-positive"> Repeat </ion-toggle>
+                                    <input type="hidden" value="No" id="immrepeat" name="{{field.name}}" />
+                                    <!--<ion-list>>SSS
                                         <div class="row" ng-init="radioData = (field.field_values).split(',')" ng-model="radioData">                   
                                             <div class="col cradio" ng-repeat="rad in radioData"><ion-radio  name="{{field.name}}" ng-click="rcheck('{{rad}}')" value="{{rad}}" >{{rad}}</ion-radio></div>
                                         </div>
-                                    </ion-list>
+                                    </ion-list>-->
                                 </div>
                             </div>
                             <div ng-if="category == 4" >
-                                <ion-toggle ng-model="proStatus" ng-checked="0" ng-click="check(proStatus)" toggle-class="toggle-positive"> Conducted </ion-toggle>
+                                <ion-toggle ng-model="proStatus" ng-checked="0" ng-click="check(proStatus)" ng-change="check(proStatus)" toggle-class="toggle-positive"> Conducted </ion-toggle>
                                 <input type="hidden" value="To be conducted" id="proconduct" name="{{field.name}}" />
                             </div>
                             <div ng-if="category == 5" >
-                                <ion-toggle ng-model="billStatus" ng-checked="0" ng-click="check(billStatus)" toggle-class="toggle-positive"> Conducted </ion-toggle>
+                                <ion-toggle ng-model="billStatus" ng-checked="0" ng-click="check(billStatus)" ng-change="check(billStatus)" toggle-class="toggle-positive"> Conducted </ion-toggle>
                                 <input type="hidden" value="To be conducted" id="invconduct" name="{{field.name}}" />
                             </div>
                             <ion-list ng-if="category != 7 && category != 2 && category != 5 && category != 4">
@@ -307,9 +321,9 @@
                 </div>--->
 
 
-                <div class="m10"><button  class="button button-block button-positive" ng-disabled="addRecordForm.$invalid">
-                        Submit
-                    </button></div>
+                <div class="m10">
+                    <button type="submit" ng-click="submit()" class="button button-block button-positive" ng-disabled="addRecordForm.$invalid"> Submit </button>
+                </div>
 
             </form>
 
