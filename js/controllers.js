@@ -682,6 +682,7 @@ angular.module('your_app_name.controllers', [])
                         console.log(response);
                     });
                     $scope.spec = response.data.spec;
+                    $scope.instant = response.data.instant;
                 });
             }, function errorCallback(e) {
                 console.log(e);
@@ -1606,7 +1607,7 @@ angular.module('your_app_name.controllers', [])
                     $scope.checkavailval = 0;
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
-                    window.localStorage.removeItem('kookooid');
+                  //  window.localStorage.removeItem('kookooid');
 
                 });
 
