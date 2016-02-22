@@ -8508,6 +8508,8 @@ h4.subhead.inactive{opacity:0.5;}
 
 }
 .action-sheet .button{font-size:16px !important;}
+
+
 .recordview{    margin-top: 105px; padding-bottom: 40px;}
 .post-footer{margin-top:15px; border-top:1px #eee solid;}
 .post-footer span{font-size: 13px; padding:8px 0 0 0;
@@ -8936,7 +8938,7 @@ a.tab-item{color:#000;}
                             border: 0;}
 .crecordlist .item-checkbox{background:none;}
 .crecordlist .item-content.disable-pointer-events{display:none !important; }
-.action-sheet-cancel{background:#387ef5;}
+.action-sheet-cancel,.action-sheet-cancel button{background:#387ef5 !important;}
 .action-sheet-cancel .button{color:#fff !important; text-align:center !important;}
 
 .cselect{    position: static !important;
