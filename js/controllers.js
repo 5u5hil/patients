@@ -371,7 +371,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture) {
 			
             $scope.curTime = new Date(); //$filter('date')(, 'yyyy-MM-dd');
             //$scope.curT = new Date()$filter('date')(new Date(), 'HH:mm');
@@ -470,7 +470,16 @@ angular.module('your_app_name.controllers', [])
 			
 		
 		
+		$scope.captureImage = function() {
+			var options = { limit: 3 };
 
+			$cordovaCapture.captureImage(options).then(function(imageData) {
+			  alert(imageData)
+			}, function(err) {
+			alert('error');
+			  // An error occurred. Show a message to the user
+			});
+		  }
 
 	
 
