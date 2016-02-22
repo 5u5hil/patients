@@ -7,7 +7,6 @@ angular.module('your_app_name.controllers', [])
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
-
             } else {
                 if ($rootScope.userLogged == 0)
                     $state.go('auth.walkthrough');
@@ -19,11 +18,9 @@ angular.module('your_app_name.controllers', [])
 
             $rootScope.imgpath = domain + "/public/frontend/user/";
             $rootScope.attachpath = domain + "/public";
-
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
-
             } else {
                 if ($rootScope.userLogged == 0)
                     $state.go('auth.walkthrough');
@@ -70,7 +67,6 @@ angular.module('your_app_name.controllers', [])
                             store(response);
                             $rootScope.userLogged = 1;
                             $rootScope.username = response.fname;
-
                             $ionicLoading.hide();
                             $state.go('app.category-list');
                             //}
@@ -316,7 +312,6 @@ angular.module('your_app_name.controllers', [])
 
         .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar, $ionicModal) {
             var filterBarInstance;
-
             $scope.selectMe = function (event) {
                 $(event.target).toggleClass('active');
             }
@@ -332,7 +327,6 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
             };
-
             $scope.refreshItems = function () {
                 if (filterBarInstance) {
                     filterBarInstance();
@@ -358,7 +352,6 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(response) {
                 console.log(response);
             });
-
 //            $ionicModal.fromTemplateUrl('deletecategory.html', {
 //                scope: $scope
 //            }).then(function (modal) {
@@ -369,11 +362,11 @@ angular.module('your_app_name.controllers', [])
 //                $scope.modal.hide();
 //            };
         })
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture) {
 
-
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading) {
-            $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd');
-            $scope.curT = $filter('date')(new Date(), 'HH:mm');
+            $scope.curTime = new Date();
+            $scope.curTimeo = $filter('date')(new Date(), 'HH:mm');
+            //$scope.curT = new Date()$filter('date')(new Date(), 'HH:mm');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
             $scope.fields = {};
@@ -459,13 +452,35 @@ angular.module('your_app_name.controllers', [])
             $scope.rcheck = function (val) {
                 console.log(val);
                 if ($scope.categoryId == 2) {
-                    if (val == 'Yes') {
+                    if (val) {
                         jQuery('#imrpton').removeClass('hide');
                     } else {
                         jQuery('#imrpton').addClass('hide');
                     }
                 }
             };
+            $scope.setFile = function (element) {
+                $scope.currentFile = element.files[0];
+                console.log('length = ' + element.files.length);
+                if (element.files.length > 0) {
+                    jQuery('#convalid').removeClass('hide');
+                    jQuery('#coninprec').removeClass('hide');
+                    jQuery('#valid-till').attr('required',true);
+                } else {
+                    jQuery('#convalid').addClass('hide');
+                    jQuery('#coninprec').addClass('hide');
+                    jQuery('#valid-till').attr('required',false);
+                }
+//                var reader = new FileReader();
+//                reader.onload = function (event) {
+//                    $scope.image_source = event.target.result
+//                    $scope.$apply()
+//
+//                }
+//                // when the file is read it triggers the onload event above.
+//                reader.readAsDataURL(element.files[0]);
+            };
+        
         })
 
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
@@ -1133,7 +1148,8 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
-                $scope.kookooID = window.localStorage.getItem('kookooid');
+				$scope.kookooID = window.localStorage.getItem('kookooid');
+                $scope.kookooID = window.localStorage.getItem('kookooid1');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -1602,15 +1618,14 @@ angular.module('your_app_name.controllers', [])
                     $ionicLoading.hide();
                 });
                 $scope.$on('$destroy', myListenern);
-
                 $scope.$on('$destroy', function () {
                     $scope.checkavailval = 0;
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
-                  //  window.localStorage.removeItem('kookooid');
+					window.localStorage.removeItem('kookooid');
+
 
                 });
-
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-kookoo-value',
@@ -1618,7 +1633,6 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(responsekookoo) {
                     console.log(responsekookoo.data);
                     $scope.checkavailval = responsekookoo.data;
-
                     if ($scope.checkavailval == 1)
                     {
                         $timeout.cancel(stopped);
@@ -1691,6 +1705,7 @@ angular.module('your_app_name.controllers', [])
                             // alert('Doctor Not Available');
                         } else {
                             window.localStorage.setItem('kookooid', response.data);
+                            window.localStorage.setItem('kookooid1', response.data);
                         }
 
                     }, function errorCallback(response) {
