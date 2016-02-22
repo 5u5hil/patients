@@ -9,6 +9,16 @@
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
+					<label class="item item-input item-stacked-label" >
+					<span class='input-label'>test</span>
+                     <input type="date" placeholder="" value="2016-02-26"  name="test" /></label>
+				
+				<label class="item" >
+					
+                     <input type="date" placeholder="" value="2016-06-30"  name="testnew" /></label>
+				
+				
+				
                 <div ng-repeat="field in fields" >
                     <div ng-if="field.is_dependent == 1 && field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By' || field.field == 'Performed By' || field.field == 'Consultant'">
                         <label class="item item-input item-select">
@@ -154,12 +164,18 @@
                                 </label>
                             </div>
                         </div>
+									
                         <div ng-if="field.field_types.value == 'date'">
                             <div ng-if="category == 2">
                                 <div ng-if="field.field == 'Date received'">
                                     <label class="item item-input item-stacked-label hide" id="imdtrcv"><span class='input-label'>{{field.field}}</span>
                                         <input type="date" placeholder="{{field.field}}" value="{{curTime|dateFormat}}"  name="{{field.name}}" />                            
                                     </label>
+									 
+									
+									
+									
+									
                                 </div>
                                 <div ng-if="field.field == 'Repeat On'">
                                     <label class="item item-input item-stacked-label hide" id="imrpton"><span class='input-label'>{{field.field}}</span>
