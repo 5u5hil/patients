@@ -479,15 +479,7 @@ angular.module('your_app_name.controllers', [])
 //                // when the file is read it triggers the onload event above.
 //                reader.readAsDataURL(element.files[0]);
             };
-            $scope.captureImage = function () {
-                var options = {limit: 3};
-                $cordovaCapture.captureImage(options).then(function (imageData) {
-                    alert(imageData)
-                }, function (err) {
-                    alert('error');
-                    // An error occurred. Show a message to the user
-                });
-            };
+        
         })
 
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
