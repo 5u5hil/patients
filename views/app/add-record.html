@@ -27,7 +27,7 @@
 		<input type="file"  accept="image/*" >	
 				<br/>
 				<br/> -->
-				
+			
 				
                 <div ng-repeat="field in fields" >
                     <div ng-if="field.is_dependent == 1 && field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By' || field.field == 'Performed By' || field.field == 'Consultant'">
@@ -232,11 +232,11 @@
                         <div ng-if="field.field_types.value == 'time'">                        
                             <label class="item item-input" ng-if="field.multi_value == 0">
                                 <span class="input-label" >{{field.field}}</span>
-                                <input type="time" placeholder="{{field.field}}" ng-model="curTime" value="{{curTime|time1}}" name="{{field.name}}" />                            
+                                <input type="time" placeholder="{{field.field}}" ng-model="curTimeo" value="{{curTimeo}}" name="{{field.name}}" />                            
                             </label>
                             <label class="item item-input" ng-if="field.multi_value == 1">
                                 <span class="input-label" >{{field.field}}</span>
-                                <input type="time" placeholder="{{field.field}}" ng-model="curTime" value="{{curTime|time1}}" class="toClone" name="{{field.name}}[]" />
+                                <input type="time" placeholder="{{field.field}}" ng-model="curTimeo" value="{{curTimeo}}" class="toClone" name="{{field.name}}[]" />
                                 <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                             </label>
                         </div>
