@@ -467,7 +467,16 @@ angular.module('your_app_name.controllers', [])
                     }
                 }
             };
-        })
+			
+		
+		
+
+
+	
+
+
+
+ })
 
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
 
