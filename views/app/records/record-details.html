@@ -99,9 +99,20 @@
                             <h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
                             <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
                                  <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
+                            <div ng-repeat="attach in rec.attachments" >
+                                <div ng-init="selData = (attach.orginial_name).split('.')">
+                                    <div ng-if="selData[1] == 'png' || selData[1] == 'gif' || selData[1] == 'jpg' || selData[1] == 'PNG' || selData[1] == 'GIF' || selData[1] == 'JPG'">
+                                        <a class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" >
+                                            <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                        </a>
+                                    </div>
+                                    <div ng-if="selData[1] != 'png' && selData[1] != 'gif' && selData[1] != 'jpg' && selData[1] != 'PNG' && selData[1] != 'GIF' && selData[1] != 'JPG'">
+                                        <a class="filelink" href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}"  download>
+                                            <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                        </a>
+                                    </div>
+                                </div>
 
-                            <div class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" ng-repeat="attach in rec.attachments">
-                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
                             </div>
                             <div class="clr"></div>		
                         </div>
