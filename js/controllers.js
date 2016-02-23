@@ -567,7 +567,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout,$ionicModal) {
+        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout,$ionicModal,$rootScope,$sce) {
             $scope.recordId = $stateParams.id;
             $scope.isNumber = function (num) {
                 return angular.isNumber(num);
@@ -612,12 +612,21 @@ angular.module('your_app_name.controllers', [])
             // Load the modal from the given template URL
             $ionicModal.fromTemplateUrl('filesview.html', function ($ionicModal) {
                 $scope.modal = $ionicModal;
+				$scope.showm=function(path,name){
+					console.log(path+'=afd ='+name);
+					$scope.value=$rootScope.attachpath+path+name;
+					$scope.modal.show();
+					}
+				
             }, {
                 // Use our scope for the scope of the modal to keep it simple
                 scope: $scope,
                 // The animation we want to use for the modal entrance
                 animation: 'slide-in-up'
             });
+			$scope.trustSrc = function (src) {
+                return $sce.trustAsResourceUrl(src);
+            };
 
         })
 

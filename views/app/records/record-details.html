@@ -88,9 +88,15 @@
                             </div>
                             <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
-                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
-                            <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
-                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a>
+                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >
+							<h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
+                           <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
+								
+							 <div class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" ng-repeat="attach in rec.attachments">
+                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+							</div>
+							<div class="clr"></div>		
                         </div>
                     </div>
                 </li>
@@ -137,12 +143,18 @@
         </header>
 <content has-header="true" padding="true" class="fullwh">
 		<div class="mcontent">
-        <div class="list" >
-			<div class="item">fasd</div>
+      
+		<!-- <iframe  type="text/html" style="width:100%; position:absolute; height:80%; top:100px;" scrolling="yes" ng-src="{{trustSrc(value)}}" allowfullscreen frameborder="0">       
+        </iframe> -->
+		
+		<div class="viewattachfile">
+			<img src="{{value}}">
 		</div>
+		
+	
 		</div>
 		</content>
-		</div>
+		
 		
 <div class="bar bar-footer" style="z-index:999;"><div class="button button-positive" style="width:100%;" ng-click="modal.hide()">Cancel</div></div>
 
