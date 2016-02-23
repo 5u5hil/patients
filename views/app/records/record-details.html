@@ -77,26 +77,33 @@
                         </div>
                         <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'">
                             <div ng-if="rec.fields.field_type == 8">
-                                <div ng-if="rec.value == ''">NA</div>
-                                <div ng-if="rec.value == '0000-00-00'"> NA </div>
-                                <div ng-if="rec.value != '0000-00-00'">{{rec.value|dateFormat4}}</div>
+                                <div ng-if="rec.fields.field == 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
+                                <div ng-if="rec.fields.field != 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
                             </div>
-                            <div ng-if="rec.fields.field_type == 12">
+                            <div ng-if="rec.fields.field_type == 12">                                
                                 <div ng-if="rec.value == ''"> NA </div>
                                 <div ng-if="rec.value == '00:00:00'"> NA </div>
-                                <div ng-if="rec.value != '00:00:00'">{{rec.value|time1}}</div>
+                                <div ng-if="rec.value != '00:00:00' && rec.value != ''">{{rec.value|time1}}</div>
                             </div>
                             <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
                         <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >
-							<h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
-                           <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
-                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
-								
-							 <div class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" ng-repeat="attach in rec.attachments">
+                            <h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
+                            <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                 <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
+
+                            <div class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" ng-repeat="attach in rec.attachments">
                                 <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
-							</div>
-							<div class="clr"></div>		
+                            </div>
+                            <div class="clr"></div>		
                         </div>
                     </div>
                 </li>
@@ -136,27 +143,27 @@
     </div> -->
 </ion-view>
 <script id="filesview.html" type="text/ng-template">
-		<div class="modal">
-        <header class="bar bar-header bar-positive">
-		<h1 class="title">Attached Files</h1>
-          
-        </header>
-<content has-header="true" padding="true" class="fullwh">
-		<div class="mcontent">
-      
-		<!-- <iframe  type="text/html" style="width:100%; position:absolute; height:80%; top:100px;" scrolling="yes" ng-src="{{trustSrc(value)}}" allowfullscreen frameborder="0">       
-        </iframe> -->
-		
-		<div class="viewattachfile">
-			<img src="{{value}}">
-		</div>
-		
-	
-		</div>
-		</content>
-		
-		
-<div class="bar bar-footer" style="z-index:999;"><div class="button button-positive" style="width:100%;" ng-click="modal.hide()">Cancel</div></div>
+    <div class="modal">
+    <header class="bar bar-header bar-positive">
+    <h1 class="title">Attached Files</h1>
+
+    </header>
+    <content has-header="true" padding="true" class="fullwh">
+    <div class="mcontent">
+
+    <!-- <iframe  type="text/html" style="width:100%; position:absolute; height:80%; top:100px;" scrolling="yes" ng-src="{{trustSrc(value)}}" allowfullscreen frameborder="0">       
+    </iframe> -->
+
+    <div class="viewattachfile">
+    <img src="{{value}}">
+    </div>
+
+
+    </div>
+    </content>
+
+
+    <div class="bar bar-footer" style="z-index:999;"><div class="button button-positive" style="width:100%;" ng-click="modal.hide()">Cancel</div></div>
 
 </script>
 
