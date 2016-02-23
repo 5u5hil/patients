@@ -567,7 +567,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout) {
+        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout,$ionicModal) {
             $scope.recordId = $stateParams.id;
             $scope.isNumber = function (num) {
                 return angular.isNumber(num);
