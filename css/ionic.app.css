@@ -8945,6 +8945,7 @@ a.tab-item{color:#000;}
              width: 100%;
              direction: ltr !important;
              padding: 8px 0 8px 0px !important;
+			 font-weight:bold;
 }
 
 /* endcss */
