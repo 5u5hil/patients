@@ -15,17 +15,24 @@
                         <div ng-if="rec.fields.field == 'Related Problem'">
                             {{problem[$index].value}}
                         </div>
-                        <div ng-if="rec.fields.field == 'Frequency'" ng-init="fdata = ((rec.value)/24)">
+                        <div ng-if="rec.fields.field == 'Frequency'" ng-init="fdata = ((rec.value) / 24)">
                             {{fdata}} times in day
                         </div>
-<!--                        <div ng-if="rec.fields.field == 'Frequency'" ng-init="fdata = (rec.value).split('-')">
-                            {{fdata[0]}} times in {{fdata[1]}}
-                        </div>-->
+                        <!--                        <div ng-if="rec.fields.field == 'Frequency'" ng-init="fdata = (rec.value).split('-')">
+                                                    {{fdata[0]}} times in {{fdata[1]}}
+                                                </div>-->
                         <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Frequency'">
                             <div ng-if="rec.fields.field_type == 8">
-                                <div ng-if="rec.value == ''">NA</div>
-                                <div ng-if="rec.value == '0000-00-00'"> NA </div>
-                                <div ng-if="rec.value != '0000-00-00'">{{rec.value|dateFormat4}}</div>
+                                <div ng-if="rec.fields.field == 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
+                                <div ng-if="rec.fields.field != 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
                             </div>
                             <div ng-if="rec.fields.field_type == 12">
                                 <div ng-if="rec.value == ''"> NA </div>
@@ -53,9 +60,16 @@
                         </div>
                         <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'">
                             <div ng-if="rec.fields.field_type == 8">
-                                <div ng-if="rec.value == ''">NA</div>
-                                <div ng-if="rec.value == '0000-00-00'"> NA </div>
-                                <div ng-if="rec.value != '0000-00-00'">{{rec.value|dateFormat4}}</div>
+                                <div ng-if="rec.fields.field == 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
+                                <div ng-if="rec.fields.field != 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
                             </div>
                             <div ng-if="rec.fields.field_type == 12">
                                 <div ng-if="rec.value == ''"> NA </div>
