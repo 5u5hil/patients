@@ -465,8 +465,9 @@ angular.module('your_app_name.controllers', [])
                     jQuery('#convalid').addClass('hide');
                     jQuery('#coninprec').addClass('hide');
                     jQuery('#valid-till').attr('required', false);
-                }
+                }                
                 var image_holder = $("#image-holder");
+                image_holder.empty();
 //                var reader = new FileReader();
 //                reader.onload = function (event) {
 //                    $scope.image_source = event.target.result
@@ -582,7 +583,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout) {
+        .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {
             $scope.recordId = $stateParams.id;
             $scope.isNumber = function (num) {
                 return angular.isNumber(num);
@@ -621,6 +622,25 @@ angular.module('your_app_name.controllers', [])
             $scope.edit = function (id, cat) {
                 $state.go('app.edit-record', {'id': id, 'cat': cat});
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
+            };
+
+            // Load the modal from the given template URL
+            $ionicModal.fromTemplateUrl('filesview.html', function ($ionicModal) {
+                $scope.modal = $ionicModal;
+                $scope.showm = function (path, name) {
+                    console.log(path + '=afd =' + name);
+                    $scope.value = $rootScope.attachpath + path + name;
+                    $scope.modal.show();
+                }
+
+            }, {
+                // Use our scope for the scope of the modal to keep it simple
+                scope: $scope,
+                // The animation we want to use for the modal entrance
+                animation: 'slide-in-up'
+            });
+            $scope.trustSrc = function (src) {
+                return $sce.trustAsResourceUrl(src);
             };
         })
 
