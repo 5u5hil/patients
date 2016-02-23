@@ -119,9 +119,9 @@
         </div>-->
     </ion-content>
     <div class="footerbar">
-        <a class="button" confirmed-click="delete(category[0].id)" ng-confirm-click="Do you really want to delete?" ><i class="icon ion-trash-b"></i> Delete</a>
-        <a class="button" ng-click="edit(category[0].id, category[0].category)"><i class="icon ion-android-share-alt"></i> Share</a>
-        <a class="button" ui-sref="app.edit({'id' : category[0].id,'cat' : category[0].category, 'res' : 'json'})"><i class="icon ion-edit"></i> Edit</a>
+        <a class="button btn-delete" confirmed-click="delete(category[0].id)" ng-confirm-click="Do you really want to delete?" ><i class="icon ion-trash-b"></i> Delete</a>
+        <a class="button btn-share" ng-click="edit(category[0].id, category[0].category)"><i class="icon ion-android-share-alt"></i> Share</a>
+        <a class="button btn-edit" ui-sref="app.edit({'id' : category[0].id,'cat' : category[0].category, 'res' : 'json'})"><i class="icon ion-edit"></i> Edit</a>
     </div>
     <!-- 
     <div class="cslideup">

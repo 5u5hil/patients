@@ -96,14 +96,12 @@ overflow: auto;">
 	
 	
     <div class="footerbar">
-        <a class="button" ui-sref="#" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"
-
-           ><i class="icon ion-trash-b"></i> Delete</a>
-        <a class="button" ui-sref="#"><i class="icon ion-android-share-alt" ></i> Share</a>
+        <a class="button btn-delete" ui-sref="#" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"><i class="icon ion-trash-b"></i> Delete</a>
+        <a class="button btn-share" ui-sref="#"><i class="icon ion-android-share-alt" ></i> Share</a>
 		
         <!-- <a class="button" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a> -->
 		
-		 <a class="button" ng-controller="AdsCtrl" ng-click="modal.show()" ><i class="icon ion-android-add-circle"></i> Add</a>
+		 <a class="button btn-add" ng-controller="AdsCtrl" ng-click="modal.show()" ><i class="icon ion-android-add-circle"></i> Add</a>
 		 
 		
 		
