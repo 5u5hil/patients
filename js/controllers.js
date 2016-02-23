@@ -436,10 +436,12 @@ angular.module('your_app_name.controllers', [])
                     if (val) {
                         jQuery('#invconduct').val('Conducted On');
                         jQuery('#invconon').removeClass('hide');
+                        jQuery('.inv').removeClass('hide');
                         jQuery('#invconbef').addClass('hide');
                     } else {
                         jQuery('#invconduct').val('To be conducted');
                         jQuery('#invconon').addClass('hide');
+                        jQuery('.inv').addClass('hide');
                         jQuery('#invconbef').removeClass('hide');
                     }
                 }
