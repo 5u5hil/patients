@@ -14,6 +14,7 @@ angular.module('your_app_name.controllers', [])
         })
 
 // APP
+// APP
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
 
             $rootScope.imgpath = domain + "/public/frontend/user/";
@@ -263,42 +264,36 @@ angular.module('your_app_name.controllers', [])
                 );
             };
         })
-        .controller('AdsCtrl', function ($scope, $http, $state, $ionicActionSheet, AdMob, iAd) {
+        .controller('AdsCtrl', function ($scope, $http, $state, $ionicActionSheet, AdMob, iAd, $ionicModal) {
             $http({
                 method: 'GET',
                 url: domain + 'records/get-record-categories',
                 params: {userId: $scope.userid}
             }).then(function successCallback(response) {
-                $scope.cats = [];
-                angular.forEach(response.data, function (value, key) {
-                    $scope.cats.push({text: value.category, id: value.id});
-                });
+                $scope.cats = response.data;
+                // angular.forEach(response.data, function (value, key) {
+                    // $scope.cats.push({text: value.category, id: value.id});
+                // });
             }, function errorCallback(response) {
                 console.log(response);
             });
-            $scope.manageAdMob = function () {
-                // Show the action sheet
-                var hideSheet = $ionicActionSheet.show({
-                    //Here you can add some more buttons                    
-                    buttons: $scope.cats,
-                    //destructiveText: 'Remove Ads',
-                    titleText: 'Select the Category',
-                    cancelText: 'Cancel',
-                    cancel: function () {
-                        // add cancel code..
-                    },
-                    destructiveButtonClicked: function () {
-                        console.log("removing ads");
-                        //AdMob.removeAds();
-                        return true;
-                    },
-                    buttonClicked: function (index, button) {
-                        console.log(button.id);
-                        $state.go('app.add-category', {'id': button.id}, {reload: true});
-                        return true;
-                    }
-                });
-            };
+            
+			// Load the modal from the given template URL
+			$ionicModal.fromTemplateUrl('addrecord.html', function($ionicModal) {
+				$scope.modal = $ionicModal;
+				$scope.addRecord=function($ab){
+				$state.go('app.add-category', {'id': $ab}, {reload: true});
+					$scope.modal.hide()
+				}
+				
+			}, {
+				// Use our scope for the scope of the modal to keep it simple
+				scope: $scope,
+				// The animation we want to use for the modal entrance
+				animation: 'slide-in-up'
+			}); 
+			
+			
         })
 
 //bring specific category providers
@@ -483,6 +478,22 @@ angular.module('your_app_name.controllers', [])
         
         })
 
+		  .controller('addbtnCtrl', function ($scope, $ionicModal) {
+	    // Load the modal from the given template URL
+    $ionicModal.fromTemplateUrl('addrecord.html', function($ionicModal) {
+        $scope.modal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    }); 	
+		
+		  })	
+		
+		
+		
+		
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
 
         })
@@ -612,7 +623,19 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.edit-record', {'id': id, 'cat': cat});
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
-        })
+			
+			
+				// Load the modal from the given template URL
+				$ionicModal.fromTemplateUrl('filesview.html', function($ionicModal) {
+					$scope.modal = $ionicModal;
+				}, {
+					// Use our scope for the scope of the modal to keep it simple
+					scope: $scope,
+					// The animation we want to use for the modal entrance
+					animation: 'slide-in-up'
+				}); 
+			
+		})
 
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
 

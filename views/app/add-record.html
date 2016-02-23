@@ -2,10 +2,12 @@
     <ion-nav-title>
         <span>Add Record ({{record.category}})</span>
     </ion-nav-title>
+	<form name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
     <ion-content>
+
         <ul class="list addform">
             <!-- <div class="item item-divider">{{record.category}}</div> -->
-            <form name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
+            
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
@@ -378,14 +380,20 @@
                 </div>--->
 
 
-                <div class="m10">
+              <!--   <div class="m10">
                     <button type="submit" ng-click="submit()" class="button button-block button-positive" ng-disabled="addRecordForm.$invalid"> Submit </button>
-                </div>
+                </div> -->
 
-            </form>
+			
 
         </ul>
 
     </ion-content>
-
+	<div class="bar bar-footer">
+		<button type="submit" ng-click="submit()" class="button button-positive w100p" ng-disabled="addRecordForm.$invalid"> Submit </button>
+	</div>
+	
+	</form>
+	
+	
 </ion-view>

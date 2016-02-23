@@ -45,10 +45,7 @@
 
             </div>
         </div>  
-
-
-
-        <!-- 	<div class="list cdetail-list">
+ <!-- 	<div class="list cdetail-list">
                 <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
         
                 <ion-item ng-repeat="cat in userRecords | orderBy:'-count'" 
@@ -63,25 +60,51 @@
               </ion-list>
                 
                 </div> -->
-
-
-
-
-
-
-
-
-
-
-
     </ion-content>
 
+<script id="addrecord.html" type="text/ng-template">
+		<div class="modal">
+        <header class="bar bar-header bar-positive">
+		<h1 class="title">Select Category </h1>
+          
+        </header>
+<content has-header="true" padding="true" class="fullwh">
+		<div class="mcontent">
+        <div class="list" >
+			<div class="item" ng-repeat="cat in cats"  ng-click="addRecord({{cat.id}})"  >{{cat.category}}</div>
+		</div>
+		</div>
+		
+		
+		</content>
+		</div>
+<div class="bar bar-footer" style="z-index:999;"><div class="button button-positive" style="width:100%;" ng-click="modal.hide()">
+			<!-- <span class="icon ion-close"></span> --> Cancel</div>
+			
+			</div>
+
+</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
     <div class="footerbar">
         <a class="button" ui-sref="#" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"
 
            ><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button" ui-sref="#"><i class="icon ion-android-share-alt" ></i> Share</a>
-        <a class="button" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a>
+		
+        <!-- <a class="button" ng-controller="AdsCtrl" ng-click="manageAdMob()" ><i class="icon ion-android-add-circle"></i> Add</a> -->
+		
+		 <a class="button" ng-controller="AdsCtrl" ng-click="modal.show()" ><i class="icon ion-android-add-circle"></i> Add</a>
+		 
+		
+		
     </div>
 
 </ion-view>
