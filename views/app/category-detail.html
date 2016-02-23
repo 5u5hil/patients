@@ -31,11 +31,11 @@
         </ion-content>
 
 
-        <!-- for select list long pressing  - on-hold='selectMe($event)' -->
+        <!-- for select list long pressing  - on-hold='selectMe($event)' | orderBy:'-count' -->
 
         <div class="list cdetail-list">
            <div class="mt15" ng-if="userRecords.length == 0"> <p class="txt-center" >No records here. Add now to get started</p></div>
-            <div class="crecordlist" ng-repeat="cat in userRecords| orderBy:'-count'">
+            <div class="crecordlist" ng-repeat="cat in userRecords| orderBy: 'category'">
                 <div class="clistck">
                     <ion-checkbox ng-model="isChecked" ng-value="{{cat.id}}" ng-checked="getIds(isChecked)">Checkbox Label</ion-checkbox></div>
                 <a  class="item item-icon-left item-icon-right "  ui-sref="app.records-view({'id' : cat.id,'res' : 'json'})">

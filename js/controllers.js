@@ -466,14 +466,29 @@ angular.module('your_app_name.controllers', [])
                     jQuery('#coninprec').addClass('hide');
                     jQuery('#valid-till').attr('required', false);
                 }
+                var image_holder = $("#image-holder");
 //                var reader = new FileReader();
 //                reader.onload = function (event) {
 //                    $scope.image_source = event.target.result
-//                    $scope.$apply()
-//
-//                }
-//                // when the file is read it triggers the onload event above.
-//                reader.readAsDataURL(element.files[0]);
+//                    $scope.$apply();
+                if (typeof (FileReader) != "undefined") {
+                    //loop for each file selected for uploaded.
+                    for (var i = 0; i < element.files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+//                            $("<img />", {
+//                                "src": e.target.result,
+//                                "class": "thumb-image"
+//                            }).appendTo(image_holder);
+                            $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(image_holder);
+                        }
+                        image_holder.show();
+                        reader.readAsDataURL(element.files[0]);
+                    }
+                }
+                //}
+                // when the file is read it triggers the onload event above.
+                //reader.readAsDataURL(element.files[0]);
             };
 
         })
@@ -607,18 +622,6 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.edit-record', {'id': id, 'cat': cat});
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
-
-
-            // Load the modal from the given template URL
-            $ionicModal.fromTemplateUrl('filesview.html', function ($ionicModal) {
-                $scope.modal = $ionicModal;
-            }, {
-                // Use our scope for the scope of the modal to keep it simple
-                scope: $scope,
-                // The animation we want to use for the modal entrance
-                animation: 'slide-in-up'
-            });
-
         })
 
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
