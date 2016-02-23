@@ -2,12 +2,12 @@
     <ion-nav-title>
         <span>Add Record ({{record.category}})</span>
     </ion-nav-title>
-	<form name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
-    <ion-content>
+    <form name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
+        <ion-content>
 
-        <ul class="list addform">
-            <!-- <div class="item item-divider">{{record.category}}</div> -->
-            
+            <ul class="list addform">
+                <!-- <div class="item item-divider">{{record.category}}</div> -->
+
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
@@ -69,7 +69,7 @@
                                 </label>
                             </div>
                             <div ng-if="field.multi_value == 0 && field.field != 'Result'">                            
-                                <label class="item item-input item-floating-label"  ng-if="field.is_mandatory == 1">
+                                <label class="item item-input item-floating-label listreq"  ng-if="field.is_mandatory == 1">
                                     <span class="input-label" >{{field.field}} {{field.is_mandatory==1? '*':''}}</span>
                                     <input type="text" placeholder="{{field.field}} *" id="{{field.name}}"  name="{{field.name}}" maxlength="{{field.max_length}}" required ng-model="formText"/>
                                 </label>
@@ -79,7 +79,7 @@
                                 </label>
                             </div>
                             <div  ng-if="field.multi_value == 1 && field.field != 'Result'">
-                                <label class="item item-input" ng-if="field.is_mandatory == 1">
+                                <label class="item item-input item-floating-label listreq" ng-if="field.is_mandatory == 1">
                                     <input type="text" placeholder="{{field.field}}" id="{{field.name}}" class="toClone"  name="{{field.name}}[]" required/>
                                 </label>
                                 <label class="item item-input" ng-if="field.is_mandatory != 1">
@@ -215,8 +215,8 @@
                             </div>
                             <div ng-if="category == 8">
                                 <div ng-if="field.field == 'Consultation Date'">
-                                    <label class="item item-input item-stacked-label hide"><span class='input-label'>{{field.field}}</span>
-                                        <input type="date" ng-model="curTime" placeholder="{{field.field}}" value="{{curTime|dateFormat1}}"  name="{{field.name}}" />                            
+                                    <label class="item item-input item-stacked-label listreq"><span class='input-label'>{{field.field}}</span>
+                                        <input type="date" ng-model="curTime" placeholder="{{field.field}}" value="{{curTime|dateFormat1}}"  name="{{field.name}}" required />                            
                                     </label>
                                 </div>
                                 <div ng-if="field.field == 'Valid till'">
@@ -415,22 +415,13 @@
                         <img ng-src="{{img}}">
                     </div>
                 </div>--->
-
-
-              <!--   <div class="m10">
-                    <button type="submit" ng-click="submit()" class="button button-block button-positive" ng-disabled="addRecordForm.$invalid"> Submit </button>
-                </div> -->
-
-			
-
-        </ul>
-
-    </ion-content>
-	<div class="bar bar-footer">
-		<button type="submit" ng-click="submit()" class="button button-positive w100p" ng-disabled="addRecordForm.$invalid"> Submit </button>
-	</div>
-	
-	</form>
-	
-	
+                <!--   <div class="m10">
+                      <button type="submit" ng-click="submit()" class="button button-block button-positive" ng-disabled="addRecordForm.$invalid"> Submit </button>
+                  </div> -->
+            </ul>
+        </ion-content>
+        <div class="bar bar-footer">
+            <button type="submit" ng-click="submit()" class="button button-positive w100p" ng-disabled="addRecordForm.$invalid"> Submit </button>
+        </div>
+    </form>
 </ion-view>

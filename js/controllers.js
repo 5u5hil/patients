@@ -272,28 +272,26 @@ angular.module('your_app_name.controllers', [])
             }).then(function successCallback(response) {
                 $scope.cats = response.data;
                 // angular.forEach(response.data, function (value, key) {
-                    // $scope.cats.push({text: value.category, id: value.id});
+                // $scope.cats.push({text: value.category, id: value.id});
                 // });
             }, function errorCallback(response) {
                 console.log(response);
             });
-            
-			// Load the modal from the given template URL
-			$ionicModal.fromTemplateUrl('addrecord.html', function($ionicModal) {
-				$scope.modal = $ionicModal;
-				$scope.addRecord=function($ab){
-				$state.go('app.add-category', {'id': $ab}, {reload: true});
-					$scope.modal.hide()
-				}
-				
-			}, {
-				// Use our scope for the scope of the modal to keep it simple
-				scope: $scope,
-				// The animation we want to use for the modal entrance
-				animation: 'slide-in-up'
-			}); 
-			
-			
+
+            // Load the modal from the given template URL
+            $ionicModal.fromTemplateUrl('addrecord.html', function ($ionicModal) {
+                $scope.modal = $ionicModal;
+                $scope.addRecord = function ($ab) {
+                    $state.go('app.add-category', {'id': $ab}, {reload: true});
+                    $scope.modal.hide()
+                }
+
+            }, {
+                // Use our scope for the scope of the modal to keep it simple
+                scope: $scope,
+                // The animation we want to use for the modal entrance
+                animation: 'slide-in-up'
+            });
         })
 
 //bring specific category providers
@@ -462,11 +460,11 @@ angular.module('your_app_name.controllers', [])
                 if (element.files.length > 0) {
                     jQuery('#convalid').removeClass('hide');
                     jQuery('#coninprec').removeClass('hide');
-                    jQuery('#valid-till').attr('required',true);
+                    jQuery('#valid-till').attr('required', true);
                 } else {
                     jQuery('#convalid').addClass('hide');
                     jQuery('#coninprec').addClass('hide');
-                    jQuery('#valid-till').attr('required',false);
+                    jQuery('#valid-till').attr('required', false);
                 }
 //                var reader = new FileReader();
 //                reader.onload = function (event) {
@@ -477,25 +475,9 @@ angular.module('your_app_name.controllers', [])
 //                // when the file is read it triggers the onload event above.
 //                reader.readAsDataURL(element.files[0]);
             };
-        
+
         })
 
-		  .controller('addbtnCtrl', function ($scope, $ionicModal) {
-	    // Load the modal from the given template URL
-    $ionicModal.fromTemplateUrl('addrecord.html', function($ionicModal) {
-        $scope.modal = $ionicModal;
-    }, {
-        // Use our scope for the scope of the modal to keep it simple
-        scope: $scope,
-        // The animation we want to use for the modal entrance
-        animation: 'slide-in-up'
-    }); 	
-		
-		  })	
-		
-		
-		
-		
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
 
         })
@@ -625,19 +607,19 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.edit-record', {'id': id, 'cat': cat});
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
-			
-			
-				// Load the modal from the given template URL
-				$ionicModal.fromTemplateUrl('filesview.html', function($ionicModal) {
-					$scope.modal = $ionicModal;
-				}, {
-					// Use our scope for the scope of the modal to keep it simple
-					scope: $scope,
-					// The animation we want to use for the modal entrance
-					animation: 'slide-in-up'
-				}); 
-			
-		})
+
+
+            // Load the modal from the given template URL
+            $ionicModal.fromTemplateUrl('filesview.html', function ($ionicModal) {
+                $scope.modal = $ionicModal;
+            }, {
+                // Use our scope for the scope of the modal to keep it simple
+                scope: $scope,
+                // The animation we want to use for the modal entrance
+                animation: 'slide-in-up'
+            });
+
+        })
 
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
 
@@ -1173,7 +1155,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.appUrl = $location.absUrl();
                 $scope.userId = get('id');
                 $scope.discount = window.localStorage.getItem('coupondiscount');
-				$scope.kookooID = window.localStorage.getItem('kookooid');
+                $scope.kookooID = window.localStorage.getItem('kookooid');
                 $scope.kookooID = window.localStorage.getItem('kookooid1');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
@@ -1647,7 +1629,7 @@ angular.module('your_app_name.controllers', [])
                     $scope.checkavailval = 0;
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
-					window.localStorage.removeItem('kookooid');
+                    window.localStorage.removeItem('kookooid');
 
 
                 });
