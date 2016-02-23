@@ -414,9 +414,11 @@ angular.module('your_app_name.controllers', [])
                     if (val) {
                         jQuery('#immrcvdate').val('Received');
                         jQuery('#imdtrcv').removeClass('hide');
+                        jQuery('.imd').removeClass('hide');
                     } else {
                         jQuery('#immrcvdate').val('To be received');
                         jQuery('#imdtrcv').addClass('hide');
+                        jQuery('.imd').addClass('hide');
                     }
                 }
                 if ($scope.categoryId == 4) {
@@ -449,8 +451,10 @@ angular.module('your_app_name.controllers', [])
                 if ($scope.categoryId == 2) {
                     if (val) {
                         jQuery('#imrpton').removeClass('hide');
+                        jQuery('.imd').removeClass('hide');
                     } else {
                         jQuery('#imrpton').addClass('hide');
+                        jQuery('.imd').addClass('hide');
                     }
                 }
             };

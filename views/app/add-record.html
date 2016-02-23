@@ -61,13 +61,19 @@
                     <div ng-if="field.is_dependent == 0">
                         <div ng-if="field.field_types.value == 'text'">                            
                             <div ng-if="field.field == 'Result'">                        
-                                <label class="item item-input hide inv" id="invres" >
+                                <label class="item item-input item-floating-label hide inv" id="invres" >
                                     <span class="input-label"> {{field.field}}</span>
                                     <input type="text" placeholder="Value" name="{{field.name}}-1" required/>
                                     <input type="text" placeholder="Unit" name="{{field.name}}-2" required />
                                 </label>
                             </div>
-                            <div ng-if="field.multi_value == 0 && field.field != 'Result'">                            
+                            <div ng-if="field.field == 'Adverse Effects'">                        
+                                <label class="item item-input item-floating-label hide imd" >
+                                    <span class="input-label"> {{field.field}}</span>
+                                    <input type="text" placeholder="{{field.field}}" id="{{field.name}}"  name="{{field.name}}" maxlength="{{field.max_length}}" />
+                                </label>
+                            </div>
+                            <div ng-if="field.multi_value == 0 && field.field != 'Result' && field.field != 'Adverse Effects'">                            
                                 <label class="item item-input item-floating-label listreq"  ng-if="field.is_mandatory == 1">
                                     <span class="input-label" >{{field.field}} {{field.is_mandatory==1? '*':''}}</span>
                                     <input type="text" placeholder="{{field.field}} *" id="{{field.name}}"  name="{{field.name}}" maxlength="{{field.max_length}}" required ng-model="formText"/>
@@ -77,7 +83,7 @@
                                     <input type="text" placeholder="{{field.field}}" id="{{field.name}}"  name="{{field.name}}" maxlength="{{field.max_length}}" />                            
                                 </label>
                             </div>
-                            <div  ng-if="field.multi_value == 1 && field.field != 'Result'">
+                            <div  ng-if="field.multi_value == 1 && field.field != 'Result' && field.field != 'Adverse Effects'">
                                 <label class="item item-input item-floating-label listreq" ng-if="field.is_mandatory == 1">
                                     <input type="text" placeholder="{{field.field}}" id="{{field.name}}" class="toClone"  name="{{field.name}}[]" required/>
                                 </label>
@@ -170,12 +176,12 @@
                         <div ng-if="field.field_types.value == 'date'">
                             <div ng-if="category == 2">
                                 <div ng-if="field.field == 'Date received'">
-                                    <label class="item item-input item-stacked-label hide" id="imdtrcv"><span class='input-label'>{{field.field}}</span>
+                                    <label class="item item-input item-stacked-label hide imd" id="imdtrcv"><span class='input-label'>{{field.field}}</span>
                                         <input type="date" ng-model="curTime" placeholder="{{field.field}}" value="{{curTime|dateFormat1}}"  name="{{field.name}}" />                            
                                     </label>
                                 </div>
                                 <div ng-if="field.field == 'Repeat On'">
-                                    <label class="item item-input item-stacked-label hide" id="imrpton"><span class='input-label'>{{field.field}}</span>
+                                    <label class="item item-input item-stacked-label hide imd" id="imrpton"><span class='input-label'>{{field.field}}</span>
                                         <input type="date" ng-model="curTime" placeholder="{{field.field}}" id="{{field.name}}" value="{{curTime|dateFormat1}}"  name="{{field.name}}" />                            
                                     </label>
                                 </div>
