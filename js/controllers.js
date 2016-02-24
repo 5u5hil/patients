@@ -509,7 +509,7 @@ angular.module('your_app_name.controllers', [])
                 //reader.readAsDataURL(element.files[0]);
             };
             $scope.images = [];
-            $scope.takePict = function () {
+            $scope.takePict = function (name) {
                 console.log('aaaaa');
                 // 2
                 var options = {
@@ -523,11 +523,11 @@ angular.module('your_app_name.controllers', [])
                 $cordovaCamera.getPicture(options).then(function (imageData) {
                     alert(imageData);
                     alert(cordova.file.dataDirectory);
-                    // 4
-                    onImageSuccess(imageData);
-                    function onImageSuccess(fileURI) {
-                        createFileEntry(fileURI);
-                    }
+                    $scope.$apply(function () {
+				$scope.images.push(imageData);
+			});
+                    //jQuery('#addFile').append('');    
+                    jQuery('#camfile').val($scope.images);
                 }, function (err) {
                     console.log(err);
                 });

@@ -160,13 +160,13 @@
                                             <div class="row p0">
                                                 <div class="col col-50 pl0"> 
                                                     <div class="filelabel">
-                                                        <input type="file" class="img" placeholder="{{field.field}}" onchange="angular.element(this).scope().setFile(this)" id="{{field.name}}"  name="{{field.name}}" />
+                                                        <input type="file" class="img" placeholder="{{field.field}}" onchange="angular.element(this).scope().setFile(this)"  name="{{field.name}}" />
                                                         <label for="attachfile">File Selector</label>
                                                     </div>
                                                 </div>	
-                                                <div class="col col-50">
-                                                    <div class="btncamera" ng-model="capPic" ng-click="takePict()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <div class="btncamera" ng-model="capPic" ng-click="takePicture()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                <div class="col col-50" id="addFile">
+                                                    <div class="btncamera" ng-model="capPic" ng-click="takePict('{{field.name}}')"><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                    <input class="" type="hidden" name="cam-'+name+'[]" id="camfile"/>
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
