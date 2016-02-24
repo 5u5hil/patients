@@ -355,7 +355,7 @@ angular.module('your_app_name.controllers', [])
 //                $scope.modal.hide();
 //            };
         })
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture, $cordovaCamera) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture, $cordovaCamera, $cordovaFile) {
 
             $scope.curTime = new Date();
             $scope.curTimeo = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
@@ -507,7 +507,8 @@ angular.module('your_app_name.controllers', [])
                 //reader.readAsDataURL(element.files[0]);
             };
             $scope.images = [];
-            $scope.addImage = function () {
+            $scope.takePict = function () {
+                console.log('aaaaa');
                 // 2
                 var options = {
                     destinationType: Camera.DestinationType.FILE_URI,
@@ -518,7 +519,8 @@ angular.module('your_app_name.controllers', [])
                 };
                 // 3
                 $cordovaCamera.getPicture(options).then(function (imageData) {
-
+                    alert(imageData);
+                    alert(cordova.file.dataDirectory);
                     // 4
                     onImageSuccess(imageData);
                     function onImageSuccess(fileURI) {
