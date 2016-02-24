@@ -472,17 +472,19 @@ angular.module('your_app_name.controllers', [])
             $scope.setFile = function (element) {
                 $scope.currentFile = element.files[0];
                 console.log('length = ' + element.files.length);
+                var image_holder = $("#image-holder");
+                image_holder.empty();
                 if (element.files.length > 0) {
                     jQuery('#convalid').removeClass('hide');
                     jQuery('#coninprec').removeClass('hide');
                     jQuery('#valid-till').attr('required', true);
+                    image_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
                 } else {
                     jQuery('#convalid').addClass('hide');
                     jQuery('#coninprec').addClass('hide');
                     jQuery('#valid-till').attr('required', false);
                 }
-                var image_holder = $("#image-holder");
-                image_holder.empty();
+
 //                var reader = new FileReader();
 //                reader.onload = function (event) {
 //                    $scope.image_source = event.target.result
@@ -529,6 +531,13 @@ angular.module('your_app_name.controllers', [])
                 }, function (err) {
                     console.log(err);
                 });
+            };
+            $scope.takePicture = function () {
+                takePicture();
+            };
+            $scope.removeFile = function () {
+                console.log('remove');
+                jQuery('.img').val('');
             };
         })
 
