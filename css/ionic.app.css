@@ -8979,12 +8979,18 @@ form .item{margin-bottom: 1px;border-top: 0px;}
               height: 50px;
               text-align: center;}
 .dblock{display: block !important ;}
-.btn-delete{background:#ef473a;}
-.btn-share{background:#387ef5;}
-.btn-add{background:#28a54c; /*green */}
-.btn-edit{background:#28a54c;}
+.btn-delete,.btn-delete.activated{background:#ef473a;}
+.btn-share,.btn-share.activated{background:#387ef5;}
+.btn-add,.btn-add.activated{background:#28a54c; /*green */}
+.btn-edit,.btn-edit.activated{background:#28a54c;}
 .btn-delete,.btn-share,.btn-add,.btn-edit{line-height:44px !important;}
-.btn-delete,.btn-share,.btn-add,.btn-edit,.btn-delete i,.btn-share i,.btn-add i,.btn-edit i{color:#fff;}
+.btn-delete.activated,.btn-share.activated,.btn-add.activated,.btn-edit.activated{ border:0;}
+
+
+.btn-delete,.btn-share,.btn-add,.btn-edit,.btn-delete:hover,.btn-share:hover,.btn-add:hover,.btn-edit:hover,.btn-delete i,.btn-share i,.btn-add i,.btn-edit i{color:#fff;}
+
+
+
 .drstatus{    position: absolute;
     right: 15px;
     top: 15px;
@@ -8994,7 +9000,7 @@ form .item{margin-bottom: 1px;border-top: 0px;}
     font-size: 11px;
     border-radius: 3px;}
 .filelabel{position:relative; overflow:hidden;}
-.filelabel label{display:block;   background:#d3394c; color:#fff; padding:7px 0; text-align:center;}
+.filelabel label{display:block;   background:#28a54c; color:#fff; padding:7px 0; text-align:center;}
 .filelabel input[type="file"]{opacity:0; position:absolute; z-index:1; width:100%;}
 .btncamera{    width: 100%;
     padding: 0px 0;
@@ -9002,7 +9008,8 @@ form .item{margin-bottom: 1px;border-top: 0px;}
     font-size: 23px;
     background: #fff;
     color: #fff;}
-	.btncamera i{/* color:#fff; */}
+	.brdradious0{border-radius:0;}
+
 
 
 /* endcss */
