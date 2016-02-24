@@ -401,6 +401,15 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
             };
+            $scope.chkDt = function(dt){
+                console.log(dt);
+                console.log($scope.curTime);
+                console.log($scope.curTime<dt);
+                if(!($scope.curTime<dt)){
+                    alert('End date should be greater than start date.');
+                    jQuery('#enddt').val('');
+                }
+            };
             $scope.check = function (val) {
                 console.log(val);
                 if ($scope.categoryId == 7) {

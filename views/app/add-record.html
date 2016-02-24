@@ -11,7 +11,6 @@
                 <input type="hidden" ng-model="record.recordUser" value="{{userId}}" name="userId" />
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
-                <<<<<<< HEAD
 
 
 
@@ -27,26 +26,6 @@
                                            <div class="col"><button class="button button-block button-dark" onclick="takePicture()"><i class="ion-android-camera"></i></button></div>	
                                            </div>	  
                 -->
-
-                =======
-
-
-
-
-                <div class="row">
-                    <div class="col col-75"> 
-                        <div class="filelabel">
-                            <input type="file" name="attachfile" id="attachfile" accept="image/*;capture=camera" >
-                            <label for="attachfile">Attach File</label>
-                        </div>
-                    </div>	
-                    <div class="col">
-                        <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
-                    </div>	
-                </div>	  
-
-
-                >>>>>>> origin/master
 
                 <div class="brdT">
                     <div ng-repeat="field in fields" >
@@ -167,6 +146,7 @@
                                                 </div>	
                                                 <div class="col">
                                                     <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+                                                    <input type="file" placeholder="{{field.field}}"  id="camfile" name="{{field.name}}-1[]" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -183,6 +163,7 @@
                                                 </div>	
                                                 <div class="col">
                                                     <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+                                                    <input type="file" placeholder="{{field.field}}" id="camfile" name="{{field.name}}-1[]" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -201,6 +182,7 @@
                                                 </div>	
                                                 <div class="col">
                                                     <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+                                                    <input type="file" placeholder="{{field.field}}"  multiple="" id="camfile" name="{{field.name}}-1[]" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -217,6 +199,7 @@
                                                 </div>	
                                                 <div class="col">
                                                     <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+                                                    <input type="file" placeholder="{{field.field}} *"  required multiple="" id="camfile" name="{{field.name}}-1[]" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -329,10 +312,10 @@
                                     </div>
                                     <div ng-if="field.field == 'End Date'">
                                         <label class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1"><span class='input-label'>{{field.field}} *</span>
-                                            <input type="date" placeholder="{{field.field}}" name="{{field.name}}" />                            
+                                            <input type="date" placeholder="{{field.field}}" name="{{field.name}}" ng-model="endDate" ng-blur="chkDt(endDate)" id="enddt"/>                            
                                         </label>
                                         <label class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1"><span class='input-label'>{{field.field}}</span>
-                                            <input type="date" placeholder="{{field.field}}" name="{{field.name}}" />                            
+                                            <input type="date" placeholder="{{field.field}}" name="{{field.name}}" ng-model="endDate" ng-blur="chkDt(endDate)" id="enddt" />                            
                                         </label>
                                     </div>
                                     <div ng-if="field.field != 'Start Date' && field.field != 'End Date'">

@@ -8,15 +8,15 @@
             <option ng-repeat="cat in category" value="{{cat.id}}" ng-selected="{{catId == cat.id}}" >{{cat.category}}</option>
         </select>
     </div>
-    <div class="bar bar-subheader cbar divider-2" style="margin-top:45px;">
+<!--    <div class="bar bar-subheader cbar divider-2" style="margin-top:45px;">
         <div class="row">
             <div class="col-50"><a  ui-sref="app.filter"><h4 class="subhead"><i class="icon ion-funnel"></i> Filter</h4></a></div>
             <div class="col-50"><h4 class="subhead">Sort <i class="icon ion-ios-arrow-thin-down"></i></h4> </div>
         </div>
-    </div>
+    </div>-->
 
     <ion-content>
-        <div class="list recordview" >
+        <div class="list recordview" style="margin-top: 50px;" >
             <div class="mt15" ng-if="records.length == 0"> <p class="txt-center" >No records here. Add now to get started.</p></div>
             <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index" ng-if="records.length > 0">
                 <div  class="list card post-item">
@@ -34,7 +34,8 @@
                                     </span>
                                     <span ng-if="detail.fields.field != 'Prescribed By' && detail.fields.field != 'Measured By' && detail.fields.field != 'Referred By' && detail.fields.field != 'Performed By' && detail.fields.field != 'Consultant' && detail.fields.field != 'Related Problem'">
                                         <span ng-if="detail.fields.field_type == 8">{{detail.value|dateFormat4}}</span>
-                                        <span ng-if="detail.fields.field_type != 8">{{detail.value}}</span>
+                                        <span ng-if="detail.fields.field_type == 12">{{detail.value|time1}}</span>
+                                        <span ng-if="detail.fields.field_type != 8 && detail.fields.field_type != 12">{{detail.value}}</span>
                                     </span>
                                 </p>
                                 <!--{{$index % 2 == 0|| $index == limit? '</p>' : ''}}
