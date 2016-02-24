@@ -44,9 +44,10 @@
                         </div>
                         <div class="post-actions row post-footer">
                             <span>Created {{rec.created_at| datetime3 }} by You</span>
-                            <span ng-if="rec.attachments.length != 0"><i class="ion-paperclip"></i></span>
-                        </div>
-
+						</div>
+						<div class="attachcard" ng-if="rec.attachments.length != 0">
+							<i class="ion-paperclip"></i></div>
+						<div class="card-viewbtn button-positive">View</div>
                     </div>
                 </div>
             </a>
