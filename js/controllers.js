@@ -358,7 +358,7 @@ angular.module('your_app_name.controllers', [])
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture) {
 
             $scope.curTime = new Date();
-            $scope.curTimeo = $filter('date')(new Date(), 'HH:mm');
+            $scope.curTimeo = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
             //$scope.curT = new Date()$filter('date')(new Date(), 'HH:mm');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
@@ -391,13 +391,24 @@ angular.module('your_app_name.controllers', [])
                 callAjax("POST", domain + "records/save", data, function (response) {
                     console.log(response);
                     $ionicLoading.hide();
-                    //if (angular.isObject(response)) {
-                    alert("Record added successfully!");
-                    $timeout(function () {
-                        $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
-                    }, 1000);
-                    //}
+                    if (angular.isObject(response.records)) {
+                        alert("Record added successfully!");
+                        $timeout(function () {
+                            $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                        }, 1000);
+                    } else if (response.err != '') {
+                        alert('Please fill mandatory fields');
+                    }
                 });
+            };
+            $scope.chkDt = function(dt){
+                console.log(dt);
+                console.log($scope.curTime);
+                console.log($scope.curTime<dt);
+                if(!($scope.curTime<dt)){
+                    alert('End date should be greater than start date.');
+                    jQuery('#enddt').val('');
+                }
             };
             $scope.check = function (val) {
                 console.log(val);
@@ -469,7 +480,7 @@ angular.module('your_app_name.controllers', [])
                     jQuery('#convalid').addClass('hide');
                     jQuery('#coninprec').addClass('hide');
                     jQuery('#valid-till').attr('required', false);
-                }                
+                }
                 var image_holder = $("#image-holder");
                 image_holder.empty();
 //                var reader = new FileReader();
@@ -551,8 +562,10 @@ angular.module('your_app_name.controllers', [])
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.records = response.data.records;
-                if ($scope.records[0].record_metadata.length == 6) {
-                    $scope.limit = 3; //$scope.records[0].record_metadata.length;
+                if ($scope.records.length != 0) {
+                    if ($scope.records[0].record_metadata.length == 6) {
+                        $scope.limit = 3; //$scope.records[0].record_metadata.length;
+                    }
                 }
                 $scope.category = response.data.category;
                 $scope.doctors = response.data.doctors;
@@ -571,8 +584,10 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     $scope.records = response.data.records;
-                    if ($scope.records[0].record_metadata.length == 6) {
-                        $scope.limit = 3; //$scope.records[0].record_metadata.length;
+                    if ($scope.records.length != 0) {
+                        if ($scope.records[0].record_metadata.length == 6) {
+                            $scope.limit = 3; //$scope.records[0].record_metadata.length;
+                        }
                     }
                     //$scope.category = response.data.category;
                     console.log($scope.catId);
