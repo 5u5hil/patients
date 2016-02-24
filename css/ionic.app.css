@@ -8976,9 +8976,21 @@ label.listreq{border-color:#f00 !important;}
 .dblock{display: block !important ;}
 .btn-delete{background:#ef473a;}
 .btn-share{background:#387ef5;}
-.btn-add{background:#28a54c;}
+.btn-add{background:#28a54c; /*green */}
 .btn-edit{background:#28a54c;}
+.btn-delete,.btn-share,.btn-add,.btn-edit{line-height:44px !important;}
 .btn-delete,.btn-share,.btn-add,.btn-edit,.btn-delete i,.btn-share i,.btn-add i,.btn-edit i{color:#fff;}
+.drstatus{    position: absolute;
+    right: 15px;
+    top: 15px;
+    padding: 0px 5px;
+    background: #28a54c;
+    color: #fff;
+    font-size: 11px;
+    border-radius: 3px;}
+.filelabel{position:relative;}
+.filelabel label{display:block; position:absolute; width:100%; height:100%; top:0; left:0; background:#d3394c;}
+.filelabel input[type="file"]{opacity:0;height:0.1px; width:0.5px;}
 
 
 /* endcss */
