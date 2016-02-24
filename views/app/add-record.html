@@ -17,13 +17,13 @@
 
 
                 <div class="row">
-                    <div class="col col-75"> 
+                    <div class="col col-50"> 
                         <div class="filelabel">
                             <input type="file" name="attachfile" id="attachfile" accept="image/*;capture=camera" >
                             <label for="attachfile">Attach File</label>
                         </div>
                     </div>	
-                    <div class="col">
+                    <div class="col col-50">
                         <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
                     </div>	
                 </div>
@@ -104,13 +104,13 @@
                                     <label class="item item-input item-stacked-label" ng-if="field.multi_value == 0">
                                         <span class="input-label dblock" >{{field.field}}</span>
                                         <div class="row p0">
-                                            <div class="col col-75 pl0"> 
+                                            <div class="col col-50 pl0"> 
                                                 <div class="filelabel">
                                                     <input type="file" placeholder="{{field.field}}" name="{{field.name}}" onchange="angular.element(this).scope().setFile(this)" id="presciption" ng-model="prescription" />
                                                     <label for="attachfile">Attach File</label>
                                                 </div>
                                             </div>	
-                                            <div class="col">
+                                            <div class="col col-50">
                                                 <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
                                             </div>	
                                         </div>	
@@ -120,14 +120,16 @@
                                     <label class="item item-input item-stacked-label" ng-if="field.multi_value == 1">
                                         <span class="input-label dblock" >{{field.field}}</span>
                                         <div class="row p0">
-                                            <div class="col col-75 pl0"> 
+                                            <div class="col col-50 pl0"> 
                                                 <div class="filelabel">
                                                     <input type="file" placeholder="{{field.field}}" class="toClone" multiple="" onchange="angular.element(this).scope().setFile(this)" name="{{field.name}}[]" ng-model="prescription"/>
-                                                    <label for="attachfile">Attach File</label>
+                                                    <label for="attachfile">File Selector</label>
                                                 </div>
                                             </div>	
-                                            <div class="col">
-                                                <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+                                            <div class="col col-50">
+                                                <button class="btncamera" onclick="takePicture()">
+													<!-- <i class="ion-android-camera"></i> -->Camera
+													</button>
                                             </div>	
                                         </div>	
                                         <div id="image-holder"></div>
@@ -142,12 +144,14 @@
                                                 <div class="col col-75 pl0"> 
                                                     <div class="filelabel">
                                                         <input type="file" placeholder="{{field.field}}" required onchange="angular.element(this).scope().setFile(this)" name="{{field.name}}" />
-                                                        <label for="attachfile">Attach File</label>
+                                                        <label for="attachfile">File Selector</label>
                                                     </div>
                                                 </div>	
                                                 <div class="col">
-                                                    <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
-                                                    <input type="file" placeholder="{{field.field}}"  id="camfile" name="{{field.name}}-1[]" />
+                                                    <button class="btncamera" onclick="takePicture()">
+													<!-- <i class="ion-android-camera"></i> -->Camera
+														</button>
+                                                    <input type="file" placeholder="{{field.field}}"  id="camfile" name="{{field.name}}-1[]" class="camerafile" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -159,12 +163,12 @@
                                                 <div class="col col-75 pl0"> 
                                                     <div class="filelabel">
                                                         <input type="file" placeholder="{{field.field}}" onchange="angular.element(this).scope().setFile(this)" id="{{field.name}}"  name="{{field.name}}" />
-                                                        <label for="attachfile">Attach File</label>
+                                                        <label for="attachfile">File Selector</label>
                                                     </div>
                                                 </div>	
                                                 <div class="col">
-                                                    <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
-                                                    <input type="file" placeholder="{{field.field}}" id="camfile" name="{{field.name}}-1[]" />
+                                                    <button class="btncamera" onclick="takePicture()">	<!-- <i class="ion-android-camera"></i> -->Camera</button>
+                                                    <input type="file" placeholder="{{field.field}}" id="camfile" name="{{field.name}}-1[]" class="camerafile"  />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -178,12 +182,12 @@
                                                 <div class="col col-75 pl0"> 
                                                     <div class="filelabel">
                                                         <input type="file" placeholder="{{field.field}} *"  required multiple="" onchange="angular.element(this).scope().setFile(this)" ng-model="formFile" class="toClone"  name="{{field.name}}[]" />
-                                                        <label for="attachfile">Attach File</label>
+                                                        <label for="attachfile">File Selector</label>
                                                     </div>
                                                 </div>	
                                                 <div class="col">
-                                                    <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
-                                                    <input type="file" placeholder="{{field.field}}"  multiple="" id="camfile" name="{{field.name}}-1[]" />
+                                                    <button class="btncamera" onclick="takePicture()">	<!-- <i class="ion-android-camera"></i> -->Camera</button>
+                                                    <input type="file" placeholder="{{field.field}}"  multiple="" id="camfile" name="{{field.name}}-1[]" class="camerafile"  />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -195,12 +199,12 @@
                                                 <div class="col col-75 pl0"> 
                                                     <div class="filelabel">
                                                         <input type="file" placeholder="{{field.field}}" multiple="" onchange="angular.element(this).scope().setFile(this)"  name="{{field.name}}[]" />
-                                                        <label for="attachfile">Attach File</label>
+                                                        <label for="attachfile">File Selector</label>
                                                     </div>
                                                 </div>	
                                                 <div class="col">
-                                                    <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
-                                                    <input type="file" placeholder="{{field.field}} *"  required multiple="" id="camfile" name="{{field.name}}-1[]" />
+                                                    <button class="btncamera" onclick="takePicture()">	<!-- <i class="ion-android-camera"></i> -->Camera</button>
+                                                    <input type="file" placeholder="{{field.field}} *"  required multiple="" id="camfile" name="{{field.name}}-1[]" class="camerafile" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
