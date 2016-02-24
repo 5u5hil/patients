@@ -29,7 +29,7 @@
 							  
 							  
 
-
+				<div class="brdT">
                 <div ng-repeat="field in fields" >
                     <div ng-if="field.is_dependent == 1 && field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By' || field.field == 'Performed By' || field.field == 'Consultant' || field.field == 'Created By'">
                         <label class="item item-input item-select item-stacked-label">
@@ -112,7 +112,22 @@
                             <div ng-if="category != 8">
                                 <label class="item item-input item-stacked-label" ng-if="field.multi_value == 0">
                                     <span class="input-label dblock" >{{field.field}}</span>
-                                    <input type="file" placeholder="{{field.field}}" id="{{field.name}}"  name="{{field.name}}" />
+                                    
+									
+									<div class="row p0">
+									<div class="col col-75 pl0"> 
+									<div class="filelabel">
+									<input type="file" placeholder="{{field.field}}" id="{{field.name}}"  onchange="angular.element(this).scope().setFile(this)" name="{{field.name}}" />
+									<label for="attachfile">Attach File</label>
+									</div>
+									</div>	
+									<div class="col">
+									<button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+									</div>	
+									</div>	
+									
+									
+									
                                     <div id="image-holder"></div>
                                 </label>
                             </div>
@@ -414,6 +429,7 @@
                         </div>
                     </div>
                 </div>
+				</div>
                 <!--<div class="item item-divider">Add files</div>                
                 <button class="button button-block button-dark" ng-click="selImages()" type="button">
                     Select Images
