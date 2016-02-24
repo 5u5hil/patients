@@ -355,7 +355,7 @@ angular.module('your_app_name.controllers', [])
 //                $scope.modal.hide();
 //            };
         })
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture, $cordovaCamera) {
 
             $scope.curTime = new Date();
             $scope.curTimeo = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
@@ -506,10 +506,28 @@ angular.module('your_app_name.controllers', [])
                 // when the file is read it triggers the onload event above.
                 //reader.readAsDataURL(element.files[0]);
             };
-            $scope.takePict = function () {
-                takePicture();
-            };
+            $scope.images = [];
+            $scope.addImage = function () {
+                // 2
+                var options = {
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+                    allowEdit: false,
+                    encodingType: Camera.EncodingType.JPEG,
+                    popoverOptions: CameraPopoverOptions,
+                };
+                // 3
+                $cordovaCamera.getPicture(options).then(function (imageData) {
 
+                    // 4
+                    onImageSuccess(imageData);
+                    function onImageSuccess(fileURI) {
+                        createFileEntry(fileURI);
+                    }
+                }, function (err) {
+                    console.log(err);
+                });
+            };
         })
 
         .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
@@ -645,7 +663,6 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.edit-record', {'id': id, 'cat': cat});
                 //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
             };
-
             // Load the modal from the given template URL
             $ionicModal.fromTemplateUrl('filesview.html', function ($ionicModal) {
                 $scope.modal = $ionicModal;
@@ -1675,8 +1692,6 @@ angular.module('your_app_name.controllers', [])
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
                     window.localStorage.removeItem('kookooid');
-
-
                 });
                 $http({
                     method: 'GET',
