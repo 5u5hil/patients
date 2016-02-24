@@ -521,11 +521,11 @@ angular.module('your_app_name.controllers', [])
                 };
                 // 3
                 $cordovaCamera.getPicture(options).then(function (imageData) {
-                    alert(imageData);
-                    alert(cordova.file.dataDirectory);
+                    //alert(imageData);
+                    //alert(cordova.file.dataDirectory);
                     $scope.$apply(function () {
-				$scope.images.push(imageData);
-			});
+                        $scope.images.push(imageData);
+                    });
                     //jQuery('#addFile').append('');    
                     jQuery('#camfile').val($scope.images);
                 }, function (err) {
@@ -632,19 +632,19 @@ angular.module('your_app_name.controllers', [])
             $scope.addRecord = function () {
                 $state.go('app.add-category', {'id': button.id}, {reload: true});
             };
-			
-			$scope.recordDelete = function(){
-				jQuery('.selectrecord').fadeIn('slow');
-				jQuery('#rec1').fadeOut();
-				jQuery('#rec2').fadeIn('slow');
-			}
-			
-			$scope.recordcancel=function(){
-				jQuery('.selectrecord').fadeOut('slow');
-				jQuery('#rec1').fadeIn('slow');
-				jQuery('#rec2').fadeOut();
-				}
-			
+
+            $scope.recordDelete = function () {
+                jQuery('.selectrecord').fadeIn('slow');
+                jQuery('#rec1').fadeOut();
+                jQuery('#rec2').fadeIn('slow');
+            }
+
+            $scope.recordcancel = function () {
+                jQuery('.selectrecord').fadeOut('slow');
+                jQuery('#rec1').fadeIn('slow');
+                jQuery('#rec2').fadeOut();
+            }
+
         })
 
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {

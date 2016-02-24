@@ -16,7 +16,7 @@
 
 
 
-                <div class="row">
+<!--                <div class="row">
                     <div class="col col-50"> 
                         <div class="filelabel">
                             <input type="file" name="attachfile" id="attachfile" accept="image/*;capture=camera" >
@@ -26,7 +26,7 @@
                     <div class="col col-50">
                         <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
                     </div>	
-                </div>
+                </div>-->
 
                 <div class="brdT">
                     <div ng-repeat="field in fields" >
@@ -149,7 +149,6 @@
                                                 </div>	
                                                 <div class="col col-50">
                                                     <div class="btncamera" ng-click="takePict()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <input type="file" placeholder="{{field.field}}"  id="camfile" name="{{field.name}}-1[]" class="camerafile" />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -166,7 +165,7 @@
                                                 </div>	
                                                 <div class="col col-50" id="addFile">
                                                     <div class="btncamera" ng-model="capPic" ng-click="takePict('{{field.name}}')"><!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <input class="" type="hidden" name="cam-'+name+'[]" id="camfile"/>
+                                                    <input class="" type="hidden" name="cam-{{field.name}}[]" id="camfile"/>
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
