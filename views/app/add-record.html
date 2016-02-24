@@ -155,7 +155,7 @@
                                             <div id="image-holder"></div>
                                             <div id="camera_status"></div>
                                         </label>
-                                        <label class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
+                                        <div class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
                                             <span class="input-label dblock" >{{field.field}}</span>
                                             <div class="row p0">
                                                 <div class="col col-50 pl0"> 
@@ -167,12 +167,11 @@
                                                 <div class="col col-50">
                                                     <div class="btncamera" ng-click="takePict()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
                                                     <div class="btncamera" ng-click="takePicture()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <input type="file" placeholder="{{field.field}}" id="camfile" name="{{field.name}}-1[]" class="camerafile"  />
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
                                             <div id="camera_status"></div>
-                                        </label>
+                                        </div>
                                     </div>
                                     <div ng-if="field.multi_value == 1" > 
                                         <label class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
