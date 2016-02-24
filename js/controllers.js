@@ -401,11 +401,11 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
             };
-            $scope.chkDt = function(dt){
+            $scope.chkDt = function (dt) {
                 console.log(dt);
                 console.log($scope.curTime);
-                console.log($scope.curTime<dt);
-                if(!($scope.curTime<dt)){
+                console.log($scope.curTime < dt);
+                if (!($scope.curTime < dt)) {
                     alert('End date should be greater than start date.');
                     jQuery('#enddt').val('');
                 }
@@ -505,6 +505,9 @@ angular.module('your_app_name.controllers', [])
                 //}
                 // when the file is read it triggers the onload event above.
                 //reader.readAsDataURL(element.files[0]);
+            };
+            $scope.takePict = function () {
+                takePicture();
             };
 
         })
