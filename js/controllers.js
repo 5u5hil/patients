@@ -510,7 +510,7 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.images = [];
             $scope.takePict = function (name) {
-                console.log('aaaaa');
+                console.log(name);
                 // 2
                 var options = {
                     destinationType: Camera.DestinationType.FILE_URI,
