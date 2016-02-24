@@ -18,9 +18,9 @@
     <ion-content>
         <div class="list recordview" style="margin-top: 50px;" >
             <div class="mt15" ng-if="records.length == 0"> <p class="txt-center" >No records here. Add now to get started.</p></div>
-            <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index" ng-if="records.length > 0">
+            <div class="posts-list"  ng-repeat="rec in records track by $index" ng-if="records.length > 0">
                 <div  class="list card post-item">
-                    <div class="post-content item item-text-wrap">
+                    <a ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" class="post-content item item-text-wrap">
                         <div class="row pr-b10">
                             <div class="col" ng-repeat="detail in rec.record_metadata| limitTo: limit">
                                 <!--{{$index == 0 ? '<p>': ''}} -->
@@ -47,23 +47,30 @@
 						</div>
 						<div class="attachcard" ng-if="rec.attachments.length != 0">
 							<i class="ion-paperclip"></i></div>
-						<div class="card-viewbtn button-positive">View</div>
-                    </div>
+					</a>
+					
+					<div class="row p0">
+					<div class="col selectrecord"><ion-checkbox>Select</ion-checkbox></div>
+					<div class="col"><div class="card-viewbtn button-positive">View</div></div>
+					</div>
                 </div>
-            </a>
+            </div>
         </div>
     </ion-content>
 
 
 
-    <div class="footerbar">
-        <a class="button btn-delete"><i class="icon ion-trash-b"></i> Delete</a>
+    <div class="footerbar" id="rec1" >
+	<a class="button btn-delete" ng-click="recordDelete()"><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button btn-share"><i class="icon ion-android-share-alt"></i> Share</a>
         <a class="button btn-add" ui-sref="app.add-category({'id': catId})" ui-sref-opts="{reload: true}" ><i class="icon ion-android-add-circle"></i> Add</a> 
-
-
-
-
-    </div>
+	</div>
+	
+	
+    <div class="footerbar button-bar rec2" id="rec2">
+	<a class="button btn-delete"><i class="icon ion-trash-b"></i> Delete</a>
+    <a class="button btn-share" ng-click="recordcancel()"><i class="icon ion-android-close"></i> Cancel</a>
+   </div>
+	
 </ion-view>
 

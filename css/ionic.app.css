@@ -8549,7 +8549,7 @@ a.posts-list{text-decoration:none;}
 .tab-item.tab-item-active, .tab-item.active, .tab-item.activated{box-shadow:0px 2px 0 #387ef5; background:#fff; font-weight:bold; color:#387ef5;}
 .tab-item.tab-item-active i, .tab-item.tab-item-active span.tab-title{color:#387ef5;}
 
-.footerbar a{width:33.33%; padding:0; border:none; display: block; float:left; text-align:center;}
+.footerbar a{width:33.33%; padding:0; border:none; display: block; float:left; text-align:center; border:0; border-radius:0 !important;}
 .footerbar a:first-child,.footerbar a:nth-child(2){border-right:1px #ccc solid;}
 
 
@@ -9021,6 +9021,16 @@ label.item .col{position:relative;}
     margin-top: 5px; color:#fff;  /* border:1px #387ef5 solid; */
 }
 .attachcard{ display:block; font-size:20px; margin:5px 0; text-align:center;}
+.selectrecord{display:none;}
+.selectrecord label{padding:6px 5px 5px 50px; background:#387ef5;     margin-top: 4px;     border-radius: 0px !important;}
+.selectrecord label  span{color:#fff;}
+.selectrecord  label .checkbox-icon:before{border-width:0; background:none;}
+.selectrecord.active{display:block;}
+.rec2{display:none;}
+.rec2 a{width:50%;    width: 50% !important;
+    border: 0;
+    border-radius: 0px !important;}
+
 
 /* endcss */
 
