@@ -19,6 +19,7 @@
                 <div  class="list card post-item">
                     <div class="post-content item item-text-wrap p0">
                         <a ui-sref="app.consultation-profile({'id' : doc.id, 'res' : 'json'})" class="card-content" >
+						<div class="drstatus">Online</div>
                             <!--  <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div> -->
                             <div class="card-left">	
                                 <img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg">
