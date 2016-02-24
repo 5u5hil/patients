@@ -5,7 +5,7 @@
 
     <div class="item item-divider mtop44" style="font-size: 18px; min-height: 45px; text-align:center;">
         <select class="selectheader" ng-model="catId" ng-change="getRecords(catId)">
-            <option ng-repeat="cat in category" value="{{cat.categories.id}}" ng-selected="{{catId == cat.categories.id}}" >{{cat.categories.category}}</option>
+            <option ng-repeat="cat in category" value="{{cat.id}}" ng-selected="{{catId == cat.id}}" >{{cat.category}}</option>
         </select>
     </div>
     <div class="bar bar-subheader cbar divider-2" style="margin-top:45px;">
@@ -17,14 +17,15 @@
 
     <ion-content>
         <div class="list recordview" >
-            <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index">
+            <div class="mt15" ng-if="records.length == 0"> <p class="txt-center" >No records here. Add now to get started.</p></div>
+            <a class="posts-list" ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ng-repeat="rec in records track by $index" ng-if="records.length > 0">
                 <div  class="list card post-item">
                     <div class="post-content item item-text-wrap">
                         <div class="row pr-b10">
                             <div class="col" ng-repeat="detail in rec.record_metadata| limitTo: limit">
                                 <!--{{$index == 0 ? '<p>': ''}} -->
                                 <p>
-                                    <strong>{{detail.fields.field| capitalize}}</strong><br/>{{$parent.$parent.$index}}
+                                    <strong>{{detail.fields.field| capitalize}}</strong><br/>
                                     <span ng-if="detail.fields.field == 'Prescribed By' || detail.fields.field == 'Measured By' || detail.fields.field == 'Referred By' || detail.fields.field == 'Performed By' || detail.fields.field == 'Consultant'">
                                         {{doctors[$parent.$parent.$index].fname}} {{doctors[$parent.$parent.$index].lname}}
                                     </span>
