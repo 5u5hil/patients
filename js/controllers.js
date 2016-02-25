@@ -553,7 +553,9 @@ angular.module('your_app_name.controllers', [])
                     // 6
                     function onCopySuccess(entry) {
                         alert(entry.nativeURL);
-                        $scope.picData = getImgUrl(entry.nativeURL);
+                        var imageName = entry.nativeURL;
+                        var imgName = imageName.substr(imageName.lastIndexOf('/') + 1);
+                        $scope.picData = getImgUrl(imageName);
                         alert($scope.picData);
                         $scope.ftLoad = true;
 //                        $scope.$apply(function () {
@@ -564,7 +566,7 @@ angular.module('your_app_name.controllers', [])
                         //jQuery('#addFile').append('');                        
                         $scope.uploadPicture();
                         $scope.$apply(function () {
-                            $scope.images.push(entry.nativeURL);
+                            $scope.images.push(imgName);
                         });
                         jQuery('#camfile').val($scope.images);
                     }
@@ -604,6 +606,9 @@ angular.module('your_app_name.controllers', [])
                 options.params = params;
                 var uploadSuccess = function (response) {
                     alert('Success  =   ' + JSON.stringify(response));
+//                     var response_data = jQuery.parseJSON(data);
+//                    if (typeof response_data == 'object')
+//                    }
                     $ionicLoading.hide();
                 }
                 var ft = new FileTransfer();
