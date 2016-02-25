@@ -557,8 +557,8 @@ angular.module('your_app_name.controllers', [])
                 params.value1 = "someparams";
                 params.value2 = "otherparams";
                 options.params = params;
-                var uploadSuccess = function (data) {
-                    alert('Success'+data);
+                var uploadSuccess = function (response) {
+                    alert('Success'+response.data);
                     $ionicLoading.hide();
                 }
                 var ft = new FileTransfer();
