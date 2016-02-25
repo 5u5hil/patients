@@ -552,19 +552,20 @@ angular.module('your_app_name.controllers', [])
                     }
                     // 6
                     function onCopySuccess(entry) {
-                        $scope.picData = entry.nativeURL;
+                        alert(entry.nativeURL);
+                        $scope.picData = getImgUrl(entry.nativeURL);
                         $scope.ftLoad = true;
 //                        $scope.$apply(function () {
 //                            $scope.images.push(imageData);
 //                        });
                         camimg_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
                         $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(camimg_holder);
-                        //jQuery('#addFile').append('');    
-                        jQuery('#camfile').val($scope.images);
+                        //jQuery('#addFile').append('');                        
                         $scope.uploadPicture();
                         $scope.$apply(function () {
                             $scope.images.push(entry.nativeURL);
                         });
+                        jQuery('#camfile').val($scope.images);
                     }
                     function fail(error) {
                         console.log("fail: " + error.code);
@@ -576,6 +577,11 @@ angular.module('your_app_name.controllers', [])
                             text += possible.charAt(Math.floor(Math.random() * possible.length));
                         }
                         return text;
+                    }
+                    function getImgUrl(imageName) {
+                        var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+                        var trueOrigin = cordova.file.dataDirectory + name;
+                        return trueOrigin;
                     }
                 }, function (err) {
                     console.log(err);
