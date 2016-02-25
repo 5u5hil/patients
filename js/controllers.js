@@ -515,6 +515,8 @@ angular.module('your_app_name.controllers', [])
             $scope.images = [];
             $scope.takePict = function (name) {
                 console.log(name);
+                var camimg_holder = $("#camera-status");
+                camimg_holder.empty();
                 // 2
                 var options = {
                     destinationType: Camera.DestinationType.FILE_URI,
@@ -532,7 +534,8 @@ angular.module('your_app_name.controllers', [])
                     $scope.$apply(function () {
                         $scope.images.push(imageData);
                     });
-                    $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(image_holder);
+                    camimg_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
+                    $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(camimg_holder);
                     //jQuery('#addFile').append('');    
                     jQuery('#camfile').val($scope.images);
                     $scope.uploadPicture();
@@ -550,27 +553,20 @@ angular.module('your_app_name.controllers', [])
                 options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
                 options.mimeType = "image/jpeg";
                 options.chunkedMode = true;
-
                 var params = {};
                 params.value1 = "someparams";
                 params.value2 = "otherparams";
-
                 options.params = params;
-
                 var uploadSuccess = function (data) {
                     alert('Success'+data);
                     $ionicLoading.hide();
                 }
-
-
                 var ft = new FileTransfer();
                 ft.upload(fileURL, encodeURI(domain + 'records/upload'), uploadSuccess, function (error) {
                     $ionicLoading.show({template: 'Error in connecting...'});
                     $ionicLoading.hide();
                 }, options);
             };
-
-
             $scope.takePicture = function () {
                 takePicture();
             };
