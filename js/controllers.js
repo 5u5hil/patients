@@ -392,11 +392,12 @@ angular.module('your_app_name.controllers', [])
                 alert($scope.tempImgs);
                 angular.forEach($scope.tempImgs, function (value, key) {
                     $scope.picData = getImgUrl(value);
+                    var imgName = value.substr(value.lastIndexOf('/') + 1);
                     alert($scope.picData);
                     $scope.ftLoad = true;
                     $scope.uploadPicture();
                     $scope.$apply(function () {
-                        $scope.images.push(value);
+                        $scope.images.push(imgName);
                     });
                 });
                 jQuery('#camfile').val($scope.images);
@@ -415,6 +416,11 @@ angular.module('your_app_name.controllers', [])
                  alert('Please fill mandatory fields');
                  }
                  });*/
+                function getImgUrl(imageName) {
+                    var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+                    var trueOrigin = cordova.file.dataDirectory + name;
+                    return trueOrigin;
+                }
             };
 
             //Take images with camera
@@ -459,8 +465,7 @@ angular.module('your_app_name.controllers', [])
                         var imageName = entry.nativeURL;
                         $scope.$apply(function () {
                             $scope.tempImgs.push(imageName);
-                        });
-                        var imgName = imageName.substr(imageName.lastIndexOf('/') + 1);
+                        });                        
                         $scope.picData = getImgUrl(imageName);
                         alert($scope.picData);
                         $scope.ftLoad = true;
