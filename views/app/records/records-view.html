@@ -50,8 +50,8 @@
 					</a>
 					
 					<div class="row p0">
-					<div class="col selectrecord"><ion-checkbox>Select</ion-checkbox></div>
-					<div class="col"><div class="card-viewbtn button-positive">View</div></div>
+					<div class="col selectrecord"><ion-checkbox ng-model="checkboxmodel"  ng-change="selectcheckbox(checkboxmodel)" > Select</ion-checkbox></div>
+					<div class="col btview"><a ui-sref="app.record-details({'id' : rec.id,'res' : 'json'})" ><div class="card-viewbtn button-positive">View</div></a></div>
 					</div>
                 </div>
             </div>

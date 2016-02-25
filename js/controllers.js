@@ -635,14 +635,24 @@ angular.module('your_app_name.controllers', [])
 			
 			$scope.recordDelete = function(){
 				jQuery('.selectrecord').fadeIn('slow');
+				jQuery('.btview').fadeOut('slow');
 				jQuery('#rec1').fadeOut();
 				jQuery('#rec2').fadeIn('slow');
+				
 			}
 			
 			$scope.recordcancel=function(){
 				jQuery('.selectrecord').fadeOut('slow');
+				jQuery('.btview').fadeIn('slow');
 				jQuery('#rec1').fadeIn('slow');
 				jQuery('#rec2').fadeOut();
+				}
+				
+				$scope.selectcheckbox=function($event){
+				console.log($event);
+				// if($event==true){
+					// jQuery(this).addClass('asd123');
+					// }
 				}
 			
         })

@@ -9020,16 +9020,23 @@ label.item .col{position:relative;}
     padding: 5px;
     margin-top: 5px; color:#fff;  /* border:1px #387ef5 solid; */
 }
-.attachcard{ display:block; font-size:20px; margin:5px 0; text-align:center;}
+.attachcard{ display:block; font-size:20px; margin:5px 0; text-align:center; position:relative;}
 .selectrecord{display:none;}
-.selectrecord label{padding:6px 5px 5px 50px; background:#387ef5;     margin-top: 4px;     border-radius: 0px !important;}
-.selectrecord label  span{color:#fff;}
+.selectrecord label{padding:6px 5px 5px 50px; /* background:#387ef5;  *//* text-align:center;  */    margin-top: 4px;     border-radius: 0px !important;}
+.selectrecord label  span{/* color:#fff; */}
 .selectrecord  label .checkbox-icon:before{border-width:0; background:none;}
 .selectrecord.active{display:block;}
 .rec2{display:none;}
 .rec2 a{width:50%;    width: 50% !important;
     border: 0;
     border-radius: 0px !important;}
+	
+	.selectrecord input[type="checkbox"],.selectrecord  .checkbox-icon{width:auto !important;     height: 30px;}
+	.item-content.disable-pointer-events{position:absolute; z-index:99; left:40%; top:6px;}
+	.selectrecord .item.item-checkbox{height:32px;}
+	.selectrecord .checkbox input:before, .selectrecord .checkbox-icon:before{border-radius:0;}
+	.selectrecord .item-checkbox .checkbox{left:0; right:0;}
+	.btview a{text-decoration:none;}
 
 
 /* endcss */
