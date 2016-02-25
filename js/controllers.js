@@ -355,7 +355,7 @@ angular.module('your_app_name.controllers', [])
 //                $scope.modal.hide();
 //            };
         })
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $localstorage, $cordovaCamera, $cordovaFile) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile) {
 
             $scope.curTime = new Date();
             $scope.curTimeo = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
