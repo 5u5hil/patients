@@ -513,7 +513,7 @@ angular.module('your_app_name.controllers', [])
                         alert(response_data);
                         alert('upload');
                     }
-                    $ionicLoading.hide();
+                    //$ionicLoading.hide();
                 }
                 var ft = new FileTransfer();
                 ft.upload(fileURL, encodeURI(domain + 'records/upload'), uploadSuccess, function (error) {
