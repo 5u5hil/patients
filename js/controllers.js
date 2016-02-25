@@ -358,9 +358,9 @@ angular.module('your_app_name.controllers', [])
 
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile) {
 
-			$scope.methodA=function(){
-				//alert('fasd');
-				}
+            $scope.methodA = function () {
+                //alert('fasd');
+            }
             $scope.curTime = new Date();
             $scope.curTimeo = $filter('date')(new Date(), 'hh:mm');
             //$scope.curT = new Date()$filter('date')(new Date(), 'H:i');
@@ -528,17 +528,55 @@ angular.module('your_app_name.controllers', [])
                 // 3
                 $cordovaCamera.getPicture(options).then(function (imageData) {
                     //alert(imageData);
-                    //alert(cordova.file.dataDirectory);
-                    $scope.picData = imageData;
-                    $scope.ftLoad = true;
-                    $scope.$apply(function () {
-                        $scope.images.push(imageData);
-                    });
-                    camimg_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
-                    $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(camimg_holder);
-                    //jQuery('#addFile').append('');    
-                    jQuery('#camfile').val($scope.images);
-                    $scope.uploadPicture();
+                    onImageSuccess(imageData);
+                    function onImageSuccess(fileURI) {
+                        createFileEntry(fileURI);
+                    }
+                    function createFileEntry(fileURI) {
+                        window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+                    }
+                    // 5
+                    function copyFile(fileEntry) {
+                        var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+                        var newName = makeid() + name;
+
+                        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+                            fileEntry.copyTo(
+                                    fileSystem2,
+                                    newName,
+                                    onCopySuccess,
+                                    fail
+                                    );
+                        },
+                                fail);
+                    }
+                    // 6
+                    function onCopySuccess(entry) {
+                        $scope.picData = entry.nativeURL;
+                        $scope.ftLoad = true;
+//                        $scope.$apply(function () {
+//                            $scope.images.push(imageData);
+//                        });
+                        camimg_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
+                        $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(camimg_holder);
+                        //jQuery('#addFile').append('');    
+                        jQuery('#camfile').val($scope.images);
+                        $scope.uploadPicture();
+                        $scope.$apply(function () {
+                            $scope.images.push(entry.nativeURL);
+                        });
+                    }
+                    function fail(error) {
+                        console.log("fail: " + error.code);
+                    }
+                    function makeid() {
+                        var text = "";
+                        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                        for (var i = 0; i < 5; i++) {
+                            text += possible.charAt(Math.floor(Math.random() * possible.length));
+                        }
+                        return text;
+                    }
                 }, function (err) {
                     console.log(err);
                 });
@@ -558,7 +596,7 @@ angular.module('your_app_name.controllers', [])
                 params.value2 = "otherparams";
                 options.params = params;
                 var uploadSuccess = function (response) {
-                    alert('Success'+response.data);
+                    alert('Success' + response.data);
                     $ionicLoading.hide();
                 }
                 var ft = new FileTransfer();
@@ -668,28 +706,28 @@ angular.module('your_app_name.controllers', [])
                 $state.go('app.add-category', {'id': button.id}, {reload: true});
             };
 
-			
-			$scope.recordDelete = function(){
-				jQuery('.selectrecord').fadeIn('slow');
-				jQuery('.btview').fadeOut('slow');
-				jQuery('#rec1').fadeOut();
-				jQuery('#rec2').fadeIn('slow');
-				
-			}
-			
-			$scope.recordcancel=function(){
-				jQuery('.selectrecord').fadeOut('slow');
-				jQuery('.btview').fadeIn('slow');
-				jQuery('#rec1').fadeIn('slow');
-				jQuery('#rec2').fadeOut();
-				}
-				
-				$scope.selectcheckbox=function($event){
-				console.log($event);
-				// if($event==true){
-					// jQuery(this).addClass('asd123');
-					// }
-				}
+
+            $scope.recordDelete = function () {
+                jQuery('.selectrecord').fadeIn('slow');
+                jQuery('.btview').fadeOut('slow');
+                jQuery('#rec1').fadeOut();
+                jQuery('#rec2').fadeIn('slow');
+
+            }
+
+            $scope.recordcancel = function () {
+                jQuery('.selectrecord').fadeOut('slow');
+                jQuery('.btview').fadeIn('slow');
+                jQuery('#rec1').fadeIn('slow');
+                jQuery('#rec2').fadeOut();
+            }
+
+            $scope.selectcheckbox = function ($event) {
+                console.log($event);
+                // if($event==true){
+                // jQuery(this).addClass('asd123');
+                // }
+            }
 
         })
 
