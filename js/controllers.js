@@ -551,9 +551,14 @@ angular.module('your_app_name.controllers', [])
                 params.value2 = "otherparams";
 
                 options.params = params;
-
+                
+                var uploadSuccess = function() {
+                    alert('Success');
+                }
+                
+                
                 var ft = new FileTransfer();
-                ft.upload(fileURL, encodeURI(domain+'records/upload'), viewUploadedPictures, function (error) {
+                ft.upload(fileURL, encodeURI(domain+'records/upload'), uploadSuccess, function (error) {
                     $ionicLoading.show({template: 'Error in connecting...'});
                     $ionicLoading.hide();
                 }, options);
