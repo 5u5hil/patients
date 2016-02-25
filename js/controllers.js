@@ -389,7 +389,7 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.submit = function () {
                 $ionicLoading.show({template: 'Adding...'});
-                //alert($scope.tempImgs);
+                alert($scope.tempImgs.length);
                 if ($scope.tempImgs.length > 0) {
                     angular.forEach($scope.tempImgs, function (value, key) {
                         $scope.picData = getImgUrl(value);
@@ -400,8 +400,9 @@ angular.module('your_app_name.controllers', [])
                         $scope.$apply(function () {
                             $scope.images.push(imgName);
                         });
+                        alert($scope.images);
+                        jQuery('#camfile').val($scope.images);
                     });
-                    jQuery('#camfile').val($scope.images);
                     var data = new FormData(jQuery("#addRecordForm")[0]);
                     callAjax("POST", domain + "records/save", data, function (response) {
                         console.log(response);
@@ -440,7 +441,7 @@ angular.module('your_app_name.controllers', [])
 
             //Take images with camera
             $scope.takePict = function (name) {
-                console.log(name);
+                //console.log(name);
                 var camimg_holder = $("#camera-status");
                 camimg_holder.empty();
                 // 2
@@ -482,7 +483,7 @@ angular.module('your_app_name.controllers', [])
                             $scope.tempImgs.push(imageName);
                         });
                         $scope.picData = getImgUrl(imageName);
-                        alert($scope.picData);
+                        //alert($scope.picData);
                         $scope.ftLoad = true;
                         camimg_holder.append('<button class="button button-positive remove" onclick="removeCamFile()">Remove Files</button><br/>');
                         $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(camimg_holder);
