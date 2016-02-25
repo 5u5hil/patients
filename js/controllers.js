@@ -388,12 +388,12 @@ angular.module('your_app_name.controllers', [])
                 addNew(ele);
             };
             $scope.submit = function () {
-                //$ionicLoading.show({template: 'Adding...'});
-                alert($scope.tempImgs);
+                $ionicLoading.show({template: 'Adding...'});
+                //alert($scope.tempImgs);
                 angular.forEach($scope.tempImgs, function (value, key) {
                     $scope.picData = getImgUrl(value);
                     var imgName = value.substr(value.lastIndexOf('/') + 1);
-                    alert($scope.picData);
+                    //alert($scope.picData);
                     $scope.ftLoad = true;
                     $scope.uploadPicture();
                     $scope.$apply(function () {
@@ -401,21 +401,19 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
                 jQuery('#camfile').val($scope.images);
-                //$ionicLoading.hide();
-
-                /*var data = new FormData(jQuery("#addRecordForm")[0]);
-                 callAjax("POST", domain + "records/save", data, function (response) {
-                 console.log(response);
-                 $ionicLoading.hide();
-                 if (angular.isObject(response.records)) {
-                 alert("Record added successfully!");
-                 $timeout(function () {
-                 $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
-                 }, 1000);
-                 } else if (response.err != '') {
-                 alert('Please fill mandatory fields');
-                 }
-                 });*/
+                var data = new FormData(jQuery("#addRecordForm")[0]);
+                callAjax("POST", domain + "records/save", data, function (response) {
+                    console.log(response);
+                    $ionicLoading.hide();
+                    if (angular.isObject(response.records)) {
+                        alert("Record added successfully!");
+                        $timeout(function () {
+                            $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                        }, 1000);
+                    } else if (response.err != '') {
+                        alert('Please fill mandatory fields');
+                    }
+                });
                 function getImgUrl(imageName) {
                     var name = imageName.substr(imageName.lastIndexOf('/') + 1);
                     var trueOrigin = cordova.file.dataDirectory + name;
@@ -465,18 +463,12 @@ angular.module('your_app_name.controllers', [])
                         var imageName = entry.nativeURL;
                         $scope.$apply(function () {
                             $scope.tempImgs.push(imageName);
-                        });                        
+                        });
                         $scope.picData = getImgUrl(imageName);
                         alert($scope.picData);
                         $scope.ftLoad = true;
                         camimg_holder.append('<button class="button button-positive remove" onclick="removeCamFile()">Remove Files</button><br/>');
                         $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(camimg_holder);
-                        //jQuery('#addFile').append('');                        
-//                        $scope.uploadPicture();
-//                        $scope.$apply(function () {
-//                            $scope.images.push(imgName);
-//                        });
-//                        jQuery('#camfile').val($scope.images);
                     }
                     function fail(error) {
                         console.log("fail: " + error.code);
