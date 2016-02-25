@@ -390,17 +390,19 @@ angular.module('your_app_name.controllers', [])
             $scope.submit = function () {
                 $ionicLoading.show({template: 'Adding...'});
                 //alert($scope.tempImgs);
-                angular.forEach($scope.tempImgs, function (value, key) {
-                    $scope.picData = getImgUrl(value);
-                    var imgName = value.substr(value.lastIndexOf('/') + 1);
-                    //alert($scope.picData);
-                    $scope.ftLoad = true;
-                    $scope.uploadPicture();
-                    $scope.$apply(function () {
-                        $scope.images.push(imgName);
+                if ($scope.tempImgs.length>0) {
+                    angular.forEach($scope.tempImgs, function (value, key) {
+                        $scope.picData = getImgUrl(value);
+                        var imgName = value.substr(value.lastIndexOf('/') + 1);
+                        //alert($scope.picData);
+                        $scope.ftLoad = true;
+                        $scope.uploadPicture();
+                        $scope.$apply(function () {
+                            $scope.images.push(imgName);
+                        });
                     });
-                });
-                jQuery('#camfile').val($scope.images);
+                    jQuery('#camfile').val($scope.images);
+                }
                 var data = new FormData(jQuery("#addRecordForm")[0]);
                 callAjax("POST", domain + "records/save", data, function (response) {
                     console.log(response);
@@ -493,7 +495,7 @@ angular.module('your_app_name.controllers', [])
 
 
             $scope.uploadPicture = function () {
-                $ionicLoading.show({template: 'Uploading..'});
+                //$ionicLoading.show({template: 'Uploading..'});
                 var fileURL = $scope.picData;
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
@@ -516,7 +518,7 @@ angular.module('your_app_name.controllers', [])
                 var ft = new FileTransfer();
                 ft.upload(fileURL, encodeURI(domain + 'records/upload'), uploadSuccess, function (error) {
                     $ionicLoading.show({template: 'Error in connecting...'});
-                    $ionicLoading.hide();
+                    //$ionicLoading.hide();
                 }, options);
             };
             $scope.chkDt = function (dt) {
