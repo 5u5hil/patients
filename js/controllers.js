@@ -356,10 +356,11 @@ angular.module('your_app_name.controllers', [])
 //            };
         })
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture, $cordovaCamera, $cordovaFile) {
-
+			
+			
             $scope.curTime = new Date();
-            $scope.curTimeo = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-            //$scope.curT = new Date()$filter('date')(new Date(), 'HH:mm');
+            $scope.curTimeo = $filter('date')(new Date(), 'hh:mm');
+            //$scope.curT = new Date()$filter('date')(new Date(), 'H:i');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
             $scope.fields = {};

@@ -1,6 +1,6 @@
 <ion-view class="add-category-view">
     <ion-nav-title>
-        <span>Add Record ({{record.category}})</span>
+        <span>Add Record <!--({{record.category}})--></span>
     </ion-nav-title>
     <form name="addRecordForm" id="addRecordForm" enctype="multipart/form-data" novalidate >
         <ion-content>
@@ -12,9 +12,7 @@
                 <input type="hidden" ng-model="record.recordCat" value="{{category}}" name="recordCat" />
                 <!--<div ng-repeat="field in fields" ng-bind-html="field"></div>-->
 
-
-
-
+			
 
                 <div class="row">
                     <div class="col col-50"> 
@@ -28,6 +26,9 @@
                     </div>	
                 </div>
 
+				
+				
+				
                 <div class="brdT">
                     <div ng-repeat="field in fields" >
                         <div ng-if="field.is_dependent == 1 && field.field == 'Prescribed By' || field.field == 'Measured By' || field.field == 'Referred By' || field.field == 'Performed By' || field.field == 'Consultant' || field.field == 'Created By'">
@@ -335,22 +336,22 @@
                                 <div ng-if="field.multi_value == 0">
                                     <label class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
                                         <span class="input-label" >{{field.field}} *</span>
-                                        <input type="time" placeholder="{{field.field}} *" ng-model="curTimeo" value="{{curTimeo|time1}}" name="{{field.name}}" />                            
+                                        <input type="time" placeholder="{{field.field}} *" ng-model="curTimeo" value="{{curTimeo}}" name="{{field.name}}" />                            
                                     </label>
                                     <label class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
                                         <span class="input-label" >{{field.field}}</span>
-                                        <input type="time" placeholder="{{field.field}}" ng-model="curTimeo" value="{{curTimeo|time1}}" name="{{field.name}}" />                            
+                                        <input type="time" placeholder="{{field.field}}" ng-model="curTimeo" value="{{curTimeo}}" name="{{field.name}}" />                            
                                     </label>
                                 </div>
                                 <div ng-if="field.multi_value == 1">
                                     <label class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
                                         <span class="input-label" >{{field.field}} *</span>
-                                        <input type="time" placeholder="{{field.field}} *" ng-model="curTimeo" value="{{curTimeo|time1}}" class="toClone" name="{{field.name}}[]" />
+                                        <input type="time" placeholder="{{field.field}} *" ng-model="curTimeo" value="{{curTimeo}}" class="toClone" name="{{field.name}}[]" />
                                         <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                                     </label>
                                     <label class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
                                         <span class="input-label" >{{field.field}}</span>
-                                        <input type="time" placeholder="{{field.field}}" ng-model="curTimeo" value="{{curTimeo|time1}}" class="toClone" name="{{field.name}}[]" />
+                                        <input type="time" placeholder="{{field.field}}" ng-model="curTimeo" value="{{curTimeo}}" class="toClone" name="{{field.name}}[]" />
                                         <button type="button" class="button button-small addbtn" ng-click="addNewElement(field.name)">Add New</button>
                                     </label>
                                 </div>
