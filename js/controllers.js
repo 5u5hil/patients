@@ -355,7 +355,7 @@ angular.module('your_app_name.controllers', [])
 //                $scope.modal.hide();
 //            };
         })
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture, $cordovaCamera, $cordovaFile) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $localstorage, $cordovaCamera, $cordovaFile) {
 
             $scope.curTime = new Date();
             $scope.curTimeo = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
@@ -523,6 +523,8 @@ angular.module('your_app_name.controllers', [])
                 $cordovaCamera.getPicture(options).then(function (imageData) {
                     //alert(imageData);
                     //alert(cordova.file.dataDirectory);
+                    $scope.picData = imageData;
+                    $scope.ftLoad = true;
                     $scope.$apply(function () {
                         $scope.images.push(imageData);
                     });
@@ -532,6 +534,31 @@ angular.module('your_app_name.controllers', [])
                     console.log(err);
                 });
             };
+
+
+            $scope.uploadPicture = function () {
+                $ionicLoading.show({template: 'Uploading..'});
+                var fileURL = $scope.picData;
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+                options.mimeType = "image/jpeg";
+                options.chunkedMode = true;
+
+                var params = {};
+                params.value1 = "someparams";
+                params.value2 = "otherparams";
+
+                options.params = params;
+
+                var ft = new FileTransfer();
+                ft.upload(fileURL, encodeURI(domain+'records/upload'), viewUploadedPictures, function (error) {
+                    $ionicLoading.show({template: 'Error in connecting...'});
+                    $ionicLoading.hide();
+                }, options);
+            };
+
+
             $scope.takePicture = function () {
                 takePicture();
             };
