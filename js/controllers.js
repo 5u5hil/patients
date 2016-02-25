@@ -390,7 +390,7 @@ angular.module('your_app_name.controllers', [])
             $scope.submit = function () {
                 $ionicLoading.show({template: 'Adding...'});
                 //alert($scope.tempImgs);
-                if ($scope.tempImgs.length>0) {
+                if ($scope.tempImgs.length > 0) {
                     angular.forEach($scope.tempImgs, function (value, key) {
                         $scope.picData = getImgUrl(value);
                         var imgName = value.substr(value.lastIndexOf('/') + 1);
@@ -402,20 +402,35 @@ angular.module('your_app_name.controllers', [])
                         });
                     });
                     jQuery('#camfile').val($scope.images);
+                    var data = new FormData(jQuery("#addRecordForm")[0]);
+                    callAjax("POST", domain + "records/save", data, function (response) {
+                        console.log(response);
+                        $ionicLoading.hide();
+                        if (angular.isObject(response.records)) {
+                            alert("Record added successfully!");
+                            $timeout(function () {
+                                $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                            }, 1000);
+                        } else if (response.err != '') {
+                            alert('Please fill mandatory fields');
+                        }
+                    });
+                } else {
+                    var data = new FormData(jQuery("#addRecordForm")[0]);
+                    callAjax("POST", domain + "records/save", data, function (response) {
+                        console.log(response);
+                        $ionicLoading.hide();
+                        if (angular.isObject(response.records)) {
+                            alert("Record added successfully!");
+                            $timeout(function () {
+                                $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                            }, 1000);
+                        } else if (response.err != '') {
+                            alert('Please fill mandatory fields');
+                        }
+                    });
                 }
-                var data = new FormData(jQuery("#addRecordForm")[0]);
-                callAjax("POST", domain + "records/save", data, function (response) {
-                    console.log(response);
-                    $ionicLoading.hide();
-                    if (angular.isObject(response.records)) {
-                        alert("Record added successfully!");
-                        $timeout(function () {
-                            $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
-                        }, 1000);
-                    } else if (response.err != '') {
-                        alert('Please fill mandatory fields');
-                    }
-                });
+
                 function getImgUrl(imageName) {
                     var name = imageName.substr(imageName.lastIndexOf('/') + 1);
                     var trueOrigin = cordova.file.dataDirectory + name;
@@ -517,7 +532,7 @@ angular.module('your_app_name.controllers', [])
                 }
                 var ft = new FileTransfer();
                 ft.upload(fileURL, encodeURI(domain + 'records/upload'), uploadSuccess, function (error) {
-                    $ionicLoading.show({template: 'Error in connecting...'});
+                    //$ionicLoading.show({template: 'Error in connecting...'});
                     //$ionicLoading.hide();
                 }, options);
             };
