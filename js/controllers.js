@@ -389,16 +389,16 @@ angular.module('your_app_name.controllers', [])
             };
             $scope.submit = function () {
                 $ionicLoading.show({template: 'Adding...'});
-                alert($scope.tempImgs.length);
+                //alert($scope.tempImgs.length);
                 if ($scope.tempImgs.length > 0) {
                     angular.forEach($scope.tempImgs, function (value, key) {
                         $scope.picData = getImgUrl(value);
                         var imgName = value.substr(value.lastIndexOf('/') + 1);
-                        //alert($scope.picData);
+                        alert(imgName);
                         $scope.ftLoad = true;
                         $scope.uploadPicture();
                         $scope.$apply(function () {
-                            $scope.images.push(imgName);
+                            $scope.images.push(value.substr(value.lastIndexOf('/') + 1));
                         });
                         alert($scope.images);
                         jQuery('#camfile').val($scope.images);
