@@ -530,6 +530,7 @@ angular.module('your_app_name.controllers', [])
                     });
                     //jQuery('#addFile').append('');    
                     jQuery('#camfile').val($scope.images);
+                    $scope.uploadPicture();
                 }, function (err) {
                     console.log(err);
                 });
