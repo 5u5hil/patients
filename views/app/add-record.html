@@ -14,17 +14,17 @@
 
 			
 
-                <div class="row">
-                    <div class="col col-50"> 
-                        <div class="filelabel">
-                            <input type="file" name="attachfile" id="attachfile" accept="image/*;capture=camera" >
-                            <label for="attachfile">Attach File</label>
-                        </div>
-                    </div>	
-                    <div class="col col-50">
-                        <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
-                    </div>	
-                </div>
+                <!--                <div class="row">
+                                    <div class="col col-50"> 
+                                        <div class="filelabel">
+                                            <input type="file" name="attachfile" id="attachfile" accept="image/*;capture=camera" >
+                                            <label for="attachfile">Attach File</label>
+                                        </div>
+                                    </div>	
+                                    <div class="col col-50">
+                                        <button class="btncamera" onclick="takePicture()"><i class="ion-android-camera"></i></button>
+                                    </div>	
+                                </div>-->
 
 				
 				
@@ -102,7 +102,7 @@
                             </div>
                             <div ng-if="field.field_types.value == 'file'">  
                                 <div ng-if="category == 8">
-                                    <label class="item item-input item-stacked-label" ng-if="field.multi_value == 0">
+                                    <div class="item item-input item-stacked-label" ng-if="field.multi_value == 0">
                                         <span class="input-label dblock" >{{field.field}}</span>
                                         <div class="row p0">
                                             <div class="col col-50 pl0"> 
@@ -110,16 +110,16 @@
                                                     <input type="file" placeholder="{{field.field}}" name="{{field.name}}" onchange="angular.element(this).scope().setFile(this)" id="presciption" ng-model="prescription" />
                                                     <label for="attachfile">File Selector</label>
                                                 </div>
-                                            </div>	
-
+                                            </div>
                                             <div class="col col-50">
-                                                <div class="btncamera" ng-click="takePict()"><i class="ion-android-camera"></i></div>
+                                                <div class="btncamera" ng-click="takePict('{{field.name}}')"><i class="ion-android-camera"></i></div>
+                                                <input class="" type="text" name="cam-{{field.name}}" id="camfile"/>
                                             </div>	
                                         </div>	
                                         <div id="image-holder"></div>
                                         <div id="camera_status"></div>
-                                    </label>
-                                    <label class="item item-input item-stacked-label" ng-if="field.multi_value == 1">
+                                    </div>
+                                    <div class="item item-input item-stacked-label" ng-if="field.multi_value == 1">
                                         <span class="input-label dblock" >{{field.field}}</span>
                                         <div class="row p0">
                                             <div class="col col-50 pl0"> 
@@ -130,16 +130,17 @@
                                             </div>	
 
                                             <div class="col col-50">
-                                                <div class="btncamera" ng-click="takePict()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                <div class="btncamera" ng-click="takePict('{{field.name}}')" ><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                <input class="" type="text" name="cam-{{field.name}}" id="camfile"/>
                                             </div>	
                                         </div>	
                                         <div id="image-holder"></div>
                                         <div id="camera_status"></div>
-                                    </label>
+                                    </div>
                                 </div>
                                 <div ng-if="category != 8">
                                     <div ng-if="field.multi_value == 0" >
-                                        <label class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
+                                        <div class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
                                             <span class="input-label dblock" >{{field.field}}</span>
                                             <div class="row p0">
                                                 <div class="col col-50 pl0"> 
@@ -149,25 +150,25 @@
                                                     </div>
                                                 </div>	
                                                 <div class="col col-50">
-                                                    <div class="btncamera" ng-click="takePict()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <input type="file" placeholder="{{field.field}}"  id="camfile" name="{{field.name}}-1[]" class="camerafile" />
+                                                    <div class="btncamera" ng-click="takePict('{{field.name}}')"><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                    <input class="" type="text" name="cam-{{field.name}}" id="camfile"/>
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
                                             <div id="camera_status"></div>
-                                        </label>
+                                        </div>
                                         <div class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
                                             <span class="input-label dblock" >{{field.field}}</span>
                                             <div class="row p0">
                                                 <div class="col col-50 pl0"> 
                                                     <div class="filelabel">
-                                                        <input type="file" class="img" placeholder="{{field.field}}" onchange="angular.element(this).scope().setFile(this)" id="{{field.name}}"  name="{{field.name}}" />
+                                                        <input type="file" class="img" placeholder="{{field.field}}" onchange="angular.element(this).scope().setFile(this)"  name="{{field.name}}" />
                                                         <label for="attachfile">File Selector</label>
                                                     </div>
                                                 </div>	
-                                                <div class="col col-50">
-                                                    <div class="btncamera" ng-model="capPic" ng-click="takePict()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <div class="btncamera" ng-model="capPic" ng-click="takePicture()"><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                <div class="col col-50" id="addFile">
+                                                    <div class="btncamera" ng-model="capPic" ng-click="takePict('{{field.name}}')"><!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                    <input class="" type="text" name="cam-{{field.name}}" id="camfile"/>
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
@@ -175,7 +176,7 @@
                                         </div>
                                     </div>
                                     <div ng-if="field.multi_value == 1" > 
-                                        <label class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
+                                        <div class="item item-input item-stacked-label listreq" ng-if="field.is_mandatory == 1">
                                             <span class="input-label dblock" >{{field.field}}</span>
                                             <div class="row p0">
                                                 <div class="col col-75 pl0"> 
@@ -185,14 +186,14 @@
                                                     </div>
                                                 </div>	
                                                 <div class="col">
-                                                    <div class="btncamera" onclick="takePicture()">	<!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <input type="file" placeholder="{{field.field}}"  multiple="" id="camfile" name="{{field.name}}-1[]" class="camerafile"  />
+                                                    <div class="btncamera" ng-click="takePict('{{field.name}}')">	<!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                    <input class="" type="text" name="cam-{{field.name}}" id="camfile"/>
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
                                             <div id="camera_status"></div>
-                                        </label>
-                                        <label class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
+                                        </div>
+                                        <div class="item item-input item-stacked-label" ng-if="field.is_mandatory != 1">
                                             <span class="input-label dblock" >{{field.field}}</span>
                                             <div class="row p0">
                                                 <div class="col col-75 pl0"> 
@@ -202,13 +203,13 @@
                                                     </div>
                                                 </div>	
                                                 <div class="col">
-                                                    <div class="btncamera" onclick="takePicture()">	<!-- <i class="ion-android-camera"></i> -->Camera</div>
-                                                    <input type="file" placeholder="{{field.field}} *"  required multiple="" id="camfile" name="{{field.name}}-1[]" class="camerafile" />
+                                                    <div class="btncamera" ng-click="takePict('{{field.name}}')">	<!-- <i class="ion-android-camera"></i> -->Camera</div>
+                                                    <input class="" type="text" name="cam-{{field.name}}" id="camfile"/>
                                                 </div>	
                                             </div>	
                                             <div id="image-holder"></div>
                                             <div id="camera_status"></div>
-                                        </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

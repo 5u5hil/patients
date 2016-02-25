@@ -355,9 +355,10 @@ angular.module('your_app_name.controllers', [])
 //                $scope.modal.hide();
 //            };
         })
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCapture, $cordovaCamera, $cordovaFile) {
-			
-			
+
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile) {
+
+
             $scope.curTime = new Date();
             $scope.curTimeo = $filter('date')(new Date(), 'hh:mm');
             //$scope.curT = new Date()$filter('date')(new Date(), 'H:i');
@@ -510,8 +511,8 @@ angular.module('your_app_name.controllers', [])
                 //reader.readAsDataURL(element.files[0]);
             };
             $scope.images = [];
-            $scope.takePict = function () {
-                console.log('aaaaa');
+            $scope.takePict = function (name) {
+                console.log(name);
                 // 2
                 var options = {
                     destinationType: Camera.DestinationType.FILE_URI,
@@ -522,17 +523,50 @@ angular.module('your_app_name.controllers', [])
                 };
                 // 3
                 $cordovaCamera.getPicture(options).then(function (imageData) {
-                    alert(imageData);
-                    alert(cordova.file.dataDirectory);
-                    // 4
-                    onImageSuccess(imageData);
-                    function onImageSuccess(fileURI) {
-                        createFileEntry(fileURI);
-                    }
+                    //alert(imageData);
+                    //alert(cordova.file.dataDirectory);
+                    $scope.picData = imageData;
+                    $scope.ftLoad = true;
+                    $scope.$apply(function () {
+                        $scope.images.push(imageData);
+                    });
+                    //jQuery('#addFile').append('');    
+                    jQuery('#camfile').val($scope.images);
+                    $scope.uploadPicture();
                 }, function (err) {
                     console.log(err);
                 });
             };
+
+
+            $scope.uploadPicture = function () {
+                $ionicLoading.show({template: 'Uploading..'});
+                var fileURL = $scope.picData;
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+                options.mimeType = "image/jpeg";
+                options.chunkedMode = true;
+
+                var params = {};
+                params.value1 = "someparams";
+                params.value2 = "otherparams";
+
+                options.params = params;
+                
+                var uploadSuccess = function() {
+                    alert('Success');
+                }
+                
+                
+                var ft = new FileTransfer();
+                ft.upload(fileURL, encodeURI(domain+'records/upload'), uploadSuccess, function (error) {
+                    $ionicLoading.show({template: 'Error in connecting...'});
+                    $ionicLoading.hide();
+                }, options);
+            };
+
+
             $scope.takePicture = function () {
                 takePicture();
             };
@@ -633,6 +667,7 @@ angular.module('your_app_name.controllers', [])
             $scope.addRecord = function () {
                 $state.go('app.add-category', {'id': button.id}, {reload: true});
             };
+
 			
 			$scope.recordDelete = function(){
 				jQuery('.selectrecord').fadeIn('slow');
@@ -655,7 +690,7 @@ angular.module('your_app_name.controllers', [])
 					// jQuery(this).addClass('asd123');
 					// }
 				}
-			
+
         })
 
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {
