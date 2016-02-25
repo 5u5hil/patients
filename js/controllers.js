@@ -399,19 +399,21 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
                 jQuery('#camfile').val($scope.images);
+                $ionicLoading.hide();
+
                 /*var data = new FormData(jQuery("#addRecordForm")[0]);
-                callAjax("POST", domain + "records/save", data, function (response) {
-                    console.log(response);
-                    $ionicLoading.hide();
-                    if (angular.isObject(response.records)) {
-                        alert("Record added successfully!");
-                        $timeout(function () {
-                            $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
-                        }, 1000);
-                    } else if (response.err != '') {
-                        alert('Please fill mandatory fields');
-                    }
-                });*/
+                 callAjax("POST", domain + "records/save", data, function (response) {
+                 console.log(response);
+                 $ionicLoading.hide();
+                 if (angular.isObject(response.records)) {
+                 alert("Record added successfully!");
+                 $timeout(function () {
+                 $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
+                 }, 1000);
+                 } else if (response.err != '') {
+                 alert('Please fill mandatory fields');
+                 }
+                 });*/
             };
 
             //Take images with camera
