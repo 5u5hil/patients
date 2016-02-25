@@ -388,7 +388,8 @@ angular.module('your_app_name.controllers', [])
                 addNew(ele);
             };
             $scope.submit = function () {
-                $ionicLoading.show({template: 'Adding...'});
+                //$ionicLoading.show({template: 'Adding...'});
+                alert($scope.tempImgs);
                 angular.forEach($scope.tempImgs, function (value, key) {
                     $scope.picData = getImgUrl(value);
                     alert($scope.picData);
@@ -399,7 +400,7 @@ angular.module('your_app_name.controllers', [])
                     });
                 });
                 jQuery('#camfile').val($scope.images);
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
 
                 /*var data = new FormData(jQuery("#addRecordForm")[0]);
                  callAjax("POST", domain + "records/save", data, function (response) {
@@ -457,7 +458,7 @@ angular.module('your_app_name.controllers', [])
                     function onCopySuccess(entry) {
                         var imageName = entry.nativeURL;
                         $scope.$apply(function () {
-                            $scope.tempImgs.push(imgName);
+                            $scope.tempImgs.push(imageName);
                         });
                         var imgName = imageName.substr(imageName.lastIndexOf('/') + 1);
                         $scope.picData = getImgUrl(imageName);
