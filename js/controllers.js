@@ -413,110 +413,7 @@ angular.module('your_app_name.controllers', [])
                     }
                 });*/
             };
-            $scope.chkDt = function (dt) {
-                console.log(dt);
-                console.log($scope.curTime);
-                console.log($scope.curTime < dt);
-                if (!($scope.curTime < dt)) {
-                    alert('End date should be greater than start date.');
-                    jQuery('#enddt').val('');
-                }
-            };
-            $scope.check = function (val) {
-                console.log(val);
-                if ($scope.categoryId == 7) {
-                    if (val) {
-                        jQuery('#billStatus').val('Paid');
-                        jQuery('#billmode').removeClass('hide');
-                    } else {
-                        jQuery('#billStatus').val('Unpaid');
-                        jQuery('#billmode').addClass('hide');
-                    }
-                }
-                if ($scope.categoryId == 2) {
-                    if (val) {
-                        jQuery('#immrcvdate').val('Received');
-                        jQuery('#imdtrcv').removeClass('hide');
-                        jQuery('.imd').removeClass('hide');
-                    } else {
-                        jQuery('#immrcvdate').val('To be received');
-                        jQuery('#imdtrcv').addClass('hide');
-                        jQuery('.imd').addClass('hide');
-                    }
-                }
-                if ($scope.categoryId == 4) {
-                    if (val) {
-                        jQuery('#proconduct').val('Conducted On');
-                        jQuery('#proconon').removeClass('hide');
-                        jQuery('#proconbef').addClass('hide');
-                    } else {
-                        jQuery('#proconduct').val('To be conducted');
-                        jQuery('#proconon').addClass('hide');
-                        jQuery('#proconbef').removeClass('hide');
-                    }
-                }
-                if ($scope.categoryId == 5) {
-                    if (val) {
-                        jQuery('#invconduct').val('Conducted On');
-                        jQuery('#invconon').removeClass('hide');
-                        jQuery('.inv').removeClass('hide');
-                        jQuery('#invconbef').addClass('hide');
-                    } else {
-                        jQuery('#invconduct').val('To be conducted');
-                        jQuery('#invconon').addClass('hide');
-                        jQuery('.inv').addClass('hide');
-                        jQuery('#invconbef').removeClass('hide');
-                    }
-                }
-            };
-            $scope.rcheck = function (val) {
-                console.log(val);
-                if ($scope.categoryId == 2) {
-                    if (val) {
-                        jQuery('#imrpton').removeClass('hide');
-                        jQuery('.imd').removeClass('hide');
-                    } else {
-                        jQuery('#imrpton').addClass('hide');
-                        jQuery('.imd').addClass('hide');
-                    }
-                }
-            };
-            $scope.setFile = function (element) {
-                $scope.currentFile = element.files[0];
-                console.log('length = ' + element.files.length);
-                var image_holder = $("#image-holder");
-                image_holder.empty();
-                if (element.files.length > 0) {
-                    jQuery('#convalid').removeClass('hide');
-                    jQuery('#coninprec').removeClass('hide');
-                    jQuery('#valid-till').attr('required', true);
-                    image_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
-                } else {
-                    jQuery('#convalid').addClass('hide');
-                    jQuery('#coninprec').addClass('hide');
-                    jQuery('#valid-till').attr('required', false);
-                }
 
-//                var reader = new FileReader();
-//                reader.onload = function (event) {
-//                    $scope.image_source = event.target.result
-//                    $scope.$apply();
-                if (typeof (FileReader) != "undefined") {
-                    //loop for each file selected for uploaded.
-                    for (var i = 0; i < element.files.length; i++) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-//                            $("<img />", {
-//                                "src": e.target.result,
-//                                "class": "thumb-image"
-//                            }).appendTo(image_holder);
-                            $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(image_holder);
-                        }
-                        image_holder.show();
-                        reader.readAsDataURL(element.files[0]);
-                    }
-                }
-            };
             //Take images with camera
             $scope.takePict = function (name) {
                 console.log(name);
@@ -622,12 +519,109 @@ angular.module('your_app_name.controllers', [])
                     $ionicLoading.hide();
                 }, options);
             };
-            $scope.takePicture = function () {
-                takePicture();
+            $scope.chkDt = function (dt) {
+                console.log(dt);
+                console.log($scope.curTime);
+                console.log($scope.curTime < dt);
+                if (!($scope.curTime < dt)) {
+                    alert('End date should be greater than start date.');
+                    jQuery('#enddt').val('');
+                }
             };
-            $scope.removeFile = function () {
-                console.log('remove');
-                jQuery('.img').val('');
+            $scope.check = function (val) {
+                console.log(val);
+                if ($scope.categoryId == 7) {
+                    if (val) {
+                        jQuery('#billStatus').val('Paid');
+                        jQuery('#billmode').removeClass('hide');
+                    } else {
+                        jQuery('#billStatus').val('Unpaid');
+                        jQuery('#billmode').addClass('hide');
+                    }
+                }
+                if ($scope.categoryId == 2) {
+                    if (val) {
+                        jQuery('#immrcvdate').val('Received');
+                        jQuery('#imdtrcv').removeClass('hide');
+                        jQuery('.imd').removeClass('hide');
+                    } else {
+                        jQuery('#immrcvdate').val('To be received');
+                        jQuery('#imdtrcv').addClass('hide');
+                        jQuery('.imd').addClass('hide');
+                    }
+                }
+                if ($scope.categoryId == 4) {
+                    if (val) {
+                        jQuery('#proconduct').val('Conducted On');
+                        jQuery('#proconon').removeClass('hide');
+                        jQuery('#proconbef').addClass('hide');
+                    } else {
+                        jQuery('#proconduct').val('To be conducted');
+                        jQuery('#proconon').addClass('hide');
+                        jQuery('#proconbef').removeClass('hide');
+                    }
+                }
+                if ($scope.categoryId == 5) {
+                    if (val) {
+                        jQuery('#invconduct').val('Conducted On');
+                        jQuery('#invconon').removeClass('hide');
+                        jQuery('.inv').removeClass('hide');
+                        jQuery('#invconbef').addClass('hide');
+                    } else {
+                        jQuery('#invconduct').val('To be conducted');
+                        jQuery('#invconon').addClass('hide');
+                        jQuery('.inv').addClass('hide');
+                        jQuery('#invconbef').removeClass('hide');
+                    }
+                }
+            };
+            $scope.rcheck = function (val) {
+                console.log(val);
+                if ($scope.categoryId == 2) {
+                    if (val) {
+                        jQuery('#imrpton').removeClass('hide');
+                        jQuery('.imd').removeClass('hide');
+                    } else {
+                        jQuery('#imrpton').addClass('hide');
+                        jQuery('.imd').addClass('hide');
+                    }
+                }
+            };
+            $scope.setFile = function (element) {
+                $scope.currentFile = element.files[0];
+                console.log('length = ' + element.files.length);
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+                if (element.files.length > 0) {
+                    jQuery('#convalid').removeClass('hide');
+                    jQuery('#coninprec').removeClass('hide');
+                    jQuery('#valid-till').attr('required', true);
+                    image_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
+                } else {
+                    jQuery('#convalid').addClass('hide');
+                    jQuery('#coninprec').addClass('hide');
+                    jQuery('#valid-till').attr('required', false);
+                }
+
+//                var reader = new FileReader();
+//                reader.onload = function (event) {
+//                    $scope.image_source = event.target.result
+//                    $scope.$apply();
+                if (typeof (FileReader) != "undefined") {
+                    //loop for each file selected for uploaded.
+                    for (var i = 0; i < element.files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+//                            $("<img />", {
+//                                "src": e.target.result,
+//                                "class": "thumb-image"
+//                            }).appendTo(image_holder);
+                            $('<span class="upattach"><i class="ion-paperclip"></i></span>').appendTo(image_holder);
+                        }
+                        image_holder.show();
+                        reader.readAsDataURL(element.files[0]);
+                    }
+                }
             };
         })
 
