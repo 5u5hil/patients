@@ -359,7 +359,7 @@ angular.module('your_app_name.controllers', [])
         .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile) {
 
 			$scope.methodA=function(){
-				alert('fasd');
+				//alert('fasd');
 				}
             $scope.curTime = new Date();
             $scope.curTimeo = $filter('date')(new Date(), 'hh:mm');
