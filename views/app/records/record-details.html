@@ -41,9 +41,26 @@
                             </div>
                             <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
-                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
-                            <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
-                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a>
+                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >
+                            <h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
+                            <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                 <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
+                            <div ng-repeat="attach in rec.attachments" >
+                                <div ng-init="selData = (attach.orginial_name).split('.')">
+                                    <div ng-if="selData[1] == 'png' || selData[1] == 'gif' || selData[1] == 'jpg' || selData[1] == 'PNG' || selData[1] == 'GIF' || selData[1] == 'JPG'">
+                                        <a class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" >
+                                            <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                        </a>
+                                    </div>
+                                    <div ng-if="selData[1] != 'png' && selData[1] != 'gif' && selData[1] != 'jpg' && selData[1] != 'PNG' && selData[1] != 'GIF' && selData[1] != 'JPG'">
+                                        <a class="filelink" href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}"  download>
+                                            <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clr"></div>		
                         </div>
                     </div>
                     <div ng-if="category[0].category == 7" >
@@ -57,6 +74,7 @@
                         </div>
                         <div ng-if="rec.fields.field == 'Payment Mode'">
                             <div ng-if="rec.value == '0'">NA</div>
+                            <div ng-if="rec.value != '0'">{{rec.value}}</div>
                         </div>
                         <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'">
                             <div ng-if="rec.fields.field_type == 8">
@@ -78,9 +96,26 @@
                             </div>
                             <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> {{rec.value}}</div>
                         </div>
-                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >Attached Files ({{rec.attachments.length}})
-                            <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
-                                <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a>
+                        <div class="clist-data-icon" ng-If="rec.fields.field == 'Attachments'" >
+                            <h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
+                            <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                                 <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
+                            <div ng-repeat="attach in rec.attachments" >
+                                <div ng-init="selData = (attach.orginial_name).split('.')">
+                                    <div ng-if="selData[1] == 'png' || selData[1] == 'gif' || selData[1] == 'jpg' || selData[1] == 'PNG' || selData[1] == 'GIF' || selData[1] == 'JPG'">
+                                        <a class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" >
+                                            <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                        </a>
+                                    </div>
+                                    <div ng-if="selData[1] != 'png' && selData[1] != 'gif' && selData[1] != 'jpg' && selData[1] != 'PNG' && selData[1] != 'GIF' && selData[1] != 'JPG'">
+                                        <a class="filelink" href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}"  download>
+                                            <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clr"></div>		
                         </div>
                     </div>
                     <div ng-if="category[0].category != 3 && category[0].category != 7">

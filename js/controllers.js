@@ -613,12 +613,12 @@ angular.module('your_app_name.controllers', [])
                 if (element.files.length > 0) {
                     jQuery('#convalid').removeClass('hide');
                     jQuery('#coninprec').removeClass('hide');
-                    jQuery('#valid-till').attr('required', true);
+                    //jQuery('#valid-till').attr('required', true);
                     image_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
                 } else {
                     jQuery('#convalid').addClass('hide');
                     jQuery('#coninprec').addClass('hide');
-                    jQuery('#valid-till').attr('required', false);
+                    //jQuery('#valid-till').attr('required', false);
                 }
 
 //                var reader = new FileReader();
