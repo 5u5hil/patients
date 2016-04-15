@@ -10,7 +10,7 @@
     <gap:platform name="ios" />
     <gap:platform name="android" />
     <description>
-        KES Health
+        KES Health 
     </description> 
     <author href="http://www.infinisystem.com" email="support@infiniteit.biz">
         Infini Systems
