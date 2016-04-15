@@ -1,0 +1,134 @@
+<ion-view cache-view="false" class="category-list-view" >
+  <ion-nav-title>
+    <span>Package Name</span>
+</ion-nav-title>
+<ion-content>
+	<div class="flexcont btnpd">
+	<div class="innerdiv brdright">Price <span class="countconsult">INR 350</span></div>
+	<div class="innerdiv">Duration <span class="countconsult">3 months</span></div>
+	</div>
+	<div class="item item-divider">Description</div>
+		<div class="cardcont txt-justify" ng-controller="pkgDetailsCtrl" ng-click="modal.show()">
+		<p>
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+		</p>
+		<div class="sbtn viewmore">readmore</div>
+		<br/>
+		</div>
+	<div class="item item-divider">Consultations</div>
+	
+	<div class="flexcont btnpd">
+	<div class="innerdiv brdright">Video <span class="countconsult">3</span></div>
+	<div class="innerdiv">Chat <span class="countconsult">7</span></div>
+	</div>
+
+	<div class="cardcont">
+		<div class="row p0">
+		<div class="col col-33"><strong>Specialist</strong></div>
+		<div class="col col-67"> 
+		<ul>
+		<li ng-controller="infodoctrsCtrl" ng-click="modal.show();">Dr.ABC , </li>
+		<li ng-controller="infodoctrsCtrl" ng-click="modal.show();">Dr.Hitakshi</li>
+		</ul>
+		</div>
+		</div>
+	</div>
+	<div class="item item-divider">Terms & Conditions</div>
+		<div class="cardcont txt-justify" ng-controller="pkgtermsCtrl" ng-click="modal.show()">
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ever since.</p>
+		<br/>
+			<div class="sbtn viewmore">readmore</div>
+		
+		</div>
+	
+	
+	
+ 
+  </ion-content>
+   <div class="fixedbar">
+    <a class="button btn-add" ui-sref="app.package-confirm" >Subscribe for INR 350</a>
+   
+    </div>
+  </ion-view>
+  
+  <script id="pkg-details" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Package Description</h1>
+	 <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+    </ion-header-bar>
+    <ion-content>
+		<div class="cardcont txt-justify">
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		</div>
+	</ion-content>
+</ion-modal-view>
+</script>
+  
+  
+    <script id="pkg-terms" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Terms & Conditions</h1>
+	 <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+    </ion-header-bar>
+    <ion-content>
+		<div class="cardcont txt-justify">
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		</div>
+	</ion-content>
+	</ion-modal-view>
+	</script>
+
+
+    <script id="infodoctrs" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Doctor Info</h1>
+	 <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+    </ion-header-bar>
+    <ion-content>
+
+	<div class="list card post-item">
+                    <div class="post-content item item-text-wrap">
+                        <a ui-sref="#" >
+                            <div class="card-left">	
+                                <!-- ngIf: doc.image != '' -->
+								<img class="user-image-circle" ng-if="doc.image != ''" ng-src="http://stage.doctrs.in//public/frontend/user/hitakshi.jpg" src="http://stage.doctrs.in//public/frontend/user/hitakshi.jpg"><!-- end ngIf: doc.image != '' --><!-- ngIf: doc.image == '' -->
+                            </div>
+                            <div class="card-detail txt-left">
+                                <p><strong>Dr. Hitakshi</strong><br>
+                                  <span> Psychiatrist </span></p>
+                            </div>
+                            <div class="row txt-left">
+                                <div class="col"><p><strong>Experience</strong><br>15 Years</p></div>	
+                                <div class="col"><p><strong>Qualification</strong><br>
+                                      <span>MD</span></p></div>	
+                            </div>
+                            <div class="row txt-left">
+                                <div class="col">
+								<p><strong>Languages</strong><br>
+								<span>english,&nbsp;</span>
+								<span>gujarati,&nbsp;</span>
+								<span> hindi</span></p></div>	
+                                <div class="col">
+								<p><strong>Focus Area</strong><br>
+                                        <!-- ngRepeat: focus in doc.focuses -->
+										<span> Behavioural disorders,&nbsp;</span>
+										<span>Depression,&nbsp;</span>
+										<span>Anxiety disorders,&nbsp;</span>
+										</p></div>	
+                            </div>
+                            <div class="clr"></div>
+                        </a>
+						
+                    </div>
+                </div>
+
+	</ion-content>
+</ion-modal-view>
+</script>

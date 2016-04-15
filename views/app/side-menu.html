@@ -29,22 +29,51 @@
                     <i class="icon ion-android-home"></i>
                     <h2 class="menu-text">Home</h2>
                 </ion-item>
-				
-				<!--   <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.test">
-					 <i class="icon ion-android-home"></i>
-                    <h2 class="menu-text">Home</h2>
-                </ion-item> -->
-				
 
-				<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.consultations-list">
+                <!--   <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.test">
+                         <i class="icon ion-android-home"></i>
+    <h2 class="menu-text">Home</h2>
+</ion-item> -->
+
+
+                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.consultations-list">
                     <i class="icon ion-medkit"></i>
                     <h2 class="menu-text">Consultations</h2>
                 </ion-item>
-				
-                <ion-item class="item-icon-left logoutbtn" nav-clear menu-close ng-if="userLogged==1" ng-click="logout()" >
+                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="#" >
+                    <i class="icon ion-folder"></i>
+                    <span class="menu-text">Records</span>
+                    <div class="comingsoon">Coming Soon</div>
+                </ion-item>  
+
+           <ion-item class="item-icon-left greyitem" nav-clear menu-close ui-sref="#" >
+                    <i class="icon ion-chatboxes"></i>
+                    <span class="menu-text">Chats</span>
+                    <div class="comingsoon">Coming Soon</div>
+                </ion-item>
+
+  <!--     app.category-detail                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="#" >
+                    <i class="icon ion-cube"></i>
+                    <span class="menu-text">Library</span>	
+                    <div class="comingsoon">Coming Soon</div>
+                </ion-item>
+
+        app.chatlist      <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.medicine">
+                    <i class="icon ion-medkit"></i>
+                    <span class="menu-text">Medicines</span>
+                </ion-item> 
+
+                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.pathology">
+                    <i class="icon ion-erlenmeyer-flask"></i>
+                    <span class="menu-text">Pathology</span>
+                </ion-item>-->
+
+                <ion-item class="item-icon-left logoutbtn" nav-clear menu-close ng-if="userLogged == 1" ng-click="logout()" >
                     <i class="icon ion-android-unlock"></i>
                     <h2 class="menu-text">Logout</h2>
-                </ion-item> 
+                </ion-item>
+
+
 
 
             </ion-list>

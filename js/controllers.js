@@ -1,9 +1,9 @@
 var publisher;
 var session;
 var subscriber;
-angular.module('your_app_name.controllers', [])
-
+angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
         .controller('AuthCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
+            $scope.interface = window.localStorage.setItem('interface_id', '3');
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
@@ -14,11 +14,10 @@ angular.module('your_app_name.controllers', [])
         })
 
 // APP
-// APP
         .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
-
             $rootScope.imgpath = domain + "/public/frontend/user/";
             $rootScope.attachpath = domain + "/public";
+
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
@@ -38,18 +37,17 @@ angular.module('your_app_name.controllers', [])
                     $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
                     $state.go('auth.walkthrough', {}, {reload: true});
                 }, 30);
+
             };
         })
-
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
 
         })
 
-
-
-
 //LOGIN
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading, $timeout) {
+            window.localStorage.setItem('interface_id', '3');
+            $scope.interface = window.localStorage.getItem('interface_id');
             $scope.doLogIn = function () {
                 $ionicLoading.show({template: 'Loading...'});
                 var data = new FormData(jQuery("#loginuser")[0]);
@@ -81,7 +79,6 @@ angular.module('your_app_name.controllers', [])
                                 $scope.loginError = response;
                                 $scope.loginError.digest;
                             })
-
                             //console.log('else part login');
                         }
                         $rootScope.$digest;
@@ -115,13 +112,14 @@ angular.module('your_app_name.controllers', [])
             }, 30);
         })
         .controller('SignupCtrl', function ($scope, $state, $http, $rootScope) {
+            $scope.interface = window.localStorage.setItem('interface_id', '3');
             $scope.user = {};
             $scope.user.name = '';
             $scope.user.email = '';
             $scope.user.phone = '';
             $scope.user.password = '';
             $scope.doSignUp = function () {
-                var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
+                var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password + "&interface=" + $scope.interface;
                 //var data = new FormData(jQuery("#signup")[0]);
                 $.ajax({
                     type: 'GET',
@@ -138,16 +136,19 @@ angular.module('your_app_name.controllers', [])
                     }
                 });
             };
-            //check OTP
+            //check OTP bhavana
             $scope.checkOTP = function (otp) {
+                $scope.interface = window.localStorage.getItem('interface_id');
                 $scope.user = {};
                 $scope.user.name = window.localStorage.getItem('name');
                 $scope.user.email = window.localStorage.getItem('email');
                 $scope.user.phone = window.localStorage.getItem('phone');
                 $scope.user.password = window.localStorage.getItem('password');
-                var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password;
+                var data = "name=" + $scope.user.name + "&email=" + $scope.user.email + "&phone=" + $scope.user.phone + "&password=" + $scope.user.password + "&interface=" + $scope.interface;
+                console.log("data " + data);
                 var code = window.localStorage.getItem('code');
                 if (parseInt(code) === parseInt(otp)) {
+                    console.log('code' + code + '--otp--' + otp)
                     $.ajax({
                         type: 'GET',
                         url: domain + "register",
@@ -170,14 +171,17 @@ angular.module('your_app_name.controllers', [])
                             console.log(e.responseText);
                         }
                     });
+                } else {
+                    alert('Enterd OTP code is incorrect.Kindly ckeck');
                 }
             };
             //Check if email is already registered
             $scope.checkEmail = function (email) {
+                $scope.interface = window.localStorage.getItem('interface_id');
                 $http({
                     method: 'GET',
                     url: domain + 'check-user-email',
-                    params: {userEmail: email}
+                    params: {userEmail: email, interface: $scope.interface}
                 }).then(function successCallback(response) {
                     if (response.data > 0) {
                         $scope.user.email = '';
@@ -186,6 +190,26 @@ angular.module('your_app_name.controllers', [])
                     } else {
                         $scope.emailError = "";
                         $scope.emailError.digest;
+                    }
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            };
+            //Check if phone is already registered - bhavana
+            $scope.checkPhone = function (phone) {
+                $scope.interface = window.localStorage.getItem('interface_id');
+                $http({
+                    method: 'GET',
+                    url: domain + 'check-user-phone',
+                    params: {userPhone: phone, interface: $scope.interface}
+                }).then(function successCallback(response) {
+                    if (response.data > 0) {
+                        $scope.user.phone = '';
+                        $scope.phoneError = "This phone number is already registered!";
+                        $scope.phoneError.digest;
+                    } else {
+                        $scope.phoneError = "";
+                        $scope.phoneError.digest;
                     }
                 }, function errorCallback(response) {
                     console.log(response);
@@ -264,11 +288,13 @@ angular.module('your_app_name.controllers', [])
                 );
             };
         })
+
         .controller('AdsCtrl', function ($scope, $http, $state, $ionicActionSheet, AdMob, iAd, $ionicModal) {
+            $scope.interface = window.localStorage.getItem('interface_id');
             $http({
                 method: 'GET',
                 url: domain + 'records/get-record-categories',
-                params: {userId: $scope.userid}
+                params: {userId: $scope.userid, interface: $scope.interface}
             }).then(function successCallback(response) {
                 $scope.cats = response.data;
                 // angular.forEach(response.data, function (value, key) {
@@ -299,15 +325,13 @@ angular.module('your_app_name.controllers', [])
             if (get('id') != null) {
                 $rootScope.userLogged = 1;
             }
-            $scope.category_sources = [];
-            $scope.categoryId = $stateParams.categoryId;
         })
 
-        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar, $ionicModal) {
+        .controller('CategoryDetailCtrl', function ($scope, $http, $stateParams, $ionicFilterBar, $ionicModal, $timeout) {
             var filterBarInstance;
             $scope.selectMe = function (event) {
                 $(event.target).toggleClass('active');
-            }
+            };
 
             $scope.showFilterBar = function () {
                 filterBarInstance = $ionicFilterBar.show({
@@ -325,40 +349,154 @@ angular.module('your_app_name.controllers', [])
                     filterBarInstance();
                     filterBarInstance = null;
                 }
-
                 $timeout(function () {
                     getItems();
                     $scope.$broadcast('scroll.refreshComplete');
                 }, 1000);
             };
+            $scope.catIds = [];
+            $scope.catId = [];
+            $scope.docId = '';
+            $scope.interface = window.localStorage.getItem('interface_id');
             $scope.categoryId = $stateParams.categoryId;
             //console.log(get('id'));
             $scope.userid = get('id');
+            $scope.patientId = get('id');
             $http({
                 method: 'GET',
                 url: domain + 'records/view-patient-record-category',
-                params: {userId: $scope.userid}
+                params: {userId: $scope.userid, patientId: $scope.patientId, interface: $scope.interface}
             }).then(function successCallback(response) {
-                //console.log(response.data);
+                console.log(response.data);
                 $scope.categories = response.data.categories;
+                $scope.doctrs = response.data.doctrs;
                 $scope.userRecords = response.data.recordCount;
             }, function errorCallback(response) {
                 console.log(response);
             });
-//            $ionicModal.fromTemplateUrl('deletecategory.html', {
-//                scope: $scope
-//            }).then(function (modal) {
-//                $scope.modal = modal;
-//            });
-//
-//            $scope.submitmodal = function () {
-//                $scope.modal.hide();
-//            };
+
+            $scope.getIds = function (id) {
+                console.log(id);
+                if ($scope.catId[id]) {
+                    $scope.catIds.push(id);
+                } else {
+                    var index = $scope.catIds.indexOf(id);
+                    $scope.catIds.splice(index, 1);
+                }
+                console.log($scope.catIds);
+            };
+            $scope.getDocId = function (id) {
+                console.log(id);
+                $scope.docId = id;
+            };
+            //Delete all Records by category
+            $scope.delete = function () {
+                if ($scope.catIds.length > 0) {
+                    var confirm = window.confirm("Do you really want to delete?");
+                    if (confirm) {
+                        console.log($scope.catIds);
+                        $http({
+                            method: 'POST',
+                            url: domain + 'records/delete-all',
+                            params: {ids: JSON.stringify($scope.catIds), userId: $scope.userid}
+                        }).then(function successCallback(response) {
+                            alert("Records deleted successfully!");
+                            $timeout(function () {
+                                window.location.reload();
+                                //$state.go('app.category-detail');
+                            }, 1000);
+                        }, function errorCallback(e) {
+                            console.log(e);
+                        });
+                    }
+                } else {
+                    alert("Please select records to delete!");
+                }
+            };
+            //Share all records by Category
+            $scope.share = function () {
+                if ($scope.catIds.length > 0) {
+                    if ($scope.docId != '') {
+                        var confirm = window.confirm("Do you really want to share?");
+                        if (confirm) {
+                            console.log($scope.catIds);
+                            $http({
+                                method: 'POST',
+                                url: domain + 'records/share-all',
+                                params: {ids: JSON.stringify($scope.catIds), userId: $scope.userid, docId: $scope.docId}
+                            }).then(function successCallback(response) {
+                                console.log(response);
+                                if (response.data == 'Success') {
+                                    alert("Records shared successfully!");
+                                    $timeout(function () {
+                                        window.location.reload();
+                                    }, 1000);
+                                }
+                            }, function errorCallback(e) {
+                                console.log(e);
+                            });
+
+                        }
+                    } else {
+                        alert("Please select doctor to share with!");
+                    }
+                } else {
+                    alert("Please select records to share!");
+                }
+            };
+            $ionicModal.fromTemplateUrl('share', {
+                scope: $scope,
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+
+            $scope.submitmodal = function () {
+                console.log($scope.catIds);
+                $scope.modal.hide();
+            };
         })
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile) {
+        .controller('MedicineCtrl', function ($scope, $http, $stateParams, $ionicModal) {
+            $scope.category_sources = [];
+            $scope.categoryId = $stateParams.categoryId;
+
+            $ionicModal.fromTemplateUrl('prescription-type', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+            };
+        })
+
+        .controller('AddressCtrl', function ($scope, $http, $stateParams, $ionicModal) {
+            $scope.category_sources = [];
+            $scope.categoryId = $stateParams.categoryId;
+
+            $ionicModal.fromTemplateUrl('addnewaddress', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+            };
+        })
+
+        .controller('CloseModalCtrl', function ($scope, $ionicModal, $state) {
+            $scope.modalclose = function (ulink) {
+                $state.go(ulink);
+                $scope.modal.hide();
+            }
+        })
+
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $ionicHistory, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile, $rootScope) {
+            $scope.interface = window.localStorage.getItem('interface_id');
             $scope.images = [];
+            $scope.image = [];
             $scope.tempImgs = [];
+            $scope.prescription = 'Yes';
             $scope.curTime = new Date();
             $scope.curTimeo = $filter('date')(new Date(), 'hh:mm');
             //$scope.curT = new Date()$filter('date')(new Date(), 'H:i');
@@ -370,7 +508,7 @@ angular.module('your_app_name.controllers', [])
             $http({
                 method: 'GET',
                 url: domain + 'records/add',
-                params: {id: $stateParams.id, userId: $scope.userId}
+                params: {id: $stateParams.id, userId: $scope.userId, interface: $scope.interface}
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.record = response.data.record;
@@ -382,6 +520,7 @@ angular.module('your_app_name.controllers', [])
                 console.log(response);
             });
             $scope.addOther = function (name, field, val) {
+                console.log(name, field, val);
                 addOther(name, field, val);
             };
             $scope.addNewElement = function (ele) {
@@ -394,20 +533,22 @@ angular.module('your_app_name.controllers', [])
                     angular.forEach($scope.tempImgs, function (value, key) {
                         $scope.picData = getImgUrl(value);
                         var imgName = value.substr(value.lastIndexOf('/') + 1);
-                        alert(imgName);
                         $scope.ftLoad = true;
                         $scope.uploadPicture();
-                        $scope.$apply(function () {
-                            $scope.images.push(value.substr(value.lastIndexOf('/') + 1));
-                        });
-                        alert($scope.images);
-                        jQuery('#camfile').val($scope.images);
+                        $scope.image.push(imgName);
+                        console.log($scope.image);
                     });
+                    jQuery('#camfilee').val($scope.image);
+                    console.log($scope.images);
                     var data = new FormData(jQuery("#addRecordForm")[0]);
                     callAjax("POST", domain + "records/save", data, function (response) {
                         console.log(response);
                         $ionicLoading.hide();
                         if (angular.isObject(response.records)) {
+                            $ionicHistory.nextViewOptions({
+                                historyRoot: true
+                            });
+                            $scope.image = [];
                             alert("Record added successfully!");
                             $timeout(function () {
                                 $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
@@ -422,6 +563,9 @@ angular.module('your_app_name.controllers', [])
                         console.log(response);
                         $ionicLoading.hide();
                         if (angular.isObject(response.records)) {
+                            $ionicHistory.nextViewOptions({
+                                historyRoot: true
+                            });
                             alert("Record added successfully!");
                             $timeout(function () {
                                 $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
@@ -438,7 +582,16 @@ angular.module('your_app_name.controllers', [])
                     return trueOrigin;
                 }
             };
-
+            $scope.getPrescription = function (pre) {
+                console.log('pre ' + pre);
+                if (pre === ' No') {
+                    console.log("no");
+                    jQuery('#convalid').addClass('hide');
+                } else if (pre === 'Yes') {
+                    console.log("yes");
+                    jQuery('#convalid').removeClass('hide');
+                }
+            };
             //Take images with camera
             $scope.takePict = function (name) {
                 //console.log(name);
@@ -450,7 +603,6 @@ angular.module('your_app_name.controllers', [])
                     sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
                     allowEdit: false,
                     encodingType: Camera.EncodingType.JPEG,
-                    popoverOptions: CameraPopoverOptions,
                 };
                 // 3
                 $cordovaCamera.getPicture(options).then(function (imageData) {
@@ -509,26 +661,25 @@ angular.module('your_app_name.controllers', [])
                 });
             };
 
-
             $scope.uploadPicture = function () {
                 //$ionicLoading.show({template: 'Uploading..'});
                 var fileURL = $scope.picData;
+                var name = fileURL.substr(fileURL.lastIndexOf('/') + 1);
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
                 options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
                 options.mimeType = "image/jpeg";
                 options.chunkedMode = true;
                 var params = {};
-                params.value1 = "someparams";
-                params.value2 = "otherparams";
-                options.params = params;
+//                params.value1 = "someparams";
+//                params.value2 = "otherparams";
+//                options.params = params;
                 var uploadSuccess = function (response) {
-                    alert('Success  =   ' + JSON.stringify(response));
-                    var response_data = jQuery.parseJSON(response);
-                    if (typeof response_data == 'object') {
-                        alert(response_data);
-                        alert('upload');
-                    }
+                    alert('Success  ====== ');
+                    console.log("Code = " + r.responseCode);
+                    console.log("Response = " + r.response);
+                    console.log("Sent = " + r.bytesSent);
+                    //$scope.image.push(name);
                     //$ionicLoading.hide();
                 }
                 var ft = new FileTransfer();
@@ -537,6 +688,7 @@ angular.module('your_app_name.controllers', [])
                     //$ionicLoading.hide();
                 }, options);
             };
+
             $scope.chkDt = function (dt) {
                 console.log(dt);
                 console.log($scope.curTime);
@@ -614,17 +766,13 @@ angular.module('your_app_name.controllers', [])
                     jQuery('#convalid').removeClass('hide');
                     jQuery('#coninprec').removeClass('hide');
                     //jQuery('#valid-till').attr('required', true);
-                    image_holder.append('<button class="button button-positive remove" onclick="removeFile()">Remove Files</button><br/>');
+                    image_holder.append('<button class="button button-small button-assertive remove icon ion-close" onclick="removeFile()"></button>');
                 } else {
                     jQuery('#convalid').addClass('hide');
                     jQuery('#coninprec').addClass('hide');
                     //jQuery('#valid-till').attr('required', false);
                 }
 
-//                var reader = new FileReader();
-//                reader.onload = function (event) {
-//                    $scope.image_source = event.target.result
-//                    $scope.$apply();
                 if (typeof (FileReader) != "undefined") {
                     //loop for each file selected for uploaded.
                     for (var i = 0; i < element.files.length; i++) {
@@ -643,9 +791,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-        .controller('ThankyouCtrl', function ($scope, $http, $stateParams) {
-
-        })
+        .controller('ThankyouCtrl', function ($scope, $http, $stateParams) { })
 
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
@@ -684,15 +830,20 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-        .controller('RecordsViewCtrl', function ($scope, $http, $state, $stateParams, $rootScope) {
-            $scope.category = '';
+
+        .controller('RecordsViewCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $cordovaPrinter, $ionicModal, $timeout) {
+            $scope.interface = window.localStorage.getItem('interface_id');
+            $scope.category = [];
             $scope.catId = $stateParams.id;
             $scope.limit = 3;
+            $scope.recId = [];
+            $scope.recIds = [];
             $scope.userId = get('id');
+            $scope.patientId = get('id');
             $http({
                 method: 'GET',
                 url: domain + 'records/get-records-details',
-                params: {id: $stateParams.id, userId: $scope.userId}
+                params: {id: $stateParams.id, userId: $scope.userId, patientId: $scope.patientId, interface: $scope.interface}
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.records = response.data.records;
@@ -701,9 +852,12 @@ angular.module('your_app_name.controllers', [])
                         $scope.limit = 3; //$scope.records[0].record_metadata.length;
                     }
                 }
+                $scope.createdby = response.data.createdby;
                 $scope.category = response.data.category;
                 $scope.doctors = response.data.doctors;
+                $scope.patient = response.data.patient;
                 $scope.problems = response.data.problems;
+                $scope.doctrs = response.data.shareDoctrs;
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -714,7 +868,7 @@ angular.module('your_app_name.controllers', [])
                 $http({
                     method: 'GET',
                     url: domain + 'records/get-records-details',
-                    params: {id: cat, userId: $scope.userId}
+                    params: {id: cat, userId: $scope.userId, interface: $scope.interface}
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     $scope.records = response.data.records;
@@ -723,58 +877,159 @@ angular.module('your_app_name.controllers', [])
                             $scope.limit = 3; //$scope.records[0].record_metadata.length;
                         }
                     }
+                    $scope.doctrs = response.data.shareDoctrs;
                     //$scope.category = response.data.category;
                     console.log($scope.catId);
                 }, function errorCallback(response) {
                     console.log(response);
                 });
                 $rootScope.$digest;
-                //$state.go('app.records-view', {'id': cat}, {reload: true});
             };
             $scope.addRecord = function () {
                 $state.go('app.add-category', {'id': button.id}, {reload: true});
             };
+            //Delete Records by Category
+            $scope.getRecIds = function (id) {
+                console.log(id);
+                if ($scope.recId[id]) {
+                    $scope.recIds.push(id);
+                } else {
+                    var index = $scope.recIds.indexOf(id);
+                    $scope.recIds.splice(index, 1);
+                }
+                console.log($scope.recIds);
 
+            };
+            $scope.getDocId = function (id) {
+                console.log(id);
+                $scope.docId = id;
+            };
+            //Delete all Records by category
+            $scope.delete = function () {
+                if ($scope.recIds.length > 0) {
+                    var confirm = window.confirm("Do you really want to delete?");
+                    if (confirm) {
+                        console.log($scope.recIds);
+                        $http({
+                            method: 'POST',
+                            url: domain + 'records/delete-by-category',
+                            params: {ids: JSON.stringify($scope.recIds), userId: $scope.userId}
+                        }).then(function successCallback(response) {
+                            alert("Records deleted successfully!");
+                            $timeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                        }, function errorCallback(e) {
+                            console.log(e);
+                        });
+                    }
+                } else {
+                    alert("Please select records to delete!");
+                }
+            };
+            //Share all records by Category
+            $scope.share = function () {
+                if ($scope.recIds.length > 0) {
+                    if ($scope.docId != '') {
+                        var confirm = window.confirm("Do you really want to share?");
+                        if (confirm) {
+                            console.log($scope.recIds);
+                            $http({
+                                method: 'POST',
+                                url: domain + 'records/share-by-category',
+                                params: {ids: JSON.stringify($scope.recIds), userId: $scope.userId, docId: $scope.docId}
+                            }).then(function successCallback(response) {
+                                console.log(response);
+                                if (response.data == 'Success') {
+                                    alert("Records shared successfully!");
+                                    $timeout(function () {
+                                        window.location.reload();
+                                    }, 1000);
+                                }
+                            }, function errorCallback(e) {
+                                console.log(e);
+                            });
 
+                        }
+                    } else {
+                        alert("Please select doctor to share with!");
+                    }
+                } else {
+                    alert("Please select records to share!");
+                }
+            };
+            // Delete and share buttons hide show
             $scope.recordDelete = function () {
-                jQuery('.selectrecord').fadeIn('slow');
-                jQuery('.btview').fadeOut('slow');
-                jQuery('#rec1').fadeOut();
-                jQuery('#rec2').fadeIn('slow');
+                jQuery('.selectrecord').css('display', 'block');
+                jQuery('.btview').css('display', 'none');
+                jQuery('#rec1').css('display', 'none');
+                jQuery('#rec3').css('display', 'block');
+
+            };
+            $scope.recordShare = function () {
+                jQuery('.selectrecord').css('display', 'block');
+                jQuery('.btview').css('display', 'none');
+                jQuery('#rec1').css('display', 'none');
+                jQuery('#rec2').css('display', 'block');
 
             }
-
-            $scope.recordcancel = function () {
-                jQuery('.selectrecord').fadeOut('slow');
-                jQuery('.btview').fadeIn('slow');
-                jQuery('#rec1').fadeIn('slow');
-                jQuery('#rec2').fadeOut();
-            }
+            $scope.CancelAction = function () {
+                jQuery('.selectrecord').css('display', 'none');
+                jQuery('.btview').css('display', 'block');
+                jQuery('#rec1').css('display', 'block');
+                jQuery('#rec2').css('display', 'none');
+                jQuery('#rec3').css('display', 'none');
+            };
 
             $scope.selectcheckbox = function ($event) {
                 console.log($event);
                 // if($event==true){
                 // jQuery(this).addClass('asd123');
                 // }
-            }
+            };
+            //Show share model
+            $ionicModal.fromTemplateUrl('share', {
+                scope: $scope,
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
 
+            $scope.submitmodal = function () {
+                console.log($scope.catIds);
+                $scope.modal.hide();
+            };
+
+
+            $scope.print = function () {
+                //  console.log("fsfdfsfd");
+                //  var printerAvail = $cordovaPrinter.isAvailable();
+                var print_page = '<img src="http://stage.doctrs.in/public/frontend/uploads/attachments/7V7Lr1456500103323.jpg"  height="600" width="300" />';
+                //console.log(print_page);  
+                cordova.plugins.printer.print(print_page, 'alpha', function () {
+                    alert('printing finished or canceled');
+                });
+            };
         })
 
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {
             $scope.recordId = $stateParams.id;
+            $scope.userId = get('id');
+            $scope.interface = window.localStorage.getItem('interface_id');
             $scope.isNumber = function (num) {
                 return angular.isNumber(num);
             }
             $http({
                 method: 'GET',
                 url: domain + 'records/get-record-details',
-                params: {id: $stateParams.id}
+                params: {id: $stateParams.id, interface: $scope.interface}
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.recordDetails = response.data.recordsDetails;
                 $scope.category = response.data.record;
                 $scope.problem = response.data.problem;
-                $scope.doctrs = response.data.doctrs;
+                $scope.doctors = response.data.doctrs;
+                $scope.patient = response.data.patient;
+                $scope.doctrs = response.data.shareDoctrs;
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -795,11 +1050,42 @@ angular.module('your_app_name.controllers', [])
                     console.log(e);
                 });
             };
-            //EDIT Modal
-            $scope.edit = function (id, cat) {
-                $state.go('app.edit-record', {'id': id, 'cat': cat});
-                //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
+            $scope.getDocId = function (id) {
+                console.log(id);
+                $scope.docId = id;
             };
+            //Share all records by Category
+            $scope.share = function () {
+                if ($scope.docId != '') {
+                    var confirm = window.confirm("Do you really want to share?");
+                    if (confirm) {
+                        console.log($scope.recordId);
+                        $http({
+                            method: 'POST',
+                            url: domain + 'records/share',
+                            params: {id: $scope.recordId, userId: $scope.userId, docId: $scope.docId}
+                        }).then(function successCallback(response) {
+                            console.log(response);
+                            if (response.data == 'Success') {
+                                alert("Records shared successfully!");
+                                $timeout(function () {
+                                    window.location.reload();
+                                }, 1000);
+                            }
+                        }, function errorCallback(e) {
+                            console.log(e);
+                        });
+
+                    }
+                } else {
+                    alert("Please select doctor to share with!");
+                }
+            };
+            //EDIT Modal
+//            $scope.edit = function (id, cat) {
+//                $state.go('app.edit-record', {'id': id, 'cat': cat});
+//                //window.location.href = "http://192.168.2.169:8100/#/app/edit-record/" + id + "/" + cat;
+//            };
             // Load the modal from the given template URL
             $ionicModal.fromTemplateUrl('filesview.html', function ($ionicModal) {
                 $scope.modal = $ionicModal;
@@ -818,13 +1104,31 @@ angular.module('your_app_name.controllers', [])
             $scope.trustSrc = function (src) {
                 return $sce.trustAsResourceUrl(src);
             };
+
+            $scope.submitmodal = function () {
+                console.log($scope.catIds);
+                $scope.modal.hide();
+            };
+        })
+        .controller('shareModalCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {
+            //Show share model
+            $ionicModal.fromTemplateUrl('share', {
+                scope: $scope,
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+
+            $scope.submitmodal = function () {
+                console.log($scope.catIds);
+                $scope.modal.hide();
+            };
         })
 
         .controller('ConsultationsListCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
-
             $scope.dnlink = function ($nurl) {
                 $state.go($nurl);
             }
+            $scope.interface = window.localStorage.getItem('interface_id');
             $scope.imgpath = domain;
             $scope.specializations = {};
             $scope.userId = get('id');
@@ -833,7 +1137,7 @@ angular.module('your_app_name.controllers', [])
             $http({
                 method: 'GET',
                 url: domain + 'doctors/consultations',
-                params: {userId: $scope.userId}
+                params: {userId: $scope.userId, interface: $scope.interface}
             }).then(function successCallback(response) {
                 $ionicLoading.hide();
                 $scope.specializations = response.data.spec;
@@ -854,6 +1158,14 @@ angular.module('your_app_name.controllers', [])
                 $scope.clinic_app = response.data.clinic_app;
                 $scope.clinic_doctorsData = response.data.clinic_doctorsData;
                 $scope.clinic_products = response.data.clinic_products;
+                $scope.clinic_time = response.data.clinic_time;
+                $scope.clinic_end_time = response.data.clinic_end_time;
+
+                $scope.clinic_app_past = response.data.clinic_app_past;
+                $scope.clinic_doctorsData_past = response.data.clinic_doctorsData_past;
+                $scope.clinic_products_past = response.data.clinic_products_past;
+                $scope.clinic_time_past = response.data.clinic_time_past;
+                $scope.clinic_end_time = response.data.clinic_end_time;
                 //Home
                 $scope.home_app = response.data.home_app;
                 $scope.home_doctorsData = response.data.home_doctorsData;
@@ -866,6 +1178,24 @@ angular.module('your_app_name.controllers', [])
             }, function errorCallback(e) {
                 console.log(e);
             });
+
+            $scope.deleteApp = function (appId, prodId, mode, startTime) {
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctorsapp/patient-delete-app',
+                    params: {appId: appId, prodId: prodId, userId: $scope.userId}
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    if (response.data == 1) {
+                        alert('Your appointment is cancelled successfully.');
+                        $state.go('app.consultations-current', {}, {reload: true});
+                    }
+                    //$state.go('app.consultations-current', {}, {reload: true});
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+            };
+
             $scope.joinVideo = function (mode, start, end, appId) {
                 console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
                 if ($scope.curTime >= start || $scope.curTime <= end) {
@@ -879,6 +1209,7 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('ConsultationCardsCtrl', function ($scope, $http, $stateParams, $ionicLoading) {
+            $scope.interface = window.localStorage.getItem('interface_id');
             $ionicLoading.show({template: 'Loading...'});
             $scope.specId = $stateParams.id;
             $scope.userId = get('id');
@@ -886,34 +1217,32 @@ angular.module('your_app_name.controllers', [])
             $http({
                 method: 'GET',
                 url: domain + 'doctors/list',
-                params: {id: $stateParams.id}
+                params: {id: $stateParams.id, interface: $scope.interface}
             }).then(function successCallback(response) {
                 $ionicLoading.hide();
                 $scope.doctors = response.data.user;
+                $scope.services = response.data.services;
                 angular.forEach($scope.doctors, function (value, key) {
                     $http({
                         method: 'GET',
                         url: domain + 'doctors/get-doctor-services',
-                        params: {id: value.id}
+                        params: {id: value.id, interface: $scope.interface}
                     }).then(function successCallback(responseData) {
                         $ionicLoading.hide();
-                        $scope.getDprice = responseData.price;
-                        $scope.docServices[key] = responseData.data;
+                        console.log(responseData);
+                        $scope.docServices[key] = responseData.data.data;
                     }, function errorCallback(response) {
                         console.log(response);
                     });
                     $scope.spec = response.data.spec;
-                    $scope.instant = response.data.instant;
+
                 });
             }, function errorCallback(e) {
                 console.log(e);
             });
         })
 
-
-
         .controller('ConsultationProfileCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $filter, $ionicLoading, $ionicModal, $timeout, $ionicTabsDelegate) {
-
             $scope.apply = '0';
             $scope.discountApplied = '0';
             $scope.vSch = [];
@@ -930,10 +1259,11 @@ angular.module('your_app_name.controllers', [])
             $scope.nextHdate = [];
             $scope.bookingSlot = '';
             $scope.supId = '';
+            $scope.interface = window.localStorage.getItem('interface_id');
             $http({
                 method: 'GET',
                 url: domain + 'doctors/get-details',
-                params: {id: $stateParams.id}
+                params: {id: $stateParams.id, interface: $scope.interface}
             }).then(function successCallback(response) {
                 console.log(response.data);
                 $scope.doctor = response.data.user;
@@ -953,6 +1283,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.chatInc = response.data.chat_inclusions;
                 $scope.packages = response.data.packages;
                 $scope.services = response.data.services;
+                $scope.service = response.data.service;
                 //console.log("prodId " + $scope.instVideo + "popopo");
                 //$ionicLoading.hide();
                 angular.forEach($scope.videoSch, function (value, key) {
@@ -1043,6 +1374,7 @@ angular.module('your_app_name.controllers', [])
             }
 
             $scope.checkAvailability = function (uid, prodId) {
+                $scope.interface = window.localStorage.getItem('interface_id');
                 console.log("prodId " + prodId);
                 console.log("uid " + uid);
                 $rootScope.$broadcast('loading:hide');
@@ -1050,11 +1382,10 @@ angular.module('your_app_name.controllers', [])
                 $http({
                     method: 'GET',
                     url: domain + 'kookoo/check-doctor-availability',
-                    params: {id: uid}
+                    params: {id: uid, interface: $scope.interface}
                 }).then(function successCallback(responseData) {
-                    var dataInfo = responseData.data.split('-');
-                    console.log(dataInfo);
-                    if (responseData.data == 1) {
+
+                    if (responseData.data.status == 1) {
 
                         $state.go('app.checkavailable', {'data': prodId, 'uid': uid});
                     } else {
@@ -1063,8 +1394,8 @@ angular.module('your_app_name.controllers', [])
                 });
             };
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
-                console.log(nextDate + '=======' + supsassId + '=====' + key);
-                var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
+                console.log(nextDate + '=======' + supsassId + '=====' + key + "Seveice == " + serv);
+                var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd') + '+05:30:00';  // HH:mm:ss
                 $ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
@@ -1081,6 +1412,7 @@ angular.module('your_app_name.controllers', [])
                             $scope.nextdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         } else if (serv == 3) {
+                            console.log('Serv = if');
                             $scope.cSch[key] = responseData.data.slots;
                             $scope.schCdate[key] = new Date();
                             $scope.nextCdate[key] = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -1101,6 +1433,7 @@ angular.module('your_app_name.controllers', [])
                             $scope.nextdate[key] = $filter('date')(new Date(tomorrow), 'yyyy-MM-dd');
                             $rootScope.$digest;
                         } else if (serv == 3) {
+                            console.log('Serv = else');
                             $scope.cSch[key] = responseData.data.slots;
                             $scope.schCdate[key] = new Date(responseData.data.lastdate);
                             var tomorrow = new Date(responseData.data.lastdate);
@@ -1230,15 +1563,19 @@ angular.module('your_app_name.controllers', [])
                 }
             };
             $scope.bookChatAppointment = function (prodId, serv) {
-                window.localStorage.setItem('prodid', prodId);
+                window.localStorage.setItem('prodId', prodId);
                 //window.localStorage.setItem('url', 'app.payment');
                 window.localStorage.setItem('mode', serv);
                 $rootScope.prodid = prodId;
                 $rootScope.url = 'app.payment';
-                if (checkLogin())
+                if (checkLogin()) {
+                    $ionicLoading.show({template: 'Loading...'});
                     $state.go('app.payment');
-                else
+                } else
+                {
+                    $ionicLoading.show({template: 'Loading...'});
                     $state.go('auth.login');
+                }
             };
             /* view more doctor profile modalbox*/
             $ionicModal.fromTemplateUrl('viewmoreprofile.html', {
@@ -1258,11 +1595,9 @@ angular.module('your_app_name.controllers', [])
         })
 
         .controller('PaymentCtrl', function ($scope, $http, $state, $filter, $location, $stateParams, $rootScope, $ionicLoading, $ionicGesture, $timeout, $ionicHistory) {
-
             $scope.counter1 = 300;
             var stopped1;
             $scope.paynowcountdown = function () {
-
                 stopped1 = $timeout(function () {
                     console.log($scope.counter1);
                     $scope.counter1--;
@@ -1286,7 +1621,7 @@ angular.module('your_app_name.controllers', [])
                             $state.go('app.consultations-list', {reload: true});
                         }, 3000);
                     }, function errorCallback(response) {
-                        console.log(response);
+                        $state.go('app.consultations-list', {reload: true});
                     });
                 }
             };
@@ -1298,6 +1633,7 @@ angular.module('your_app_name.controllers', [])
             $scope.startSlot = window.localStorage.getItem('startSlot');
             $scope.endSlot = window.localStorage.getItem('endSlot');
             $scope.prodid = window.localStorage.getItem('prodId');
+            $scope.interface = window.localStorage.getItem('interface_id');
             $scope.apply = '0';
             $scope.ccode = '';
             $scope.curTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -1305,7 +1641,7 @@ angular.module('your_app_name.controllers', [])
             $http({
                 method: 'GET',
                 url: domain + 'doctors/get-order-review',
-                params: {id: $scope.supid, prodId: $scope.prodid}
+                params: {id: $scope.supid, prodId: $scope.prodid, interface: $scope.interface}
             }).then(function successCallback(responseData) {
                 console.log(responseData.data);
                 $ionicLoading.show({template: 'Loading...'});
@@ -1323,6 +1659,7 @@ angular.module('your_app_name.controllers', [])
             });
             $scope.bookNow = function () {
                 $ionicLoading.show({template: 'Loading...'});
+                $scope.interface = window.localStorage.getItem('interface_id');
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.appUrl = $location.absUrl();
@@ -1330,20 +1667,19 @@ angular.module('your_app_name.controllers', [])
                 $http({
                     method: 'GET',
                     url: domain + 'buy/book-appointment',
-                    params: {prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {prodId: $scope.prodid, userId: $scope.userId, supId: $scope.supid, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     $ionicLoading.hide();
-                    if (response.data.httpcode == 'success')
-                    {
-                        $state.go('app.success', {'id': response.data.orderId, 'serviceId': response.data.scheduleId});
-                    } else {
-                        $state.go('app.failure', {'id': response.data.orderId, 'serviceId': response.data.scheduleId});
-                    }
+                    $state.go('app.thankyou', {'data': 'success'}, {reload: true});
                 }, function errorCallback(response) {
                     console.log(response);
                 });
             };
-            $scope.payNow = function (finalamount) {
+            $scope.payNow = function (amount, discount) {
+                $scope.finalamount = ($filter('ceil')(amount) - discount);
+                console.log(amount);
+                console.log($scope.finalamount);
+                $scope.interface = window.localStorage.getItem('interface_id');
                 if (window.localStorage.getItem('instantV') == 'instantV') {
                     $scope.startSlot = window.localStorage.getItem('IVstartSlot');
                     $scope.endSlot = window.localStorage.getItem('IVendSlot');
@@ -1362,12 +1698,12 @@ angular.module('your_app_name.controllers', [])
                 $http({
                     method: 'GET',
                     url: domain + 'buy/buy-individual',
-                    params: {kookooID: $scope.kookooID, ccode: $scope.ccode, discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {interface: $scope.interface, kookooID: $scope.kookooID, ccode: $scope.ccode, discount: $scope.discount, disapply: $scope.discountApplied, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                     console.log(response.data);
-                    if (finalamount > 0) {
+                    if ($scope.finalamount > 0) {
                         $state.go('app.Gopay', {'link': response.data});
                         console.log(response.data);
                     } else {
@@ -1378,21 +1714,6 @@ angular.module('your_app_name.controllers', [])
                         $timeout.cancel(stopped1);
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
                     }
-                    //                    if ((parseInt($scope.discount) == parseInt($scope.discountApplied)) && (parseInt($scope.discount) > 0)) {
-                    //                     
-                    //                        $scope.discountval = response.data.discount;
-                    //                        $ionicHistory.nextViewOptions({
-                    //                            disableBack: true
-                    //                        });
-                    //						
-                    //			 $state.go('app.thankyou', {'data': response.data}, {reload: true});
-                    //				 
-                    //                    } else {
-                    //				
-                    //                      $state.go('app.Gopay', {'link': response.data});
-                    //						console.log(response.data)
-                    //                      //window.location.href=response.data
-                    //                    }
                 }, function errorCallback(response) {
                     console.log(response);
                 })
@@ -1401,6 +1722,7 @@ angular.module('your_app_name.controllers', [])
                 $scope.apply = '0';
                 $scope.discountApplied = '0';
                 window.localStorage.setItem('coupondiscount', '0');
+                $scope.interface = window.localStorage.getItem('interface_id');
                 $scope.startSlot = window.localStorage.getItem('startSlot');
                 $scope.endSlot = window.localStorage.getItem('endSlot');
                 $scope.prodid = window.localStorage.getItem('prodId');
@@ -1411,7 +1733,7 @@ angular.module('your_app_name.controllers', [])
                 $http({
                     method: 'GET',
                     url: domain + 'buy/apply-coupon-code',
-                    params: {couponCode: ccode, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
+                    params: {interface: $scope.interface, couponCode: ccode, prodId: $scope.prodid, userId: $scope.userId, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
                     // console.log(response);
                     console.log(response.data);
@@ -1449,19 +1771,7 @@ angular.module('your_app_name.controllers', [])
                 });
             }
             ;
-        }
-        )
-
-
-
-
-
-
-
-
-
-
-
+        })
 
         .controller('ThankyouCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
             console.log($stateParams.data);
@@ -1470,6 +1780,11 @@ angular.module('your_app_name.controllers', [])
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
+                window.localStorage.removeItem('startSlot');
+                window.localStorage.removeItem('endSlot');
+                window.localStorage.removeItem('prodId');
+                window.localStorage.removeItem('supid');
+                window.localStorage.removeItem('mode');
                 window.localStorage.removeItem('kookooid');
                 window.localStorage.removeItem('coupondiscount');
                 window.localStorage.removeItem('IVendSlot');
@@ -1485,10 +1800,8 @@ angular.module('your_app_name.controllers', [])
                 //$state.go('app.category-list', {}, {reload: true});
                 $state.go('app.consultations-current', {}, {reload: true});
             }
-
-
-
         })
+
         .controller('GoPaymentCtrl', function ($scope, $http, $state, $location, $stateParams, $rootScope, $ionicGesture, $timeout, $sce, $ionicHistory) {
             console.log($stateParams.link);
             $scope.link = $stateParams.link;
@@ -1572,10 +1885,7 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
-
-
         // $ionicHistory.clearCache();
-
         .controller('PatientJoinCtrl', function ($window, $scope, $http, $stateParams, $sce, $filter, $timeout, $state, $ionicHistory, $ionicLoading) {
             if (!get('loadedOnce')) {
                 store({'loadedOnce': 'true'});
@@ -1604,7 +1914,9 @@ angular.module('your_app_name.controllers', [])
                 //$scope.oToken = "https://test.doctrs.in/opentok/opentok?session=" + response.data.app[0].appointments.opentok_session_id;
                 var apiKey = '45121182';
                 var sessionId = response.data.app[0].appointments.opentok_session_id;
+                console.log('sessionId' + sessionId);
                 var token = response.data.oToken;
+                console.log('token' + token);
                 if (OT.checkSystemRequirements() == 1) {
                     session = OT.initSession(apiKey, sessionId);
                     $ionicLoading.hide();
@@ -1699,6 +2011,134 @@ angular.module('your_app_name.controllers', [])
             };
         })
 
+        .controller('ChatListCtrl', function ($scope, $http, $stateParams, $rootScope) {
+            $scope.doctorId = window.localStorage.getItem('id');
+            $scope.participant = [];
+            $scope.msg = [];
+            $http({
+                method: 'GET',
+                url: domain + 'doctorsapp/get-active-chats',
+                params: {drid: $scope.doctorId}
+            }).then(function sucessCallback(response) {
+                console.log(response.data);
+                $scope.chatParticipants = response.data;
+                angular.forEach($scope.chatParticipants, function (value, key) {
+                    $http({
+                        method: 'GET',
+                        url: domain + 'doctorsapp/get-chat-msg',
+                        params: {partId: value[0].participant_id, chatId: value[0].chat_id}
+                    }).then(function successCallback(responseData) {
+                        console.log(responseData);
+                        $scope.participant[key] = responseData.data.user;
+                        $scope.msg[key] = responseData.data.msg;
+                        $rootScope.$digest;
+                    }, function errorCallback(response) {
+                        console.log(response.responseText);
+                    });
+                });
+            }, function errorCallback(e) {
+                console.log(e);
+            });
+        })
+
+        .controller('PastChatListCtrl', function ($scope, $http, $stateParams, $rootScope) {
+            $scope.doctorId = window.localStorage.getItem('id');
+            $scope.participant = [];
+            $scope.msg = [];
+            $http({
+                method: 'GET',
+                url: domain + 'doctorsapp/get-past-chats',
+                params: {drid: $scope.doctorId}
+            }).then(function sucessCallback(response) {
+                console.log(response.data);
+                $scope.chatParticipants = response.data;
+                angular.forEach($scope.chatParticipants, function (value, key) {
+                    $http({
+                        method: 'GET',
+                        url: domain + 'doctorsapp/get-chat-msg',
+                        params: {partId: value[0].participant_id, chatId: value[0].chat_id}
+                    }).then(function successCallback(responseData) {
+                        console.log(responseData);
+                        $scope.participant[key] = responseData.data.user;
+                        $scope.msg[key] = responseData.data.msg;
+                        $rootScope.$digest;
+                    }, function errorCallback(response) {
+                        console.log(response.responseText);
+                    });
+                });
+            }, function errorCallback(e) {
+                console.log(e);
+            });
+        })
+
+        .controller('ChatCtrl', function ($scope, $http, $stateParams, $timeout, $filter) {
+            $scope.chatId = $stateParams.id;
+            window.localStorage.setItem('chatId', $stateParams.id);
+            $scope.partId = window.localStorage.getItem('id');
+            $scope.msg = '';
+            var apiKey = '45121182';
+            //console.log($scope.chatId);
+            $http({
+                method: 'GET',
+                url: domain + 'doctorsapp/get-chat-token',
+                params: {chatId: $scope.chatId, userId: $scope.partId}
+            }).then(function sucessCallback(response) {
+                console.log(response.data);
+                $scope.user = response.data.user;
+                $scope.otherUser = response.data.otherUser;
+                $scope.chatMsgs = response.data.chatMsgs;
+                $scope.token = response.data.token;
+                $scope.otherToken = response.data.otherToken;
+                $scope.sessionId = response.data.chatSession;
+                window.localStorage.setItem('Toid', $scope.otherUser.id);
+                //$scope.connect("'" + $scope.token + "'");
+                $scope.apiKey = apiKey;
+                var session = OT.initSession($scope.apiKey, $scope.sessionId);
+                $scope.session = session;
+                var chatWidget = new OTSolution.TextChat.ChatWidget({session: $scope.session, container: '#chat'});
+                console.log(chatWidget);
+                session.connect($scope.token, function (err) {
+                    if (!err) {
+                        console.log("Connection success");
+                    } else {
+                        console.error(err);
+                    }
+                });
+
+            }, function errorCallback(e) {
+                console.log(e);
+            });
+
+            $scope.returnjs = function () {
+                jQuery(function () {
+                    var wh = jQuery('window').height();
+                    jQuery('#chat').css('height', wh);
+                    //	console.log(wh);
+
+                })
+            };
+            $scope.returnjs();
+            $scope.iframeHeight = $(window).height() - 88;
+            $('#chat').css('height', $scope.iframeHeight);
+            //Previous Chat 
+            $scope.appendprevious = function () {
+                $(function () {
+                    angular.forEach($scope.chatMsgs, function (value, key) {
+                        var msgTime = $filter('date')(new Date(value.tstamp), 'hh:mm a');
+                        if (value.sender_id == $scope.partId) {
+                            $('#chat .ot-textchat .ot-bubbles').append('<section class="ot-bubble mine" data-sender-id=""><div><header class="ot-bubble-header"><p class="ot-message-sender"></p><time class="ot-message-timestamp">' + msgTime + '</time></header><div class="ot-message-content">' + value.message + '</div></div></section>');
+                        } else {
+                            $('#chat .ot-textchat .ot-bubbles').append('<section class="ot-bubble" data-sender-id=""><div><header class="ot-bubble-header"><p class="ot-message-sender"></p><time class="ot-message-timestamp">' + msgTime + '</time></header><div class="ot-message-content">' + value.message + '</div></div></section>');
+                        }
+                    });
+                })
+            };
+            $timeout(function () {
+                $scope.appendprevious();
+            }, 1000);
+
+        })
+
         .controller('JoinChatCtrl', function ($scope, $http, $stateParams, $sce) {
             $scope.appId = $stateParams.id;
             $scope.mode = $stateParams.mode;
@@ -1758,11 +2198,24 @@ angular.module('your_app_name.controllers', [])
             });
         })
 
-
-
         .controller('CheckavailableCtrl', function ($scope, $rootScope, $ionicLoading, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.data = $stateParams.data;
             $scope.uid = $stateParams.uid;
+
+            $scope.interface = window.localStorage.getItem('interface_id');
+            $http({
+                method: 'GET',
+                url: domain + 'kookoo/check-doctor-availability',
+                params: {id: $scope.uid, interface: $scope.interface}
+            }).then(function successCallback(responseData) {
+
+                $scope.check_availability = responseData.data.check_availability
+                $scope.instant_video = responseData.data.instant_video
+
+                $scope.language = responseData.data.lang.language;
+
+            });
+
             /* patient confirm */
             $scope.showConfirm = function () {
                 var confirmPopup = $ionicPopup.confirm({
@@ -1829,6 +2282,8 @@ angular.module('your_app_name.controllers', [])
                     console.log("jhffffhjfhj" + $scope.checkavailval);
                     $timeout.cancel(stopped);
                     window.localStorage.removeItem('kookooid');
+
+
                 });
                 $http({
                     method: 'GET',
@@ -1905,7 +2360,8 @@ angular.module('your_app_name.controllers', [])
                         {
                             alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
                             $timeout.cancel(stopped);
-                            $state.go('app.consultations-list', {}, {reload: true});
+                            $state.go('app.consultation-profile', {'id': $scope.uid}, {reload: true});
+                            //$state.go('app.consultations-list', {}, {reload: true});
                             // alert('Doctor Not Available');
                         } else {
                             window.localStorage.setItem('kookooid', response.data);
@@ -1914,6 +2370,7 @@ angular.module('your_app_name.controllers', [])
 
                     }, function errorCallback(response) {
                         alert('Sorry. The specialist is currently unavailable. Please try booking a scheduled video or try again later.');
+                        $state.go('app.consultation-profile', {'id': $scope.uid}, {reload: true});
                     });
                 }
 
@@ -1935,6 +2392,7 @@ angular.module('your_app_name.controllers', [])
                 }).then(function successCallback(patientresponse) {
                     console.log(patientresponse.data);
                     $timeout.cancel(stopped);
+                    window.localStorage.removeItem('kookooid');
                     // $state.go('app.consultations-list', {reload: true});
                     $state.go('app.consultation-profile', {'id': $scope.product[0].user_id}, {reload: true});
                 }, function errorCallback(patientresponse) {
@@ -1943,6 +2401,57 @@ angular.module('your_app_name.controllers', [])
                 // $scope.counter = 20;
             };
         })
+
+
+        .controller('packagingCtrl', function ($scope) {
+
+        })
+
+        .controller('PackagingDetailCtrl', function ($scope, $ionicModal) {
+
+
+        })
+
+        .controller('pkgDetailsCtrl', function ($scope, $ionicModal) {
+            $ionicModal.fromTemplateUrl('pkg-details', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+        })
+
+        .controller('pkgtermsCtrl', function ($scope, $ionicModal) {
+            $ionicModal.fromTemplateUrl('pkg-terms', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+        })
+
+        .controller('infodoctrsCtrl', function ($scope, $ionicModal) {
+            $ionicModal.fromTemplateUrl('infodoctrs', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+        })
+        .controller('packageConfirmCtrl', function ($scope, $ionicModal) {
+
+        })
+
+
+        /* packages */
+        .controller('ActivePackagesCtrl', function ($scope) {})
+        .controller('PackagesViewCtrl', function ($scope) {})
+        .controller('PastPackagesCtrl', function ($scope) {})
+        /* packages */
+
+
+        /* Pathology */
+        .controller('PathologyCtrl', function ($scope) {})
+        .controller('PackagesListCtrl', function ($scope) {})
+        /* Pathology */
+
 
 
 

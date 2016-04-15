@@ -31,8 +31,17 @@ angular.module('your_app_name.filters', [])
                 }
             }
         })
-        .filter('dateFormat', function ($filter)
-        {
+        .filter('ceil', function () {
+            return function (n) {
+                return Math.ceil(n);
+            };
+        })
+        .filter('floor', function () {
+            return function (n) {
+                return Math.floor(n);
+            };
+        })
+        .filter('dateFormat', function ($filter) {
             return function (input)
             {
                 if (input == null) {
@@ -45,8 +54,7 @@ angular.module('your_app_name.filters', [])
 
             };
         })
-        .filter('dateFormat1', function ($filter)
-        {
+        .filter('dateFormat1', function ($filter) {
             return function (input)
             {
                 if (input == null) {
@@ -60,8 +68,7 @@ angular.module('your_app_name.filters', [])
             };
         })
 
-        .filter('dateFormat2', function ($filter)
-        {
+        .filter('dateFormat2', function ($filter) {
             return function (input)
             {
                 if (input == null) {
@@ -74,8 +81,7 @@ angular.module('your_app_name.filters', [])
 
             };
         })
-        .filter('dateFormat3', function ($filter)
-        {
+        .filter('dateFormat3', function ($filter) {
             return function (input)
             {
                 if (input == null) {
@@ -88,8 +94,7 @@ angular.module('your_app_name.filters', [])
 
             };
         })
-        .filter('dateFormat4', function ($filter)
-        {
+        .filter('dateFormat4', function ($filter) {
             return function (input)
             {
                 if (input == null) {
@@ -102,8 +107,7 @@ angular.module('your_app_name.filters', [])
 
             };
         })
-        .filter('time', function ($filter)
-        {
+        .filter('time', function ($filter) {
             return function (input)
             {
                 if (input == null) {
@@ -116,8 +120,7 @@ angular.module('your_app_name.filters', [])
 
             };
         })
-        .filter('time1', function ($filter)
-        {
+        .filter('time1', function ($filter) {
             return function (input)
             {
                 if (input == null) {

@@ -1,0 +1,71 @@
+<ion-view cache-view="false" class="category-list-view" >
+  <ion-nav-title>
+    <span>Package Name</span>
+</ion-nav-title>
+<ion-content>
+				<div class="item item-body allp">
+                    <p>
+					<strong >Package : </strong> ABC<br>
+					<strong >Price : </strong> INR 350<br>
+					<strong >Duration : </strong> 3 Months<br>
+                   </p>
+                     <p>
+					<strong > Description : </strong > <br/>
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
+					 </p>
+	   <div class="sbtn viewmore">
+	   <span ng-controller="pkgDetailsCtrl" ng-click="modal.show();">View Details</span>
+	   </div>
+		
+		</div>
+				   
+		<div class="item item-divider">Terms</div>  
+		<div class="item item-body">
+			<ul class="clist">
+			<li>Lorem Ipsum is simply</li>
+			<li>Printing and typesetting</li>
+			<li>Been the industry's standard</li>
+			</ul>
+		
+	<div class="sbtn viewmore"><span ng-controller="pkgDetailsCtrl" ng-click="modal.show();">View Details</span></div>
+	</div>
+	<div class="item item-divider">Payment</div> 
+	
+	<br/>
+	
+	  <div class="row">
+	<div class="col col-75">
+		<input type="text" class="custominput" Placeholder="Enter Coupon Code"  ng-model="ccode" />
+	</div>
+	<div class="col">
+		<button class="button button-small button-assertive csbtn ">Apply</button>
+		
+		
+	</div>
+</div>
+
+	
+	
+ 
+  </ion-content>
+   <div class="fixedbar">
+    <div class="button btn-add" >Pay Now</div>
+   
+    </div>
+  </ion-view>
+  
+   <script id="pkg-details" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Package Description</h1>
+	 <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+    </ion-header-bar>
+    <ion-content>
+		<div class="cardcont txt-justify">
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the </p>
+		</div>
+	</ion-content>
+</ion-modal-view>
+</script>
