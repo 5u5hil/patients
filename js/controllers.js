@@ -2133,10 +2133,10 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             };
 			
 			
-			 $scope.movebottom = function () {
-				jQuery(function () {
-				  var dh=$('.ot-bubbles').height();
-                   	$('.chatscroll').scrollTop(dh);
+            $scope.movebottom = function () {
+                jQuery(function () {
+                    var dh = $('.ot-bubbles').height();
+                    $('.chatscroll').scrollTop(dh);
                     //	console.log(wh);
 
                 })
