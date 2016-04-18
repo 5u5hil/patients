@@ -14,30 +14,56 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
         })
 
 // APP
-        .controller('AppCtrl', function ($scope, $state, $ionicConfig, $rootScope, $ionicLoading, $ionicHistory, $timeout) {
+       .controller('AppCtrl', function ($scope, $http, $state, $ionicConfig, $rootScope, $ionicLoading, $timeout, $ionicHistory) {
             $rootScope.imgpath = domain + "/public/frontend/user/";
             $rootScope.attachpath = domain + "/public";
-
             if (window.localStorage.getItem('id') != null) {
                 $rootScope.userLogged = 1;
                 $rootScope.username = window.localStorage.getItem('fname');
+                $rootScope.userimage = window.localStorage.getItem('image');
             } else {
                 if ($rootScope.userLogged == 0)
                     $state.go('auth.walkthrough');
             }
+            $scope.interface = window.localStorage.getItem('interface_id');
+            $scope.userId = window.localStorage.getItem('id');
+            $scope.CurrentDate = new Date();
+            $http({
+                method: 'GET',
+                url: domain + 'get-sidemenu-lang',
+                params: {id: $scope.userId, interface: $scope.interface}
+            }).then(function successCallback(response) {
+                if (response.data) {
+                    $scope.menutext = response.data.dataMenu;
+                    $scope.language = response.data.lang.language;
+
+                } else {
+                }
+            }, function errorCallback(response) {
+                // console.log(response);
+            });
+
             $scope.logout = function () {
                 $ionicLoading.show({template: 'Logging out....'});
-                window.localStorage.clear();
-                $rootScope.userLogged = 0;
-                $rootScope.$digest;
-                $timeout(function () {
-                    $ionicLoading.hide();
-                    $ionicHistory.clearCache();
-                    $ionicHistory.clearHistory();
-                    $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
-                    $state.go('auth.walkthrough', {}, {reload: true});
-                }, 30);
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctors/doctor-logout',
+                    params: {docId: window.localStorage.getItem('id')}
+                }).then(function successCallback(response) {
 
+                    window.localStorage.clear();
+                    $rootScope.userLogged = 0;
+                    $rootScope.$digest;
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                        $ionicHistory.clearCache();
+                        $ionicHistory.clearHistory();
+                        $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
+                        $state.go('auth.walkthrough', {}, {reload: true});
+                    }, 30);
+                }, function errorCallback(e) {
+                    console.log(e);
+                });
             };
         })
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
