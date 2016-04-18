@@ -1675,10 +1675,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     console.log(response);
                 });
             };
-            $scope.payNow = function (amount, discount) {
-                $scope.finalamount = ($filter('ceil')(amount) - discount);
-                console.log(amount);
-                console.log($scope.finalamount);
+            $scope.payNow = function (finalamount) {
                 $scope.interface = window.localStorage.getItem('interface_id');
                 if (window.localStorage.getItem('instantV') == 'instantV') {
                     $scope.startSlot = window.localStorage.getItem('IVstartSlot');
@@ -1703,7 +1700,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                     console.log(response.data);
-                    if ($scope.finalamount > 0) {
+                    if (finalamount > 0) {
                         $state.go('app.Gopay', {'link': response.data});
                         console.log(response.data);
                     } else {

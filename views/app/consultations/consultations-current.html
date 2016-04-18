@@ -26,23 +26,23 @@
                             <div class="posts-list" ng-repeat="vApp in video_app track by $index | orderBy: 'appointments.scheduled_start_time'">
                                 <div  class="list card post-item" ng-repeat="prod in video_products[$index]">
                                     <div class="post-content item item-text-wrap p0">
-                                        <a  ui-sref="app.current-tab({'id': vApp.appointment_id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
+                                        <a  ui-sref="app.current-tab({'id': vApp.id,'mode': 1})" class="card-content paraspacing" ng-repeat="doc in video_doctorsData[$index]">
                                             <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
                                                 <span ng-repeat="spec in doc.specializations">
                                                     {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                                 </span>
                                             </p>
-                                            <p><strong>Appointment Time : {{vApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
-                                                <span>{{vApp.appointments.scheduled_start_time|time1}} To {{vApp.appointments.scheduled_end_time|time1}}
+                                            <p><strong>Appointment Time : {{vApp.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                <span>{{vApp.scheduled_start_time|time1}} To {{vApp.scheduled_end_time|time1}}
                                                 </span>
                                             </p>
                                             <div class="clr"></div>
                                         </a>
                                         <div class="post-actions  post-footer p0">
                                             <div class="row cardbtn-small p0">
-                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(vApp.appointment_id,prod.user_id,1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.appointment_id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
+                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(vApp.id,prod.user_id,1, vApp.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
                                                 <!---<div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule"><i class="ion-calendar"></i>  Reschedule</a></div>--->
-                                                <div ng-if="vApp.appointments.mode == 1" class="col"><a  class="cbtn join" ng-click="joinVideo(vApp.appointments.mode, video_time[$parent.$index], video_end_time[$parent.$index], vApp.appointments.id)"><i class="ion-ios-videocam"></i> Join</a></div>
+                                                <div ng-if="vApp.mode == 1" class="col"><a  class="cbtn join" ng-click="joinVideo(vApp.mode, video_time[$parent.$index], video_end_time[$parent.$index], vApp.id)"><i class="ion-ios-videocam"></i> Join</a></div>
 
                                             </div>
                                         </div>
@@ -64,19 +64,19 @@
                                                     {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                                 </span>
                                             </p>
-                                            <p><strong>Appointment Time : {{cApp.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
-                                                <span>{{cApp.appointments.scheduled_start_time|time}} To {{cApp.appointments.scheduled_end_time|time}}
+                                            <p><strong>Appointment Time : {{cApp.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                <span>{{cApp.scheduled_start_time|time}} To {{cApp.scheduled_end_time|time}}
                                                 </span>
                                             </p>
                                             <div class="clr"></div>
                                         </a>
                                         <div class="post-actions  post-footer p0">
-                                            <div class="row cardbtn-small p0" ng-if="cApp.appointments.status == 0">
-                                                <div class="col"><a confirmed-click="deleteApp(cApp.appointment_id,prod.user_id, 3, cApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{cApp.appointment_id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
+                                            <div class="row cardbtn-small p0" ng-if="cApp.status == 0">
+                                                <div class="col"><a confirmed-click="deleteApp(cApp.id,prod.user_id, 3, cApp.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{cApp.appointment_id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
                                             </div>
-                                            <div class="row cardbtn-small p0" ng-if="cApp.appointments.status != 0">
-                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(cApp.appointment_id,prod.user_id,1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{cApp.appointment_id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
-                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(cApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule"><i class="ion-calendar"></i>  Reschedule</a></div>
+                                            <div class="row cardbtn-small p0" ng-if="cApp.status != 0">
+                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(cApp.id,prod.user_id,1, vApp.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{cApp.appointment_id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
+                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(cApp.id, prod.user_id, 1, vApp.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule"><i class="ion-calendar"></i>  Reschedule</a></div>
                                             </div>
                                         </div>
                                     </div>

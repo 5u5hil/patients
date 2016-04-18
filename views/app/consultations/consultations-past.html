@@ -28,20 +28,20 @@
                                                     {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                                 </span>
                                             </p>
-                                            <p><strong>Appointment Time : {{vAppPast.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
-                                                <span>{{vAppPast.appointments.scheduled_start_time|time1}} To {{vAppPast.appointments.scheduled_end_time|time1}}
+                                            <p><strong>Appointment Time : {{vAppPast.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                <span>{{vAppPast.scheduled_start_time|time1}} To {{vAppPast.scheduled_end_time|time1}}
                                                 </span>
                                             </p>
                                             <div class="clr"></div>
                                         </div>
                                         <div class="post-actions  post-footer p0">
                                             <div class="row cardbtn-small p0">
-                                                <div class="cardpast-bar {{vAppPast.appointments.status==3 ?'fgreen':'fred'}}">
-                                                    <i class="{{vAppPast.appointments.status==3 ?'ion-checkmark':'ion-close'}}"></i>
-                                                    {{vAppPast.appointments.status==4 ? 'Cancelled':''}}
-                                                    {{vAppPast.appointments.status==6 ? 'Patient no-show':''}}
-                                                    {{vAppPast.appointments.status==7 ? 'Doctor no-show':''}}
-                                                    {{vAppPast.appointments.status==3 ? 'Consulted':''}}
+                                                <div class="cardpast-bar {{vAppPast.status==3 ?'fgreen':'fred'}}">
+                                                    <i class="{{vAppPast.status==3 ?'ion-checkmark':'ion-close'}}"></i>
+                                                    {{vAppPast.status==4 ? 'Cancelled':''}}
+                                                    {{vAppPast.status==6 ? 'Patient no-show':''}}
+                                                    {{vAppPast.status==7 ? 'Doctor no-show':''}}
+                                                    {{vAppPast.status==3 ? 'Consulted':''}}
 
                                                 </div>
                                             </div>
@@ -63,20 +63,20 @@
                                                     {{spec.specialization}}{{$last==true? '': ',&nbsp;'}} 
                                                 </span>
                                             </p>
-                                            <p><strong>Appointment Time : {{cAppPast.appointments.scheduled_start_time|dateFormat3}}</strong><br/> 
-                                                <span>{{cAppPast.appointments.scheduled_start_time|time}} To {{cAppPast.appointments.scheduled_end_time|time}}
+                                            <p><strong>Appointment Time : {{cAppPast.scheduled_start_time|dateFormat3}}</strong><br/> 
+                                                <span>{{cAppPast.scheduled_start_time|time}} To {{cAppPast.scheduled_end_time|time}}
                                                 </span>
                                             </p>
                                             <div class="clr"></div>
                                         </div>
                                         <div class="post-actions  post-footer p0">
                                             <div class="row cardbtn-small p0">
-                                                <div class="cardpast-bar {{cAppPast.appointments.status==3 ?'fgreen':'fred'}}">
-                                                    <i class="{{cAppPast.appointments.status==3 ?'ion-checkmark':'ion-close'}}"></i>
-                                                    {{cAppPast.appointments.status==4 ? 'Cancelled':''}}
-                                                    {{cAppPast.appointments.status==6 ? 'Patient no-show':''}}
-                                                    {{cAppPast.appointments.status==7 ? 'Doctor no-show':''}}
-                                                    {{cAppPast.appointments.status==3 ? 'Consulted':''}}
+                                                <div class="cardpast-bar {{cAppPast.status==3 ?'fgreen':'fred'}}">
+                                                    <i class="{{cAppPast.status==3 ?'ion-checkmark':'ion-close'}}"></i>
+                                                    {{cAppPast.status==4 ? 'Cancelled':''}}
+                                                    {{cAppPast.status==6 ? 'Patient no-show':''}}
+                                                    {{cAppPast.status==7 ? 'Doctor no-show':''}}
+                                                    {{cAppPast.status==3 ? 'Consulted':''}}
 
                                                 </div>
                                             </div>
