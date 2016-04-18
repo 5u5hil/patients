@@ -128,9 +128,10 @@ section.ot-bubble.mine{text-align:left;     margin-left: 0.5em;}
 }
 
 .ot-textchat .ot-input {
-  position: relative;
+  position: fixed;
   margin: 0 0;
-  /* bottom: 0; */
+  bottom: 0; 
+  width:100%;
 }
 
 .ot-textchat .ot-composer {
@@ -196,7 +197,7 @@ section.ot-bubble.mine{text-align:left;     margin-left: 0.5em;}
 }
 
 .ot-textchat .ot-send-button:hover {
-  background-color: #f4f4f4;
+  background-color:#387EF5;
 }
 
 .ot-textchat .ot-send-button[disabled] {
