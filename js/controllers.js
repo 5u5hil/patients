@@ -2115,7 +2115,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 })
             };
             $scope.returnjs();
-            $scope.iframeHeight = $(window).height() - 88;
+            $scope.iframeHeight = $(window).height() - 42;
             $('#chat').css('height', $scope.iframeHeight);
             //Previous Chat 
             $scope.appendprevious = function () {
@@ -2130,8 +2130,19 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     });
                 })
             };
+			
+			
+			 $scope.movebottom = function () {
+				jQuery(function () {
+				  var dh=$('.ot-bubbles').height();
+                   	$('.chatscroll').scrollTop(dh);
+                    //	console.log(wh);
+
+                })
+            };
             $timeout(function () {
                 $scope.appendprevious();
+				  $scope.movebottom();
             }, 1000);
 
         })
