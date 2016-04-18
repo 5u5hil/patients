@@ -1701,7 +1701,9 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                     console.log(response.data);
+
                       $timeout.cancel(stopped1);
+
                     if (finalamount > 0) {
                         $state.go('app.Gopay', {'link': response.data});
                         console.log(response.data);
@@ -2135,10 +2137,10 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             };
 			
 			
-			 $scope.movebottom = function () {
-				jQuery(function () {
-				  var dh=$('.ot-bubbles').height();
-                   	$('.chatscroll').scrollTop(dh);
+            $scope.movebottom = function () {
+                jQuery(function () {
+                    var dh = $('.ot-bubbles').height();
+                    $('.chatscroll').scrollTop(dh);
                     //	console.log(wh);
 
                 })
