@@ -73,7 +73,7 @@
     <gap:plugin name="org.apache.cordova.statusbar" source="npm" />
 
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay"  version="1.2.0" />
-    <gap:plugin name="com.pushwoosh.plugins.pushwoosh" version="3.4.2" />
+   <!-- <gap:plugin name="com.pushwoosh.plugins.pushwoosh" version="3.4.2" />-->
     
     <access origin="*"/> <!-- allow all pages, use for development -->
     <allow-navigation href="*" />
