@@ -28,15 +28,16 @@
                                 <p>
                                     <strong>{{detail.fields.field| capitalize}}</strong><br/>
                                     <span ng-if="detail.fields.field == 'Prescribed By' || detail.fields.field == 'Measured By' || detail.fields.field == 'Referred By' || detail.fields.field == 'Performed By' || detail.fields.field == 'Consultant'">
-                                        {{doctors[$parent.$parent.$index].fname}} {{doctors[$parent.$parent.$index].lname}}
+                                        {{doctors[$parent.$parent.$index]}}
                                     </span>
                                     <span ng-if="detail.fields.field == 'Related Problem'" >
                                         {{problems[$parent.$parent.$index].value}}
                                     </span>
-                                    <span ng-if="detail.fields.field == 'Patient'" >
-                                        {{patient[$parent.$parent.$index].fname}} {{patient[$parent.$parent.$index].lname}} 
+                                    <span ng-if="detail.fields.field == 'Frequency'" ng-init="fdata = ((detail.value) / 24)">
+                                        {{fdata}} time{{fdata!=1? 's':''}} in day{{fdata!=1? 's':''}}
                                     </span>
-                                    <span ng-if="detail.fields.field != 'Patient' && detail.fields.field != 'Prescribed By' && detail.fields.field != 'Measured By' && detail.fields.field != 'Referred By' && detail.fields.field != 'Performed By' && detail.fields.field != 'Consultant' && detail.fields.field != 'Related Problem'">
+                                    <span ng-if="detail.fields.field == 'Patient'" ></span>
+                                    <span ng-if="detail.fields.field != 'Patient' && detail.fields.field != 'Frequency' && detail.fields.field != 'Prescribed By' && detail.fields.field != 'Measured By' && detail.fields.field != 'Referred By' && detail.fields.field != 'Performed By' && detail.fields.field != 'Consultant' && detail.fields.field != 'Related Problem'">
                                         <span ng-if="detail.fields.field_type == 8">{{detail.value|dateFormat4}}</span>
                                         <span ng-if="detail.fields.field_type == 12">{{detail.value|time1}}</span>
                                         <span ng-if="detail.fields.field_type != 8 && detail.fields.field_type != 12">{{detail.value}}</span>

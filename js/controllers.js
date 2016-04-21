@@ -26,16 +26,16 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             }
             $scope.logout = function () {
                 $ionicLoading.show({template: 'Logging out....'});
-                    window.localStorage.clear();
-                    $rootScope.userLogged = 0;
-                    $rootScope.$digest;
-                    $timeout(function () {
-                        $ionicLoading.hide();
-                        $ionicHistory.clearCache();
-                        $ionicHistory.clearHistory();
-                        $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
-                        $state.go('auth.walkthrough', {}, {reload: true});
-                    }, 30);
+                window.localStorage.clear();
+                $rootScope.userLogged = 0;
+                $rootScope.$digest;
+                $timeout(function () {
+                    $ionicLoading.hide();
+                    $ionicHistory.clearCache();
+                    $ionicHistory.clearHistory();
+                    $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
+                    $state.go('auth.walkthrough', {}, {reload: true});
+                }, 30);
 
             };
         })
@@ -490,20 +490,28 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             }
         })
 
-        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $ionicHistory, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile, $rootScope) {
+        .controller('AddRecordCtrl', function ($scope, $http, $state, $stateParams, $compile, $ionicModal, $ionicHistory, $filter, $timeout, $ionicLoading, $cordovaCamera, $cordovaFile, $rootScope) {
             $scope.interface = window.localStorage.getItem('interface_id');
             $scope.images = [];
             $scope.image = [];
             $scope.tempImgs = [];
             $scope.prescription = 'Yes';
+            $scope.coverage = 'Family Floater';
+            $scope.probstatus = 'Current';
+            $scope.conId = [];
+            $scope.conIds = [];
+            $scope.selConditions = [];
             $scope.curTime = new Date();
-            $scope.curTimeo = $filter('date')(new Date(), 'hh:mm');
+            $scope.curTimeo = $filter('date')(new Date(), 'HH:mm');
             //$scope.curT = new Date()$filter('date')(new Date(), 'H:i');
             $scope.userId = get('id');
             $scope.categoryId = $stateParams.id;
-            $scope.fields = {};
-            $scope.problems = {};
-            $scope.doctrs = {};
+            $scope.fields = [];
+            $scope.problems = [];
+            $scope.doctrs = [];
+            $scope.day = '';
+            $scope.meals = [{time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}];
+            $scope.mealDetails = [];
             $http({
                 method: 'GET',
                 url: domain + 'records/add',
@@ -515,9 +523,44 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 $scope.problems = response.data.problems;
                 $scope.doctrs = response.data.doctrs;
                 $scope.category = $stateParams.id;
+                $scope.conditions = response.data.knownHistory;
+                if ($scope.category == '6') {
+                    angular.forEach($scope.fields, function (value, key) {
+                        if (value.field == 'Coverage') {
+                            $scope.coverage = 'Family Floater';
+                        }
+                    });
+                }
+                if ($scope.category == '14') {
+                    angular.forEach($scope.fields, function (value, key) {
+                        if (value.field == 'Status') {
+                            console.log(value.field);
+                            $scope.probstatus = 'Current';
+                        }
+                    });
+                }
             }, function errorCallback(response) {
                 console.log(response);
             });
+            $scope.getCondition = function (id, con) {
+                console.log(id + "==" + con);
+                var con = con.toString();
+                if ($scope.conId[id]) {
+                    $scope.conIds.push(id);
+                    $scope.selConditions.push({'condition': con});
+                } else {
+                    var index = $scope.conIds.indexOf(id);
+                    $scope.conIds.splice(index, 1);
+                    for (var i = $scope.selConditions.length - 1; i >= 0; i--) {
+                        if ($scope.selConditions[i].condition == con) {
+                            $scope.selConditions.splice(i, 1);
+                        }
+                    }
+                }
+                jQuery("#selcon").val($scope.conIds);
+                console.log($scope.selConditions);
+                console.log($scope.conIds);
+            };
             $scope.addOther = function (name, field, val) {
                 console.log(name, field, val);
                 addOther(name, field, val);
@@ -547,7 +590,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                             $ionicHistory.nextViewOptions({
                                 historyRoot: true
                             });
-                            $scope.image = [];
+                            //$scope.image = [];
                             alert("Record added successfully!");
                             $timeout(function () {
                                 $state.go('app.records-view', {'id': $scope.categoryId}, {}, {reload: true});
@@ -581,6 +624,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     return trueOrigin;
                 }
             };
+
             $scope.getPrescription = function (pre) {
                 console.log('pre ' + pre);
                 if (pre === ' No') {
@@ -697,6 +741,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     jQuery('#enddt').val('');
                 }
             };
+
             $scope.check = function (val) {
                 console.log(val);
                 if ($scope.categoryId == 7) {
@@ -706,6 +751,13 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     } else {
                         jQuery('#billStatus').val('Unpaid');
                         jQuery('#billmode').addClass('hide');
+                    }
+                }
+                if ($scope.categoryId == 3) {
+                    if (val) {
+                        jQuery('#mediStatus').val('Active');
+                    } else {
+                        jQuery('#mediStatus').val('Inactive');
                     }
                 }
                 if ($scope.categoryId == 2) {
@@ -723,16 +775,18 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     if (val) {
                         jQuery('#proconduct').val('Conducted On');
                         jQuery('#proconon').removeClass('hide');
+                        jQuery('.proc').removeClass('hide');
                         jQuery('#proconbef').addClass('hide');
                     } else {
                         jQuery('#proconduct').val('To be conducted');
                         jQuery('#proconon').addClass('hide');
+                        jQuery('.proc').addClass('hide');
                         jQuery('#proconbef').removeClass('hide');
                     }
                 }
                 if ($scope.categoryId == 5) {
                     if (val) {
-                        jQuery('#invconduct').val('Conducted On');
+                        jQuery('#invconduct').val('Conducted');
                         jQuery('#invconon').removeClass('hide');
                         jQuery('.inv').removeClass('hide');
                         jQuery('#invconbef').addClass('hide');
@@ -744,18 +798,45 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     }
                 }
             };
+
             $scope.rcheck = function (val) {
                 console.log(val);
                 if ($scope.categoryId == 2) {
                     if (val) {
+                        jQuery('#immrepeat').val('Yes');
                         jQuery('#imrpton').removeClass('hide');
-                        jQuery('.imd').removeClass('hide');
+                        //jQuery('.imd').removeClass('hide');
                     } else {
+                        jQuery('#immrepeat').val('No');
                         jQuery('#imrpton').addClass('hide');
-                        jQuery('.imd').addClass('hide');
+                        //jQuery('.imd').addClass('hide');
                     }
                 }
             };
+
+            $scope.shCheck = function (val) {
+                console.log(val);
+                if ($scope.categoryId == 3) {
+                    if (val == '') {
+                        jQuery('#prescribeDt').addClass('hide');
+                    } else {
+                        jQuery('#prescribeDt').removeClass('hide');
+                    }
+                }
+
+            };
+
+            $scope.radChange = function (prob) {
+                console.log(prob);
+                if ($scope.categoryId == 14) {
+                    if (prob != 'Past') {
+                        jQuery('#probend').addClass('hide');
+                    } else {
+                        jQuery('#probend').removeClass('hide');
+                    }
+                }
+            };
+
             $scope.setFile = function (element) {
                 $scope.currentFile = element.files[0];
                 console.log('length = ' + element.files.length);
@@ -788,9 +869,47 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     }
                 }
             };
+
+            $ionicModal.fromTemplateUrl('mealdetails', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+                $scope.showModal = function (index) {
+                    console.log('day' + (index - 1));
+                    $scope.day = 'day' + (index - 1);
+                    //$scope.mealDetails =[{index: $scope.meals}];
+                    $scope.modal.show();
+                };
+            });
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+                $scope.mealDetails[($scope.day - 1)] = $scope.meals;
+                //$scope.mealDetails.splice(($scope.day-1), 0, $scope.meals);
+            };
+
+
+            $scope.dietdetails = function (days) {
+                console.log(days); //ng-controller="mealDetailsCtrl"
+                jQuery('.dietdays').empty();
+                var dietDays = '';
+                for (var i = 1; i <= days; i++) {
+                    $scope.mealDetails['day' + (i - 1)] = [{time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}, {time: '', details: ''}];
+                    //dietDays = $compile('<input type="hidden" id="day' + (i-1) + '" name="day-' + i + '" value=""/><div class="item item-divider">Day ' + i + '<button class="Cstmbutn button-small mb15 col-25" style="float:right; padding:0;" ng-click="showModal(' + i + ')"><span class="icon ion-plus-circled"></span> Day </button></div><label class="item item-input"></label>')($scope);
+                    dietDays = $compile('<input type="hidden" id="day' + (i - 1) + '" name="day-' + i + '" value=""/><button class="button button-positive button-small inbtn" ng-click="showModal(' + i + ')"><span class="icon ion-plus-circled"></span> Day ' + i + '</button>')($scope);
+                    jQuery('.dietdays').append(dietDays);
+                }
+                console.log($scope.mealDetails);
+            };
+            $scope.saveMeal = function (day) {
+                console.log(day);
+                jQuery('#' + day).val(JSON.stringify($scope.mealDetails[day]));
+                console.log(JSON.stringify($scope.mealDetails[day]));
+                console.log($scope.mealDetails[day]);
+                console.log($scope.mealDetails);
+                $scope.modal.hide();
+            };
         })
 
-        .controller('ThankyouCtrl', function ($scope, $http, $stateParams) { })
 
         .controller('EditRecordCtrl', function ($scope, $http, $state, $stateParams, $sce) {
             $scope.fields = [];
@@ -828,7 +947,6 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 console.log(response);
             });
         })
-
 
         .controller('RecordsViewCtrl', function ($scope, $http, $state, $stateParams, $rootScope, $cordovaPrinter, $ionicModal, $timeout) {
             $scope.interface = window.localStorage.getItem('interface_id');
@@ -1013,6 +1131,13 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
         .controller('RecordDetailsCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {
             $scope.recordId = $stateParams.id;
             $scope.userId = get('id');
+            $scope.Bstatus = '';
+            $scope.Istatus = '';
+            $scope.repeatStatus = '';
+            $scope.InvStatus = '';
+            $scope.probstatus = '';
+            $scope.prescstatus = '';
+            $scope.selConditions = [];
             $scope.interface = window.localStorage.getItem('interface_id');
             $scope.isNumber = function (num) {
                 return angular.isNumber(num);
@@ -1029,6 +1154,38 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 $scope.doctors = response.data.doctrs;
                 $scope.patient = response.data.patient;
                 $scope.doctrs = response.data.shareDoctrs;
+                $scope.selConditions = response.data.conditions;
+                angular.forEach($scope.recordDetails, function (val, key) {
+                    if ($scope.category[0].categories.id == '7') {
+                        console.log(val.fields.field);
+                        if (val.fields.field == 'Status') {
+                            $scope.Bstatus = val.value;
+                        }
+                    }
+                    if ($scope.category[0].categories.id == '2') {
+                        if (val.fields.field == 'Status') {
+                            $scope.Istatus = val.value;
+                        }
+                        if (val.fields.field == 'Repeat') {
+                            $scope.repeatStatus = val.value;
+                        }
+                    }
+                    if ($scope.category[0].categories.id == '5' || $scope.category[0].categories.id == '4') {
+                        if (val.fields.field == 'Status') {
+                            $scope.InvStatus = val.value;
+                        }
+                    }
+                    if ($scope.category[0].categories.id == '14') {
+                        if (val.fields.field == 'Status') {
+                            $scope.probstatus = val.value;
+                        }
+                    }
+                    if ($scope.category[0].categories.id == '8') {
+                        if (val.fields.field == 'Includes Prescription') {
+                            $scope.prescstatus = val.value;
+                        }
+                    }
+                });
             }, function errorCallback(response) {
                 console.log(response);
             });
@@ -1109,6 +1266,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 $scope.modal.hide();
             };
         })
+
         .controller('shareModalCtrl', function ($scope, $http, $state, $stateParams, $timeout, $ionicModal, $rootScope, $sce) {
             //Show share model
             $ionicModal.fromTemplateUrl('share', {
@@ -1615,7 +1773,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     }).then(function successCallback(responseData) {
                         alert('Sorry, Your payment time expired');
                         window.localStorage.removeItem('kookooid');
-                         window.localStorage.removeItem('kookooid1');
+                        window.localStorage.removeItem('kookooid1');
                         $timeout(function () {
                             // $state.go('app.consultation-profile', {'id':$scope.product[0].user_id}, {reload: true});
                             $state.go('app.consultations-list', {reload: true});
@@ -1702,7 +1860,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                     console.log(response.data);
-                      //$timeout.cancel(stopped1);
+                    //$timeout.cancel(stopped1);
                     if (finalamount > 0) {
                         $state.go('app.Gopay', {'link': response.data});
                         console.log(response.data);
@@ -1711,7 +1869,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-                       //$timeout.cancel(stopped1);
+                        //$timeout.cancel(stopped1);
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
                     }
                 }, function errorCallback(response) {
@@ -2134,8 +2292,8 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     });
                 })
             };
-			
-			
+
+
             $scope.movebottom = function () {
                 jQuery(function () {
                     var dh = $('.ot-bubbles').height();
@@ -2146,7 +2304,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             };
             $timeout(function () {
                 $scope.appendprevious();
-				  $scope.movebottom();
+                $scope.movebottom();
             }, 1000);
 
         })
