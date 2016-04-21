@@ -2299,7 +2299,6 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     var dh = $('.ot-bubbles').height();
                     $('.chatscroll').scrollTop(dh);
                     //	console.log(wh);
-
                 })
             };
             $timeout(function () {
@@ -2371,19 +2370,15 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
         .controller('CheckavailableCtrl', function ($scope, $rootScope, $ionicLoading, $state, $http, $stateParams, $timeout, $ionicModal, $ionicPopup) {
             $scope.data = $stateParams.data;
             $scope.uid = $stateParams.uid;
-
             $scope.interface = window.localStorage.getItem('interface_id');
             $http({
                 method: 'GET',
                 url: domain + 'kookoo/check-doctor-availability',
                 params: {id: $scope.uid, interface: $scope.interface}
             }).then(function successCallback(responseData) {
-
-                $scope.check_availability = responseData.data.check_availability
-                $scope.instant_video = responseData.data.instant_video
-
+                $scope.check_availability = responseData.data.check_availability;
+                $scope.instant_video = responseData.data.instant_video;
                 $scope.language = responseData.data.lang.language;
-
             });
 
             /* patient confirm */
@@ -2572,15 +2567,9 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             };
         })
 
+        .controller('packagingCtrl', function ($scope) {})
 
-        .controller('packagingCtrl', function ($scope) {
-
-        })
-
-        .controller('PackagingDetailCtrl', function ($scope, $ionicModal) {
-
-
-        })
+        .controller('PackagingDetailCtrl', function ($scope, $ionicModal) {  })
 
         .controller('pkgDetailsCtrl', function ($scope, $ionicModal) {
             $ionicModal.fromTemplateUrl('pkg-details', {
@@ -2589,7 +2578,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 $scope.modal = modal;
             });
         })
-
+        
         .controller('pkgtermsCtrl', function ($scope, $ionicModal) {
             $ionicModal.fromTemplateUrl('pkg-terms', {
                 scope: $scope
@@ -2605,27 +2594,20 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 $scope.modal = modal;
             });
         })
+        
         .controller('packageConfirmCtrl', function ($scope, $ionicModal) {
 
         })
-
-
         /* packages */
         .controller('ActivePackagesCtrl', function ($scope) {})
         .controller('PackagesViewCtrl', function ($scope) {})
         .controller('PastPackagesCtrl', function ($scope) {})
         /* packages */
 
-
         /* Pathology */
         .controller('PathologyCtrl', function ($scope) {})
         .controller('PackagesListCtrl', function ($scope) {})
         /* Pathology */
-
-
-
-
-
         .controller('RescheduleCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $ionicHistory, $filter, $state) {
             $scope.cancelApp = function (appId, drId, mode, startTime) {
                 $scope.appId = appId;
@@ -2696,7 +2678,8 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 }
             };
         })
-        .controller('RescheduleAppointmentCtrl', function ($scope, $http, $stateParams, $ionicLoading, $rootScope, $ionicHistory, $filter, $state) {
+        
+        .controller('RescheduleAppointmentCtrl', function ($scope, $http, $ionicModal, $stateParams, $ionicLoading, $rootScope, $ionicHistory, $filter, $state) {
             $scope.pSch = [];
             $scope.schP = [];
             $scope.schdate = [];
@@ -2746,7 +2729,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             });
             $scope.getNextSlots = function (nextDate, supsassId, key, serv) {
                 console.log(nextDate + '=======' + supsassId + '=====' + key);
-                var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd HH:mm:ss');
+                var from = $filter('date')(new Date(nextDate), 'yyyy-MM-dd') + '+05:30:00';  // HH:mm:ss
                 $ionicLoading.show({template: 'Loading...'});
                 $http({
                     method: 'GET',
@@ -2802,6 +2785,16 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     console.log(response);
                 });
             };
+            /* view more doctor profile modalbox*/
+            $ionicModal.fromTemplateUrl('viewmoreprofile.html', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.modal = modal;
+            });
+            $scope.submitmodal = function () {
+                $scope.modal.hide();
+            };
+            /* end profile */            
             $scope.bookSlot = function (starttime, endtime, supid) {
                 console.log(starttime + '===' + endtime + '=========' + supid);
                 $scope.bookingStart = starttime;
@@ -2844,4 +2837,6 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 });
                 $state.go('app.consultations-list', {}, {reload: true});
             };
-        });
+        })
+        
+;

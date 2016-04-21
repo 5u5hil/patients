@@ -9,31 +9,31 @@
     <div ng-repeat="doc in doctor">
         <div class="profile-head">
             <div class="card-content">
-
-                <div class="card-left">
-                    <img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg">
-                </div>
+                <!--  <div class="rating"><i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star active"></i> <i class="ion-star"></i> <i class="ion-star"></i></br>15 Reviews</div> -->
+                <div class="card-left"><img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg"></div>
                 <div class="card-detail txt-left">
-                    <p><strong>{{doc.fname}} {{doc.lname}}</strong><br/>
+                    <p><strong> {{doc.fname}} {{doc.lname}}</strong><br/>
                         <span ng-repeat="spec in doc.specializations">
                             {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
                         </span></p>
+                    <div class="button button-small button-outline button-positive viewmore" ng-click="modal.show()">View more</div>
                 </div>
                 <div class="clr"></div>
             </div>
         </div>
     </div>
     <ion-content>
-        <div class="ctab profile" style="margin-top:114px;">
-            <my-tabs class="themetabs" > <!--- class="tabs-positive tabs-icon-top"-->
+        <div class="ioncontent">
+            <div class="whitetab" style="margin-top:87px;">
+                <my-tabs class="themetabs" > <!--- class="tabs-positive tabs-icon-top"-->
                     <my-tab icon="ion-ios-videocam tabicon" title="{{appointment.mode==1 ? 'Video': ''}}
-                             {{appointment.mode==2 ? 'Chat': ''}}
-                             {{appointment.mode==3 ? 'Clinic': ''}}
-                             {{appointment.mode==4 ? 'Home': ''}}" >
+                            {{appointment.mode==2 ? 'Chat': ''}}
+                            {{appointment.mode==3 ? 'Clinic': ''}}
+                            {{appointment.mode==4 ? 'Home': ''}}" >
                         <!-- Tab 1 content -->
                         <div class="tabc2">
                             <ul class="clist">
-                                <li>{{Prod.desc}}</li>
+                                <!--<li>{{Prod.desc}}</li>-->
                                 <li ng-repeat="pInc in Inc track by $index">{{pInc.mode}}, {{pInc.desc}},
                                     <span ng-if="vInc.discount < 100">Discount : {{pInc.discount}} %</span>, {{pInc.validity_in_days}} Days
                                 </li>
@@ -69,6 +69,47 @@
                             </div>
                         </div>
                     </my-tab>
-            </my-tabs>
+                </my-tabs>
+            </div>
+        </div>
     </ion-content>
+        <script id="viewmoreprofile.html" type="text/ng-template">
+        <ion-modal-view>
+        <div class="profile-head detailhead" ng-repeat="doc in doctor">
+        <div class="card-content">
+        <div class="card-left"><img class="user-image-circle" ng-if="doc.image != ''" ng-src="{{imgpath}}{{doc.image}}"><img class="user-image-circle" ng-if="doc.image == ''" ng-src="img/default-user.jpg"></div>
+        <div class="card-detail txt-left">
+        <p><strong> {{doc.fname}} {{doc.lname}}</strong><br/>
+        <span ng-repeat="spec in doc.specializations">
+        {{spec.specialization}}{{$last==true? '': ',&nbsp;'}}
+        </span></p>
+        <div class="button button-small button-outline button-assertive viewmore" ng-click="modal.hide()">Close</div>
+        </div>
+        <div class="clr"></div>
+        </div>
+        </div>
+        <ion-content>
+        <div class="list" ng-repeat="doc in doctor" style="margin-top:65px;">
+        <div class="item item-body">
+        <div class="row txt-left">
+        <div class="col"><p><strong>Experience</strong><br/>{{doc.exp}}</p></div>	
+        <div class="col"><p><strong>Qualification</strong><br/>
+        <span ng-repeat="qual in doc.qualifications">{{qual.qualification}}{{$last==true? '': ',&nbsp;'}}</span>
+        </p></div>	
+        </div>
+        <div class="row txt-left">
+        <div class="col"><p><strong>Languages</strong><br/>
+        <span ng-repeat="lang in doc.languages">
+        {{lang.language}}{{$last==true? '': ',&nbsp;'}}
+        </span></p></div>	
+        <div class="col"><p><strong>Focus Area</strong><br/>
+        <span ng-repeat="focus in doc.focuses">
+        {{focus.focus}}{{$last==true? '': ',&nbsp;'}}
+        </span></p></div>	
+        </div>
+        </div>
+        </div>
+        </ion-content>
+        </ion-modal-view> 
+    </script>
 </ion-view>
