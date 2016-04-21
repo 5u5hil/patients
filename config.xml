@@ -60,7 +60,7 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="UIWebViewBounce" value="false" />
     
-    <plugin name="Cordova-Plugin-OpenTok-JBS" version="1.0.0" source="pgb" />
+    <plugin name="Cordova-Plugin-OpenTok-JBS" version="1.0.0" source="npm" />
     <plugin name="org.crosswalk.engine" spec="1.3.0" source="pgb" />
     <gap:plugin name="org.apache.cordova.splashscreen" source="npm" />
     <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />
