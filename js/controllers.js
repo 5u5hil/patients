@@ -1676,6 +1676,8 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 });
             };
             $scope.payNow = function (finalamount) {
+                //Stop timer
+                $timeout.cancel(stopped1);
                 $scope.interface = window.localStorage.getItem('interface_id');
                 if (window.localStorage.getItem('instantV') == 'instantV') {
                     $scope.startSlot = window.localStorage.getItem('IVstartSlot');
@@ -1700,9 +1702,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     window.localStorage.removeItem('coupondiscount');
                     window.localStorage.setItem('coupondiscount', '')
                     console.log(response.data);
-
-                      $timeout.cancel(stopped1);
-
+                      //$timeout.cancel(stopped1);
                     if (finalamount > 0) {
                         $state.go('app.Gopay', {'link': response.data});
                         console.log(response.data);
@@ -1711,7 +1711,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
-                        $timeout.cancel(stopped1);
+                       //$timeout.cancel(stopped1);
                         $state.go('app.thankyou', {'data': response.data}, {reload: true});
                     }
                 }, function errorCallback(response) {
