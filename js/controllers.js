@@ -1817,6 +1817,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 console.log(response);
             });
             $scope.bookNow = function () {
+                $timeout.cancel(stopped1);
                 $ionicLoading.show({template: 'Loading...'});
                 $scope.interface = window.localStorage.getItem('interface_id');
                 $scope.startSlot = window.localStorage.getItem('startSlot');
@@ -1828,7 +1829,10 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                     url: domain + 'buy/book-appointment',
                     params: {prodId: $scope.prodid, userId: $scope.userId, supId: $scope.supid, startSlot: $scope.startSlot, endSlot: $scope.endSlot}
                 }).then(function successCallback(response) {
-                    $ionicLoading.hide();
+                    $ionicLoading.hide
+                    $ionicHistory.nextViewOptions({
+                        disableBack: true
+                    });
                     $state.go('app.thankyou', {'data': 'success'}, {reload: true});
                 }, function errorCallback(response) {
                     console.log(response);
