@@ -6,7 +6,7 @@
         <div class="pb50">
 
             <div ng-repeat="rec in recordDetails track by $index">
-                <div ng-if="category[0].category == 3">
+                <div ng-if="category.category == 3">
                     <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                     <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
                     <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
@@ -68,7 +68,7 @@
                         <div class="clr"></div>		
                     </div>
                 </div>
-                <div ng-if="category[0].category == 7" >
+                <div ng-if="category.category == 7" >
                     <div ng-if="rec.fields.field == 'Payment Mode'">
                         <div ng-if="Bstatus != '' && Bstatus != 'Unpaid'">
                             <div ng-if="rec.value == '0'">
@@ -141,7 +141,7 @@
                         <div class="clr"></div>		
                     </div>
                 </div>
-                <div ng-if="category[0].category == 2" >
+                <div ng-if="category.category == 2" >
                     <div ng-if="rec.fields.field == 'Adverse Effects' || rec.fields.field == 'Date received'">
                         <div ng-if="Istatus != 'To be received'">                            
                             <div ng-if="rec.fields.field == 'Adverse Effects'">
@@ -222,7 +222,7 @@
                         <div class="clr"></div>		
                     </div>
                 </div>
-                <div ng-if="category[0].category == 4" >
+                <div ng-if="category.category == 4" >
                     <div ng-if="rec.fields.field == 'To be conducted before' || rec.fields.field == 'Conducted On' || rec.fields.field == 'Performed By' || rec.fields.field == 'Performed At' || rec.fields.field == 'Inference' || rec.fields.field == 'Reference Range'">
                         <div ng-if="InvStatus == 'Conducted'">
                             <div ng-if="rec.fields.field != 'Conducted On' && rec.fields.field != 'To be conducted before'">
@@ -294,13 +294,12 @@
                                         </a>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="clr"></div>		
                         </div>
                     </div>
                 </div>
-                <div ng-if="category[0].category == 5" >
+                <div ng-if="category.category == 5" >
                     <div ng-if="rec.fields.field == 'To be conducted before' || rec.fields.field == 'Conducted On' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Result' || rec.fields.field == 'Inference' || rec.fields.field == 'Reference Range'">
                         <div ng-if="InvStatus == 'Conducted'">
                             <div ng-if="rec.fields.field != 'Conducted On' && rec.fields.field != 'To be conducted before'">
@@ -378,7 +377,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="category[0].category != 3 && category[0].category != 4 && category[0].category != 5 && category[0].category != 7 && category[0].category != 2">
+                <div ng-if="category.category != 3 && category.category != 4 && category.category != 5 && category.category != 7 && category.category != 2">
                     <div ng-if="rec.fields.name == 'how-it-ended' && probstatus == 'Past'">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
@@ -393,23 +392,20 @@
                             <ul><li ng-repeat="sel in selConditions[$index]">{{sel.condition}}</li></ul>
                         </div>
                     </div>
-					
-					
-					<div ng-if="rec.fields.name == 'no-of-days'">
+
+
+                    <div ng-if="rec.fields.name == 'no-of-days'">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
                         <div class="fieldvalue" >
-                          <div class="dietdays">
-						  <button class="button button-positive button-small inbtn">
-						  <span class="icon ion-plus-circled"></span> Day 1</button>
-						  
-						  <button class="button button-positive button-small inbtn"><span class="icon ion-plus-circled"></span> Day 2</button>
-						  </div>
+                            <div class="dietdays">
+                                <button class="button button-positive button-small inbtn" ng-repeat="dd in dietDetails" ng-click="daymodal({{$index}})">
+                                    <span class="icon ion-plus-circled"></span> Day {{$index + 1}}</button>
+                            </div>
                         </div>
                     </div>
-					
-                    <div ng-if="rec.fields.name != 'how-it-ended' 
-					&& rec.fields.name != 'no-of-days' && rec.fields.name != 'quick-history'" >
+
+                    <div ng-if="rec.fields.name != 'how-it-ended' && rec.fields.name != 'no-of-days' && rec.fields.name != 'quick-history'" >
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
                         <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
@@ -471,26 +467,11 @@
                 </div>
             </div>
         </div>
-        <!---
-        <div class="ctab">
-            <ion-tabs class="tabs-positive tabs-icon-top">
-                <ion-tab title="View" >                    
-                </ion-tab>
-                <ion-tab title="Track" >
-                    <div class="tabcontainer"> Under Construction	</div>
-                </ion-tab>
-                <ion-tab title="Versions" >
-                    <div class="tabcontainer">
-                        Under Construction	
-                    </div>
-                </ion-tab>
-            </ion-tabs>
-        </div>-->
     </ion-content>
     <div class="footerbar button-bar">
         <a class="button btn-delete" confirmed-click="delete(category[0].id)" ng-confirm-click="Do you really want to delete?" ><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button btn-share" ng-controller="shareModalCtrl" ng-click="modal.show()"><i class="icon ion-android-share-alt"></i> Share</a>
-        <!--<a class="button btn-edit" ui-sref="app.edit({'id' : category[0].id,'cat' : category[0].category, 'res' : 'json'})"><i class="icon ion-edit"></i> Edit</a>--->
+        <!--<a class="button btn-edit" ui-sref="app.edit({'id' : category[0].id,'cat' : category.category, 'res' : 'json'})"><i class="icon ion-edit"></i> Edit</a>--->
     </div>
 </ion-view>
 <script id="filesview.html" type="text/ng-template">
@@ -502,7 +483,7 @@
     <div class="mcontent">
     <!-- <iframe  type="text/html" style="width:100%; position:absolute; height:80%; top:100px;" scrolling="yes" ng-src="{{trustSrc(value)}}" allowfullscreen frameborder="0">       
     </iframe> -->
-    <div class="viewattachfile">
+    <div class="viewattachfile" ng-if="value!=''">
     <img src="{{value}}">
     </div>
     </div>
@@ -527,4 +508,50 @@
     </div>
     </ion-modal-view>
 </script>
-
+<script id="mealdetailss" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Meal Details</h1>
+    <button class="button button-clear pull-left" ng-click="submitmodal()">Cancel</button>
+    <div class="buttons buttons-right pull-right"><span class="right-buttons">
+    <button type="submit" ng-click="saveMeal(day)" class="button button-positive w100p brdradious0" ng-disabled="addRecordForm.$invalid" disabled="disabled"> 
+    <strong>Submit</strong> </button>
+    </span></div>
+    </ion-header-bar>
+    <ion-content>
+    <div ng-repeat="meal in mealDetails[day]">
+    <div class="item item-divider">Meal {{$index+1}}</div>
+    <label class="item item-input">
+    <input type="time" placeholder="Time" ng-model="mealDetails[day][$index].time"  required="">
+    </label>
+    <label class="item item-input">
+    <textarea placeholder="Notes" name="" ng-model="mealDetails[day][$index].details" maxlength="" rows="2" cols="50"></textarea>
+    </label>
+    </div>  
+    </ion-content>
+    </ion-modal-view>
+</script>
+<script id="mealdetails" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Meal Details</h1>
+    <button class="button button-clear pull-left" ng-click="submitmodal()">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+    <div ng-if="dietPlanDetails.length==0"><p class="text-center">No data added</p></div>
+    <div ng-repeat="diet in dietPlanDetails">
+    <div class="item item-divider">Meal {{$index+1}}</div>
+    <div ng-repeat="meal in diet">   
+    <label class="item item-input" ng-if="meal.fields.name=='meal-1' || meal.fields.name=='value'">
+    <div ng-if="meal.fields.field=='Time'">
+        <div ng-if="meal.value == ''"> NA </div>
+        <div ng-if="meal.value == '00:00:00'"> NA </div>
+        <div ng-if="meal.value != '00:00:00' && meal.value != ''">{{meal.value|time1}}</div>
+    </div>
+    <div ng-if="meal.fields.field!='Time'">{{meal.value==''? 'NA':meal.value}}</div>    
+    </label>
+    </div>
+    </div>  
+    </ion-content>
+    </ion-modal-view>
+</script>

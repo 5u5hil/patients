@@ -17,7 +17,7 @@
                             <div class="" ng-if="field.is_dependent == 1">
                                 <div class="listreq" ng-if="field.is_mandatory == 1" ><div class="item item-divider" >{{field.field}} *</div> </div>
                                 <div class="item item-divider" ng-if="field.is_mandatory != 1" >{{field.field}} </div>
-                                <label class="item item-input"><select class="cselect" name="{{field.name}}" ng-init="-1" id="{{field.name}}" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
+                                <label class="item item-input"><select class="cselect" name="{{field.name}}" ng-init="- 1" id="{{field.name}}" ng-model="fields.field.name" ng-change="addOther(field.name, field.field, fields.field.name)">
                                         <option value="">Select {{field.field}}</option>
                                         <option value="0">Add New</option>
                                         <option ng-repeat="doc in doctrs" value="{{doc.id}}">{{doc.fname}}</option>
@@ -37,7 +37,7 @@
                             <div class="">
                                 <div class="item item-divider" >{{field.field}}</div>
                                 <label class="item item-input">
-                                    <select class="cselect" name="{{field.name}}" id="{{field.name}}" ng-model="prob.record_id" ng-change="addOther(field.name, field.field, prob.record_id)" ng-init="-1">
+                                    <select class="cselect" name="{{field.name}}" id="{{field.name}}" ng-model="prob.record_id" ng-change="addOther(field.name, field.field, prob.record_id)" ng-init="- 1">
                                         <option value="" ng-selected="1">Select </option>
                                         <option ng-repeat="prob in problems"  value="{{prob.record_id}}">{{prob.value}}</option>
                                     </select>
@@ -226,9 +226,16 @@
                                         </label>
                                     </div>
                                     <div><div class="item item-divider"> Meal Plan</div>
-                                        <label class="item item-input mh44 inbtnlabel">
-                                            <div class="dietdays"></div>
-                                        </label>
+                                        <div class="item item-input mh44 inbtnlabel">
+                                            <div class="dietdays" >
+                                                <div ng-repeat="dm in dayMeal track by $index"style="float:left;">
+                                                    <input type="hidden" id="day{{$index}}" name="day-{{$index + 1}}" value="{{dm}}"/>
+                                                    <button  class="button button-positive button-small inbtn" ng-click="daymodal({{dm}})">
+                                                        <span class="icon ion-plus-circled"></span> Day {{$index + 1}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div ng-if="field.field != 'Frequency' && field.name != 'no-of-days'">
