@@ -41,7 +41,7 @@
                                         <div class="post-actions  post-footer p0">
                                             <div class="row cardbtn-small p0">
                                                 <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="cancelApp(vApp.id,prod.user_id,1, vApp.scheduled_start_time)" ng-confirm-click="Do you really want to cancel appointment?" id="{{vApp.id}}" class="cbtn cancel"><i class="ion-close"></i> Cancel</a></div>
-                                                <!---<div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(vApp.appointment_id, prod.user_id, 1, vApp.appointments.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule"><i class="ion-calendar"></i>  Reschedule</a></div>--->
+<!--                                                <div class="col"><a ng-controller="RescheduleCtrl" confirmed-click="rescheduleApp(vApp.id, prod.user_id, 1, vApp.scheduled_start_time)" ng-confirm-click="Do you really want to reschedule?" class="cbtn reschedule"><i class="ion-calendar"></i>  Reschedule</a></div>-->
                                                 <div ng-if="vApp.mode == 1" class="col"><a  class="cbtn join" ng-click="joinVideo(vApp.mode, video_time[$parent.$index], video_end_time[$parent.$index], vApp.id)"><i class="ion-ios-videocam"></i> Join</a></div>
 
                                             </div>
