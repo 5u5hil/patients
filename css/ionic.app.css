@@ -9146,11 +9146,15 @@ label.item .col{position:relative;}
 .countconsult{display:block; text-align:center;}
 
 input[type="date"]:before{
-	font-family: "Ionicons";
-	display: inline-block;
-	padding:0 5px;
-	content: "\f117"; display:block;
+       font-family: "Ionicons";
+    position: absolute;
+    left: 0;
+    top: 34%;
+    padding: 0 5px;
+    content: "\f117"; 
 }
+
+.item.item-input input[type="date"]{text-indent:8px;}
 
 
 .sche-date input[type="date"]:before{
