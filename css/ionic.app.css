@@ -39,6 +39,7 @@ For example, you might change some of the default colors:
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
+.pb30{padding-bottom: 30px;}
 
 .ion-alert:before {
     content: "\f101"; }
@@ -8952,7 +8953,7 @@ a.tab-item{color:#000;}
                 direction: ltr !important;
                 padding: 7px 0 7px 0px !important;
                 /* font-weight: bold; */
-                border: 0;
+                border: 0; background:#fff;
 }
 
 
@@ -9150,14 +9151,12 @@ label.item .col{position:relative;}
 .countconsult{display:block; text-align:center;}
 
 input[type="date"]:before{
- font-family: "Ionicons";
+       font-family: "Ionicons";
     position: absolute;
     left: 0;
     top: 34%;
     padding: 0 5px;
     content: "\f117"; 
-	display:block;
-
 }
 
 .item.item-input input[type="date"]{text-indent:8px;}
@@ -9174,7 +9173,7 @@ input[type="date"]:before{
           color: #fff;
           display: block;
           line-height: 35px !important; text-decoration:none;}
-.fieldvalue{ padding:10px;}
+.fieldvalue{ padding:10px; float: left; width:100%;     text-indent: 6px;}
 
 .f22{font-size: 22px;}
 
@@ -9210,9 +9209,32 @@ input[type="date"]:before{
 .button-positive .icon{color:#fff;}
 
 .inbtnlabel{text-overflow:inherit; white-space: inherit; overflow:auto;      min-width: 65px;   padding-left: 8px;}
-.filldata{background: rgba(56,126,245,0.6);
-    border-color:rgba(56,126,245,0.6);
+.filled-data{    color: #387EF5;
+    border-color: #387EF5;}
+.filled-data .icon{color: #387EF5;}
+
+.filldata{background: #387EF5;
+color: #fff;
 }
+.filldata .icon{
+color: #fff;
+}
+.modalhead{  position: absolute;
+  top: 0;
+  right: 80px;
+  left: 80px;
+  z-index: 0;
+  overflow: hidden;
+  margin: 0 10px;
+  min-width: 30px;
+  height: 43px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 500; color:#fff; line-height:43px;
+  }
+
 
 /* endcss */
 
