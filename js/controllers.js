@@ -1182,6 +1182,7 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
             $scope.diet = [];
             $scope.dietPlanDetails = [];
             $scope.Mealday = '';
+            $scope.isAttachment = '';
             $scope.interface = window.localStorage.getItem('interface_id');
             $scope.isNumber = function (num) {
                 return angular.isNumber(num);
