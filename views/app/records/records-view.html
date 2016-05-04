@@ -40,7 +40,10 @@
                                     <span ng-if="detail.fields.field != 'Patient' && detail.fields.field != 'Frequency' && detail.fields.field != 'Prescribed By' && detail.fields.field != 'Measured By' && detail.fields.field != 'Referred By' && detail.fields.field != 'Performed By' && detail.fields.field != 'Consultant' && detail.fields.field != 'Related Problem'">
                                         <span ng-if="detail.fields.field_type == 8">{{detail.value|dateFormat4}}</span>
                                         <span ng-if="detail.fields.field_type == 12">{{detail.value|time1}}</span>
-                                        <span ng-if="detail.fields.field_type != 8 && detail.fields.field_type != 12">{{detail.value}}</span>
+                                        <span ng-if="detail.fields.field_type != 8 && detail.fields.field_type != 12">
+                                            <span ng-if="detail.value == ''">NA</span>
+                                            <span ng-if="detail.value != ''">{{detail.value}}</span>
+                                        </span>
                                     </span>
                                 </p>
                                 <!--{{$index % 2 == 0|| $index == limit? '</p>' : ''}}

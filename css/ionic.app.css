@@ -39,6 +39,7 @@ For example, you might change some of the default colors:
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
+.pb30{padding-bottom: 30px;}
 
 .ion-alert:before {
     content: "\f101"; }
@@ -8671,7 +8672,7 @@ select.selectheader{ /* width:80%; */ padding:3px; border:0; /* text-indent:35%;
 
 .timesheet li.disabled{opacity:0.3;}
 .sche-date input{
-    margin: 0 auto;
+    margin: 0 auto; width:45%;
     height: 30px;
     padding: 3px;
     text-align: center;
@@ -8869,8 +8870,8 @@ iframe.videochat{position:absolute; width:100%; height: 100%;}
                                                                  border-bottom: 1px #eee solid; 
 }
 .sbtn{    padding: 2px 5px;
-    border: 1px #387EF5 solid;
-    border-radius: 2px;}
+          border: 1px #387EF5 solid;
+          border-radius: 2px;}
 
 .item-price{ text-align: center;
              padding: 0px 0 8px; margin-left:-10px; margin-right:-10px;
@@ -8948,11 +8949,11 @@ a.tab-item{color:#000;}
 .action-sheet-cancel .button{color:#fff !important; text-align:center !important;}
 
 .cselect{       position: static !important;
-    width: 96%;
-    direction: ltr !important;
-    padding: 7px 0 7px 0px !important;
-    /* font-weight: bold; */
-    border: 0;
+                width: 96%;
+                direction: ltr !important;
+                padding: 7px 0 7px 0px !important;
+                /* font-weight: bold; */
+                border: 0; background:#fff;
 }
 
 
@@ -8974,13 +8975,17 @@ label.listreq{border-bottom-color:#f00 !important;}
 
 .brdT{border-top: 1px #eee solid;}
 form .item{margin-bottom: 1px;border-top: 0px;}
+form .item-radio{
+    border-top: 1px #ddd solid;
+}
+
 
 .upattach{      display: inline-block;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    border: 1px #ccc solid;
-    margin: 10px 2px 0 2px;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                border: 1px #ccc solid;
+                margin: 10px 2px 0 2px;
 }
 
 .viewattachfile{padding-top:20px; width:100%; text-align:center;}
@@ -9015,19 +9020,19 @@ form .item{margin-bottom: 1px;border-top: 0px;}
               font-size: 11px;
               border-radius: 3px;}
 .filelabel{    position: absolute;
-    top: 0;
-    z-index: 99;
-    right: 0;}
+               top: 0;
+               z-index: 99;
+               right: 0;}
 
 .filelabel label{    display: block;
-    background: #28a54c;
-    color: #fff;
-    padding: 7px 20px;
-    text-align: center;
-    height: 36px;}
+                     background: #28a54c;
+                     color: #fff;
+                     padding: 7px 20px;
+                     text-align: center;
+                     height: 36px;}
 .holderattach{height: 47px; border-bottom: 1px #eee solid;     margin-bottom: 1px;}
 .holderattach .remove{    float: right;
-    margin: 8px 8px 0 0;}
+                          margin: 8px 8px 0 0;}
 
 .filelabel input[type="file"]{opacity:0; position:absolute; z-index:1; width:100%;}
 .btncamera{     width: 100%;
@@ -9120,12 +9125,12 @@ label.item .col{position:relative;}
 .chatlist .item  .title{ font-weight:bold; font-size:15px;}
 .chatlist .item  .description{ text-indent:3px; font-size:13px;}
 .chatlist .listright { float: right;
-    position: absolute;
-    right: 15px;
-    top: 37%;
-    font-size: 12px; }
-	#chat{position:absolute; width:100%; top:0px;}
-	.bgwhite{background:#fff;}
+                       position: absolute;
+                       right: 15px;
+                       top: 37%;
+                       font-size: 12px; }
+#chat{position:absolute; width:100%; top:0px;}
+.bgwhite{background:#fff;}
 .flexcont{
     display: -webkit-flex; /* Safari */
     display: flex; /* Safari */
@@ -9134,39 +9139,102 @@ label.item .col{position:relative;}
 
 }
 .flexcont div.innerdiv{-webkit-flex: 1;  /* Safari 6.1+ */
-                    -ms-flex: 1;  /* IE 10 */    
-                    flex:1;
-					text-align:center;
-					    background: #E6E7E8;
-    font-weight: bold;
-					}
-					.btnpd  .innerdiv{padding:8px;}
+                       -ms-flex: 1;  /* IE 10 */    
+                       flex:1;
+                       text-align:center;
+                       background: #E6E7E8;
+                       font-weight: bold;
+}
+.btnpd  .innerdiv{padding:8px;}
 .brdright{border-right:1px #eee solid;}
 .brdrht{border-right:1px #ccc solid;}
 .countconsult{display:block; text-align:center;}
 
 input[type="date"]:before{
-	font-family: "Ionicons";
-	display: inline-block;
-	padding:0 5px;
-	content: "\f117"; display:block;
+       font-family: "Ionicons";
+    position: absolute;
+    left: 0;
+    top: 34%;
+    padding: 0 5px;
+    content: "\f117"; 
 }
+
+.item.item-input input[type="date"]{text-indent:8px;}
 
 
 .sche-date input[type="date"]:before{
-	content:''; display:none; padding:0;
+    content:''; display:none; padding:0;
 }
 .cardprice{float:right; font-size:16px;}
 .cardcont{line-height:20px; padding:12px; position:relative;}
 .cardbtn {padding: 0px;
-    margin: 2px;
-    line-height: 16px;
-    color: #fff;
-    display: block;
-    line-height: 35px !important; text-decoration:none;}
-	.fieldvalue{ padding:10px;}
+          margin: 2px;
+          line-height: 16px;
+          color: #fff;
+          display: block;
+          line-height: 35px !important; text-decoration:none;}
+.fieldvalue{ padding:10px; float: left; width:100%;     text-indent: 6px;}
 
 .f22{font-size: 22px;}
+
+.Cstmbutn {
+    width: 100%;
+    /* margin-bottom: 15px; */
+    background: #fff;
+    border: 1px #28a54c solid;
+    color: #28a54c;
+    padding: 5px 0;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    /* margin-top: -8px; */
+    height: 29px;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    right: 0;
+}
+
+.Cstmbutn .icon{color: #28a54c;} 
+.hleft{left:5px;}
+.hright{right:5px;}
+.mh44{min-height:46px;}
+.inbtn{    width: 28%;
+    margin: 6px 2%;
+    float:left;}
+.inbtn button{width:100%; padding: 5px 0;}
+.dietdays{width:100%;}
+
+
+.button-positive .icon{color:#fff;}
+
+.inbtnlabel{text-overflow:inherit; white-space: inherit; overflow:auto;      min-width: 65px;   padding-left: 8px;}
+.filled-data{    color: #387EF5;
+    border-color: #387EF5;}
+.filled-data .icon{color: #387EF5;}
+
+.filldata{background: #387EF5;
+color: #fff;
+}
+.filldata .icon{
+color: #fff;
+}
+.modalhead{  position: absolute;
+  top: 0;
+  right: 80px;
+  left: 80px;
+  z-index: 0;
+  overflow: hidden;
+  margin: 0 10px;
+  min-width: 30px;
+  height: 43px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 500; color:#fff; line-height:43px;
+  }
+
 
 /* endcss */
 

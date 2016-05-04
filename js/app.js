@@ -1,4 +1,5 @@
 // Ionic Starter App
+//var domain = "http://stage.doctrs.in/";
 var domain = "http://test.doctrs.in/";
 //var domain = "http://192.168.2.169/doctors/";
 angular.module('underscore', [])
@@ -43,11 +44,11 @@ angular.module('your_app_name', [
                 PushNotificationsService.register();
             });
             $rootScope.$on('loading:show', function () {
-                $ionicLoading.show({template: 'Loading'})
+                //$ionicLoading.show({template: 'Loading'})
             })
 
             $rootScope.$on('loading:hide', function () {
-                $ionicLoading.hide()
+                //$ionicLoading.hide()
             })
             // This fixes transitions for transparent background views
             $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
@@ -291,7 +292,7 @@ angular.module('your_app_name', [
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/consultations/consultations-current.html",
-                                controller: 'ConsultationsListCtrl'
+                                controller: 'ConsultationsListCurrentCtrl'
                             }
                         }
                     })
@@ -301,7 +302,7 @@ angular.module('your_app_name', [
                         views: {
                             'menuContent': {
                                 templateUrl: "views/app/consultations/consultations-past.html",
-                                controller: 'ConsultationsListCtrl'
+                                controller: 'ConsultationsListPastCtrl'
                             }
                         }
                     })
@@ -421,6 +422,7 @@ angular.module('your_app_name', [
                             }
                         }
                     })
+<<<<<<< HEAD
 
                     /* packaging */
 
@@ -528,6 +530,90 @@ angular.module('your_app_name', [
 
 
 
+
+                    /* packaging */
+
+                    .state('app.packaging', {
+                        url: "/packaging",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/packaging/packaging.html",
+                                controller: 'packagingCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.packaging-detail', {
+                        url: "/packaging-detail",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/packaging/packaging-detail.html",
+                                controller: 'PackagingDetailCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.package-confirm', {
+                        url: "/package-confirm",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/packaging/package-confirm.html",
+                                controller: 'packageConfirmCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.active-packages', {
+                        url: "/active-packages",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/packaging/active-packages.html",
+                                controller: 'ActivePackagesCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.packages-view', {
+                        url: "/packages-view",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/packaging/packages-view.html",
+                                controller: 'PackagesViewCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.past-packages', {
+                        url: "/past-packages",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/packaging/past-packages.html",
+                                controller: 'PastPackagesCtrl'
+                            }
+                        }
+                    })
+                    /* end of packaging */
+                    /* Pathology  */
+                    .state('app.pathology', {
+                        url: "/pathology",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/pathology/pathology.html",
+                                controller: 'PathologyCtrl'
+                            }
+                        }
+                    })
+
+                    .state('app.packages-list', {
+                        url: "/packages-list",
+                        views: {
+                            'menuContent': {
+                                templateUrl: "views/app/pathology/packages-list.html",
+                                controller: 'PackagesListCtrl'
+                            }
+                        }
+                    })
+                    /* End Pathology  */
                     .state('app.logout', {
                         url: "/logout",
                         views: {

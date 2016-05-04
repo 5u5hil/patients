@@ -1,17 +1,17 @@
 <ion-view class="records-view">
     <ion-nav-title>
-        <span>{{category[0].created_at| datetime3}}</span> <!---Specific Record ({{category[0].categories.category}}) --->
+        <span>{{category.created_at| datetime3}}</span> <!---Specific Record ({{category[0].categories.category}}) --->
     </ion-nav-title>
-    <ion-content>
-        <div class="pb50">
+    <ion-content class="pb50">
+        <div >
 
             <div ng-repeat="rec in recordDetails track by $index">
-                <div ng-if="category[0].category == 3">
+                <div ng-if="category.category == 3">
                     <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                     <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
-                    <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
+                    <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
                         <!--- ng-show="angular.isNumber(rec.value)"  -->
-                        <div>{{doctors[$index]}}</div>
+                        <div class="fieldvalue">{{doctors[$index]!=''? doctors[$index]:'NA'}}</div>
                     </div>
                     <div ng-if="rec.fields.field == 'Related Problem'" class="fieldvalue">
                         <div ng-if="rec.value != ''">{{problem[$index].value}}</div>
@@ -23,7 +23,7 @@
                     <!--                        <div ng-if="rec.fields.field == 'Frequency'" ng-init="fdata = (rec.value).split('-')">
                                                 {{fdata[0]}} times in {{fdata[1]}}
                                             </div>-->
-                    <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Frequency'" class="fieldvalue">
+                    <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Frequency'" class="fieldvalue">
                         <div ng-if="rec.fields.field_type == 8">
                             <div ng-if="rec.fields.field == 'End Date'">
                                 <div ng-if="rec.value == ''">NA</div>
@@ -68,7 +68,7 @@
                         <div class="clr"></div>		
                     </div>
                 </div>
-                <div ng-if="category[0].category == 7" >
+                <div ng-if="category.category == 7" >
                     <div ng-if="rec.fields.field == 'Payment Mode'">
                         <div ng-if="Bstatus != '' && Bstatus != 'Unpaid'">
                             <div ng-if="rec.value == '0'">
@@ -86,15 +86,15 @@
                     <div ng-if="rec.fields.field != 'Payment Mode'">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
-                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
-                            <div>{{doctors[$index]}}</div>
+                            <div class="fieldvalue">{{doctors[$index]!=''? doctors[$index]:'NA'}}</div>
                         </div>
                         <div ng-if="rec.fields.field == 'Related Problem'" class="fieldvalue">
                             <div ng-if="rec.value != ''">{{problem[$index].value}}</div>
                             <div ng-if="rec.value == ''">NA</div>
-                        </div>
-                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'" class="fieldvalue">
+                        </div>                        
+                        <div ng-if="rec.fields.field != 'Includes Prescription' && rec.fields.field != 'Valid till' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode' && rec.fields.field != 'Attachments'" class="fieldvalue">
                             <div ng-if="rec.fields.field_type == 8">
                                 <div ng-if="rec.fields.field == 'End Date'">
                                     <div ng-if="rec.value == ''"></div>
@@ -141,7 +141,7 @@
                         <div class="clr"></div>		
                     </div>
                 </div>
-                <div ng-if="category[0].category == 2" >
+                <div ng-if="category.category == 2" >
                     <div ng-if="rec.fields.field == 'Adverse Effects' || rec.fields.field == 'Date received'">
                         <div ng-if="Istatus != 'To be received'">                            
                             <div ng-if="rec.fields.field == 'Adverse Effects'">
@@ -222,12 +222,23 @@
                         <div class="clr"></div>		
                     </div>
                 </div>
-                <div ng-if="category[0].category == 4" >
+                <div ng-if="category.category == 4" >
                     <div ng-if="rec.fields.field == 'To be conducted before' || rec.fields.field == 'Conducted On' || rec.fields.field == 'Performed By' || rec.fields.field == 'Performed At' || rec.fields.field == 'Inference' || rec.fields.field == 'Reference Range'">
                         <div ng-if="InvStatus == 'Conducted'">
                             <div ng-if="rec.fields.field != 'Conducted On' && rec.fields.field != 'To be conducted before'">
-                                <div class="item item-divider" >{{rec.fields.field}} </div>
-                                <div class="fieldvalue">{{rec.value!=''? rec.value:''}}</div>
+                                <div class="item item-divider" >{{rec.fields.field}}</div>
+                                <div ng-if="rec.fields.field == 'Performed By' || rec.fields.field == 'Performed At'">
+                                    <div class="fieldvalue" ng-if="rec.fields.field == 'Performed By'">
+                                        {{rec.value!=''? rec.value:'NA'}}
+                                    </div>
+
+                                    <div class="fieldvalue" ng-if="rec.fields.field == 'Performed At'">
+                                        {{rec.value!=''? rec.value:'NA'}}
+                                    </div>
+                                </div>                                
+                                <div class="fieldvalue" ng-if="rec.fields.field != 'Performed By' && rec.fields.field != 'Performed At'">
+                                    {{rec.value!=''? rec.value:''}}
+                                </div>
                             </div>
                             <div ng-if="rec.fields.field == 'Conducted On'">
                                 <div class="item item-divider" >{{rec.fields.field}} </div>
@@ -249,16 +260,16 @@
                     <div ng-if="rec.fields.field != 'To be conducted before' && rec.fields.field != 'Conducted On' && rec.fields.field != 'Performed At' && rec.fields.field != 'Performed By' && rec.fields.field != 'Inference' && rec.fields.field != 'Reference Range' && rec.fields.field != 'Attachments'">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
-                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
-                            <div>{{doctors[$index]}}</div>
+                            <div>{{doctors[$index]!=''? doctors[$index]:'NA'}}</div>
                         </div>
 
                         <div ng-if="rec.fields.field == 'Related Problem'" class="fieldvalue">
                             <div ng-if="rec.value != ''">{{problem[$index].value}}</div>
                             <div ng-if="rec.value == ''">NA</div>
                         </div>
-                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'" class="fieldvalue">
+                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'" class="fieldvalue">
                             <div ng-if="rec.fields.field_type == 8">
                                 <div ng-if="rec.fields.field == 'End Date'">
                                     <div ng-if="rec.value == ''"></div>
@@ -294,22 +305,31 @@
                                         </a>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="clr"></div>		
                         </div>
                     </div>
                 </div>
-                <div ng-if="category[0].category == 5" >
+                <div ng-if="category.category == 5" >
                     <div ng-if="rec.fields.field == 'To be conducted before' || rec.fields.field == 'Conducted On' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Result' || rec.fields.field == 'Inference' || rec.fields.field == 'Reference Range'">
                         <div ng-if="InvStatus == 'Conducted'">
                             <div ng-if="rec.fields.field != 'Conducted On' && rec.fields.field != 'To be conducted before'">
                                 <div class="item item-divider" >{{rec.fields.field}} </div>
-                                <div class="fieldvalue">{{rec.value!=''? rec.value:''}}</div>
+                                <div ng-if="rec.fields.field == 'Reference Range' || rec.fields.field == 'Result'">
+                                    <div class="fieldvalue" ng-if="rec.fields.field == 'Reference Range'">
+                                        {{rec.value!=','? rec.value:'NA'}}
+                                    </div>
+                                    <div class="fieldvalue" ng-if="rec.fields.field == 'Result'">
+                                        {{rec.value!='-'? rec.value:'NA'}}
+                                    </div>
+                                </div>
+                                <div ng-if="rec.fields.field != 'Reference Range' && rec.fields.field != 'Result'">
+                                    <div class="fieldvalue">{{rec.value!=''? rec.value:'NA'}}</div>
+                                </div>
                             </div>
                             <div ng-if="rec.fields.field == 'Conducted On'">
                                 <div class="item item-divider" >{{rec.fields.field}} </div>
-                                <div class="fieldvalue" ng-if="rec.value == ''"></div>
+                                <div class="fieldvalue" ng-if="rec.value == ''">NA</div>
                                 <div class="fieldvalue" ng-if="rec.value == '0000-00-00'"> </div>
                                 <div class="fieldvalue" ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
                             </div>
@@ -327,16 +347,16 @@
                     <div ng-if="rec.fields.field != 'To be conducted before' && rec.fields.field != 'Conducted On' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Result' && rec.fields.field != 'Inference' && rec.fields.field != 'Reference Range' && rec.fields.field != 'Attachments'">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
-                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" class="fieldvalue" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
-                            <div>{{doctors[$index]}}</div>
+                            <div>{{doctors[$index]!=''? doctors[$index]:'NA'}}</div>
                         </div>
 
                         <div ng-if="rec.fields.field == 'Related Problem'" class="fieldvalue">
                             <div ng-if="rec.value != ''">{{problem[$index].value}}</div>
                             <div ng-if="rec.value == ''">NA</div>
                         </div>
-                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'" class="fieldvalue">
+                        <div ng-if="rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem' && rec.fields.field != 'Payment Mode'" class="fieldvalue">
                             <div ng-if="rec.fields.field_type == 8">
                                 <div ng-if="rec.fields.field == 'End Date'">
                                     <div ng-if="rec.value == ''"></div>
@@ -354,8 +374,119 @@
                                 <div ng-if="rec.value != ''">{{rec.value}}</div>
                             </div>
                         </div>
-                        <div class="clist-data-icon" ng-if="rec.fields.field == 'Attachments'" >
+                    </div>
+                    <div class="clist-data-icon" ng-if="rec.fields.field == 'Attachments'" >
+                        <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
+                        <h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
+                        <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
+                             <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
+                        <div ng-repeat="attach in rec.attachments" >
+                            <div ng-init="selData = (attach.orginial_name).split('.')">
+                                <div ng-if="selData[1] == 'png' || selData[1] == 'gif' || selData[1] == 'jpg' || selData[1] == 'PNG' || selData[1] == 'GIF' || selData[1] == 'JPG'">
+                                    <a class="filelink" ng-click="showm('{{attach.attachment_path}}','{{attach.orginial_name}}')" >
+                                        <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                    </a>
+                                </div>
+                                <div ng-if="selData[1] != 'png' && selData[1] != 'gif' && selData[1] != 'jpg' && selData[1] != 'PNG' && selData[1] != 'GIF' && selData[1] != 'JPG'">
+                                    <a class="filelink" href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}"  download>
+                                        <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clr"></div>		
+                    </div>
+
+                </div>
+                <div ng-if="category.category == 19">
+                    <div ng-if="rec.fields.name == 'how-it-ended' && probstatus == 'Past'">
+                        <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
+                        <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
+                        <div class="fieldvalue" >
+                            {{rec.value==''? 'NA': rec.value}}
+                        </div>
+                    </div>
+                    <div ng-if="rec.fields.name == 'time-8'">
+                        <div class="item item-divider" >{{rec.fields.field}} </div>
+                        <div class="fieldvalue">
+                            {{endtime==''? 'NA': endtime=='00:00:00'? 'NA':rec.value}}
+                        </div>
+                    </div>
+                    <div ng-if="rec.fields.name == 'quick-history'">
+                        <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
+                        <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
+                        <div class="fieldvalue" >
+                            <ul><li ng-repeat="sel in selConditions[$index]">{{sel.condition}}</li></ul>
+                        </div>
+                    </div>
+
+
+                    <div ng-if="rec.fields.name == 'no-of-days'">
+                        <div class="listreq" ng-if="rec.fields.is_mandatory == 1" >
+                            <div class="item item-divider" >{{rec.fields.field}} *</div>
                             <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
+                            <div class="fieldvalue" >
+                                <div class="dietdays">
+                                    <button class="button button-positive button-small inbtn" ng-repeat="dd in dietDetails" ng-controller="mealDetailsCtrl" ng-click="daymodal({{$index}})">
+                                        <span class="icon ion-plus-circled"></span> Day {{$index + 1}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="rec.fields.field == 'Includes Prescription' && isAttachment != ''">
+                        <div class="item item-divider" ng-if="rec.value != '' && rec.value != 0">
+                            <span>{{rec.fields.field}} </span></div>
+                        <div class="fieldvalue" ng-if="rec.value != 0">{{rec.value}}</div>
+                    </div>
+                    <div ng-if="rec.fields.field == 'Valid till' && isAttachment != ''">
+                        <div class="item item-divider" ng-if="rec.value != ''">
+                            <span>{{rec.fields.field}} </span>
+                        </div>
+                        <div class="fieldvalue">
+                            <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                            <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                        </div>
+                    </div>
+                    <div ng-if="rec.fields.name != 'time-8' && rec.fields.field != 'Includes Prescription' && rec.fields.field != 'Valid till' && rec.fields.name != 'how-it-ended' && rec.fields.name != 'no-of-days' && rec.fields.name != 'quick-history'" class="clr">
+                        <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
+                        <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
+                            <!--- ng-show="angular.isNumber(rec.value)"  -->
+                            <div class="fieldvalue">{{doctors[$index]!=''? doctors[$index]:'NA'}}</div>
+                        </div>
+                        <div ng-if="rec.fields.field == 'Related Problem'" class="fieldvalue">
+                            <div ng-if="rec.value != ''">{{problem[$index].value}}</div>
+                            <div ng-if="rec.value == ''">NA</div>
+                        </div>
+                        <div ng-if="rec.fields.field == 'Patient'" class="fieldvalue">
+                            {{patient[$index].fname}} {{patient[$index].lname}}
+                        </div>
+                        <div ng-if="rec.fields.field != 'Attachments' && rec.fields.field != 'Patient' && rec.fields.name != 'how-it-ended' && rec.fields.field != 'Prescribed By' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'" class="fieldvalue">
+                            <div ng-if="rec.fields.field_type == 8">
+                                <div ng-if="rec.fields.field == 'End Date'">
+                                    <div ng-if="rec.value == ''">NA</div>
+                                    <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
+                                <div ng-if="rec.fields.field != 'End Date'">
+                                    <div ng-if="rec.value == ''"></div>
+                                    <div ng-if="rec.value == '0000-00-00'"> </div>
+                                    <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                                </div>
+                            </div>
+                            <div ng-if="rec.fields.field_type == 12">                                
+                                <div ng-if="rec.value == ''"> NA </div>
+                                <div ng-if="rec.value == '00:00:00'"> NA </div>
+                                <div ng-if="rec.value != '00:00:00' && rec.value != ''">{{rec.value|time1}}</div>
+                            </div>
+                            <div ng-if="rec.fields.field_type != 8 && rec.fields.field_type != 12"> 
+                                <div ng-if="rec.value == ''">NA</div>
+                                <div ng-if="rec.value != ''">{{rec.value}}</div>
+                            </div>
+                        </div>
+                        <div class="clist-data-icon fieldvalue" ng-if="rec.fields.field == 'Attachments'" >
                             <h5 class="mt0">Attached Files ({{rec.attachments.length}})</h5>
                             <!--  <a href="{{attachpath}}{{attach.attachment_path}}{{attach.orginial_name}}" target="_blank" class="button button-outline button-positive" style="width:100%" ng-If="rec.attachments.length > 0" ng-repeat="attach in rec.attachments" >
                                  <span class="ico"><i class="ion-paperclip"></i></span> ({{$index + 1}})</a> -->
@@ -378,7 +509,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="category[0].category != 3 && category[0].category != 4 && category[0].category != 5 && category[0].category != 7 && category[0].category != 2">
+                <div ng-if="category.category != 3 && category.category != 4 && category.category != 5 && category.category != 7 && category.category != 2 && category.category != 19">
                     <div ng-if="rec.fields.name == 'how-it-ended' && probstatus == 'Past'">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
@@ -393,28 +524,41 @@
                             <ul><li ng-repeat="sel in selConditions[$index]">{{sel.condition}}</li></ul>
                         </div>
                     </div>
-					
-					
-					<div ng-if="rec.fields.name == 'no-of-days'">
-                        <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
-                        <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
-                        <div class="fieldvalue" >
-                          <div class="dietdays">
-						  <button class="button button-positive button-small inbtn">
-						  <span class="icon ion-plus-circled"></span> Day 1</button>
-						  
-						  <button class="button button-positive button-small inbtn"><span class="icon ion-plus-circled"></span> Day 2</button>
-						  </div>
+
+
+                    <div ng-if="rec.fields.name == 'no-of-days'">
+                        <div class="listreq" ng-if="rec.fields.is_mandatory == 1" >
+                            <div class="item item-divider" >{{rec.fields.field}} *</div>
+                            <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
+                            <div class="fieldvalue" >
+                                <div class="dietdays">
+                                    <button class="button button-small inbtn {{dd.isEmptyObj? 'filled-data':'filldata'}}" ng-repeat="dd in dietDetails" ng-controller="mealDetailsCtrl" ng-click="daymodal({{$index}})">
+                                        <!--<span class="icon ion-plus-circled"></span>--> Day {{$index + 1}}</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-					
-                    <div ng-if="rec.fields.name != 'how-it-ended' 
-					&& rec.fields.name != 'no-of-days' && rec.fields.name != 'quick-history'" >
+
+                    <div ng-if="rec.fields.field == 'Includes Prescription' && isAttachment != ''">
+                        <div class="item item-divider" ng-if="rec.value != '' && rec.value != 0">
+                            <span>{{rec.fields.field}} </span></div>
+                        <div class="fieldvalue" ng-if="rec.value != 0">{{rec.value}}</div>
+                    </div>
+                    <div ng-if="rec.fields.field == 'Valid till' && isAttachment != ''">
+                        <div class="item item-divider" ng-if="rec.value != ''">
+                            <span>{{rec.fields.field}} </span>
+                        </div>
+                        <div class="fieldvalue" ng-if="rec.value != ''">
+                            <div ng-if="rec.value == '0000-00-00'"> NA </div>
+                            <div ng-if="rec.value != '0000-00-00' && rec.value != ''">{{rec.value|dateFormat4}}</div>
+                        </div>
+                    </div>
+                    <div ng-if="rec.fields.field != 'Includes Prescription' && rec.fields.field != 'Valid till' && rec.fields.name != 'how-it-ended' && rec.fields.name != 'no-of-days' && rec.fields.name != 'quick-history'" class="clr">
                         <div class="listreq" ng-if="rec.fields.is_mandatory == 1" ><div class="item item-divider" >{{rec.fields.field}} *</div> </div>
                         <div class="item item-divider" ng-if="rec.fields.is_mandatory != 1" >{{rec.fields.field}} </div>
-                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
+                        <div ng-if="rec.fields.field == 'Prescribed By' || rec.fields.field == 'Measured By' || rec.fields.field == 'Referred By' || rec.fields.field == 'Conducted By' || rec.fields.field == 'Performed By' || rec.fields.field == 'Consultant'" >
                             <!--- ng-show="angular.isNumber(rec.value)"  -->
-                            <div class="fieldvalue" > {{doctors[$index]}}</div>
+                            <div class="fieldvalue">{{doctors[$index]!=''? doctors[$index]:'NA'}}</div>
                         </div>
                         <div ng-if="rec.fields.field == 'Related Problem'" class="fieldvalue">
                             <div ng-if="rec.value != ''">{{problem[$index].value}}</div>
@@ -423,7 +567,7 @@
                         <div ng-if="rec.fields.field == 'Patient'" class="fieldvalue">
                             {{patient[$index].fname}} {{patient[$index].lname}}
                         </div>
-                        <div ng-if="rec.fields.field != 'Attachments' && rec.fields.field != 'Patient' && rec.fields.name != 'how-it-ended' && rec.fields.field != 'Prescribed By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'" class="fieldvalue">
+                        <div ng-if="rec.fields.field != 'Attachments' && rec.fields.field != 'Patient' && rec.fields.name != 'how-it-ended' && rec.fields.field != 'Prescribed By' && rec.fields.field != 'Conducted By' && rec.fields.field != 'Measured By' && rec.fields.field != 'Referred By' && rec.fields.field != 'Performed By' && rec.fields.field != 'Consultant' && rec.fields.field != 'Related Problem'" class="fieldvalue">
                             <div ng-if="rec.fields.field_type == 8">
                                 <div ng-if="rec.fields.field == 'End Date'">
                                     <div ng-if="rec.value == ''">NA</div>
@@ -471,26 +615,11 @@
                 </div>
             </div>
         </div>
-        <!---
-        <div class="ctab">
-            <ion-tabs class="tabs-positive tabs-icon-top">
-                <ion-tab title="View" >                    
-                </ion-tab>
-                <ion-tab title="Track" >
-                    <div class="tabcontainer"> Under Construction	</div>
-                </ion-tab>
-                <ion-tab title="Versions" >
-                    <div class="tabcontainer">
-                        Under Construction	
-                    </div>
-                </ion-tab>
-            </ion-tabs>
-        </div>-->
     </ion-content>
     <div class="footerbar button-bar">
         <a class="button btn-delete" confirmed-click="delete(category[0].id)" ng-confirm-click="Do you really want to delete?" ><i class="icon ion-trash-b"></i> Delete</a>
         <a class="button btn-share" ng-controller="shareModalCtrl" ng-click="modal.show()"><i class="icon ion-android-share-alt"></i> Share</a>
-        <!--<a class="button btn-edit" ui-sref="app.edit({'id' : category[0].id,'cat' : category[0].category, 'res' : 'json'})"><i class="icon ion-edit"></i> Edit</a>--->
+        <!--<a class="button btn-edit" ui-sref="app.edit({'id' : category[0].id,'cat' : category.category, 'res' : 'json'})"><i class="icon ion-edit"></i> Edit</a>--->
     </div>
 </ion-view>
 <script id="filesview.html" type="text/ng-template">
@@ -502,7 +631,7 @@
     <div class="mcontent">
     <!-- <iframe  type="text/html" style="width:100%; position:absolute; height:80%; top:100px;" scrolling="yes" ng-src="{{trustSrc(value)}}" allowfullscreen frameborder="0">       
     </iframe> -->
-    <div class="viewattachfile">
+    <div class="viewattachfile" ng-if="value!=''">
     <img src="{{value}}">
     </div>
     </div>
@@ -527,4 +656,27 @@
     </div>
     </ion-modal-view>
 </script>
-
+<script id="mealdetails" type="text/ng-template">
+    <ion-modal-view>
+    <ion-header-bar class="bar app-top-bar">
+    <h1 class="title">Meal Details - Day {{Mealday}}</h1>
+    <button class="button button-clear pull-left" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+    <div ng-if="dietPlanDetails.length==0"><p class="text-center">No data added</p></div>
+    <div ng-repeat="diet in dietPlanDetails">
+    <div class="item item-divider">Meal {{$index+1}}</div>
+    <div ng-repeat="meal in diet">   
+    <label class="item item-input" ng-if="meal.fields.name=='meal-1' || meal.fields.name=='value'">
+    <div ng-if="meal.fields.field=='Time'">
+    <div ng-if="meal.value == ''"> NA </div>
+    <div ng-if="meal.value == '00:00:00'"> NA </div>
+    <div ng-if="meal.value != '00:00:00' && meal.value != ''">{{meal.value|time1}}</div>
+    </div>
+    <div ng-if="meal.fields.field!='Time'">{{meal.value==''? 'NA':meal.value}}</div>    
+    </label>
+    </div>
+    </div>  
+    </ion-content>
+    </ion-modal-view>
+</script>

@@ -394,6 +394,7 @@ angular.module('your_app_name.directives', [])
                     }
                 };
             }])
+
         .directive('validfile', function validFile() {
 
             var validFormats = ['jpg', 'gif'];
@@ -404,19 +405,37 @@ angular.module('your_app_name.directives', [])
                         elem.on('change', function () {
                             var value = elem.val(),
                                     ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
-                                    console.log(elem.length);
-                                    if(elem.length>0){
-                                        jQuery('#convalid').removeClass('hide');
-                                        jQuery('#coninprec').removeClass('hide');
-                                    }
-                                    else{
-                                        jQuery('#convalid').addClass('hide');
-                                        jQuery('#coninprec').addClass('hide');
-                                    }
+                            console.log(elem.length);
+                            if (elem.length > 0) {
+                                jQuery('#convalid').removeClass('hide');
+                                jQuery('#coninprec').removeClass('hide');
+                            } else {
+                                jQuery('#convalid').addClass('hide');
+                                jQuery('#coninprec').addClass('hide');
+                            }
                             //return validFormats.indexOf(ext) !== -1;
                         });
                     };
                 }
             };
-        });
-;
+        })
+
+        .directive('validFile', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, el, attrs, ngModel) {
+                    ngModel.$render = function () {
+                        ngModel.$setViewValue(el.val());
+                    };
+
+                    el.bind('change', function () {
+                        scope.$apply(function () {
+                            ngModel.$render();
+                        });
+                    });
+                }
+            };
+        })
+
+
+        ;
