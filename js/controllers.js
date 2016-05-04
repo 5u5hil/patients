@@ -42,7 +42,22 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
         .controller('SearchBarCtrl', function ($scope, $state, $ionicConfig, $rootScope) {
 
         })
+.controller('DoctorRecordJoinCtrl', function ($scope, $http, $stateParams, $state, $ionicLoading, $filter, $ionicHistory) {
+            $scope.interface = window.localStorage.getItem('interface_id');
+            $scope.startRecording = function () {
+                $http({
+                    method: 'GET',
+                    url: domain + 'doctors/start-recording',
+                    params: {interface: $scope.interface}
+                }).then(function successCallback(response) {
 
+                    //$state.go('app.category-detail');
+                }, function errorCallback(e) {
+                    console.log(e);
+                });
+            }
+
+        })
 //LOGIN
         .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $ionicLoading, $timeout) {
             window.localStorage.setItem('interface_id', '3');
