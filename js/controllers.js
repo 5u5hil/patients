@@ -1542,6 +1542,10 @@ angular.module('your_app_name.controllers', ['ionic', 'ngCordova'])
                 });
             };
 
+//            $scope.recordVideo = function () {
+//                $state.go('app.doctor-record-join', {}, {cache: false}, {reload: true});
+//            }
+
             $scope.joinVideo = function (mode, start, end, appId) {
                 console.log(mode + "===" + start + '===' + end + "===" + $scope.curTime + "==" + appId);
                 if ($scope.curTime >= start || $scope.curTime <= end) {
